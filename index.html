@@ -118,6 +118,9 @@ a{color:var(--platine)}
 .pied a{color:var(--argent)}
 .pied-cols{display:grid;gap:1rem}
 @media (min-width:760px){.pied-cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pied .pied-bas{padding-bottom:.4rem;font-size:.8rem;letter-spacing:.02em}
+.porte{display:inline-block;margin:-14px -6px -14px -16px;padding:14px 6px 14px 16px;border:0;background:none;color:inherit;font:inherit;line-height:inherit;cursor:default;-webkit-tap-highlight-color:transparent}
+.porte:focus-visible{outline:1px solid var(--argent);outline-offset:-10px;border-radius:6px}
 
 /* boutons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.7rem 1.15rem;border:1px solid var(--argent);border-radius:var(--r-petit);background:transparent;color:var(--platine);font-weight:500;line-height:1.2;text-decoration:none;text-align:center}
@@ -229,7 +232,15 @@ dialog.produit .fen{max-height:100dvh;height:100dvh;padding:0;gap:0}
 .onglets::-webkit-scrollbar{display:none}
 .onglet{flex:none;padding:.35rem .8rem;border:1px solid transparent;border-radius:999px;background:transparent;color:var(--argent);font-size:.92rem;white-space:nowrap}
 .onglet[aria-current="page"]{border-color:var(--argent);color:var(--platine)}
-@media (max-width:620px){.console-titre{display:none}.console-in{padding-block:.45rem}.onglet{padding:.35rem .65rem}}
+.sortie{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;margin-left:auto;padding:0;border:1px solid var(--filet);border-radius:50%;background:transparent;color:var(--argent)}
+.sortie svg{width:17px;height:17px}
+.connexion{display:grid;gap:1rem}
+.connexion > .lien{justify-self:start}
+.avance{border:1px solid var(--filet);border-radius:var(--r-petit);padding:.2rem .8rem}
+.avance summary{padding:.5rem 0;cursor:pointer;color:var(--argent);font-size:.92rem}
+.avance[open] summary{margin-bottom:.4rem}
+.avance .champs{padding-bottom:.8rem}
+@media (max-width:620px){.console-titre{display:none}.console-in{flex-wrap:nowrap;padding-block:.45rem}.onglets{flex:1 1 auto;min-width:0}.onglet{padding:.35rem .42rem;font-size:.88rem}.console-in{gap:.5rem}}
 .a-publier{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;max-width:1180px;margin:0 auto;padding-block:.55rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--filet);color:var(--bas);font-size:.92rem;font-weight:500}
 .a-publier .actions{flex:none;flex-wrap:nowrap}
 .a-publier > span:first-child{min-width:0}
@@ -406,6 +417,7 @@ table.tab{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numer
 .final h2{margin:0;font:500 clamp(2rem,8vw,3rem)/1.05 var(--f-titre);text-wrap:balance}
 .final p{margin:0;color:var(--argent)}
 .final .actions{justify-content:center}
+.final + .pied{margin-top:0;border-top:0}
 
 /* jauge de livraison */
 .progres{display:grid;gap:.35rem;font-size:.82rem;color:var(--argent)}
@@ -438,7 +450,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .bloc-maison{position:relative;isolation:isolate}
 .bloc-maison::before{content:"";position:absolute;z-index:-1;left:-1rem;right:35%;top:-3rem;height:20rem;pointer-events:none;background:radial-gradient(closest-side,rgba(214,218,226,.06),rgba(214,218,226,0))}
 .final{background:radial-gradient(60% 100% at 50% 0%,rgba(36,36,41,.9) 0%,rgba(0,0,0,0) 100%)}
-</style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant.","bientot":[],"avis":[]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":70},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"30":60},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne."}}</script><script id="bp-code">(() => {
+</style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant.","bientot":[],"avis":[]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":70},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"30":60},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":null,"visible":true,"photo":"","badge":"","prixFlacon":null,"mlFlacon":null}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne."},"deduitJusqua":0}</script><script id="bp-code">(() => {
 'use strict';
 
 /* Gabarit de la page, recopié à l'identique à chaque publication. */
@@ -452,13 +464,18 @@ const COL_VENTES = 'prive/journal/ventes';
 const DOC_COUTS = 'prive/couts';
 const SOURCE = document.getElementById('bp-data').textContent;
 let ST = normaliser(JSON.parse(SOURCE));
+/* état publié de référence, pour « Annuler » */
+let BASE = SOURCE;
 
 const S = {
   panier: {}, choix: {}, mode: 'remise', fumeeStop: null, annonceStop: null, q: '', filtre: 'tous', famille: 'toutes',
   vendeur: false, onglet: 'boutique', modifs: 0, publication: false,
   db: null, dbEtat: 'attente', ventes: [], couts: null, coutsEdites: false,
-  prixManuel: false, confirmVente: null, photoTemp: null, confirmSuppr: false
+  prixManuel: false, confirmVente: null, photoTemp: null, confirmSuppr: false,
+  hote: '', gh: null, ghEtat: '', ghErreur: '', dbErreur: '', apercus: {}
 };
+/* Sur Claude, window.claude existe ; sur le site hébergé (GitHub Pages), non. */
+const surClaude = () => !!(window.claude && typeof window.claude.use === 'function');
 
 const SAISONS = [['printemps', 'Printemps', 'au printemps'], ['ete', 'Été', 'en été'], ['automne', 'Automne', 'en automne'], ['hiver', 'Hiver', 'en hiver']];
 const MOMENTS = [['jour', 'Jour'], ['soir', 'Soir']];
@@ -495,6 +512,7 @@ function normaliser(d) {
     return q;
   });
   d.maisons = d.maisons && typeof d.maisons === 'object' ? d.maisons : {};
+  d.deduitJusqua = typeof d.deduitJusqua === 'number' ? d.deduitJusqua : 0;
   return d;
 }
 const typo = h => String(h).replace(/ ([?!:;»])/g, '\u00a0$1').replace(/« /g, '«\u00a0');
@@ -582,9 +600,10 @@ function phrasePorter(p) {
 }
 const points = p => (p.accords || []).slice(0, 3).map(a => `<span class="pastille" style="--c:${couleur(a.n)}"></span>`).join('');
 const accordsTexte = p => (p.accords || []).slice(0, 3).map((a, i) => i ? a.n.toLowerCase() : a.n).join(', ');
+const srcPhoto = p => S.apercus[p.photo] || p.photo;
 function plaqueContenu(p) {
   return p.photo
-    ? `<img src="${esc(p.photo)}" alt="Flacon de ${esc(p.nom)}" loading="lazy">`
+    ? `<img src="${esc(srcPhoto(p))}" alt="Flacon de ${esc(p.nom)}" loading="lazy">`
     : `<span class="etiquette" aria-hidden="true"><span class="m">${esc(p.maison)}</span><span class="n">${esc(p.nom)}</span><span class="points">${points(p)}</span></span>`;
 }
 const pseudo = v => String(v || '').trim().replace(/^@/, '').replace(/\s/g, '');
@@ -695,6 +714,7 @@ function pied() {
       <div>${B.lieuRemise ? `<p>Remise en main propre gratuite à ${esc(B.lieuRemise)}.</p>` : ''}${B.zoneLivraison ? `<p>Livraison à ${esc(B.zoneLivraison)} ${seuilTexte()}.</p>` : ''}</div>
     </div>
     <p>Notes et accords d'après Fragrantica.${B.note ? ' ' + esc(B.note) : ''}</p>
+    <p class="pied-bas">${surClaude() ? '©' : '<button type="button" class="porte" data-act="vendeur-entree" aria-label="Espace vendeur">©</button>'} ${new Date().getFullYear()} ${esc(B.nom)}</p>
   </footer>`;
 }
 function vueEntete() {
@@ -1149,6 +1169,7 @@ function console_() {
   return `<div class="console-in">
       <p class="console-titre">Espace vendeur</p>
       <nav class="onglets" aria-label="Espace vendeur">${ONGLETS.map(o => `<button type="button" class="onglet" data-act="onglet" data-o="${o[0]}" ${S.onglet === o[0] ? 'aria-current="page"' : ''}>${o[1]}</button>`).join('')}</nav>
+      ${S.hote === 'gh' ? '<button type="button" class="sortie" data-act="deconnexion" aria-label="Quitter l\'espace vendeur" title="Quitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/></svg></button>' : ''}
     </div>
     ${S.modifs ? `<div class="a-publier"><span>${S.modifs} ${S.modifs > 1 ? 'modifications à publier' : 'modification à publier'}<span class="vh">. Tes clients voient encore l'ancienne carte.</span></span><span class="actions"><button type="button" class="btn petit discret" data-act="annuler-modifs" ${S.publication ? 'disabled' : ''}>Annuler</button><button type="button" class="btn petit plein" data-act="publier" ${S.publication ? 'disabled' : ''}>${S.publication ? 'Publication…' : 'Publier'}</button></span></div>` : ''}`;
 }
@@ -1163,7 +1184,8 @@ function rendre() {
   nettoyerPanier();
   const o = S.vendeur ? S.onglet : 'boutique';
   let contenu = '';
-  if (o === 'boutique') contenu = vueBoutique();
+  if (S.vendeur && S.hote === 'gh' && S.ghEtat !== 'pret' && o !== 'boutique') contenu = panneauChargement();
+  else if (o === 'boutique') contenu = vueBoutique();
   else if (o === 'stock') contenu = panneauStock();
   else if (o === 'ventes') contenu = panneauVentes();
   else if (o === 'couts') contenu = '<div id="couts-zone"></div>';
@@ -1173,8 +1195,10 @@ function rendre() {
     + `<div class="page">${contenu}</div><div id="barre" class="barre" hidden></div>`);
   if (S.annonceStop) { S.annonceStop(); S.annonceStop = null; }
   if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); }
-  if (o === 'ventes') { majFormulaireVente(); rendreVentesDyn(); }
-  if (o === 'couts') rendreCouts();
+  if (!document.querySelector('.page .panneau-attente')) {
+    if (o === 'ventes') { majFormulaireVente(); rendreVentesDyn(); }
+    if (o === 'couts') rendreCouts();
+  }
 }
 
 /* stock et prix */
@@ -1203,12 +1227,15 @@ function panneauStock() {
     <h2>Stock et prix</h2>
     <p class="aide">Indique les ml qu'il te reste : les tailles trop grandes se grisent toutes seules sur la carte, et le parfum passe en « Épuisé » quand il ne reste plus assez pour le plus petit format. Laisse vide pour ne pas suivre le stock. Un prix vide retire la taille de la carte.${sansPhoto ? ` ${sansPhoto} ${sansPhoto > 1 ? 'parfums n\'ont' : 'parfum n\'a'} pas encore de photo de flacon.` : ''}</p>
     <div class="actions"><button type="button" class="btn petit" data-act="nouveau">Ajouter un parfum</button><button type="button" class="btn petit discret" data-act="reglages">Réglages de la boutique</button></div>
-    <div class="bloc">
+    ${S.hote === 'gh' ? `<div class="bloc">
+      <h3>Ton site</h3>
+      <p class="aide">Tes clients voient cette carte sur <a href="${esc(location.origin)}/" target="_blank" rel="noopener">${esc(location.host)}</a>. « Publier » la met à jour directement, en une à deux minutes. Tes ventes, tes clients et tes coûts n'y figurent jamais.</p>
+    </div>` : `<div class="bloc">
       <h3>Vitrine publique</h3>
       <p class="aide">La carte de ta bio est une copie de celle-ci, hébergée sur GitHub. Après un changement de stock, de prix ou de photo, télécharge la nouvelle vitrine et remplace le fichier index.html sur GitHub. Elle ne contient ni tes ventes, ni tes clients, ni tes coûts.</p>
       <div class="actions"><button type="button" class="btn petit plein" data-act="vitrine">Télécharger la vitrine</button></div>
       <p id="vt-err" class="err" role="alert"></p>
-    </div>
+    </div>`}
     <div class="stock-liste">${ST.parfums.map(ligneStock).join('')}</div>
   </section>`;
 }
@@ -1218,7 +1245,6 @@ const RESET_VITRINE = ':root{padding-top:env(safe-area-inset-top,0px);padding-bo
 function construireVitrine() {
   const st = JSON.parse(JSON.stringify(ST));
   st.appliquees = [];
-  st.parfums = st.parfums.filter(p => p.visible);
   const B = st.boutique;
   const desc = esc(B.accroche || 'Décants de parfums authentiques');
   const json = JSON.stringify(st).replace(/</g, '\\u003c');
@@ -1276,7 +1302,7 @@ function ouvrirPhoto(id) {
   ouvrir(`
     <div class="fen-tete"><div><p class="maison">${esc(p.maison)}</p><h2>Photo de ${esc(p.nom)}</h2></div><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>
     <p class="aide">Choisis une photo du vrai flacon : enregistrée depuis Fragrantica ou le site de la marque, ou prise par toi. Elle est recadrée et allégée automatiquement.</p>
-    <div class="photo-apercu" id="ph-apercu">${p.photo ? `<img src="${esc(p.photo)}" alt="Photo actuelle">` : 'Aucune photo pour l\'instant'}</div>
+    <div class="photo-apercu" id="ph-apercu">${p.photo ? `<img src="${esc(srcPhoto(p))}" alt="Photo actuelle">` : 'Aucune photo pour l\'instant'}</div>
     <div class="champ"><label for="ph-fichier">Image du flacon</label><input id="ph-fichier" type="file" accept="image/*" data-id="${id}"></div>
     <p class="aide">Sur ordinateur, tu peux aussi coller une image copiée.</p>
     <p id="ph-err" class="err" role="alert"></p>
@@ -1441,6 +1467,7 @@ function retenirApres(msg) {
 }
 function oublierApres() { try { sessionStorage.removeItem('bp-apres'); } catch (e) {} }
 async function publier(msgOk) {
+  if (S.hote === 'gh') return publierGh(msgOk);
   if (S.publication) return false;
   let art = null;
   try { art = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('artifact') : null; } catch (e) {}
@@ -1492,7 +1519,7 @@ function panneauVentes() {
       <p id="v-stock" class="aide"></p>
       <p id="v-err" class="err" role="alert"></p>
       <div class="actions"><button type="button" class="btn plein" id="v-ok" data-act="vendre">Enregistrer la vente</button></div>
-      <p class="aide">Le journal et tes clients restent privés : seul ton compte peut les lire. Le stock de la carte est mis à jour aussitôt.</p>
+      <p class="aide">${S.hote === 'gh' ? 'Le journal et tes clients restent privés : ils sont enregistrés dans ton dépôt privé GitHub, jamais sur le site.' : 'Le journal et tes clients restent privés : seul ton compte peut les lire.'} Le stock de la carte est mis à jour aussitôt.</p>
     </div>
     <div id="v-dyn"></div>
   </section>`;
@@ -1522,11 +1549,15 @@ function majPrixVente() {
   else if (p.stock >= besoin) info.textContent = `Il reste ${ml(p.stock)} de ${p.nom}. Après cette vente : ${ml(p.stock - besoin)}.`;
   else info.textContent = `Attention : il ne reste que ${ml(p.stock)} de ${p.nom}. La vente reste possible, le stock passera à 0 ml.`;
 }
-function appliquerVente(idVente, p, quantiteMl, suivi) {
+/* Sur Claude, la carte retient les identifiants des ventes déduites (retirés de la vitrine).
+   Sur le site, elle retient l'heure de la dernière vente déduite : stock et repère partent dans le même fichier. */
+function appliquerVente(idVente, p, quantiteMl, suivi, creeLe) {
   if (p && suivi && p.stock != null) p.stock = Math.max(0, arrondi(p.stock - quantiteMl));
+  if (S.hote === 'gh') { ST.deduitJusqua = Math.max(ST.deduitJusqua || 0, creeLe || 0); return; }
   ST.appliquees.push(idVente);
   if (ST.appliquees.length > 300) ST.appliquees = ST.appliquees.slice(-300);
 }
+const estDeduite = v => S.hote === 'gh' ? (v.creeLe || 0) <= (ST.deduitJusqua || 0) : ST.appliquees.includes(v.id);
 async function enregistrerVente() {
   const err = document.getElementById('v-err');
   err.textContent = '';
@@ -1543,11 +1574,12 @@ async function enregistrerVente() {
   const btn = document.getElementById('v-ok');
   btn.disabled = true;
   const suivi = p.stock != null;
-  const ref = S.db.collection(COL_VENTES).doc();
   const vente = {
     date, parfumId: p.id, nom: p.nom, maison: p.maison, taille, qte, ml: taille * qte, prix: arrondi(prix),
     client: document.getElementById('v-client').value.trim().slice(0, 80), stockSuivi: suivi, creeLe: Date.now()
   };
+  if (S.hote === 'gh') return venteGh(vente, p, suivi, btn, err);
+  const ref = S.db.collection(COL_VENTES).doc();
   try { await ref.set(vente); }
   catch (e) { err.textContent = "Le journal des ventes n'a pas répondu. Réessaie."; btn.disabled = false; return; }
   appliquerVente(ref.id, p, vente.ml, suivi);
@@ -1557,7 +1589,7 @@ async function enregistrerVente() {
 }
 function nonDeduites() {
   const limite = Date.now() - 14 * 864e5;
-  return S.ventes.filter(v => (v.creeLe || 0) > limite && !ST.appliquees.includes(v.id));
+  return S.ventes.filter(v => (v.creeLe || 0) > limite && !estDeduite(v));
 }
 function coutUnitaire(id) {
   const c = S.couts && S.couts.parfums && S.couts.parfums[id];
@@ -1574,8 +1606,8 @@ function rendreVentesDyn() {
   const zone = document.getElementById('v-dyn');
   const alerte = document.getElementById('v-alerte');
   if (!zone) return;
-  if (S.dbEtat === 'absent' || S.dbEtat === 'erreur') {
-    zone.innerHTML = `<p class="aide">Le journal des ventes n'est pas accessible depuis cette vue. Ouvre la carte depuis ton compte Claude pour le consulter.</p>`;
+  if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) {
+    zone.innerHTML = `<p class="${S.hote === 'gh' ? 'alerte' : 'aide'}">${esc(messageDb())}</p>`;
     const b = document.getElementById('v-ok'); if (b) b.disabled = true;
     return;
   }
@@ -1612,7 +1644,7 @@ function rendreVentesDyn() {
 function ligneJournal(v) {
   const m = margeVente(v);
   const conf = S.confirmVente === v.id;
-  const rendStock = v.stockSuivi && ST.appliquees.includes(v.id) && trouver(v.parfumId) && trouver(v.parfumId).stock != null;
+  const rendStock = v.stockSuivi && estDeduite(v) && trouver(v.parfumId) && trouver(v.parfumId).stock != null;
   return `<li>
     <div><span class="quoi">${esc(v.nom)}, ${v.taille} ml × ${v.qte}</span><br><span class="qui">${esc(dateCourte(v.date))}${v.client ? ', ' + esc(v.client) : ''}</span></div>
     <div class="prix">${eur(v.prix)}${m != null ? `<span class="marge">marge ${eur(m, true)}</span>` : ''}${conf ? '' : `<br><button type="button" class="lien" data-act="suppr-vente" data-id="${esc(v.id)}">Supprimer</button>`}</div>
@@ -1623,6 +1655,7 @@ async function supprimerVente(id) {
   const v = S.ventes.find(x => x.id === id);
   S.confirmVente = null;
   if (!v || !S.db) return;
+  if (S.hote === 'gh') return supprimerVenteGh(v);
   try { await S.db.doc(COL_VENTES + '/' + id).delete(); }
   catch (e) { toast("La vente n'a pas pu être supprimée. Réessaie."); rendreVentesDyn(); return; }
   const i = ST.appliquees.indexOf(id);
@@ -1637,17 +1670,18 @@ async function supprimerVente(id) {
 async function deduireEnAttente() {
   const nd = nonDeduites();
   if (!nd.length) return;
-  nd.forEach(v => appliquerVente(v.id, trouver(v.parfumId), v.ml || 0, v.stockSuivi));
+  nd.forEach(v => appliquerVente(v.id, trouver(v.parfumId), v.ml || 0, v.stockSuivi, v.creeLe));
   S.modifs++;
   await publier('Stock mis à jour.');
+  if (S.hote === 'gh') rendreVentesDyn();
 }
 
 /* coûts */
 function rendreCouts() {
   const zone = document.getElementById('couts-zone');
   if (!zone) return;
-  const tete = `<section class="panneau"><h2>Coûts et marges</h2><p class="aide">Ces chiffres restent privés : ils sont enregistrés à part, seul ton compte peut les lire, et ils ne sont jamais dans la carte que voient tes clients.</p>`;
-  if (S.dbEtat === 'absent' || S.dbEtat === 'erreur') { zone.innerHTML = tete + `<p class="aide">Les coûts ne sont pas accessibles depuis cette vue.</p></section>`; return; }
+  const tete = `<section class="panneau"><h2>Coûts et marges</h2><p class="aide">Ces chiffres restent privés : ils sont enregistrés à part, ${S.hote === 'gh' ? 'dans ton dépôt privé GitHub' : 'seul ton compte peut les lire'}, et ils ne sont jamais dans la carte que voient tes clients.</p>`;
+  if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) { zone.innerHTML = tete + (S.hote === 'gh' ? `<p class="alerte">${esc(messageDb())}</p>` : `<p class="aide">Les coûts ne sont pas accessibles depuis cette vue.</p>`) + '</section>'; return; }
   if (!S.couts) { zone.innerHTML = tete + '<p class="aide">Chargement…</p></section>'; return; }
   const C = S.couts;
   zone.innerHTML = tete + `
@@ -1694,6 +1728,13 @@ async function enregistrerCouts() {
   err.textContent = '';
   if (!S.db) { err.textContent = "Les coûts ne peuvent pas être enregistrés depuis cette vue."; return; }
   const L = lireCoutsFormulaire();
+  if (S.hote === 'gh') {
+    try {
+      S.gh.shaCouts = await ecrireFichier(S.gh.prive, 'couts.json', texteB64(JSON.stringify(L, null, 1)), S.gh.shaCouts, 'Coûts mis à jour');
+      S.couts = L; S.coutsEdites = false; toast('Coûts enregistrés.');
+    } catch (e) { err.textContent = messageGh(e, S.gh.prive); }
+    return;
+  }
   try { await S.db.doc(DOC_COUTS).set(L); S.couts = L; S.coutsEdites = false; toast('Coûts enregistrés.'); }
   catch (e) { err.textContent = "L'enregistrement a échoué. Réessaie."; }
 }
@@ -1734,6 +1775,331 @@ function majPanneauDb() {
   if (!S.vendeur) return;
   if (S.onglet === 'ventes') { rendreVentesDyn(); const b = document.getElementById('v-ok'); if (b && S.dbEtat === 'pret') b.disabled = false; }
   if (S.onglet === 'couts') rendreCouts();
+}
+
+/* ---------- espace vendeur sur le site hébergé (GitHub) ----------
+   Le site est public : aucun secret n'y figure. La clé est un jeton GitHub personnel,
+   collé une fois sur l'appareil du vendeur et gardé chiffré (AES-GCM, clé tirée du mot de passe
+   par PBKDF2) dans le stockage de ce navigateur. Le mot de passe n'est jamais enregistré. */
+const GH_API = 'https://api.github.com';
+const CLE_GH = 'bp-vendeur';
+const ITERATIONS = 310000;
+function depotsParDefaut() {
+  const h = location.hostname.toLowerCase();
+  const m = h.match(/^([a-z0-9-]+)\.github\.io$/);
+  return { proprio: m ? m[1] : '', depot: m ? h : '', prive: 'blackphantom-gestion' };
+}
+function ghConfig() {
+  try { const c = JSON.parse(lire(CLE_GH) || 'null'); return c && c.v === 1 && c.ct && c.proprio && c.depot ? c : null; } catch (e) { return null; }
+}
+const octets = t => new TextEncoder().encode(t);
+function versB64(u8) {
+  let s = '';
+  for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+function depuisB64(b) {
+  const s = atob(String(b).replace(/\s/g, ''));
+  const u = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i);
+  return u;
+}
+const texteB64 = t => versB64(octets(t));
+const b64Texte = b => new TextDecoder().decode(depuisB64(b));
+async function cleDe(mdp, sel, iterations) {
+  const base = await crypto.subtle.importKey('raw', octets(mdp), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt: sel, iterations, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function chiffrer(jeton, mdp) {
+  const sel = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await cleDe(mdp, sel, ITERATIONS), octets(jeton)));
+  return { sel: versB64(sel), iv: versB64(iv), iter: ITERATIONS, ct: versB64(ct) };
+}
+async function dechiffrer(c, mdp) {
+  const k = await cleDe(mdp, depuisB64(c.sel), c.iter || ITERATIONS);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: depuisB64(c.iv) }, k, depuisB64(c.ct)));
+}
+
+/* API GitHub : les erreurs remontent sous la forme { statut, limite } */
+async function gh(methode, chemin, corps, accept) {
+  let r;
+  try {
+    r = await fetch(GH_API + chemin, {
+      method: methode, cache: 'no-store',
+      headers: Object.assign({ Accept: accept || 'application/vnd.github+json', Authorization: 'Bearer ' + S.gh.jeton }, corps ? { 'Content-Type': 'application/json' } : {}),
+      body: corps ? JSON.stringify(corps) : undefined
+    });
+  } catch (e) { throw { statut: 0 }; }
+  if (!r.ok) throw { statut: r.status, limite: r.headers.get('x-ratelimit-remaining') === '0' };
+  return accept ? r.text() : r.json().catch(() => null);
+}
+const enc = encodeURIComponent;
+const cheminDepot = depot => `/repos/${enc(S.gh.proprio)}/${enc(depot)}`;
+const cheminFichier = (depot, f) => cheminDepot(depot) + '/contents/' + f.split('/').map(enc).join('/');
+async function lireFichier(depot, f, sansTexte) {
+  let d;
+  try { d = await gh('GET', cheminFichier(depot, f)); }
+  catch (e) { if (e.statut === 404) return null; throw e; }
+  if (!d || Array.isArray(d) || !d.sha) throw { statut: -1 };
+  if (sansTexte) return { sha: d.sha, texte: null };
+  /* au-delà de 1 Mo, l'API ne renvoie pas le contenu : on le demande brut */
+  const texte = d.encoding === 'base64' && d.content ? b64Texte(d.content) : await gh('GET', cheminFichier(depot, f), null, 'application/vnd.github.raw+json');
+  return { sha: d.sha, texte };
+}
+async function ecrireFichier(depot, f, contenuB64, sha, message) {
+  const d = await gh('PUT', cheminFichier(depot, f), Object.assign({ message, content: contenuB64 }, sha ? { sha } : {}));
+  if (!d || !d.content || !d.content.sha) throw { statut: -1 };
+  return d.content.sha;
+}
+async function supprimerFichier(depot, f, sha, message) { await gh('DELETE', cheminFichier(depot, f), { message, sha }); }
+function messageGh(e, depot) {
+  const s = e && e.statut;
+  if (s === 0) return 'Pas de connexion à GitHub. Vérifie ton réseau, puis réessaie.';
+  if (s === 401) return "Ton jeton GitHub n'est plus valide (expiré ou supprimé). Crée-en un nouveau sur GitHub, puis reconnecte-toi avec « Nouveau jeton ».";
+  if (s === 403 && e.limite) return 'GitHub limite les requêtes pour le moment. Réessaie dans quelques minutes.';
+  if (s === 403) return `Ton jeton n'a pas le droit de modifier ${depot || 'ce dépôt'}. Dans ses réglages GitHub, coche ce dépôt et mets « Contents » sur « Read and write ».`;
+  if (s === 404) return `Le dépôt ${depot || ''} est introuvable avec ce jeton. Vérifie qu'il existe et qu'il est coché dans le jeton.`;
+  if (s === 409 || s === 422) return 'Tes données ont été modifiées entre-temps, depuis un autre appareil ou un autre onglet. Recharge la page, puis refais ta dernière action.';
+  return "GitHub n'a pas répondu comme prévu. Réessaie dans un instant.";
+}
+function messageDb() {
+  if (S.hote !== 'gh') return "Le journal des ventes n'est pas accessible depuis cette vue. Ouvre la carte depuis ton compte Claude pour le consulter.";
+  const p = S.gh ? S.gh.prive : 'blackphantom-gestion';
+  if (S.dbEtat === 'sans-depot') return `Tes ventes et tes coûts sont enregistrés dans ton dépôt privé « ${p} », introuvable avec ton jeton. Crée-le sur GitHub en « Private », coche-le dans les réglages de ton jeton (Repository access), puis recharge la page.`;
+  if (S.dbEtat === 'public') return `Le dépôt « ${p} » est public : tout le monde pourrait y lire tes ventes. Rends-le privé sur GitHub (Settings, puis Change visibility), puis recharge la page.`;
+  return S.dbErreur || "Tes ventes n'ont pas pu être chargées. Recharge la page.";
+}
+
+/* connexion */
+function ouvrirConnexion(nouveau) {
+  if (S.vendeur) { S.onglet = 'stock'; rendre(); window.scrollTo(0, 0); return; }
+  const tete = `<div class="fen-tete"><h2>Espace vendeur</h2><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>`;
+  if (!(window.crypto && crypto.subtle && window.TextEncoder)) {
+    ouvrir(tete + '<p class="aide">Ce navigateur ne permet pas de te connecter en sécurité. Ouvre le site dans Safari ou Chrome, à son adresse en https.</p>', 'edition connexion');
+    return;
+  }
+  const c = nouveau ? null : ghConfig();
+  const ident = `<input type="text" class="vh" autocomplete="username" value="${esc(ST.boutique.nom)}" tabindex="-1" aria-hidden="true" readonly>`;
+  if (c) {
+    ouvrir(tete + `<form id="gh-form" class="connexion" data-mode="entrer" novalidate>${ident}
+      <div class="champ"><label for="gh-mdp">Mot de passe admin</label><input id="gh-mdp" type="password" autocomplete="current-password" enterkeyhint="go"></div>
+      <p id="gh-err" class="err" role="alert"></p>
+      <div class="actions"><button type="submit" class="btn plein">Entrer</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
+      <button type="button" class="lien" data-act="gh-nouveau">Mot de passe oublié ou nouveau jeton</button>
+    </form>`, 'edition connexion');
+  } else {
+    const d = Object.assign(depotsParDefaut(), nouveau ? (ghConfig() || {}) : {});
+    ouvrir(tete + `<form id="gh-form" class="connexion" data-mode="nouveau" novalidate>${ident}
+      <p class="aide">Première connexion sur cet appareil. Colle ton jeton GitHub et choisis ton mot de passe admin. Le jeton est chiffré avec ce mot de passe et reste sur cet appareil : il n'est jamais mis sur le site.</p>
+      <div class="champ"><label for="gh-jeton">Jeton GitHub</label><input id="gh-jeton" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…"></div>
+      <div class="champ"><label for="gh-mdp">Choisis ton mot de passe admin</label><input id="gh-mdp" type="password" autocomplete="new-password"><small>8 caractères minimum. Il te sera demandé à chaque connexion.</small></div>
+      <div class="champ"><label for="gh-mdp2">Confirme le mot de passe</label><input id="gh-mdp2" type="password" autocomplete="new-password" enterkeyhint="go"></div>
+      <details class="avance"${d.proprio && d.depot ? '' : ' open'}><summary>Dépôts GitHub</summary>
+        <div class="champs">
+          <div class="champ"><label for="gh-proprio">Compte GitHub</label><input id="gh-proprio" value="${esc(d.proprio)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+          <div class="champ"><label for="gh-depot">Dépôt du site</label><input id="gh-depot" value="${esc(d.depot)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+          <div class="champ"><label for="gh-prive">Dépôt privé (ventes et coûts)</label><input id="gh-prive" value="${esc(d.prive)}" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        </div>
+      </details>
+      <p id="gh-err" class="err" role="alert"></p>
+      <div class="actions"><button type="submit" class="btn plein">Se connecter</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
+    </form>`, 'edition connexion');
+  }
+  const champ = document.getElementById(c ? 'gh-mdp' : 'gh-jeton');
+  if (champ) setTimeout(() => { try { champ.focus(); } catch (e) {} }, 60);
+}
+async function verifierJeton(jeton, conf) {
+  const avant = S.gh;
+  S.gh = Object.assign({ jeton }, conf);
+  try {
+    try { await gh('GET', '/user'); }
+    catch (e) { if (e.statut === 401) throw { texte: "Ce jeton n'est pas valide. Recopie-le en entier depuis GitHub (il commence par github_pat_)." }; throw e; }
+    try { await gh('GET', cheminDepot(conf.depot)); }
+    catch (e) { if (e.statut === 404) throw { texte: `Le dépôt ${conf.proprio}/${conf.depot} est introuvable. Vérifie les noms dans « Dépôts GitHub ».` }; throw e; }
+    /* .nojekyll accélère la mise en ligne, et sa création vérifie que le jeton peut écrire */
+    if (!(await lireFichier(conf.depot, '.nojekyll', true))) {
+      try { await ecrireFichier(conf.depot, '.nojekyll', texteB64('\n'), null, 'Réglage du site'); }
+      catch (e) { if (e.statut === 403 || e.statut === 404) throw { texte: `Ce jeton ne peut pas modifier ${conf.depot}. Dans ses réglages GitHub, coche ce dépôt et mets « Contents » sur « Read and write ».` }; throw e; }
+    }
+  } finally { S.gh = avant; }
+}
+async function validerConnexion() {
+  const f = document.getElementById('gh-form');
+  if (!f || f.dataset.occupe) return;
+  const err = document.getElementById('gh-err');
+  const btn = f.querySelector('[type="submit"]');
+  const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const occupe = (oui, txt) => { if (oui) f.dataset.occupe = '1'; else delete f.dataset.occupe; btn.disabled = oui; btn.textContent = txt; };
+  err.textContent = '';
+  const mdp = document.getElementById('gh-mdp').value;
+  if (f.dataset.mode === 'entrer') {
+    const c = ghConfig();
+    if (!c) { ouvrirConnexion(true); return; }
+    if (!mdp) { err.textContent = 'Entre ton mot de passe.'; return; }
+    occupe(true, 'Vérification…');
+    let jeton;
+    try { jeton = await dechiffrer(c, mdp); }
+    catch (e) { occupe(false, 'Entrer'); err.textContent = 'Mot de passe incorrect.'; const m = document.getElementById('gh-mdp'); m.value = ''; m.focus(); return; }
+    S.gh = { jeton, proprio: c.proprio, depot: c.depot, prive: c.prive };
+    entrerVendeur();
+    return;
+  }
+  const jeton = val('gh-jeton').replace(/\s/g, '');
+  const conf = { proprio: val('gh-proprio').replace(/^@/, ''), depot: val('gh-depot'), prive: val('gh-prive') || 'blackphantom-gestion' };
+  if (!jeton) { err.textContent = 'Colle ton jeton GitHub.'; return; }
+  if (!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(jeton)) { err.textContent = 'Ce texte ne ressemble pas à un jeton GitHub : il commence par github_pat_. Recopie-le en entier.'; return; }
+  if (mdp.length < 8) { err.textContent = "Choisis un mot de passe d'au moins 8 caractères."; return; }
+  if (mdp !== document.getElementById('gh-mdp2').value) { err.textContent = 'Les deux mots de passe ne sont pas identiques.'; return; }
+  if (!conf.proprio || !conf.depot) { f.querySelector('details').open = true; err.textContent = 'Indique ton compte GitHub et le dépôt du site.'; return; }
+  occupe(true, 'Vérification…');
+  try { await verifierJeton(jeton, conf); }
+  catch (e) { occupe(false, 'Se connecter'); err.textContent = e.texte || messageGh(e, conf.depot); return; }
+  try { ecrire(CLE_GH, JSON.stringify(Object.assign({ v: 1 }, conf, await chiffrer(jeton, mdp)))); } catch (e) {}
+  S.gh = Object.assign({ jeton }, conf);
+  entrerVendeur();
+  if (!ghConfig()) toast("Ce navigateur n'a pas pu garder ton jeton : il faudra le recoller à la prochaine connexion.");
+}
+function entrerVendeur() {
+  Object.assign(S, { hote: 'gh', vendeur: true, ghEtat: 'charge', ghErreur: '', db: null, dbEtat: 'charge', dbErreur: '', ventes: [], couts: null, modifs: 0 });
+  const o = lire('bp-onglet');
+  S.onglet = o && ONGLETS.some(x => x[0] === o) && o !== 'boutique' ? o : 'stock';
+  fermer();
+  rendre();
+  window.scrollTo(0, 0);
+  chargerGh();
+}
+function quitterVendeur() {
+  if (S.modifs) { toast('Publie ou annule tes modifications avant de quitter.'); return; }
+  Object.assign(S, { hote: '', vendeur: false, gh: null, ghEtat: '', db: null, dbEtat: 'attente', ventes: [], couts: null, confirmVente: null });
+  if (location.hash === '#vendeur') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  rendre();
+  window.scrollTo(0, 0);
+  toast('Tu as quitté l\'espace vendeur.');
+}
+function panneauChargement() {
+  if (S.ghEtat === 'ancien') return `<section class="panneau panneau-attente"><h2>Nouvelle version du site</h2><p class="aide">Une version plus récente de ton site est en ligne. Recharge la page pour continuer. Si ce message revient, attends deux minutes : GitHub met un peu de temps à diffuser la mise à jour.</p><div class="actions"><button type="button" class="btn plein" data-act="gh-recharger">Recharger</button></div></section>`;
+  if (S.ghEtat === 'erreur') return `<section class="panneau panneau-attente"><h2>Connexion à GitHub</h2><p class="alerte">${esc(S.ghErreur)}</p><div class="actions"><button type="button" class="btn plein" data-act="gh-reessayer">Réessayer</button><button type="button" class="btn discret" data-act="gh-changer">Nouveau jeton</button></div></section>`;
+  return '<section class="panneau panneau-attente"><p class="aide">Chargement de ta carte depuis GitHub…</p></section>';
+}
+const trierVentes = () => S.ventes.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || (b.creeLe || 0) - (a.creeLe || 0));
+async function chargerGh() {
+  const g = S.gh;
+  S.ghEtat = 'charge'; S.dbEtat = 'charge';
+  /* la carte publiée, lue sur GitHub plutôt que dans la page (qui peut venir du cache) */
+  try {
+    const f = await lireFichier(g.depot, 'index.html');
+    if (S.gh !== g) return;
+    if (!f) throw { statut: 404 };
+    const doc = new DOMParser().parseFromString(f.texte, 'text/html');
+    const data = doc.getElementById('bp-data'), code = doc.getElementById('bp-code');
+    if (!data || !code) throw { texte: "Le fichier index.html de ton site n'est pas une carte BlackPhantom. Remets en ligne le fichier que je t'ai donné." };
+    S.gh.shaIndex = f.sha;
+    if (code.textContent !== document.getElementById('bp-code').textContent) S.ghEtat = 'ancien';
+    else {
+      ST = normaliser(JSON.parse(data.textContent));
+      BASE = JSON.stringify(ST);
+      S.modifs = 0;
+      S.ghEtat = 'pret';
+    }
+  } catch (e) {
+    if (S.gh !== g) return;
+    S.ghEtat = 'erreur';
+    S.ghErreur = e.texte || messageGh(e, g.depot);
+  }
+  rendre();
+  if (S.ghEtat !== 'pret') return;
+  /* ventes et coûts, dans le dépôt privé */
+  try {
+    const r = await gh('GET', cheminDepot(g.prive));
+    if (S.gh !== g) return;
+    if (!r || r.private !== true) { S.dbEtat = 'public'; }
+    else {
+      const [v, c] = await Promise.all([lireFichier(g.prive, 'ventes.json'), lireFichier(g.prive, 'couts.json')]);
+      if (S.gh !== g) return;
+      const lv = v ? JSON.parse(v.texte || '[]') : [];
+      const lc = c ? JSON.parse(c.texte || '{}') : {};
+      S.gh.shaVentes = v ? v.sha : null;
+      S.gh.shaCouts = c ? c.sha : null;
+      S.ventes = Array.isArray(lv) ? lv.filter(x => x && x.id) : [];
+      trierVentes();
+      S.couts = Object.assign({ fiole: null, parfums: {} }, lc && typeof lc === 'object' ? lc : {});
+      S.db = 'gh'; S.dbEtat = 'pret';
+    }
+  } catch (e) {
+    if (S.gh !== g) return;
+    S.dbEtat = e && e.statut === 404 ? 'sans-depot' : 'erreur';
+    S.dbErreur = e instanceof SyntaxError ? 'Le fichier de tes ventes est illisible. Dis-le-moi dans la conversation, je le répare.' : messageGh(e, g.prive);
+  }
+  majPanneauDb();
+}
+
+/* publication : photos nouvelles dans photos/, puis index.html */
+async function publierGh(msgOk) {
+  if (S.publication) return false;
+  if (S.ghEtat !== 'pret') { toast(S.ghEtat === 'ancien' ? 'Recharge la page avant de publier.' : 'Ta carte est encore en cours de chargement.'); return false; }
+  S.publication = true; rendreConsole();
+  const avant = JSON.parse(BASE);
+  try {
+    for (const p of ST.parfums) {
+      const m = /^data:image\/(jpeg|png|webp);base64,/.exec(p.photo || '');
+      if (!m) continue;
+      const chemin = `photos/${p.id}-${Date.now().toString(36)}.${m[1] === 'jpeg' ? 'jpg' : m[1]}`;
+      await ecrireFichier(S.gh.depot, chemin, p.photo.slice(m[0].length), null, `Photo de ${p.nom}`);
+      S.apercus[chemin] = p.photo;
+      p.photo = chemin;
+    }
+    S.gh.shaIndex = await ecrireFichier(S.gh.depot, 'index.html', texteB64(construireVitrine()), S.gh.shaIndex, 'Mise à jour de la carte');
+    BASE = JSON.stringify(ST);
+    S.modifs = 0;
+    await retirerVieillesPhotos(avant);
+    toast((msgOk || 'Carte publiée.') + ' Ton site sera à jour d\'ici une à deux minutes.');
+    return true;
+  } catch (e) {
+    toast(messageGh(e, S.gh.depot));
+    return false;
+  } finally {
+    S.publication = false; rendreConsole();
+  }
+}
+async function retirerVieillesPhotos(avant) {
+  const utilisees = new Set(ST.parfums.map(p => p.photo));
+  const vieilles = [...new Set((avant.parfums || []).map(p => p.photo))].filter(x => /^photos\/[\w.-]+$/.test(x || '') && !utilisees.has(x));
+  for (const f of vieilles) {
+    try { const r = await lireFichier(S.gh.depot, f, true); if (r) await supprimerFichier(S.gh.depot, f, r.sha, 'Ancienne photo retirée'); } catch (e) {}
+  }
+}
+
+/* ventes sur le site */
+async function ecrireVentes(liste, message) {
+  S.gh.shaVentes = await ecrireFichier(S.gh.prive, 'ventes.json', texteB64(JSON.stringify(liste, null, 1)), S.gh.shaVentes, message);
+  S.ventes = liste;
+  trierVentes();
+}
+async function venteGh(vente, p, suivi, btn, err) {
+  const v = Object.assign({ id: 'v' + vente.creeLe.toString(36) + Math.random().toString(36).slice(2, 6) }, vente);
+  try { await ecrireVentes([v, ...S.ventes], `Vente : ${p.nom}, ${v.taille} ml`); }
+  catch (e) { err.textContent = messageGh(e, S.gh.prive); btn.disabled = false; return; }
+  appliquerVente(v.id, p, v.ml, suivi, v.creeLe);
+  S.modifs++;
+  S.prixManuel = false;
+  rendre();
+  const ok = await publier(suivi ? `Vente enregistrée. Il reste ${ml(p.stock)} de ${p.nom}.` : 'Vente enregistrée.');
+  rendreVentesDyn();
+  if (!ok) toast('Vente enregistrée dans le journal. Touche « Publier » pour mettre le stock de la carte à jour.');
+}
+async function supprimerVenteGh(v) {
+  const rendre_ = estDeduite(v) && v.stockSuivi;
+  try { await ecrireVentes(S.ventes.filter(x => x.id !== v.id), `Vente retirée : ${v.nom}`); }
+  catch (e) { toast(messageGh(e, S.gh.prive)); rendreVentesDyn(); return; }
+  const p = trouver(v.parfumId);
+  if (rendre_ && p && p.stock != null) {
+    p.stock = arrondi(p.stock + (v.ml || 0));
+    S.modifs++;
+    rendreVentesDyn();
+    await publier(`Vente supprimée. ${ml(v.ml)} remis en stock.`);
+  } else toast('Vente supprimée.');
+  rendreVentesDyn();
 }
 
 /* ---------- événements ---------- */
@@ -1781,7 +2147,7 @@ const actions = {
   fermer: () => fermer(),
   onglet: el => { S.onglet = el.dataset.o; ecrire('bp-onglet', S.onglet); S.confirmVente = null; S.prixManuel = false; rendre(); window.scrollTo(0, 0); },
   publier: () => publier('Carte publiée.'),
-  'annuler-modifs': () => { ST = normaliser(JSON.parse(SOURCE)); S.modifs = 0; rendre(); toast('Modifications annulées.'); },
+  'annuler-modifs': () => { ST = normaliser(JSON.parse(BASE)); S.modifs = 0; rendre(); toast('Modifications annulées.'); },
   photo: el => ouvrirPhoto(el.dataset.id),
   'photo-ok': el => { const p = trouver(el.dataset.id); if (!p || !S.photoTemp) return; p.photo = S.photoTemp; S.photoTemp = null; fermer(); modifie(); rendre(); toast('Photo ajoutée. Publie pour la montrer à tes clients.'); },
   'photo-retirer': el => { const p = trouver(el.dataset.id); if (!p) return; p.photo = ''; fermer(); modifie(); rendre(); },
@@ -1817,7 +2183,13 @@ const actions = {
   'suppr-vente': el => { S.confirmVente = el.dataset.id; rendreVentesDyn(); },
   'suppr-vente-non': () => { S.confirmVente = null; rendreVentesDyn(); },
   'suppr-vente-ok': el => supprimerVente(el.dataset.id),
-  'couts-ok': () => enregistrerCouts()
+  'couts-ok': () => enregistrerCouts(),
+  'vendeur-entree': () => ouvrirConnexion(false),
+  'gh-nouveau': () => ouvrirConnexion(true),
+  deconnexion: () => quitterVendeur(),
+  'gh-reessayer': () => { rendre(); chargerGh(); },
+  'gh-changer': () => { S.modifs = 0; quitterVendeur(); ouvrirConnexion(true); },
+  'gh-recharger': () => { location.replace(location.pathname + '?v=' + Date.now() + '#vendeur'); }
 };
 
 document.addEventListener('click', e => {
@@ -1841,6 +2213,12 @@ document.addEventListener('change', e => {
   if (t.id === 'ph-fichier' && t.files && t.files[0]) recevoirImage(t.files[0]);
   if (t.name === 'mode') { S.mode = t.value; const m = document.getElementById('msg'); if (m) m.textContent = messageSelection(); }
 });
+document.addEventListener('submit', e => {
+  if (e.target && e.target.id === 'gh-form') { e.preventDefault(); validerConnexion(); }
+});
+window.addEventListener('beforeunload', e => {
+  if (S.hote === 'gh' && (S.modifs || S.publication)) { e.preventDefault(); e.returnValue = ''; }
+});
 document.addEventListener('paste', e => {
   if (!document.getElementById('ph-fichier')) return;
   const f = [...((e.clipboardData && e.clipboardData.items) || [])].find(i => i.kind === 'file' && /^image\//.test(i.type));
@@ -1858,7 +2236,12 @@ function demarrer(donnees) {
   if (apres && apres.onglet) S.ongletApres = apres.onglet;
   rendre();
   if (apres && apres.msg) toast(apres.msg);
-  initVendeur();
+  if (surClaude()) { initVendeur(); return; }
+  /* site hébergé : l'adresse …/#vendeur ouvre directement la connexion */
+  if (/[?&]v=\d+/.test(location.search)) { try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {} }
+  const porte = () => { if (location.hash === '#vendeur' && !S.vendeur) ouvrirConnexion(false); };
+  window.addEventListener('hashchange', porte);
+  porte();
 }
 const hot = window.claude && window.claude.hot;
 if (hot && typeof hot.snapshot === 'function') { try { hot.snapshot(() => ({ panier: S.panier, q: S.q, filtre: S.filtre })); } catch (e) {} }
