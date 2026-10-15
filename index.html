@@ -739,6 +739,32 @@ details.bloc > * + *{margin-top:.9rem}
 .c-marges .pos{color:var(--ok)} .c-marges .neg{color:var(--epuise)} .c-marges .sous{color:var(--fumee)}
 .cout-l details summary{cursor:pointer;font-size:.84rem;color:var(--fumee)}
 .cout-l details .champs{margin-top:.5rem}
+
+/* ---------- flacons vides ---------- */
+details.flacons > summary{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem;list-style:none}
+details.flacons > summary::-webkit-details-marker{display:none}
+details.flacons > summary b{font:500 1.15rem/1.3 var(--f-titre)}
+details.flacons > summary::after{content:"+";margin-left:auto;color:var(--fumee);font-size:1.2rem}
+details.flacons[open] > summary::after{content:"−"}
+.fl-resume{display:flex;flex-wrap:wrap;gap:.35rem}
+.fl-pastille{padding:.1rem .55rem;border:1px solid var(--filet);border-radius:999px;font-size:.78rem;color:var(--argent);font-variant-numeric:tabular-nums}
+.fl-pastille.bas{border-color:rgba(227,185,111,.5);color:var(--bas)}
+.fl-liste{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.fl-l{display:grid;gap:.55rem;padding:.85rem 0;border-bottom:1px solid var(--filet)}
+.fl-tete{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.fl-taille{display:flex;align-items:center;gap:.5rem}
+.fl-taille .mini{width:auto;height:2.1rem;color:var(--argent)}
+.fl-taille b{font:500 1.15rem/1.2 var(--f-titre);color:var(--platine)}
+.fl-reste{font-size:.88rem;color:var(--argent);font-variant-numeric:tabular-nums}
+.fl-l.bas .fl-reste{color:var(--bas);font-weight:500}
+.fl-pied{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem 1rem;font-size:.86rem}
+.fl-pied small{color:var(--fumee)}
+.fl-carte{display:inline-flex;align-items:center;gap:.5rem;color:var(--argent);cursor:pointer}
+.fl-carte input{width:1.1rem;height:1.1rem;accent-color:var(--platine)}
+.fl-ajout{display:grid;gap:.8rem;padding:1rem;border:1px solid var(--argent);border-radius:var(--r-petit)}
+.fl-ajout h3{margin:0;font:500 1.1rem/1.3 var(--f-titre);color:var(--platine)}
+details.flacons > * + *{margin-top:.9rem}
+.fl-l .champs{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":25,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":10,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":40,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":200,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":60,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"30":60},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy."},"deduitJusqua":0,"acces":null}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -787,7 +813,8 @@ function normaliser(d) {
   d.boutique = Object.assign({ nom: 'BlackPhantom', titre: '', accroche: '', adresse: '', coffretPrix: 0, google: false, snapchat: '', instagram: '', whatsapp: '', lieuRemise: '', zoneLivraison: '', livraisonMin: 0, livraisonNb: 0, note: '', bientot: [], avis: [] }, d.boutique || {});
   if (!Array.isArray(d.boutique.bientot)) d.boutique.bientot = [];
   if (!Array.isArray(d.boutique.avis)) d.boutique.avis = [];
-  d.tailles = Array.isArray(d.tailles) && d.tailles.length ? d.tailles : [10, 30, 50];
+  const tl = Array.isArray(d.tailles) ? [...new Set(d.tailles.map(Number).filter(x => x > 0 && x <= 500))].sort((a, b) => a - b) : [];
+  d.tailles = tl.length ? tl : [10, 30, 50];
   d.appliquees = Array.isArray(d.appliquees) ? d.appliquees : [];
   d.parfums = (d.parfums || []).map(p => {
     const q = Object.assign({
@@ -943,7 +970,17 @@ const FORMES = {
   50: { d: 33, h: 88, bague: [17, 8], cap: [22, 30] }
 };
 const JUS = { gourmand: ['#F1D9A6', '#C99442'], frais: ['#F0EBC0', '#C8C174'], floral: ['#F5DCD6', '#D9A39B'], boise: ['#E8BE84', '#A86C34'], '': ['#EFE0B6', '#C9A764'] };
-const forme = ml => FORMES[ml] || FORMES[ml <= 15 ? 10 : ml <= 40 ? 30 : 50];
+/* autres contenances : interpolées entre 10, 30 et 50 ml, ou mises à l'échelle (racine cubique du volume) au-delà */
+function forme(ml) {
+  if (FORMES[ml]) return FORMES[ml];
+  const m = Number(ml) || 10;
+  const echelle = (f, k, kc) => ({ d: f.d * k, h: f.h * k, bague: [f.bague[0] * kc, f.bague[1] * kc], cap: [f.cap[0] * kc, f.cap[1] * kc] });
+  if (m < 10) { const k = Math.cbrt(m / 10); return echelle(FORMES[10], k, Math.sqrt(k)); }
+  if (m > 50) { const k = Math.cbrt(m / 50); return echelle(FORMES[50], k, Math.sqrt(k)); }
+  const [a, b] = m < 30 ? [10, 30] : [30, 50];
+  const t = (m - a) / (b - a), A = FORMES[a], B = FORMES[b], l = (x, y) => x + (y - x) * t;
+  return { d: l(A.d, B.d), h: l(A.h, B.h), bague: [l(A.bague[0], B.bague[0]), l(A.bague[1], B.bague[1])], cap: [l(A.cap[0], B.cap[0]), l(A.cap[1], B.cap[1])] };
+}
 let numFlacon = 0;
 const REFLET = 30;
 function rgba(hex, a) {
@@ -1142,7 +1179,7 @@ function scene(p, ml, nom) {
 const hauteurSvg = ml => { const f = forme(ml); return f.cap[1] + f.bague[1] + f.h + 7 + REFLET; };
 function trio(p, choisie) {
   const o = tailles(p);
-  const toutes = ST.tailles.filter(s => FORMES[s]);
+  const toutes = ST.tailles;
   const au = AURA[familleDe(p)] || ['#C9CCD2', '#8E9199'];
   const hmax = Math.max(...toutes.map(hauteurSvg));
   return `<span class="trio" style="--a:${rgba(au[0], .28)};--b:${rgba(au[1], .2)};--j:${rgba((JUS[familleDe(p)] || JUS[''])[0], .35)};--base:${((5 + REFLET) / hmax).toFixed(3)}">${toutes.map(s => {
@@ -1152,7 +1189,7 @@ function trio(p, choisie) {
 }
 /* petit flacon pour les boutons de taille */
 function miniFlacon(ml) {
-  const f = forme(ml), k = .34;
+  const f = forme(ml), k = Math.min(.34, 44 / (f.h + f.bague[1] + f.cap[1]), 22 / f.d);
   const W = 24, cx = 12, H = 46, y0 = H - (f.h + f.bague[1] + f.cap[1]) * k;
   return `<svg class="mini" viewBox="0 0 ${W} ${H}" aria-hidden="true" focusable="false"><rect x="${cx - f.cap[0] * k / 2}" y="${y0}" width="${f.cap[0] * k}" height="${f.cap[1] * k}" rx="1" fill="currentColor" opacity=".9"/><rect x="${cx - f.bague[0] * k / 2}" y="${y0 + f.cap[1] * k}" width="${f.bague[0] * k}" height="${f.bague[1] * k}" fill="currentColor" opacity=".55"/><rect x="${cx - f.d * k / 2}" y="${y0 + (f.cap[1] + f.bague[1]) * k}" width="${f.d * k}" height="${f.h * k}" rx="1.4" fill="none" stroke="currentColor" stroke-width=".9"/><rect x="${cx - f.d * k / 2 + 1.2}" y="${y0 + (f.cap[1] + f.bague[1] + f.h * .2) * k}" width="${f.d * k - 2.4}" height="${f.h * k * .74}" rx=".8" fill="currentColor" opacity=".35"/></svg>`;
 }
@@ -1271,7 +1308,7 @@ function blocService() {
 function blocFaq() {
   const B = ST.boutique;
   const q = [
-    ["C'est quoi un décant ?", "C'est un parfum transvasé depuis son flacon d'origine dans un petit vaporisateur. Tu as exactement le même jus, en 10, 30 ou 50 ml, pour une fraction du prix du flacon entier. Idéal pour découvrir un parfum, varier selon les saisons ou l'emporter partout."],
+    ["C'est quoi un décant ?", `C'est un parfum transvasé depuis son flacon d'origine dans un petit vaporisateur. Tu as exactement le même jus, en ${texteTailles()}, pour une fraction du prix du flacon entier. Idéal pour découvrir un parfum, varier selon les saisons ou l'emporter partout.`],
     ['Les parfums sont-ils authentiques ?', "Oui. Chaque décant est prélevé sur un flacon d'origine de la maison, jamais sur une imitation."],
     ['Combien de temps dure un 10 ml ?', "Un 10 ml donne en général une centaine de pulvérisations ou un peu plus. À trois ou quatre sprays par jour, ça fait plusieurs semaines."],
     ['Comment commander ?', `Ouvre la fiche d'un parfum, choisis ta taille et touche « Acheter » : ta commande est copiée, colle-la en message ${reseauxTexte()}. Pour plusieurs parfums, ajoute-les à ta sélection puis commande en une fois.`]
@@ -1353,7 +1390,8 @@ function demarrerAnnonce() {
   S.annonceStop = () => clearInterval(t);
 }
 function texteTailles() {
-  const t = ST.tailles;
+  const prop = ST.tailles.filter(s => ST.parfums.some(p => p.visible && !estMini(p) && prixDe(p, s) != null));
+  const t = prop.length ? prop : ST.tailles;
   return t.length > 1 ? t.slice(0, -1).join(', ') + ' ou ' + t[t.length - 1] + ' ml' : (t[0] || '') + ' ml';
 }
 /* trois flacons sous le titre : ceux mis en avant d'abord, puis une sélection qui change chaque jour */
@@ -1793,7 +1831,7 @@ function repli(texte) {
 
 /* ---------- coffret découverte ---------- */
 const COFFRET_NB = 3;
-const tailleCoffret = () => ST.tailles[0] || 10;
+const tailleCoffret = () => ST.tailles.includes(10) ? 10 : ST.tailles[0] || 10;
 const eligiblesCoffret = () => ST.parfums.filter(p => p.visible && prixDe(p, tailleCoffret()) != null && dispo(p, tailleCoffret()));
 function coffretLivrable() {
   const B = ST.boutique;
@@ -2039,6 +2077,7 @@ function rendre() {
   if (!document.querySelector('.page .panneau-attente')) {
     if (o === 'ventes') { majFormulaireVente(); rendreVentesDyn(); }
     if (o === 'couts') rendreCouts();
+    if (o === 'stock') rendreFlacons();
   }
 }
 
@@ -2102,6 +2141,7 @@ function panneauStock() {
   return `<section class="panneau">
     <h2>Stock et prix</h2>
     ${resumeStock()}
+    <div id="fl-zone"></div>
     ${blocSaisons()}
     <p class="aide">Indique les ml qu'il te reste : les tailles trop grandes se grisent toutes seules sur la carte, et le parfum passe en « Épuisé » quand il ne reste plus assez pour le plus petit format. Laisse vide pour ne pas suivre le stock. Un prix vide retire la taille de la carte.${sansPhoto ? ` ${sansPhoto} ${sansPhoto > 1 ? 'parfums n\'ont' : 'parfum n\'a'} pas encore de photo de flacon.` : ''}</p>
     <div class="actions"><button type="button" class="btn petit" data-act="nouveau">Ajouter un parfum</button><button type="button" class="btn petit discret" data-act="reglages">Réglages de la boutique</button></div>
@@ -2495,6 +2535,8 @@ function majPrixVente() {
   if (p.stock == null) info.textContent = `Stock non suivi pour ${p.nom}. Renseigne-le dans « Stock et prix » pour qu'il baisse à chaque vente.`;
   else if (p.stock >= besoin - 1e-9) info.textContent = `Il reste ${txt(p.stock)} de ${p.nom}. Après cette vente : ${txt(p.stock - besoin)}.`;
   else info.textContent = `Attention : il ne reste que ${txt(p.stock)} de ${p.nom}. La vente reste possible, le stock passera à ${txt(0)}.`;
+  const nf = estMini(p) ? null : resteFioles(s);
+  if (nf != null) info.textContent += nf >= q ? ` Flacons vides de ${s} ml : ${nf - q} après cette vente.` : ` Attention : ${texteFioles(nf, s)} vide${nf > 1 ? 's' : ''} en stock.`;
 }
 /* Sur Claude, la carte retient les identifiants des ventes déduites (retirés de la vitrine).
    Sur le site, elle retient l'heure de la dernière vente déduite : stock et repère partent dans le même fichier. */
@@ -2685,10 +2727,138 @@ function coutUnitaire(id, couts) {
   return mls > 0 ? euros / mls : null;
 }
 function fiole() { return S.couts && typeof S.couts.fiole === 'number' ? S.couts.fiole : 0; }
+/* ---------- flacons vides (privé, avec les coûts) ----------
+   Pour chaque contenance : un nombre compté à un moment donné (depuis) et le prix d'un flacon.
+   Le stock du moment = ce nombre, moins les décants de cette taille vendus depuis :
+   chaque vente retire un flacon, et une vente supprimée le rend. */
+const SEUIL_FIOLES = 5;
+const fiolesCouts = () => (S.couts && Array.isArray(S.couts.fioles) ? S.couts.fioles : []);
+const ficheFiole = ml => fiolesCouts().find(f => Number(f.ml) === Number(ml)) || null;
+function fiolesUtilisees(ml, depuis) {
+  return S.ventes.filter(v => v.format !== 'miniature' && Number(v.taille) === Number(ml) && (v.creeLe || 0) > (depuis || 0)).reduce((t, v) => t + (v.qte || 1), 0);
+}
+function resteFioles(ml) {
+  const f = ficheFiole(ml);
+  if (!f || f.stock == null) return null;
+  return Math.max(0, f.stock - fiolesUtilisees(ml, f.depuis));
+}
+/* prix d'un flacon vide de cette taille, sinon le prix par défaut de l'onglet Coûts */
+function coutFiole(ml) { const f = ficheFiole(ml); return f && f.prix > 0 ? f.prix : fiole(); }
+/* tailles connues : celles de la carte, celles des flacons suivis, et celles qui ont encore des prix enregistrés */
+const taillesFioles = () => [...new Set([...ST.tailles, ...fiolesCouts().map(f => Number(f.ml)),
+  ...ST.parfums.filter(p => !estMini(p)).flatMap(p => Object.keys(p.prix || {}).filter(k => p.prix[k] > 0).map(Number))])].filter(x => x > 0).sort((a, b) => a - b);
+const texteFioles = (n, ml) => n === 0 ? `plus aucun flacon de ${ml} ml` : `plus que ${n} ${n > 1 ? 'flacons' : 'flacon'} de ${ml} ml`;
+function rendreFlacons() {
+  const z = document.getElementById('fl-zone');
+  if (!z) return;
+  const tete = n => `<summary><b>Flacons vides</b>${n || ''}</summary>`;
+  if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) { z.innerHTML = `<details class="bloc flacons" open>${tete()}<p class="aide">${esc(messageDb())}</p></details>`; return; }
+  if (S.dbEtat !== 'pret' || !S.couts) { z.innerHTML = `<details class="bloc flacons" open>${tete()}<p class="aide">Chargement de ton stock de flacons…</p></details>`; return; }
+  const ts = taillesFioles();
+  const restes = ts.map(ml => [ml, resteFioles(ml)]);
+  const bas = restes.filter(([ml, n]) => n != null && n <= SEUIL_FIOLES && ST.tailles.includes(ml));
+  const resume = restes.filter(([, n]) => n != null).map(([ml, n]) => `<span class="fl-pastille${n <= SEUIL_FIOLES ? ' bas' : ''}">${ml} ml : ${n}</span>`).join('');
+  const valeur = restes.reduce((t, [ml, n]) => { const f = ficheFiole(ml); return t + (n != null && f && f.prix > 0 ? n * f.prix : 0); }, 0);
+  const A = S.flAjout;
+  z.innerHTML = typo(`<details class="bloc flacons"${S.flFerme ? '' : ' open'}>
+    ${tete(resume ? `<span class="fl-resume">${resume}</span>` : '')}
+    ${bas.length ? `<p class="alerte">Pense à racheter : ${bas.map(([ml, n]) => texteFioles(n, ml)).join(', ')}.</p>` : ''}
+    <p class="aide">Les flacons vides pour tes décants. Chaque vente enregistrée en retire un de la bonne taille, et une vente supprimée le rend. Laisse « En stock » vide pour ne pas suivre une taille.</p>
+    <ul class="fl-liste">${ts.map(ml => {
+      const f = ficheFiole(ml), n = resteFioles(ml), carte = ST.tailles.includes(ml);
+      return `<li class="fl-l${n != null && n <= SEUIL_FIOLES ? ' bas' : ''}" data-ml="${ml}">
+        <div class="fl-tete"><span class="fl-taille">${miniFlacon(ml)}<b>${ml} ml</b></span><span class="fl-reste">${n == null ? 'non suivi' : n === 0 ? 'épuisé' : `${n} en stock`}</span></div>
+        <div class="champs">
+          <div class="champ"><label for="fl-st-${ml}">En stock</label><input id="fl-st-${ml}" class="fl-stock" inputmode="numeric" autocomplete="off" value="${n == null ? '' : n}" placeholder="non suivi"></div>
+          <div class="champ"><label for="fl-px-${ml}">Prix d'un flacon (€)</label><input id="fl-px-${ml}" class="fl-prix" inputmode="decimal" autocomplete="off" value="${f && f.prix > 0 ? String(f.prix).replace('.', ',') : ''}" placeholder="${fiole() > 0 ? String(fiole()).replace('.', ',') : 'ex. 0,50'}"></div>
+        </div>
+        <div class="fl-pied"><label class="fl-carte"><input type="checkbox" class="fl-carte-c" data-ml="${ml}" ${carte ? 'checked' : ''}> Format proposé sur la carte</label>${n != null && f && f.prix > 0 ? `<small>Valeur : ${eur(n * f.prix)}</small>` : ''}</div>
+      </li>`;
+    }).join('')}</ul>
+    ${valeur > 0 ? `<p class="aide">Ton stock de flacons vides vaut ${eur(valeur)} au prix d'achat.</p>` : ''}
+    <p id="fl-err" class="err" role="alert"></p>
+    <div class="actions"><button type="button" class="btn plein" data-act="fl-ok">Enregistrer les flacons</button>${A ? '' : '<button type="button" class="btn" data-act="fl-ajout">J\'ai acheté des flacons</button>'}</div>
+    ${A ? `<div class="fl-ajout" id="fl-ajout">
+      <h3>Flacons achetés</h3>
+      <div class="champs">
+        <div class="champ"><label for="fa-taille">Taille</label><select id="fa-taille">${ts.map(ml => `<option value="${ml}"${A.ml === ml ? ' selected' : ''}>${ml} ml</option>`).join('')}<option value="autre"${A.ml === 'autre' ? ' selected' : ''}>Une autre taille…</option></select></div>
+        <div class="champ" id="fa-autre-z"${A.ml === 'autre' ? '' : ' hidden'}><label for="fa-autre">Contenance (ml)</label><input id="fa-autre" inputmode="numeric" autocomplete="off" placeholder="ex. 5"></div>
+        <div class="champ"><label for="fa-n">Nombre de flacons</label><input id="fa-n" inputmode="numeric" autocomplete="off" placeholder="ex. 50"></div>
+        <div class="champ"><label for="fa-prix">Prix payé au total (€)</label><input id="fa-prix" inputmode="decimal" autocomplete="off" placeholder="ex. 25"><small>Frais de port compris. Facultatif.</small></div>
+      </div>
+      <label class="coche-acces" id="fa-carte-z"${A.ml === 'autre' ? '' : ' hidden'}><input type="checkbox" id="fa-carte" checked><span><b>Proposer ce format sur la carte</b><small>Tu pourras ensuite donner le prix de chaque parfum dans cette taille, puis publier.</small></span></label>
+      <p class="aide">Les flacons s'ajoutent au stock. Si tu indiques le prix, il met à jour le prix d'un flacon et l'achat compte dans ton investissement (onglet Coûts).</p>
+      <p id="fa-err" class="err" role="alert"></p>
+      <div class="actions"><button type="button" class="btn plein" data-act="fa-ok">Ajouter au stock</button><button type="button" class="btn discret" data-act="fa-annuler">Annuler</button></div>
+    </div>` : ''}
+  </details>`);
+}
+/* enregistre les nombres et les prix saisis */
+async function enregistrerFioles() {
+  const err = document.getElementById('fl-err');
+  err.textContent = '';
+  if (!S.db || !S.couts) { err.textContent = "Ton stock de flacons n'est pas encore chargé."; return; }
+  const maintenant = Date.now(), fioles = [];
+  for (const li of document.querySelectorAll('#fl-zone .fl-l')) {
+    const ml = Number(li.dataset.ml), f = ficheFiole(ml);
+    const n = nombre(li.querySelector('.fl-stock').value), px = nombre(li.querySelector('.fl-prix').value);
+    if (Number.isNaN(n) || (n != null && (n < 0 || !Number.isInteger(n)))) { err.textContent = `Pour les ${ml} ml, indique un nombre de flacons entier, par exemple 40.`; return; }
+    if (Number.isNaN(px) || (px != null && px < 0)) { err.textContent = `Pour les ${ml} ml, indique le prix d'un flacon en euros, par exemple 0,50.`; return; }
+    const e = { ml, prix: px > 0 ? arrondi(px) : null, stock: null, depuis: null };
+    if (n != null) {
+      if (f && f.stock != null && n === resteFioles(ml)) { e.stock = f.stock; e.depuis = f.depuis || 0; }
+      else { e.stock = n; e.depuis = maintenant; }
+    }
+    if (e.stock != null || e.prix != null) fioles.push(e);
+  }
+  const b = document.querySelector('[data-act="fl-ok"]'); if (b) b.disabled = true;
+  try { await ecrireCouts(Object.assign({}, S.couts, { fioles })); toast('Stock de flacons enregistré.'); }
+  catch (e) { err.textContent = S.hote === 'gh' ? messageGh(e, S.gh.prive) : "L'enregistrement a échoué. Réessaie."; if (b) b.disabled = false; return; }
+  rendreFlacons();
+}
+/* « J'ai acheté des flacons » : ajoute au stock, met le prix à jour (moyenne), compte l'achat */
+async function ajouterFioles() {
+  const err = document.getElementById('fa-err');
+  err.textContent = '';
+  if (!S.db || !S.couts) { err.textContent = "Ton stock de flacons n'est pas encore chargé."; return; }
+  const v = id => document.getElementById(id).value.trim();
+  const ml = v('fa-taille') === 'autre' ? nombre(v('fa-autre')) : Number(v('fa-taille'));
+  const n = nombre(v('fa-n')), montant = nombre(v('fa-prix'));
+  if (!(ml > 0) || !Number.isInteger(ml) || ml > 200) { err.textContent = 'Indique la contenance en ml, un nombre entier, par exemple 5.'; return; }
+  if (!(n > 0) || !Number.isInteger(n)) { err.textContent = 'Indique combien de flacons tu as achetés, par exemple 50.'; return; }
+  if (Number.isNaN(montant) || (montant != null && montant < 0)) { err.textContent = 'Indique le prix payé en euros, par exemple 25.'; return; }
+  const f = ficheFiole(ml), reste = resteFioles(ml) || 0;
+  let prix = f && f.prix > 0 ? f.prix : null;
+  if (montant > 0) prix = arrondi(prix != null && reste > 0 ? (reste * prix + montant) / (reste + n) : montant / n);
+  const fioles = fiolesCouts().filter(x => Number(x.ml) !== ml).concat([{ ml, prix, stock: reste + n, depuis: Date.now() }]).sort((a, b) => a.ml - b.ml);
+  const lots = montant > 0 ? [{ nom: `Flacons vides ${ml} ml × ${n}`, date: aujourdhui(), montant: arrondi(montant), repartition: 'prix', parfums: [] }, ...lotsCouts()] : lotsCouts();
+  const b = document.querySelector('[data-act="fa-ok"]'); if (b) b.disabled = true;
+  try { await ecrireCouts(Object.assign({}, S.couts, { fioles, lots })); }
+  catch (e) { err.textContent = S.hote === 'gh' ? messageGh(e, S.gh.prive) : "L'enregistrement a échoué. Réessaie."; if (b) b.disabled = false; return; }
+  S.flAjout = null;
+  const carte = document.getElementById('fa-carte');
+  const nouveau = !ST.tailles.includes(ml) && carte && carte.checked && v('fa-taille') === 'autre';
+  if (nouveau) { ST.tailles = [...ST.tailles, ml].sort((a, b) => a - b); modifie(); const y = scrollY; rendre(); scrollTo(0, y); }
+  else rendreFlacons();
+  toast(`${n} ${n > 1 ? 'flacons' : 'flacon'} de ${ml} ml ${n > 1 ? 'ajoutés' : 'ajouté'}.${nouveau ? ' Indique les prix des parfums en ' + ml + ' ml, puis publie.' : ''}`);
+}
+/* proposer ou retirer un format sur la carte (public : il faut publier) */
+function basculerFormat(el) {
+  const ml = Number(el.dataset.ml);
+  if (el.checked) ST.tailles = [...new Set([...ST.tailles, ml])].sort((a, b) => a - b);
+  else {
+    if (ST.tailles.length <= 1) { el.checked = true; toast('Garde au moins un format sur la carte.'); return; }
+    ST.tailles = ST.tailles.filter(x => x !== ml);
+  }
+  modifie();
+  const y = scrollY; rendre(); scrollTo(0, y);
+  toast(el.checked ? `Le ${ml} ml est proposé : indique le prix de chaque parfum dans cette taille, puis publie.` : `Le ${ml} ml disparaîtra de la carte quand tu publieras. Les prix restent enregistrés si tu le reproposes.`);
+}
+
 function margeVente(v) {
   const cu = coutUnitaire(v.parfumId);
   if (cu == null) return null;
-  return v.prix - (cu * v.ml + (v.format === 'miniature' ? 0 : fiole() * (v.qte || 1)));
+  return v.prix - (cu * v.ml + (v.format === 'miniature' ? 0 : coutFiole(v.taille) * (v.qte || 1)));
 }
 function rendreVentesDyn() {
   const zone = document.getElementById('v-dyn');
@@ -2887,7 +3057,7 @@ function rendreCouts() {
       <div class="bloc-tete"><h3>Tes achats</h3>${S.lotEdit ? '' : '<button type="button" class="btn petit" data-act="lot-nouveau">Ajouter un achat</button>'}</div>
       ${lots.length ? `<ul class="lots">${lots.map(carteLot).join('')}</ul>` : '<p class="aide">Aucun achat enregistré pour l\'instant.</p>'}
     </div>
-    <div class="bloc"><div class="champs"><div class="champ"><label for="c-fiole">Coût d'une fiole vide (€)</label><input id="c-fiole" inputmode="decimal" autocomplete="off" value="${typeof C.fiole === 'number' ? C.fiole : ''}" placeholder="0"><small>Fiole, atomiseur, étiquette et emballage, par décant. Sert à la marge de chaque vente.</small></div></div></div>
+    <div class="bloc"><div class="champs"><div class="champ"><label for="c-fiole">Flacon vide, prix par défaut (€)</label><input id="c-fiole" inputmode="decimal" autocomplete="off" value="${typeof C.fiole === 'number' ? C.fiole : ''}" placeholder="0"><small>${fiolesCouts().some(f => f.prix > 0) ? `Prix par taille, réglés dans Stock et prix : ${fiolesCouts().filter(f => f.prix > 0).map(f => `${f.ml} ml à ${eur(f.prix)}`).join(', ')}. Ce prix par défaut sert pour les autres tailles.` : "Retiré de la marge de chaque décant vendu. Tu peux aussi donner un prix par taille dans Stock et prix, rubrique Flacons vides."}</small></div></div></div>
     <details class="bloc"${Object.keys(C.parfums || {}).length || lots.length ? ' open' : ''}><summary><b>Coût et marge par parfum</b></summary>
     <p class="aide">Le coût vient de tes achats ci-dessus, la marge tient compte de la fiole. Si tu connais le prix exact d'un flacon acheté seul, indique-le dans « Flacon acheté seul ».</p>
     <ul class="couts-liste">${ST.parfums.map(p => { const c = (C.parfums || {})[p.id] || {}; const mini = estMini(p); return `<li class="cout-l" data-id="${p.id}">
@@ -2913,19 +3083,19 @@ function lireCoutsFormulaire() {
     const m = nombre(tr.querySelector('.c-ml').value);
     if (a > 0) parfums[id] = { achat: arrondi(a), ml: m > 0 ? arrondi(m) : null };
   });
-  return { fiole: f != null && !Number.isNaN(f) && f >= 0 ? arrondi(f) : null, parfums, lots: lotsCouts() };
+  return Object.assign({}, S.couts, { fiole: f != null && !Number.isNaN(f) && f >= 0 ? arrondi(f) : null, parfums });
 }
 function majCalculsCouts() {
   if (!document.getElementById('c-fiole')) return;
   const L = lireCoutsFormulaire();
-  const fi = L.fiole || 0;
+  const fi = s => { const f = ficheFiole(s); return f && f.prix > 0 ? f.prix : (L.fiole || 0); };
   document.querySelectorAll('#couts-zone .cout-l').forEach(tr => {
     const p = trouver(tr.dataset.id);
     const cml = coutUnitaire(tr.dataset.id, L);
     tr.querySelector('.c-cml').textContent = cml == null ? 'coût inconnu' : estMini(p) ? eur(cml * p.contenance) + ' la pièce' : eur(cml) + ' le ml';
     const o = p ? tailles(p) : [];
     tr.querySelector('.c-marges').innerHTML = cml == null ? '<span class="sous">Ajoute-le à un achat, ou indique le prix d\'un flacon</span>'
-      : o.map(s => { const mg = prixDe(p, s) - (cml * s + (estMini(p) ? 0 : fi)); return `<span class="${mg < 0 ? 'neg' : 'pos'}">${esc(estMini(p) ? 'Marge à la vente' : s + ' ml')} : ${eur(mg, true)}</span>`; }).join('') || '<span class="sous">Aucun prix de vente</span>';
+      : o.map(s => { const mg = prixDe(p, s) - (cml * s + (estMini(p) ? 0 : fi(s))); return `<span class="${mg < 0 ? 'neg' : 'pos'}">${esc(estMini(p) ? 'Marge à la vente' : s + ' ml')} : ${eur(mg, true)}</span>`; }).join('') || '<span class="sous">Aucun prix de vente</span>';
   });
 }
 async function ecrireCouts(L) {
@@ -2944,7 +3114,7 @@ async function enregistrerCouts() {
 }
 /* enregistre (ou supprime) un achat, en gardant ce que tu as tapé dans le tableau */
 async function enregistrerLots(lots, msg) {
-  const base = S.coutsEdites && document.getElementById('c-fiole') ? lireCoutsFormulaire() : { fiole: S.couts.fiole, parfums: S.couts.parfums || {} };
+  const base = S.coutsEdites && document.getElementById('c-fiole') ? lireCoutsFormulaire() : Object.assign({}, S.couts);
   const L = Object.assign({}, base, { lots });
   try { await ecrireCouts(L); S.coutsEdites = false; S.lotEdit = null; S.lotSuppr = null; toast(msg); rendreCouts(); return true; }
   catch (e) { const z = document.getElementById('l-err') || document.getElementById('c-err'); if (z) z.textContent = S.hote === 'gh' ? messageGh(e, S.gh.prive) : "L'enregistrement a échoué. Réessaie."; return false; }
@@ -2997,6 +3167,7 @@ function majPanneauDb() {
   if (!S.vendeur) return;
   if (S.onglet === 'ventes') { rendreVentesDyn(); const b = document.getElementById('v-ok'); if (b && S.dbEtat === 'pret') b.disabled = false; }
   if (S.onglet === 'couts') rendreCouts();
+  if (S.onglet === 'stock') rendreFlacons();
 }
 
 /* ---------- espace vendeur sur le site hébergé (GitHub) ----------
@@ -3422,7 +3593,7 @@ const actions = {
     });
   },
   fermer: () => fermer(),
-  onglet: el => { S.onglet = el.dataset.o; ecrire('bp-onglet', S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; rendre(); window.scrollTo(0, 0); },
+  onglet: el => { S.onglet = el.dataset.o; ecrire('bp-onglet', S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
   publier: async () => {
     const ok = await publier('Carte publiée.');
     /* les boutons « Vendu » et les pastilles suivent les nouveaux prix et stocks */
@@ -3465,6 +3636,10 @@ const actions = {
   'suppr-vente-non': () => { S.confirmVente = null; rendreVentesDyn(); },
   'suppr-vente-ok': el => supprimerVente(el.dataset.id),
   'couts-ok': () => enregistrerCouts(),
+  'fl-ok': () => enregistrerFioles(),
+  'fl-ajout': () => { S.flAjout = { ml: ST.tailles[0] }; rendreFlacons(); const n = document.getElementById('fa-n'); const z = document.getElementById('fl-ajout'); if (z) defiler(z); if (n) n.focus({ preventScroll: true }); },
+  'fa-annuler': () => { S.flAjout = null; rendreFlacons(); },
+  'fa-ok': () => ajouterFioles(),
   'lot-nouveau': () => { S.lotEdit = { i: -1 }; S.lotSuppr = null; rendreCouts(); const f = document.getElementById('lot-form'); if (f) { defiler(f); const n = document.getElementById('l-nom'); if (n) n.focus({ preventScroll: true }); } },
   'lot-editer': el => { S.lotEdit = { i: Number(el.dataset.i) }; S.lotSuppr = null; rendreCouts(); const f = document.getElementById('lot-form'); if (f) defiler(f); },
   'lot-annuler': () => { S.lotEdit = null; rendreCouts(); },
@@ -3542,10 +3717,21 @@ document.addEventListener('change', e => {
   if (t.dataset && t.dataset.f && t.closest('.ligne-stock')) { champStock(t); return; }
   if (t.id === 'v-parfum') { S.prixManuel = false; majFormulaireVente(false); return; }
   if (t.id === 'v-taille') { S.prixManuel = false; majPrixVente(); return; }
+  if (t.classList && t.classList.contains('fl-carte-c')) { basculerFormat(t); return; }
+  if (t.id === 'fa-taille') {
+    const autre = t.value === 'autre';
+    if (S.flAjout) S.flAjout.ml = autre ? 'autre' : Number(t.value);
+    document.getElementById('fa-autre-z').hidden = !autre;
+    document.getElementById('fa-carte-z').hidden = !autre;
+    return;
+  }
   if (t.id === 'ph-fichier' && t.files && t.files[0]) recevoirImage(t.files[0]);
   if (t.name === 'mode') { S.mode = t.value; const m = document.getElementById('msg'); if (m) m.textContent = document.querySelector('#dlg.coffret-dlg') ? messageCoffret() : messageSelection(); }
 });
-document.addEventListener('toggle', e => { if (e.target && e.target.classList && e.target.classList.contains('saisons-verif')) S.svOuvert = e.target.open; }, true);
+document.addEventListener('toggle', e => {
+  if (e.target && e.target.classList && e.target.classList.contains('saisons-verif')) S.svOuvert = e.target.open;
+  if (e.target && e.target.classList && e.target.classList.contains('flacons')) S.flFerme = !e.target.open;
+}, true);
 document.addEventListener('submit', e => {
   if (e.target && e.target.id === 'gh-form') { e.preventDefault(); validerConnexion(); }
 });
