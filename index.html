@@ -250,14 +250,6 @@ dialog.produit .fen{max-height:100dvh;height:100dvh;padding:0;gap:0}
 
 .toast{position:fixed;left:50%;bottom:calc(5.6rem + env(safe-area-inset-bottom,0px));z-index:60;max-width:calc(100vw - 32px);padding:.7rem 1rem;border-radius:var(--r-petit);background:var(--platine);color:var(--nuit);font-size:.92rem;font-weight:500;transform:translateX(-50%)}
 
-/* console vendeur */
-.console{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--ecrin-haut);border-bottom:1px solid var(--filet)}
-.console-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;max-width:1180px;margin:0 auto;padding-block:.6rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.console-titre{margin:0;font:500 1rem var(--f-titre);color:var(--platine)}
-.onglets{display:flex;flex-wrap:nowrap;gap:.2rem;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.onglets::-webkit-scrollbar{display:none}
-.onglet{flex:none;padding:.35rem .8rem;border:1px solid transparent;border-radius:999px;background:transparent;color:var(--argent);font-size:.92rem;white-space:nowrap}
-.onglet[aria-current="page"]{border-color:var(--argent);color:var(--platine)}
 .sortie{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;margin-left:auto;padding:0;border:1px solid var(--filet);border-radius:50%;background:transparent;color:var(--argent)}
 .sortie svg{width:17px;height:17px}
 .connexion{display:grid;gap:1rem}
@@ -270,10 +262,6 @@ dialog.produit .fen{max-height:100dvh;height:100dvh;padding:0;gap:0}
 .avance summary{padding:.5rem 0;cursor:pointer;color:var(--argent);font-size:.92rem}
 .avance[open] summary{margin-bottom:.4rem}
 .avance .champs{padding-bottom:.8rem}
-@media (max-width:620px){.console-titre{display:none}.console-in{flex-wrap:nowrap;padding-block:.45rem}.onglets{flex:1 1 auto;min-width:0}.onglet{padding:.35rem .42rem;font-size:.88rem}.console-in{gap:.5rem}}
-.a-publier{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;max-width:1180px;margin:0 auto;padding-block:.55rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--filet);color:var(--bas);font-size:.92rem;font-weight:500}
-.a-publier .actions{flex:none;flex-wrap:nowrap}
-.a-publier > span:first-child{min-width:0}
 
 .panneau{display:grid;gap:1.4rem;padding-top:1.6rem}
 .panneau > h2{margin:0;font:500 1.8rem/1.1 var(--f-titre);color:var(--platine)}
@@ -343,7 +331,6 @@ table.tab{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numer
 
 /* en-tête fixe */
 .entete{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:var(--nuit);border-bottom:1px solid var(--filet)}
-.avec-console .entete{position:static}
 .entete-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:1180px;margin:0 auto;padding-block:.5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .marque{display:inline-flex;align-items:center;gap:.6rem;padding:0;border:0;background:none;color:var(--platine);font:500 1.1rem/1 var(--f-titre);letter-spacing:.02em}
 .marque img{width:34px;height:34px;border-radius:50%}
@@ -765,6 +752,172 @@ details.flacons[open] > summary::after{content:"−"}
 .fl-ajout h3{margin:0;font:500 1.1rem/1.3 var(--f-titre);color:var(--platine)}
 details.flacons > * + *{margin-top:.9rem}
 .fl-l .champs{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+
+/* ================= espace vendeur ================= */
+/* barre d'onglets en bas, comme une appli */
+.console{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(14,14,16,.9);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border-top:1px solid var(--filet);padding-bottom:env(safe-area-inset-bottom,0px)}
+.onglets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:620px;margin:0 auto;padding:0 max(6px,env(safe-area-inset-left,0px))}
+.onglet{position:relative;display:grid;justify-items:center;gap:.18rem;min-height:58px;padding:.5rem .1rem .45rem;border:0;background:none;color:var(--fumee);font-size:.7rem;font-weight:500;letter-spacing:.01em}
+.onglet .ic{display:block;width:24px;height:24px}
+.onglet .ic svg{display:block;width:100%;height:100%}
+.onglet[aria-current="page"]{color:var(--platine)}
+.onglet[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;border-radius:0 0 2px 2px;background:var(--platine)}
+.a-publier{display:flex;align-items:center;justify-content:space-between;gap:.6rem;max-width:620px;margin:0 auto;padding:.55rem max(14px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--filet);font-size:.88rem;color:var(--platine)}
+.a-publier .actions{flex:none;flex-wrap:nowrap;gap:.4rem}
+.ap-txt{display:flex;align-items:center;gap:.5rem;min-width:0}
+.ap-point{flex:none;width:8px;height:8px;border-radius:50%;background:var(--bas);box-shadow:0 0 0 4px rgba(227,185,111,.18)}
+.mode-vendeur .toast{bottom:calc(7.6rem + env(safe-area-inset-bottom,0px))}
+.mode-vendeur .barre{bottom:calc(58px + env(safe-area-inset-bottom,0px));padding-bottom:.7rem}
+.page.page-vendeur{max-width:760px;padding-bottom:calc(10rem + env(safe-area-inset-bottom,0px))}
+/* bouton « Vente » flottant */
+.fab{position:fixed;z-index:39;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.15rem .8rem .95rem;border:0;border-radius:999px;background:linear-gradient(180deg,#FFFFFF,#DDE0E5);color:#0B0B0C;font-weight:600;font-size:.95rem;box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.4) inset}
+.fab svg{width:20px;height:20px}
+body:has(.a-publier) .fab{bottom:calc(122px + env(safe-area-inset-bottom,0px))}
+body:has(.a-publier).mode-vendeur .toast{bottom:calc(10.6rem + env(safe-area-inset-bottom,0px))}
+
+/* en-tête des panneaux */
+.panneau{gap:1.2rem}
+.pv-tete{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.pv-sur{margin:0 0 .2rem;font-size:.72rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--fumee)}
+.pv-tete h2{margin:0;font:500 clamp(1.9rem,8vw,2.4rem)/1.05 var(--f-titre);color:var(--platine)}
+.pv-sous{margin:.3rem 0 0;font-size:.9rem;color:var(--argent)}
+.sortie{flex:none;display:inline-grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid var(--filet);border-radius:50%;background:rgba(17,17,19,.6);color:var(--argent)}
+.sortie svg{width:18px;height:18px}
+.btn svg{width:1.05em;height:1.05em;flex:none}
+
+/* raccourcis du tableau de bord */
+.raccourcis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+.raccourci{display:grid;justify-items:start;align-content:start;gap:.15rem;min-height:104px;padding:.95rem 1rem;border:1px solid var(--filet);border-radius:var(--r-ecrin);background:linear-gradient(160deg,rgba(32,32,37,.92),rgba(14,14,16,.92));color:var(--platine);text-align:left}
+.raccourci .ic{display:grid;place-items:center;width:38px;height:38px;margin-bottom:.45rem;border:1px solid var(--filet);border-radius:50%;color:var(--argent)}
+.raccourci .ic svg{width:20px;height:20px}
+.raccourci b{font-weight:500;font-size:1rem;line-height:1.25}
+.raccourci small{font-size:.8rem;color:var(--fumee)}
+.raccourci.principal{border-color:transparent;background:linear-gradient(170deg,#FFFFFF,#DADDE2);color:#0B0B0C}
+.raccourci.principal .ic{border-color:rgba(0,0,0,.15);color:#0B0B0C;background:rgba(255,255,255,.6)}
+.raccourci.principal small{color:#4A4D53}
+.raccourci:active{transform:scale(.98)}
+
+/* chiffres */
+.chiffres.mini{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.chiffres.mini .chiffre{background:var(--ecrin);padding:.8rem .9rem}
+.chiffres.mini .chiffre b{font-size:1.45rem}
+.chiffre b.pos{color:var(--ok)}
+.chiffre .progres-barre{margin-top:.4rem}
+.chiffre.attente{grid-column:1/-1}
+
+/* à faire */
+.taches{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.tache{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:.7rem;padding:.7rem 0;border-bottom:1px solid var(--filet);font-size:.92rem;color:var(--argent)}
+.tache:last-child{border-bottom:0}
+.tache .ic{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:var(--fumee)}
+.tache .ic svg{width:18px;height:18px}
+.tache.urgent .ic{color:var(--epuise);background:rgba(221,144,132,.12)}
+.tache.att .ic{color:var(--bas);background:rgba(227,185,111,.12)}
+.tache.urgent .txt{color:var(--platine)}
+.tout-ok{display:flex;align-items:center;gap:.6rem;margin:0;color:var(--ok)}
+.tout-ok .ic svg{width:22px;height:22px;display:block}
+/* dernières ventes */
+.dernieres{display:grid;margin:0;padding:0;list-style:none}
+.dernieres li{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--filet)}
+.dernieres li:last-child{border-bottom:0}
+.dernieres .plaque{width:42px;border-radius:6px}
+.dernieres b{display:block;font:500 1rem/1.2 var(--f-titre);color:var(--platine)}
+.dernieres small{font-size:.8rem;color:var(--fumee)}
+.d-prix{font-variant-numeric:tabular-nums;color:var(--platine);font-weight:500}
+
+/* stock : recherche, filtres, lignes repliables */
+.stock-outils{display:grid;gap:.7rem}
+.stock-outils .recherche-zone{margin:0}
+.puces{display:flex;gap:.45rem;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+.puces::-webkit-scrollbar{display:none}
+.puce{flex:none;display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .85rem;border:1px solid var(--filet);border-radius:999px;background:var(--ecrin);color:var(--argent);font-size:.88rem}
+.puce span{min-width:1.4em;padding:0 .35rem;border-radius:999px;background:var(--ecrin-haut);font-size:.76rem;text-align:center;color:var(--fumee)}
+.puce.att span{background:rgba(227,185,111,.18);color:var(--bas)}
+.puce[aria-pressed="true"]{border-color:var(--platine);background:var(--platine);color:var(--nuit)}
+.puce[aria-pressed="true"] span{background:rgba(0,0,0,.12);color:var(--nuit)}
+.stock-liste{gap:.55rem}
+.ligne-stock{display:block;padding:0;overflow:hidden}
+.ligne-stock > summary{list-style:none}
+.ligne-stock > summary::-webkit-details-marker{display:none}
+.ls-resume{display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:.8rem;padding:.7rem .85rem .7rem .7rem;cursor:pointer}
+.ls-resume .plaque{width:54px;border-radius:6px}
+.ls-txt{display:grid;gap:.05rem;min-width:0}
+.ls-txt b{font:500 1.08rem/1.2 var(--f-titre);color:var(--platine);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-txt b small{font:400 .72rem var(--f-texte);letter-spacing:.06em;text-transform:uppercase;color:var(--fumee)}
+.ls-maison{font-size:.78rem;color:var(--fumee)}
+.ls-prix{font-size:.82rem;color:var(--argent);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-prix.manque{color:var(--bas)}
+.ls-etat{justify-self:end;padding:.2rem .6rem;border-radius:999px;font-size:.76rem;font-weight:500;white-space:nowrap;border:1px solid currentColor}
+.ls-etat.ok{color:var(--ok)} .ls-etat.bas{color:var(--bas)} .ls-etat.epuise{color:var(--epuise)} .ls-etat.bientot{color:var(--platine)} .ls-etat.libre,.ls-etat.masque{color:var(--fumee)}
+.ligne-stock[open]{border-color:var(--argent)}
+.ligne-stock[open] > .ls-resume{border-bottom:1px solid var(--filet)}
+.ligne-stock > .corps{padding:.9rem}
+.ligne-stock.cache{opacity:1}
+.ligne-stock.cache .ls-resume .plaque{opacity:.45}
+.ligne-stock .champ select{font-size:.95rem}
+.ls-actions{gap:.45rem}
+.interrupteur{display:inline-flex;align-items:center;gap:.7rem;cursor:pointer;color:var(--argent);font-size:.92rem}
+.interrupteur input{position:absolute;opacity:0;width:1px;height:1px}
+.int-piste{position:relative;flex:none;width:46px;height:28px;border-radius:999px;background:var(--filet);transition:background .2s ease}
+.int-piste::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#8E9199;transition:transform .2s ease,background .2s ease}
+.interrupteur input:checked + .int-piste{background:var(--ok)}
+.interrupteur input:checked + .int-piste::after{transform:translateX(18px);background:#FFFFFF}
+.interrupteur input:focus-visible + .int-piste{outline:2px solid var(--platine);outline-offset:3px}
+.aide-pliee summary{cursor:pointer;color:var(--fumee);font-size:.88rem}
+.aide-pliee[open] summary{margin-bottom:.5rem}
+
+/* journal : suppression discrète */
+.suppr{display:inline-grid;place-items:center;width:34px;height:34px;margin-top:.2rem;padding:0;border:1px solid var(--filet);border-radius:50%;background:transparent;color:var(--fumee)}
+.suppr svg{width:16px;height:16px}
+
+/* feuille « Nouvelle vente » */
+dialog.vente-dlg .fen{gap:.95rem}
+.vs-modes{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border:1px solid var(--filet);border-radius:999px;background:var(--nuit)}
+.vs-mode{padding:.55rem .4rem;border:0;border-radius:999px;background:transparent;color:var(--argent);font-size:.9rem;font-weight:500}
+.vs-mode[aria-pressed="true"]{background:var(--platine);color:var(--nuit)}
+dialog.vente-dlg .recherche-zone{margin:0}
+.vs-grille{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem .55rem}
+.vs-p{display:grid;gap:.15rem;padding:0;border:0;background:none;color:inherit;text-align:center;min-width:0}
+.vs-p .plaque{border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.vs-p b{font:500 .9rem/1.15 var(--f-titre);color:var(--platine);overflow-wrap:anywhere}
+.vs-p small{font-size:.72rem;color:var(--fumee)}
+.vs-p.off{opacity:.5}
+.vs-p:active .plaque{transform:scale(.97)}
+.vs-produit{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:.85rem;padding:.6rem;border:1px solid var(--filet);border-radius:var(--r-ecrin);background:var(--nuit)}
+.vs-produit .plaque{width:64px;border-radius:8px}
+.vs-produit h3{margin:0;font:500 1.25rem/1.15 var(--f-titre);color:var(--platine)}
+.vs-produit .meta{margin:.15rem 0 0;font-size:.82rem}
+.vs-bloc{display:grid;gap:.4rem}
+.vs-bloc .lbl{font-size:.84rem;color:var(--fumee)}
+.vs-tailles{display:flex;flex-wrap:wrap;gap:.5rem}
+.vs-taille{display:grid;justify-items:start;gap:.05rem;min-width:6.4rem;padding:.65rem .9rem;border:1px solid var(--filet);border-radius:var(--r-petit);background:transparent;color:var(--argent);text-align:left}
+.vs-taille b{font-weight:500;color:var(--platine)}
+.vs-taille span{font-size:.84rem;font-variant-numeric:tabular-nums}
+.vs-taille[aria-pressed="true"]{border-color:var(--platine);background:var(--platine);color:var(--nuit)}
+.vs-taille[aria-pressed="true"] b{color:var(--nuit)}
+.vs-ligne{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.8rem;align-items:end}
+.pas{display:flex;align-items:center;gap:.35rem}
+.pas input{width:3.2rem;text-align:center;padding-inline:.2rem}
+.pas .rond{flex:none}
+#v-ok{font-size:1.05rem}
+
+/* finitions de l'espace vendeur */
+.toast{width:max-content;max-width:min(calc(100vw - 32px),28rem);text-align:center;box-shadow:0 12px 32px rgba(0,0,0,.45)}
+.journal li{grid-template-columns:minmax(0,1fr) auto auto;align-items:center}
+.journal .suppr{margin:0}
+.bilan .chiffres{grid-template-columns:repeat(2,minmax(0,1fr))}
+.bilan .chiffres .chiffre:last-child{grid-column:1/-1}
+.ls-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.ls-actions .btn{justify-content:center;width:100%}
+details.couts-parfums > summary{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.15rem .8rem;list-style:none}
+details.couts-parfums > summary::-webkit-details-marker{display:none}
+details.couts-parfums > summary b{font:500 1.15rem/1.3 var(--f-titre)}
+details.couts-parfums > summary small{grid-column:1;font-size:.82rem;color:var(--fumee)}
+details.couts-parfums > summary::after{content:"+";grid-column:2;grid-row:1/span 2;color:var(--fumee);font-size:1.2rem}
+details.couts-parfums[open] > summary::after{content:"−"}
+details.couts-parfums[open] > summary{margin-bottom:.6rem}
+.page-vendeur .chiffres:not(.mini){grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-vendeur .chiffres:not(.mini) > .chiffre:last-child:nth-child(odd){grid-column:1/-1}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":25,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50,"30":120},"stock":10,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":40,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60,"50":90},"stock":200,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":60,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"30":60},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":30,"30":60},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy."},"deduitJusqua":0,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -787,14 +940,33 @@ const S = {
   vendeur: false, onglet: 'boutique', modifs: 0, publication: false,
   db: null, dbEtat: 'attente', ventes: [], couts: null, coutsEdites: false,
   prixManuel: false, confirmVente: null, photoTemp: null, confirmSuppr: false,
-  hote: '', gh: null, ghEtat: '', ghErreur: '', dbErreur: '', apercus: {}
+  hote: '', gh: null, ghEtat: '', ghErreur: '', dbErreur: '', apercus: {},
+  ouverts: new Set(), filtreStock: 'tous', qStock: '', vs: null
 };
 /* Sur Claude, window.claude existe ; sur le site hébergé (GitHub Pages), non. */
 const surClaude = () => !!(window.claude && typeof window.claude.use === 'function');
 
 const SAISONS = [['printemps', 'Printemps', 'au printemps'], ['ete', 'Été', 'en été'], ['automne', 'Automne', 'en automne'], ['hiver', 'Hiver', 'en hiver']];
 const MOMENTS = [['jour', 'Jour'], ['soir', 'Soir']];
-const ONGLETS = [['boutique', 'Boutique'], ['stock', 'Stock et prix'], ['ventes', 'Ventes'], ['couts', 'Coûts']];
+const ONGLETS = [['accueil', 'Accueil'], ['stock', 'Stock'], ['ventes', 'Ventes'], ['couts', 'Coûts'], ['boutique', 'Mon site']];
+const CLE_ONGLET = 'bp-onglet2';
+const svgT = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICV = {
+  accueil: svgT('<path d="M3.5 10.5L12 4l8.5 6.5"/><path d="M5.5 9v10.5h13V9"/><path d="M10 19.5v-5h4v5"/>'),
+  stock: svgT('<rect x="7" y="9" width="10" height="11.5" rx="2.2"/><path d="M10 9V6.5h4V9M9.2 3.5h5.6v3H9.2z"/><path d="M9.8 14h4.4"/>'),
+  ventes: svgT('<path d="M4 20V11M9.3 20V6M14.6 20v-6.5M20 20V8.5"/>'),
+  couts: svgT('<ellipse cx="12" cy="6.5" rx="7" ry="2.8"/><path d="M5 6.5v5c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-5"/><path d="M5 11.5v5c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8v-5"/>'),
+  boutique: svgT('<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.4 5.3 3.4 8.5s-1 6.1-3.4 8.5c-2.4-2.4-3.4-5.3-3.4-8.5s1-6.1 3.4-8.5z"/>'),
+  plus: svgT('<path d="M12 5v14M5 12h14"/>'),
+  coller: svgT('<rect x="5.5" y="4.5" width="13" height="16" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="M8.5 10h7M8.5 13.5h7M8.5 17h4"/>'),
+  ajout: svgT('<rect x="7" y="9" width="10" height="11.5" rx="2.2"/><path d="M10 9V6.5h4V9"/><path d="M12 12.2v5M9.5 14.7h5"/>'),
+  sortie: svgT('<path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/>'),
+  alerte: svgT('<path d="M12 4l9 15.5H3z"/><path d="M12 10v4.2M12 17h.01"/>'),
+  ok: svgT('<circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.7 2.7L16.2 9.5"/>'),
+  corbeille: svgT('<path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/>'),
+  reglages: svgT('<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>'),
+  retour: svgT('<path d="M14.5 6L8.5 12l6 6"/>')
+};
 const COULEURS = {
   'sucré': '#D98FAE', 'miel': '#DBA640', 'vanillé': '#E8D5A4', 'lavande': '#A08FD4', 'tabac': '#93704E', 'agrumes': '#E4D65C',
   'aromatique': '#72A891', 'floral': '#E59DB8', 'fleur blanche': '#F0ECE1', 'poudré': '#D9C6CF', 'épicé chaud': '#C9603F',
@@ -1539,7 +1711,7 @@ function rendreGrille() {
    qui s'interrompent entre eux sur iPhone. */
 let defil = null;
 function hauteurFixe() {
-  const el = S.vendeur ? document.getElementById('console') : document.querySelector('.entete');
+  const el = document.querySelector('.entete');
   if (!el) return 0;
   return el.offsetHeight + (parseFloat(getComputedStyle(el).top) || 0);
 }
@@ -2045,12 +2217,12 @@ function fermer() {
 
 /* ---------- espace vendeur ---------- */
 function console_() {
-  return `<div class="console-in">
-      <p class="console-titre">Espace vendeur</p>
-      <nav class="onglets" aria-label="Espace vendeur">${ONGLETS.map(o => `<button type="button" class="onglet" data-act="onglet" data-o="${o[0]}" ${S.onglet === o[0] ? 'aria-current="page"' : ''}>${o[1]}</button>`).join('')}</nav>
-      ${S.hote === 'gh' ? '<button type="button" class="sortie" data-act="deconnexion" aria-label="Quitter l\'espace vendeur" title="Quitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5.5A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20H10"/><path d="M15 8l4 4-4 4M19 12H9"/></svg></button>' : ''}
-    </div>
-    ${S.modifs ? `<div class="a-publier"><span>${S.modifs} ${S.modifs > 1 ? 'modifications à publier' : 'modification à publier'}<span class="vh">. Tes clients voient encore l'ancienne carte.</span></span><span class="actions"><button type="button" class="btn petit discret" data-act="annuler-modifs" ${S.publication ? 'disabled' : ''}>Annuler</button><button type="button" class="btn petit plein" data-act="publier" ${S.publication ? 'disabled' : ''}>${S.publication ? 'Publication…' : 'Publier'}</button></span></div>` : ''}`;
+  const pub = S.modifs ? `<div class="a-publier" role="status"><span class="ap-txt"><span class="ap-point" aria-hidden="true"></span>${S.modifs} ${S.modifs > 1 ? 'modifications à publier' : 'modification à publier'}<span class="vh">. Tes clients voient encore l'ancienne carte.</span></span><span class="actions"><button type="button" class="btn petit discret" data-act="annuler-modifs" ${S.publication ? 'disabled' : ''}>Annuler</button><button type="button" class="btn petit plein" data-act="publier" ${S.publication ? 'disabled' : ''}>${S.publication ? 'Publication…' : 'Publier'}</button></span></div>` : '';
+  return `${pub}<nav class="onglets" aria-label="Espace vendeur">${ONGLETS.map(o => `<button type="button" class="onglet" data-act="onglet" data-o="${o[0]}" ${S.onglet === o[0] ? 'aria-current="page"' : ''}><span class="ic">${ICV[o[0]]}</span><span class="lb">${o[1]}</span></button>`).join('')}</nav>`;
+}
+/* en-tête des panneaux vendeur : titre, et la sortie */
+function teteVendeur(titre, sous) {
+  return `<div class="pv-tete"><div class="pv-titres"><p class="pv-sur">Espace vendeur</p><h2>${titre}</h2>${sous ? `<p class="pv-sous">${sous}</p>` : ''}</div>${S.hote === 'gh' ? `<button type="button" class="sortie" data-act="deconnexion" aria-label="Quitter l'espace vendeur" title="Quitter">${ICV.sortie}</button>` : ''}</div>`;
 }
 function rendreConsole() {
   const c = document.getElementById('console');
@@ -2065,64 +2237,209 @@ function rendre() {
   let contenu = '';
   if (S.vendeur && S.hote === 'gh' && S.ghEtat !== 'pret' && o !== 'boutique') contenu = panneauChargement();
   else if (o === 'boutique') contenu = vueBoutique();
+  else if (o === 'accueil') contenu = panneauAccueil();
   else if (o === 'stock') contenu = panneauStock();
   else if (o === 'ventes') contenu = panneauVentes();
   else if (o === 'couts') contenu = '<div id="couts-zone"></div>';
   $app.classList.toggle('avec-console', S.vendeur);
-  $app.innerHTML = typo((S.vendeur ? `<div id="console" class="console">${console_()}</div>` : '')
-    + (o === 'boutique' ? vueAnnonce() + vueEntete() + vueOuverture() : '')
-    + `<div class="page">${contenu}</div><div id="barre" class="barre" hidden></div>`);
+  document.body.classList.toggle('mode-vendeur', S.vendeur);
+  const fab = S.vendeur && ['accueil', 'stock', 'ventes'].includes(o) && !(S.hote === 'gh' && S.ghEtat !== 'pret')
+    ? `<button type="button" class="fab" data-act="vente-ouvrir" aria-label="Nouvelle vente">${ICV.plus}<span>Vente</span></button>` : '';
+  $app.innerHTML = typo((o === 'boutique' ? vueAnnonce() + vueEntete() + vueOuverture() : '')
+    + `<div class="page${S.vendeur && o !== 'boutique' ? ' page-vendeur' : ''}">${contenu}</div><div id="barre" class="barre" hidden></div>`
+    + (S.vendeur ? `${fab}<div id="console" class="console">${console_()}</div>` : ''));
   if (S.annonceStop) { S.annonceStop(); S.annonceStop = null; }
   if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); }
   if (!document.querySelector('.page .panneau-attente')) {
-    if (o === 'ventes') { majFormulaireVente(); rendreVentesDyn(); }
+    if (o === 'ventes') rendreVentesDyn();
     if (o === 'couts') rendreCouts();
-    if (o === 'stock') rendreFlacons();
+    if (o === 'stock') { rendreListeStock(); rendreFlacons(); }
+    if (o === 'accueil') rendreAccueil();
   }
 }
 
-/* stock et prix */
+/* ---------- tableau de bord ---------- */
+const dateLongue = () => { const t = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); return t.charAt(0).toUpperCase() + t.slice(1); };
+function blocSite() {
+  if (S.hote === 'gh') {
+    const url = (adresseSite() || location.origin) + '/';
+    return `<div class="bloc site-bloc">
+      <div class="bloc-tete"><h3>Ton site</h3><a class="btn petit" href="${esc(url)}" target="_blank" rel="noopener">Ouvrir</a></div>
+      <p class="aide">Tes clients voient ta carte sur <b>${esc(url.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</b>. « Publier » la met à jour en une à deux minutes. Tes ventes, tes clients et tes coûts n'y figurent jamais.</p>
+      <div class="actions"><button type="button" class="btn petit discret" data-act="partager-carte">${IC.partage}Partager le lien</button><button type="button" class="btn petit discret" data-act="reglages">${ICV.reglages}Réglages de la boutique</button></div>
+    </div>`;
+  }
+  return `<div class="bloc site-bloc">
+    <h3>Vitrine publique</h3>
+    <p class="aide">La carte de ta bio est une copie de celle-ci, hébergée sur GitHub. Après un changement de stock, de prix ou de photo, télécharge la nouvelle vitrine et remplace le fichier index.html sur GitHub. Elle ne contient ni tes ventes, ni tes clients, ni tes coûts.</p>
+    <div class="actions"><button type="button" class="btn petit plein" data-act="vitrine">Télécharger la vitrine</button><button type="button" class="btn petit discret" data-act="reglages">Réglages de la boutique</button></div>
+    <p id="vt-err" class="err" role="alert"></p>
+  </div>`;
+}
+function panneauAccueil() {
+  return `<section class="panneau accueil">
+    ${teteVendeur('Tableau de bord', esc(dateLongue()))}
+    <div class="raccourcis">
+      <button type="button" class="raccourci principal" data-act="vente-ouvrir"><span class="ic">${ICV.plus}</span><b>Nouvelle vente</b><small>Parfum, taille, c'est noté</small></button>
+      <button type="button" class="raccourci" data-act="vente-coller"><span class="ic">${ICV.coller}</span><b>Coller une commande</b><small>Le message de ton client</small></button>
+      <button type="button" class="raccourci" data-act="nouveau"><span class="ic">${ICV.ajout}</span><b>Ajouter un parfum</b><small>À la carte</small></button>
+      <button type="button" class="raccourci" data-act="partager-carte"><span class="ic">${IC.partage}</span><b>Partager ma carte</b><small>Story, message, bio</small></button>
+    </div>
+    <div id="acc-dyn"></div>
+    ${blocSite()}
+  </section>`;
+}
+const listeNoms = l => l.length <= 3 ? l.map(p => p.nom).join(', ') : l.slice(0, 2).map(p => p.nom).join(', ') + ` et ${l.length - 2} autres`;
+/* ce qui demande ton attention, du plus urgent au moins urgent */
+function taches() {
+  const t = [];
+  const vis = ST.parfums.filter(p => p.visible);
+  if (S.modifs) t.push({ niv: 'urgent', txt: `${S.modifs} ${S.modifs > 1 ? 'modifications pas encore publiées' : 'modification pas encore publiée'} : tes clients voient l'ancienne carte.`, act: 'publier', lbl: 'Publier' });
+  if (S.dbEtat === 'pret') { const nd = nonDeduites(); if (nd.length) t.push({ niv: 'urgent', txt: `${nd.length} ${nd.length > 1 ? 'ventes pas encore retirées' : 'vente pas encore retirée'} du stock de la carte.`, act: 'deduire', lbl: 'Retirer' }); }
+  const ep = vis.filter(p => etat(p) === 'epuise' && p.statut !== 'rupture');
+  if (ep.length) t.push({ niv: 'urgent', txt: `En rupture : ${listeNoms(ep)}.`, act: 'aller-vendeur', o: 'stock', f: 'surveiller', lbl: 'Voir' });
+  /* seulement les décants où il ne reste qu'un flacon à faire : les miniatures sont souvent des pièces uniques */
+  const bas = vis.filter(p => etat(p) === 'bas' && !estMini(p) && p.stock < 2 * Math.min(...tailles(p)) - 1e-9);
+  if (bas.length) t.push({ niv: 'att', txt: `Dernier décant : ${listeNoms(bas)}.`, act: 'aller-vendeur', o: 'stock', f: 'surveiller', lbl: 'Voir' });
+  if (S.dbEtat === 'pret' && S.couts) {
+    const fb = taillesFioles().map(ml => [ml, resteFioles(ml)]).filter(([ml, n]) => n != null && n <= SEUIL_FIOLES && ST.tailles.includes(ml));
+    if (fb.length) t.push({ niv: 'att', txt: `Flacons vides : ${fb.map(([ml, n]) => texteFioles(n, ml)).join(', ')}.`, act: 'aller-vendeur', o: 'stock', f: 'flacons', lbl: 'Voir' });
+  }
+  const sp = vis.filter(p => !tailles(p).length && etat(p) !== 'bientot');
+  if (sp.length) t.push({ niv: 'info', txt: `Sans prix : ${listeNoms(sp)}.`, act: 'aller-vendeur', o: 'stock', f: 'surveiller', lbl: 'Compléter' });
+  const ph = vis.filter(p => !p.photo);
+  if (ph.length) t.push({ niv: 'info', txt: `Sans photo : ${listeNoms(ph)}.`, act: 'aller-vendeur', o: 'stock', f: 'surveiller', lbl: 'Ajouter' });
+  const sv = ST.parfums.filter(p => !p.saisonsVerifiees);
+  if (sv.length) t.push({ niv: 'info', txt: `${sv.length} ${sv.length > 1 ? 'parfums ont leurs saisons' : 'parfum a ses saisons'} à vérifier.`, act: 'aller-vendeur', o: 'stock', f: 'saisons', lbl: 'Vérifier' });
+  return t;
+}
+function rendreAccueil() {
+  const z = document.getElementById('acc-dyn');
+  if (!z) return;
+  const somme = (l, f) => l.reduce((t, v) => t + (f(v) || 0), 0);
+  let chiffres;
+  if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) chiffres = `<p class="alerte">${esc(messageDb())}</p>`;
+  else if (S.dbEtat !== 'pret') chiffres = '<div class="chiffres mini"><div class="chiffre attente"><span>Chargement de tes ventes…</span></div></div>';
+  else {
+    const auj = aujourdhui(), mois = auj.slice(0, 7);
+    const vA = S.ventes.filter(v => v.date === auj), vM = S.ventes.filter(v => (v.date || '').startsWith(mois));
+    const avecM = vM.filter(v => margeVente(v) != null);
+    const b = S.couts ? bilanInvestissement(S.couts) : null;
+    const nomMois = new Date().toLocaleDateString('fr-FR', { month: 'long' });
+    chiffres = `<div class="chiffres mini">
+      <div class="chiffre"><span>Aujourd'hui</span><b>${eur(somme(vA, v => v.prix)) || '0 €'}</b><small>${vA.length} ${vA.length > 1 ? 'ventes' : 'vente'}</small></div>
+      <div class="chiffre"><span>En ${esc(nomMois)}</span><b>${eur(somme(vM, v => v.prix)) || '0 €'}</b><small>${vM.length} ${vM.length > 1 ? 'ventes' : 'vente'}</small></div>
+      <div class="chiffre"><span>Marge en ${esc(nomMois)}</span><b class="${avecM.length ? 'pos' : ''}">${avecM.length ? eur(somme(avecM, margeVente)) : '–'}</b><small>${avecM.length ? (avecM.length === vM.length ? 'Sur toutes les ventes' : `Sur ${avecM.length} ventes`) : 'Ajoute tes achats dans Coûts'}</small></div>
+      <div class="chiffre"><span>Investissement</span>${b && b.investi ? `<b>${Math.round(b.part * 100)} %</b><small>remboursé</small><span class="progres-barre" aria-hidden="true"><span style="width:${Math.round(b.part * 100)}%"></span></span>` : '<b>–</b><small>Ajoute tes achats dans Coûts</small>'}</div>
+    </div>`;
+  }
+  const t = taches();
+  const faire = t.length
+    ? `<ul class="taches">${t.map(x => `<li class="tache ${x.niv}"><span class="ic">${x.niv === 'info' ? ICV.stock : ICV.alerte}</span><span class="txt">${esc(x.txt)}</span><button type="button" class="btn petit${x.niv === 'urgent' ? ' plein' : ' discret'}" data-act="${x.act}"${x.o ? ` data-o="${x.o}"` : ''}${x.f ? ` data-f="${x.f}"` : ''}>${x.lbl}</button></li>`).join('')}</ul>`
+    : `<p class="tout-ok"><span class="ic">${ICV.ok}</span>Tout est en ordre : rien à faire pour l'instant.</p>`;
+  const dern = S.dbEtat === 'pret' && S.ventes.length
+    ? `<div class="bloc"><div class="bloc-tete"><h3>Dernières ventes</h3><button type="button" class="btn petit discret" data-act="aller-vendeur" data-o="ventes">Tout voir</button></div>
+       <ul class="dernieres">${S.ventes.slice(0, 4).map(v => `<li><span class="plaque">${trouver(v.parfumId) ? plaqueContenu(trouver(v.parfumId)) : ''}</span><span class="d-txt"><b>${esc(v.nom)}</b><small>${esc(tailleVente(v))}${v.qte > 1 ? ' × ' + v.qte : ''} · ${esc(dateCourte(v.date))}${v.client ? ' · ' + esc(v.client) : ''}</small></span><span class="d-prix">${eur(v.prix)}</span></li>`).join('')}</ul></div>`
+    : '';
+  z.innerHTML = typo(`${chiffres}<div class="bloc"><h3>À faire</h3>${faire}</div>${dern}`);
+}
+/* aller à un onglet depuis le tableau de bord, avec le bon filtre ou la bonne rubrique ouverte */
+function allerVendeur(o, f) {
+  S.onglet = o || 'stock';
+  ecrire(CLE_ONGLET, S.onglet);
+  if (S.onglet === 'stock') {
+    S.filtreStock = f === 'surveiller' ? 'surveiller' : 'tous';
+    S.qStock = '';
+    if (f === 'flacons') S.flFerme = false;
+    if (f === 'saisons') S.svOuvert = true;
+  }
+  rendre();
+  window.scrollTo(0, 0);
+  const cible = f === 'flacons' ? document.getElementById('fl-zone') : f === 'saisons' ? document.querySelector('.saisons-verif') : f === 'surveiller' ? document.querySelector('.stock-outils') : null;
+  if (cible) defiler(cible);
+}
+
+/* ---------- stock et prix ---------- */
+const FILTRES_STOCK = [['tous', 'Tous'], ['surveiller', 'À surveiller'], ['minis', 'Miniatures'], ['masques', 'Masqués']];
+/* à regarder : rupture, presque épuisé, bientôt, sans prix ou sans photo */
+function aSurveiller(p) {
+  const e = etat(p);
+  return p.visible && (e === 'epuise' || e === 'bas' || e === 'bientot' || !tailles(p).length || !p.photo);
+}
+function filtreStockOk(p, f) {
+  if (f === 'surveiller' && !aSurveiller(p)) return false;
+  if (f === 'minis' && !estMini(p)) return false;
+  if (f === 'masques' && p.visible) return false;
+  const q = sansAccents(S.qStock).trim();
+  return !q || sansAccents(p.nom + ' ' + p.maison).includes(q);
+}
+function pastilleStock(p) {
+  const st = etat(p);
+  if (!p.visible) return ['masque', 'Masqué'];
+  if (st === 'bientot') return ['bientot', 'Bientôt'];
+  if (st === 'epuise') return ['epuise', p.statut === 'rupture' ? 'Rupture' : 'Épuisé'];
+  if (st === 'bas') return ['bas', stockTexte(p)];
+  if (p.stock == null) return ['libre', 'Non suivi'];
+  return ['ok', stockTexte(p)];
+}
+function resumeLigne(p) {
+  const mini = estMini(p);
+  const prix = tailles(p).map(s => `${mini ? '' : s + ' ml '}${eur(prixDe(p, s))}`).join(' · ');
+  const [cl, txt] = pastilleStock(p);
+  return `<span class="plaque">${plaqueContenu(p)}</span>
+      <span class="ls-txt"><b>${esc(p.nom)}${mini ? ' <small>miniature</small>' : ''}</b><span class="ls-maison">${esc(court(p.maison))}</span><span class="ls-prix${prix ? '' : ' manque'}">${prix || 'Prix à définir'}</span></span>
+      <span class="ls-etat ${cl}">${esc(txt)}</span>`;
+}
 function ligneStock(p) {
-  const id = p.id;
-  return `<article class="ligne-stock${p.visible ? '' : ' cache'}">
-    <div class="plaque">${plaqueContenu(p)}</div>
+  const id = p.id, mini = estMini(p);
+  return `<details class="ligne-stock${p.visible ? '' : ' cache'}" id="ls-${id}" data-id="${id}"${S.ouverts.has(id) ? ' open' : ''}>
+    <summary class="ls-resume" id="lr-${id}">${resumeLigne(p)}</summary>
     <div class="corps">
-      <div><p class="maison">${esc(p.maison)}</p><h3>${esc(p.nom)}</h3></div>
-      <div class="badges">${estMini(p) ? `<span class="badge">Miniature ${esc(ml(p.contenance))}</span>` : ''}${p.statut === 'bientot' ? '<span class="badge att">Bientôt disponible</span>' : p.statut === 'rupture' ? '<span class="badge att">Rupture</span>' : ''}${!p.photo ? '<span class="badge att">Sans photo</span>' : ''}${!p.saisonsVerifiees ? '<span class="badge att">Saisons à vérifier</span>' : ''}${p.stock == null ? '<span class="badge">Stock non suivi</span>' : `<span class="badge">${esc(stockTexte(p))}</span>`}${!p.visible ? '<span class="badge">Masqué</span>' : ''}</div>
       <div class="champs">
-        ${estMini(p)
+        ${mini
           ? `<div class="champ"><label for="st-${id}">Restant (pièces)</label><input id="st-${id}" data-f="stock" data-unite="piece" data-id="${id}" inputmode="numeric" autocomplete="off" value="${p.stock == null ? '' : pieces(p)}" placeholder="non suivi"></div>
         <div class="champ"><label for="px-${id}">Prix de la miniature (€)</label><input id="px-${id}" data-f="prix" data-s="${p.contenance}" data-id="${id}" inputmode="decimal" autocomplete="off" value="${prixDe(p, p.contenance) == null ? '' : prixDe(p, p.contenance)}" placeholder="sur demande"></div>`
           : `<div class="champ"><label for="st-${id}">Restant (ml)</label><input id="st-${id}" data-f="stock" data-id="${id}" inputmode="decimal" autocomplete="off" value="${p.stock == null ? '' : p.stock}" placeholder="non suivi"></div>
         ${ST.tailles.map(s => `<div class="champ"><label for="px-${id}-${s}">Prix ${s} ml (€)</label><input id="px-${id}-${s}" data-f="prix" data-s="${s}" data-id="${id}" inputmode="decimal" autocomplete="off" value="${prixDe(p, s) == null ? '' : prixDe(p, s)}" placeholder="non proposé"></div>`).join('')}`}
         <div class="champ"><label for="et-${id}">Sur la carte</label><select id="et-${id}" data-f="statut" data-id="${id}"><option value=""${p.statut ? '' : ' selected'}>Selon le stock</option><option value="rupture"${p.statut === 'rupture' ? ' selected' : ''}>Rupture</option><option value="bientot"${p.statut === 'bientot' ? ' selected' : ''}>Bientôt disponible</option></select></div>
       </div>
-      <div class="actions">
-        <span class="coches"><label><input type="checkbox" data-f="visible" data-id="${id}" ${p.visible ? 'checked' : ''}> Affiché sur la carte</label></span>
-        <button type="button" class="btn petit" data-act="photo" data-id="${id}">${p.photo ? 'Changer la photo' : 'Ajouter la photo'}</button>
+      <label class="interrupteur"><input type="checkbox" data-f="visible" data-id="${id}" ${p.visible ? 'checked' : ''}><span class="int-piste" aria-hidden="true"></span><span>Affiché sur la carte</span></label>
+      ${!p.photo ? '<p class="aide">Pas encore de photo : ajoute-la pour la montrer sur la carte.</p>' : ''}
+      <div class="actions ls-actions">
+        ${tailles(p).length ? `<button type="button" class="btn petit plein" data-act="vente-ouvrir" data-id="${id}">Vendre</button>` : ''}
+        <button type="button" class="btn petit" data-act="photo" data-id="${id}">${p.photo ? 'Photo' : 'Ajouter la photo'}</button>
         <button type="button" class="btn petit discret" data-act="editer" data-id="${id}">Fiche complète</button>
         <button type="button" class="btn petit discret" data-act="lien" data-id="${id}">Copier le lien</button>
-        ${tailles(p).length ? `<button type="button" class="btn petit plein" data-act="vendu-ouvrir" data-id="${id}" aria-expanded="false" aria-controls="vr-${id}">Vendu</button>` : ''}
-      </div>
-      <div class="vente-rapide" id="vr-${id}" hidden>
-        <span>Vente de ${esc(p.nom)}, au prix de la carte :</span>
-        <div class="actions">${tailles(p).map(t => `<button type="button" class="btn petit" data-act="vendu" data-id="${id}" data-s="${t}">${estMini(p) ? '1 miniature' : t + ' ml'}, ${eur(prixDe(p, t))}</button>`).join('')}<button type="button" class="btn petit discret" data-act="vendu-fermer" data-id="${id}">Annuler</button></div>
       </div>
     </div>
-  </article>`;
+  </details>`;
 }
-function resumeStock() {
-  const vis = ST.parfums.filter(p => p.visible);
-  const ep = vis.filter(p => etat(p) === 'epuise'), bas = vis.filter(p => etat(p) === 'bas'), libres = vis.filter(p => p.stock == null);
-  const l = [];
-  const nomL = p => esc(p.nom) + (estMini(p) ? ' (miniature)' : '');
-  const bt = vis.filter(p => etat(p) === 'bientot');
-  if (ep.length) l.push(`<li class="r-ep"><b>${ep.length > 1 ? ep.length + ' en rupture' : 'En rupture'}</b> : ${ep.map(nomL).join(', ')}</li>`);
-  if (bas.length) l.push(`<li class="r-bas"><b>${bas.length > 1 ? bas.length + ' presque épuisés' : 'Presque épuisé'}</b> : ${bas.map(p => `${nomL(p)}, ${esc(stockTexte(p))}`).join(' ; ')}</li>`);
-  if (bt.length) l.push(`<li><b>Bientôt disponible${bt.length > 1 ? 's' : ''}</b> : ${bt.map(nomL).join(', ')}</li>`);
-  if (libres.length) l.push(`<li><b>Stock non suivi</b> pour ${libres.length === vis.length ? 'tous les parfums' : libres.length + (libres.length > 1 ? ' parfums' : ' parfum')} : indique les ml restants pour être alerté avant la rupture.</li>`);
-  if (!l.length) l.push('<li class="r-ok"><b>Tout est en stock.</b></li>');
-  return `<ul class="resume-stock" aria-label="État du stock">${l.join('')}</ul>`;
+/* après un changement de stock ou de prix, la ligne repliée suit */
+function majResumeLigne(p) {
+  const r = document.getElementById('lr-' + p.id);
+  if (r) r.innerHTML = typo(resumeLigne(p));
+}
+function rendreListeStock() {
+  const f = document.getElementById('stock-filtres'), z = document.getElementById('stock-liste');
+  if (!f || !z) return;
+  const n = k => ST.parfums.filter(p => filtreStockOk(p, k)).length;
+  f.innerHTML = FILTRES_STOCK.map(([k, l]) => `<button type="button" class="puce${k === 'surveiller' && n(k) ? ' att' : ''}" data-act="filtre-stock" data-f="${k}" aria-pressed="${S.filtreStock === k}">${l}<span>${n(k)}</span></button>`).join('');
+  const l = ST.parfums.filter(p => filtreStockOk(p, S.filtreStock));
+  z.innerHTML = typo(l.map(ligneStock).join('')) || `<p class="vide">${S.qStock.trim() ? 'Aucun parfum ne correspond à ta recherche.' : S.filtreStock === 'surveiller' ? 'Rien à surveiller : tout est en ordre.' : 'Aucun parfum ici.'}</p>`;
+}
+function panneauStock() {
+  return `<section class="panneau">
+    ${teteVendeur('Stock et prix', `${ST.parfums.length} références sur la carte`)}
+    <div class="actions"><button type="button" class="btn petit plein" data-act="nouveau">${ICV.plus}Ajouter un parfum</button><button type="button" class="btn petit discret" data-act="reglages">${ICV.reglages}Réglages</button></div>
+    <div id="fl-zone"></div>
+    ${blocSaisons()}
+    <div class="stock-outils">
+      <label class="recherche-zone"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="st-q" class="recherche" type="search" placeholder="Chercher un parfum" aria-label="Chercher un parfum" value="${esc(S.qStock)}" autocomplete="off"></label>
+      <div class="puces" id="stock-filtres" role="group" aria-label="Filtrer"></div>
+    </div>
+    <div class="stock-liste" id="stock-liste"></div>
+    <details class="aide-pliee"><summary>Comment marche le stock ?</summary><p class="aide">Indique les ml qu'il te reste (ou les pièces pour une miniature) : les tailles trop grandes se grisent toutes seules sur la carte, et le parfum passe en rupture quand il ne reste plus assez pour le plus petit format. Laisse vide pour ne pas suivre le stock. Un prix vide retire la taille de la carte. Chaque vente enregistrée retire elle-même les ml vendus.</p></details>
+  </section>`;
 }
 function blocSaisons() {
   const a = ST.parfums.filter(p => !p.saisonsVerifiees);
@@ -2136,28 +2453,6 @@ function blocSaisons() {
     </li>`).join('')}</ul>
   </details>`;
 }
-function panneauStock() {
-  const sansPhoto = ST.parfums.filter(p => !p.photo).length;
-  return `<section class="panneau">
-    <h2>Stock et prix</h2>
-    ${resumeStock()}
-    <div id="fl-zone"></div>
-    ${blocSaisons()}
-    <p class="aide">Indique les ml qu'il te reste : les tailles trop grandes se grisent toutes seules sur la carte, et le parfum passe en « Épuisé » quand il ne reste plus assez pour le plus petit format. Laisse vide pour ne pas suivre le stock. Un prix vide retire la taille de la carte.${sansPhoto ? ` ${sansPhoto} ${sansPhoto > 1 ? 'parfums n\'ont' : 'parfum n\'a'} pas encore de photo de flacon.` : ''}</p>
-    <div class="actions"><button type="button" class="btn petit" data-act="nouveau">Ajouter un parfum</button><button type="button" class="btn petit discret" data-act="reglages">Réglages de la boutique</button></div>
-    ${S.hote === 'gh' ? `<div class="bloc">
-      <h3>Ton site</h3>
-      <p class="aide">Tes clients voient cette carte sur <a href="${esc(location.origin)}/" target="_blank" rel="noopener">${esc(location.host)}</a>. « Publier » la met à jour directement, en une à deux minutes. Tes ventes, tes clients et tes coûts n'y figurent jamais.</p>
-    </div>` : `<div class="bloc">
-      <h3>Vitrine publique</h3>
-      <p class="aide">La carte de ta bio est une copie de celle-ci, hébergée sur GitHub. Après un changement de stock, de prix ou de photo, télécharge la nouvelle vitrine et remplace le fichier index.html sur GitHub. Elle ne contient ni tes ventes, ni tes clients, ni tes coûts.</p>
-      <div class="actions"><button type="button" class="btn petit plein" data-act="vitrine">Télécharger la vitrine</button></div>
-      <p id="vt-err" class="err" role="alert"></p>
-    </div>`}
-    <div class="stock-liste">${ST.parfums.map(ligneStock).join('')}</div>
-  </section>`;
-}
-
 /* vitrine : page client autonome, à héberger ailleurs que sur Claude */
 const RESET_VITRINE = ':root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}';
 function construireVitrine() {
@@ -2199,10 +2494,10 @@ function champStock(el) {
   const p = trouver(el.dataset.id);
   if (!p) return;
   const f = el.dataset.f;
-  if (f === 'visible') { p.visible = el.checked; el.closest('.ligne-stock').classList.toggle('cache', !p.visible); modifie(); return; }
+  if (f === 'visible') { p.visible = el.checked; el.closest('.ligne-stock').classList.toggle('cache', !p.visible); modifie(); majResumeLigne(p); return; }
   if (f === 'statut') {
     p.statut = ['rupture', 'bientot'].includes(el.value) ? el.value : '';
-    modifie();
+    modifie(); majResumeLigne(p);
     toast(p.statut === 'bientot' ? `${p.nom} s'affichera en « Bientôt disponible ». Publie pour le montrer.` : p.statut === 'rupture' ? `${p.nom} s'affichera en rupture. Publie pour le montrer.` : `${p.nom} suit à nouveau son stock.`);
     return;
   }
@@ -2222,6 +2517,7 @@ function champStock(el) {
     if (avant === prixDe(p, s)) return;
   }
   modifie();
+  majResumeLigne(p);
 }
 
 /* photo */
@@ -2476,67 +2772,103 @@ function optionsParfums(sel) {
   return ST.parfums.map(p => `<option value="${p.id}"${p.id === sel ? ' selected' : ''}>${esc(p.nom)}${estMini(p) ? ' (miniature)' : ''}${p.visible ? '' : ' (masqué)'}</option>`).join('');
 }
 function panneauVentes() {
-  const premier = ST.parfums[0] ? ST.parfums[0].id : '';
   return `<section class="panneau">
-    <h2>Ventes</h2>
+    ${teteVendeur('Ventes')}
+    <div class="raccourcis deux">
+      <button type="button" class="raccourci principal" data-act="vente-ouvrir"><span class="ic">${ICV.plus}</span><b>Nouvelle vente</b><small>Parfum, taille, c'est noté</small></button>
+      <button type="button" class="raccourci" data-act="vente-coller"><span class="ic">${ICV.coller}</span><b>Coller une commande</b><small>Le message de ton client</small></button>
+    </div>
     <div id="v-alerte"></div>
-    <div class="bloc">
-      <h3>Coller une commande</h3>
-      <p class="aide">Copie le message de commande que ton client t'a envoyé et colle-le ici : les parfums, les tailles et les prix sont reconnus tout seuls.</p>
-      <div class="champ"><label for="cmd-texte">Message du client</label><textarea id="cmd-texte" rows="5" placeholder="Salut ! Je voudrais commander :&#10;• Naxos (Xerjoff), 10 ml : 30 €"></textarea></div>
-      <div class="champs">
-        <div class="champ"><label for="cmd-client">Client (facultatif)</label><input id="cmd-client" autocomplete="off" placeholder="Pseudo Snap ou prénom"></div>
-        <div class="champ"><label for="cmd-date">Date</label><input id="cmd-date" type="date" value="${aujourdhui()}"></div>
-      </div>
-      <div class="actions"><button type="button" class="btn" data-act="cmd-lire">Lire la commande</button></div>
-      <p id="cmd-err" class="err" role="alert"></p>
-      <div id="cmd-apercu" aria-live="polite"></div>
-    </div>
-    <div class="bloc">
-      <h3>Nouvelle vente</h3>
-      <div class="champs">
-        <div class="champ"><label for="v-parfum">Parfum</label><select id="v-parfum">${optionsParfums(premier)}</select></div>
-        <div class="champ"><label for="v-taille">Taille</label><select id="v-taille"></select></div>
-        <div class="champ"><label for="v-qte">Quantité</label><input id="v-qte" inputmode="numeric" value="1" autocomplete="off"></div>
-        <div class="champ"><label for="v-prix">Prix encaissé (€)</label><input id="v-prix" inputmode="decimal" autocomplete="off"><small>Prix de la carte, modifiable.</small></div>
-        <div class="champ"><label for="v-client">Client (facultatif)</label><input id="v-client" autocomplete="off" placeholder="Pseudo Snap ou prénom"></div>
-        <div class="champ"><label for="v-date">Date</label><input id="v-date" type="date" value="${aujourdhui()}"></div>
-      </div>
-      <p id="v-stock" class="aide"></p>
-      <p id="v-err" class="err" role="alert"></p>
-      <div class="actions"><button type="button" class="btn plein" id="v-ok" data-act="vendre">Enregistrer la vente</button></div>
-      <p class="aide">${S.hote === 'gh' ? 'Le journal et tes clients restent privés : ils sont enregistrés dans ton dépôt privé GitHub, jamais sur le site.' : 'Le journal et tes clients restent privés : seul ton compte peut les lire.'} Le stock de la carte est mis à jour aussitôt.</p>
-    </div>
     <div id="v-dyn"></div>
+    <p class="aide">${S.hote === 'gh' ? 'Le journal et tes clients restent privés : ils sont enregistrés dans ton dépôt privé GitHub, jamais sur le site.' : 'Le journal et tes clients restent privés : seul ton compte peut les lire.'} Le stock de la carte est mis à jour à chaque vente.</p>
   </section>`;
 }
-function majFormulaireVente(garderTaille) {
-  const sp = document.getElementById('v-parfum');
-  if (!sp) return;
-  const p = trouver(sp.value);
-  const st = document.getElementById('v-taille');
-  const avant = st.value;
-  const o = p ? tailles(p) : [];
-  const toutes = o.length ? o : estMini(p) ? [p.contenance] : ST.tailles;
-  st.innerHTML = toutes.map(s => `<option value="${s}">${esc(libTailleMaj(p, s))}${prixDe(p, s) != null ? ' à ' + eur(prixDe(p, s)) : ''}</option>`).join('');
-  if (garderTaille && toutes.map(String).includes(avant)) st.value = avant;
+/* ---------- vente en trois touches : parfum, taille, enregistrer ---------- */
+function ouvrirVente(mode, id) {
+  const p = id ? trouver(id) : null;
+  S.vs = { etape: mode === 'coller' ? 'coller' : p ? 'details' : 'parfum', id: p ? p.id : null, taille: p ? tailleParDefaut(p) : null, q: '' };
+  S.prixManuel = false;
+  ouvrir('', 'leger vente-dlg');
+  rendreVente();
+}
+function tailleParDefaut(p) {
+  const o = tailles(p);
+  const libre = o.find(s => p.stock == null || p.stock >= s - 1e-9);
+  return libre != null ? libre : o[0] != null ? o[0] : estMini(p) ? p.contenance : ST.tailles[0];
+}
+const taillesVente = p => { const o = tailles(p); return o.length ? o : estMini(p) ? [p.contenance] : ST.tailles; };
+const clientsConnus = () => [...new Set(S.ventes.map(v => String(v.client || '').trim()).filter(Boolean))].slice(0, 60);
+function grilleVente() {
+  const q = sansAccents(S.vs.q).trim();
+  const l = ST.parfums.filter(p => !q || sansAccents(p.nom + ' ' + p.maison).includes(q))
+    .sort((a, b) => (vendable(b) - vendable(a)) || (b.visible - a.visible));
+  if (!l.length) return '<p class="vide">Aucun parfum ne correspond.</p>';
+  return l.map(p => {
+    const st = etat(p);
+    const info = !p.visible ? 'Masqué' : st === 'bientot' ? 'Bientôt' : p.stock == null ? 'Stock libre' : stockTexte(p);
+    return `<button type="button" class="vs-p${vendable(p) ? '' : ' off'}" data-act="vs-choisir" data-id="${p.id}"><span class="plaque">${plaqueContenu(p)}</span><b>${esc(p.nom)}</b><small>${estMini(p) ? 'Miniature · ' : ''}${esc(info)}</small></button>`;
+  }).join('');
+}
+function htmlColler() {
+  return `<p class="aide">Copie le message de commande de ton client (Snap, Insta…) et colle-le ici : la commande se lit toute seule, parfums, tailles et prix compris.</p>
+    <div class="champ"><label for="cmd-texte">Message du client</label><textarea id="cmd-texte" rows="5" placeholder="Salut ! Je voudrais commander :&#10;• Naxos (Xerjoff), 10 ml : 30 €"></textarea></div>
+    <div class="champs">
+      <div class="champ"><label for="cmd-client">Client (facultatif)</label><input id="cmd-client" list="vs-clients" autocomplete="off" placeholder="Pseudo Snap ou prénom"></div>
+      <div class="champ"><label for="cmd-date">Date</label><input id="cmd-date" type="date" value="${aujourdhui()}"></div>
+    </div>
+    <datalist id="vs-clients">${clientsConnus().map(c => `<option value="${esc(c)}"></option>`).join('')}</datalist>
+    <button type="button" class="btn large" data-act="cmd-lire">Lire la commande</button>
+    <p id="cmd-err" class="err" role="alert"></p>
+    <div id="cmd-apercu" aria-live="polite"></div>`;
+}
+function rendreVente() {
+  const f = document.querySelector('#dlg.vente-dlg .fen');
+  if (!f || !S.vs) return;
+  const V = S.vs;
+  const tete = `<div class="fen-tete"><h2>${V.etape === 'coller' ? 'Coller une commande' : 'Nouvelle vente'}</h2><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>
+    <div class="vs-modes" role="group" aria-label="Façon d'enregistrer"><button type="button" class="vs-mode" data-act="vs-mode" data-m="choix" aria-pressed="${V.etape !== 'coller'}">Choisir un parfum</button><button type="button" class="vs-mode" data-act="vs-mode" data-m="coller" aria-pressed="${V.etape === 'coller'}">Coller une commande</button></div>`;
+  if (V.etape === 'coller') { f.innerHTML = typo(tete + htmlColler()); return; }
+  if (V.etape === 'parfum') {
+    f.innerHTML = typo(tete + `<label class="recherche-zone"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="vs-q" class="recherche" type="search" placeholder="Chercher un parfum" aria-label="Chercher un parfum" value="${esc(V.q)}" autocomplete="off"></label>
+      <div class="vs-grille" id="vs-grille">${grilleVente()}</div>`);
+    return;
+  }
+  const p = trouver(V.id);
+  if (!p) { V.etape = 'parfum'; rendreVente(); return; }
+  f.innerHTML = typo(tete + `
+    <div class="vs-produit"><span class="plaque">${plaqueContenu(p)}</span><div><p class="maison">${esc(p.maison)}</p><h3>${esc(p.nom)}</h3><p class="meta">${p.stock == null ? 'Stock non suivi' : 'En stock : ' + esc(stockTexte(p))}</p></div><button type="button" class="btn petit discret" data-act="vs-retour">${ICV.retour}Changer</button></div>
+    <div class="vs-bloc"><span class="lbl">${estMini(p) ? 'Format' : 'Taille'}</span><div class="vs-tailles">${taillesVente(p).map(s => `<button type="button" class="vs-taille" data-act="vs-taille" data-s="${s}" aria-pressed="${s === V.taille}"><b>${esc(libTailleMaj(p, s))}</b><span>${prixDe(p, s) != null ? eur(prixDe(p, s)) : 'prix libre'}</span></button>`).join('')}</div></div>
+    <div class="vs-ligne">
+      <div class="champ"><label for="v-qte">Quantité</label><div class="pas"><button type="button" class="rond" data-act="vs-moins" aria-label="Une de moins">−</button><input id="v-qte" inputmode="numeric" value="1" autocomplete="off"><button type="button" class="rond" data-act="vs-plus" aria-label="Une de plus">+</button></div></div>
+      <div class="champ"><label for="v-prix">Prix encaissé (€)</label><input id="v-prix" inputmode="decimal" autocomplete="off"></div>
+    </div>
+    <div class="champs">
+      <div class="champ"><label for="v-client">Client (facultatif)</label><input id="v-client" list="vs-clients" autocomplete="off" placeholder="Pseudo Snap ou prénom"></div>
+      <div class="champ"><label for="v-date">Date</label><input id="v-date" type="date" value="${aujourdhui()}"></div>
+    </div>
+    <datalist id="vs-clients">${clientsConnus().map(c => `<option value="${esc(c)}"></option>`).join('')}</datalist>
+    <p id="v-stock" class="aide"></p>
+    <p id="v-err" class="err" role="alert"></p>
+    <button type="button" class="btn plein large" id="v-ok" data-act="vendre">Enregistrer la vente</button>`);
   majPrixVente();
 }
 function majPrixVente() {
-  const p = trouver(document.getElementById('v-parfum').value);
-  const s = Number(document.getElementById('v-taille').value);
+  const V = S.vs, p = V && trouver(V.id);
+  const champ = document.getElementById('v-prix'), info = document.getElementById('v-stock'), ok = document.getElementById('v-ok');
+  if (!p || !champ || !info) return;
+  const s = Number(V.taille);
   const q = Math.max(1, Math.floor(nombre(document.getElementById('v-qte').value) || 1));
-  const px = p ? prixDe(p, s) : null;
-  if (!S.prixManuel) document.getElementById('v-prix').value = px != null ? String(arrondi(px * q)).replace('.', ',') : '';
-  const info = document.getElementById('v-stock');
-  if (!p) { info.textContent = ''; return; }
+  const px = prixDe(p, s);
+  if (!S.prixManuel) champ.value = px != null ? String(arrondi(px * q)).replace('.', ',') : '';
+  const total = nombre(champ.value);
+  if (ok && !ok.disabled) ok.textContent = 'Enregistrer la vente' + (total > 0 ? ' · ' + eur(total) : '');
   const besoin = s * q;
   const txt = v => estMini(p) ? nPieces(Math.round(v / p.contenance)) : ml(v);
-  if (p.stock == null) info.textContent = `Stock non suivi pour ${p.nom}. Renseigne-le dans « Stock et prix » pour qu'il baisse à chaque vente.`;
-  else if (p.stock >= besoin - 1e-9) info.textContent = `Il reste ${txt(p.stock)} de ${p.nom}. Après cette vente : ${txt(p.stock - besoin)}.`;
+  if (p.stock == null) info.textContent = `Stock non suivi pour ${p.nom}.`;
+  else if (p.stock >= besoin - 1e-9) info.textContent = `Après cette vente : ${txt(p.stock - besoin)} de ${p.nom}.`;
   else info.textContent = `Attention : il ne reste que ${txt(p.stock)} de ${p.nom}. La vente reste possible, le stock passera à ${txt(0)}.`;
   const nf = estMini(p) ? null : resteFioles(s);
-  if (nf != null) info.textContent += nf >= q ? ` Flacons vides de ${s} ml : ${nf - q} après cette vente.` : ` Attention : ${texteFioles(nf, s)} vide${nf > 1 ? 's' : ''} en stock.`;
+  if (nf != null) info.textContent += nf >= q ? ` Flacons vides de ${s} ml : il en restera ${nf - q}.` : ` Attention : ${texteFioles(nf, s)} vide${nf > 1 ? 's' : ''} en stock.`;
 }
 /* Sur Claude, la carte retient les identifiants des ventes déduites (retirés de la vitrine).
    Sur le site, elle retient l'heure de la dernière vente déduite : stock et repère partent dans le même fichier. */
@@ -2604,14 +2936,14 @@ function lireCommande(texte) {
   });
   return { res, ignorees };
 }
-function apercuCommande() {
+function apercuCommande(silencieux) {
   const z = document.getElementById('cmd-apercu');
   const err = document.getElementById('cmd-err');
   if (!z) return;
   err.textContent = '';
   const { res, ignorees } = lireCommande(document.getElementById('cmd-texte').value);
   S.cmd = res;
-  if (!res.length) { z.innerHTML = ''; err.textContent = ignorees.length ? "Aucun parfum de ta carte n'a été reconnu dans ce message." : 'Colle le message de commande de ton client.'; return; }
+  if (!res.length) { z.innerHTML = ''; err.textContent = silencieux ? '' : ignorees.length ? "Aucun parfum de ta carte n'a été reconnu dans ce message." : 'Colle le message de commande de ton client.'; return; }
   const total = res.reduce((t, l) => t + l.prix, 0);
   z.innerHTML = typo(`<ul class="cmd-liste">${res.map(l => {
     const manque = l.p.stock != null && l.p.stock < l.taille * l.qte;
@@ -2629,18 +2961,9 @@ async function validerCommande() {
   const b = document.getElementById('cmd-ok'); if (b) b.disabled = true;
   const r = await enregistrerVentes(S.cmd, document.getElementById('cmd-client').value, date);
   if (r.erreur) { err.textContent = r.erreur; if (b) b.disabled = false; return; }
-  S.cmd = null;
-  if (S.hote === 'gh') { rendre(); }
-}
-/* vente rapide depuis « Stock et prix » */
-async function venteRapide(id, taille) {
-  const p = trouver(id);
-  const px = p && prixDe(p, taille);
-  if (!p || px == null) return;
-  document.querySelectorAll(`#vr-${id} button`).forEach(b => { b.disabled = true; });
-  const r = await enregistrerVentes([{ p, taille, qte: 1, prix: px }], '', aujourdhui());
-  if (r.erreur) { toast(r.erreur); document.querySelectorAll(`#vr-${id} button`).forEach(b => { b.disabled = false; }); return; }
-  if (S.hote === 'gh') rendre();
+  S.cmd = null; S.vs = null;
+  fermer();
+  rendre();
 }
 /* export des ventes en tableur (séparateur ; pour Excel et Numbers en français) */
 async function exporterVentes() {
@@ -2668,21 +2991,23 @@ async function enregistrerVente() {
   const err = document.getElementById('v-err');
   err.textContent = '';
   if (!S.db || S.dbEtat !== 'pret') { err.textContent = "Le journal des ventes n'est pas encore chargé. Patiente quelques secondes."; return; }
-  const p = trouver(document.getElementById('v-parfum').value);
-  const taille = Number(document.getElementById('v-taille').value);
+  const p = S.vs && trouver(S.vs.id);
+  const taille = Number(S.vs && S.vs.taille);
   const qte = nombre(document.getElementById('v-qte').value);
   const prix = nombre(document.getElementById('v-prix').value);
   const date = document.getElementById('v-date').value;
   if (!p) { err.textContent = 'Choisis un parfum.'; return; }
+  if (!(taille > 0)) { err.textContent = 'Choisis une taille.'; return; }
   if (!(qte >= 1) || !Number.isInteger(qte)) { err.textContent = 'La quantité doit être un nombre entier, par exemple 1.'; return; }
   if (prix == null || Number.isNaN(prix) || prix < 0) { err.textContent = 'Indique le prix encaissé en euros, par exemple 30.'; return; }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { err.textContent = 'Indique la date de la vente.'; return; }
   const btn = document.getElementById('v-ok');
-  btn.disabled = true;
+  btn.disabled = true; btn.textContent = 'Enregistrement…';
   const r = await enregistrerVentes([{ p, taille, qte, prix }], document.getElementById('v-client').value, date);
-  if (r.erreur) { err.textContent = r.erreur; btn.disabled = false; return; }
-  if (S.hote === 'gh') { S.prixManuel = false; rendre(); }
-  else if (!r.ok) btn.disabled = false;
+  if (r.erreur) { err.textContent = r.erreur; btn.disabled = false; majPrixVente(); return; }
+  S.prixManuel = false; S.vs = null;
+  fermer();
+  rendre();
 }
 function nonDeduites() {
   const limite = Date.now() - 14 * 864e5;
@@ -2753,14 +3078,15 @@ function rendreFlacons() {
   if (!z) return;
   const tete = n => `<summary><b>Flacons vides</b>${n || ''}</summary>`;
   if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) { z.innerHTML = `<details class="bloc flacons" open>${tete()}<p class="aide">${esc(messageDb())}</p></details>`; return; }
-  if (S.dbEtat !== 'pret' || !S.couts) { z.innerHTML = `<details class="bloc flacons" open>${tete()}<p class="aide">Chargement de ton stock de flacons…</p></details>`; return; }
+  if (S.dbEtat !== 'pret' || !S.couts) { z.innerHTML = `<details class="bloc flacons">${tete('<span class="fl-resume"><span class="fl-pastille">Chargement…</span></span>')}<p class="aide">Chargement de ton stock de flacons…</p></details>`; return; }
   const ts = taillesFioles();
   const restes = ts.map(ml => [ml, resteFioles(ml)]);
   const bas = restes.filter(([ml, n]) => n != null && n <= SEUIL_FIOLES && ST.tailles.includes(ml));
   const resume = restes.filter(([, n]) => n != null).map(([ml, n]) => `<span class="fl-pastille${n <= SEUIL_FIOLES ? ' bas' : ''}">${ml} ml : ${n}</span>`).join('');
   const valeur = restes.reduce((t, [ml, n]) => { const f = ficheFiole(ml); return t + (n != null && f && f.prix > 0 ? n * f.prix : 0); }, 0);
   const A = S.flAjout;
-  z.innerHTML = typo(`<details class="bloc flacons"${S.flFerme ? '' : ' open'}>
+  const ouvert = S.flFerme === undefined ? !!A : !S.flFerme;
+  z.innerHTML = typo(`<details class="bloc flacons"${ouvert ? ' open' : ''}>
     ${tete(resume ? `<span class="fl-resume">${resume}</span>` : '')}
     ${bas.length ? `<p class="alerte">Pense à racheter : ${bas.map(([ml, n]) => texteFioles(n, ml)).join(', ')}.</p>` : ''}
     <p class="aide">Les flacons vides pour tes décants. Chaque vente enregistrée en retire un de la bonne taille, et une vente supprimée le rend. Laisse « En stock » vide pour ne pas suivre une taille.</p>
@@ -2906,7 +3232,8 @@ function ligneJournal(v) {
   const rendStock = v.stockSuivi && estDeduite(v) && trouver(v.parfumId) && trouver(v.parfumId).stock != null;
   return `<li>
     <div><span class="quoi">${esc(v.nom)}, ${esc(tailleVente(v))} × ${v.qte}</span><br><span class="qui">${esc(dateCourte(v.date))}${v.client ? ', ' + esc(v.client) : ''}</span></div>
-    <div class="prix">${eur(v.prix)}${m != null ? `<span class="marge">marge ${eur(m, true)}</span>` : ''}${conf ? '' : `<br><button type="button" class="lien" data-act="suppr-vente" data-id="${esc(v.id)}">Supprimer</button>`}</div>
+    <div class="prix">${eur(v.prix)}${m != null ? `<span class="marge">marge ${eur(m, true)}</span>` : ''}</div>
+    ${conf ? '' : `<button type="button" class="suppr" data-act="suppr-vente" data-id="${esc(v.id)}" aria-label="Supprimer la vente de ${esc(v.nom)}" title="Supprimer">${ICV.corbeille}</button>`}
     ${conf ? `<div class="confirm"><span>Supprimer cette vente${rendStock ? ` et remettre ${qteVente(v)} en stock` : ''} ?</span><button type="button" class="btn petit danger" data-act="suppr-vente-ok" data-id="${esc(v.id)}">Oui, supprimer</button><button type="button" class="btn petit discret" data-act="suppr-vente-non">Non</button></div>` : ''}
   </li>`;
 }
@@ -3045,7 +3372,8 @@ function majApercuLot() {
 function rendreCouts() {
   const zone = document.getElementById('couts-zone');
   if (!zone) return;
-  const tete = `<section class="panneau"><h2>Coûts et marges</h2><p class="aide">Ces chiffres restent privés : ils sont enregistrés à part, ${S.hote === 'gh' ? 'dans ton dépôt privé GitHub' : 'seul ton compte peut les lire'}, et ils ne sont jamais dans la carte que voient tes clients.</p>`;
+  const tete = `<section class="panneau">${teteVendeur('Coûts et marges', 'Ce que tu as investi, ce que tu as récupéré')}`;
+  const pied = `<p class="aide">Ces chiffres restent privés : ils sont enregistrés à part, ${S.hote === 'gh' ? 'dans ton dépôt privé GitHub' : 'seul ton compte peut les lire'}, et ne sont jamais sur la carte que voient tes clients.</p>`;
   if (['absent', 'erreur', 'sans-depot', 'public'].includes(S.dbEtat)) { zone.innerHTML = tete + (S.hote === 'gh' ? `<p class="alerte">${esc(messageDb())}</p>` : `<p class="aide">Les coûts ne sont pas accessibles depuis cette vue.</p>`) + '</section>'; return; }
   if (!S.couts) { zone.innerHTML = tete + '<p class="aide">Chargement…</p></section>'; return; }
   const C = S.couts;
@@ -3057,8 +3385,8 @@ function rendreCouts() {
       <div class="bloc-tete"><h3>Tes achats</h3>${S.lotEdit ? '' : '<button type="button" class="btn petit" data-act="lot-nouveau">Ajouter un achat</button>'}</div>
       ${lots.length ? `<ul class="lots">${lots.map(carteLot).join('')}</ul>` : '<p class="aide">Aucun achat enregistré pour l\'instant.</p>'}
     </div>
-    <div class="bloc"><div class="champs"><div class="champ"><label for="c-fiole">Flacon vide, prix par défaut (€)</label><input id="c-fiole" inputmode="decimal" autocomplete="off" value="${typeof C.fiole === 'number' ? C.fiole : ''}" placeholder="0"><small>${fiolesCouts().some(f => f.prix > 0) ? `Prix par taille, réglés dans Stock et prix : ${fiolesCouts().filter(f => f.prix > 0).map(f => `${f.ml} ml à ${eur(f.prix)}`).join(', ')}. Ce prix par défaut sert pour les autres tailles.` : "Retiré de la marge de chaque décant vendu. Tu peux aussi donner un prix par taille dans Stock et prix, rubrique Flacons vides."}</small></div></div></div>
-    <details class="bloc"${Object.keys(C.parfums || {}).length || lots.length ? ' open' : ''}><summary><b>Coût et marge par parfum</b></summary>
+    <div class="bloc"><div class="champs"><div class="champ"><label for="c-fiole">Flacon vide, prix par défaut (€)</label><input id="c-fiole" inputmode="decimal" autocomplete="off" value="${typeof C.fiole === 'number' ? C.fiole : ''}" placeholder="0"><small>${fiolesCouts().some(f => f.prix > 0) ? `Prix par taille, réglés dans l'onglet Stock : ${fiolesCouts().filter(f => f.prix > 0).map(f => `${f.ml} ml à ${eur(f.prix)}`).join(', ')}. Ce prix par défaut sert pour les autres tailles.` : "Retiré de la marge de chaque décant vendu. Tu peux aussi donner un prix par taille dans l'onglet Stock, rubrique Flacons vides."}</small></div></div></div>
+    <details class="bloc couts-parfums"${S.cpOuvert ? ' open' : ''}><summary><b>Coût et marge par parfum</b><small>Marge de chaque taille, prix d'un flacon acheté seul</small></summary>
     <p class="aide">Le coût vient de tes achats ci-dessus, la marge tient compte de la fiole. Si tu connais le prix exact d'un flacon acheté seul, indique-le dans « Flacon acheté seul ».</p>
     <ul class="couts-liste">${ST.parfums.map(p => { const c = (C.parfums || {})[p.id] || {}; const mini = estMini(p); return `<li class="cout-l" data-id="${p.id}">
       <div class="cl-tete"><span><b>${esc(p.nom)}</b><small>${mini ? 'Miniature, ' : ''}${esc(court(p.maison))}</small></span><span class="c-cml n"></span></div>
@@ -3070,6 +3398,7 @@ function rendreCouts() {
     </li>`; }).join('')}</ul></details>
     <p id="c-err" class="err" role="alert"></p>
     <div class="actions"><button type="button" class="btn plein" data-act="couts-ok">Enregistrer les coûts</button></div>
+    ${pied}
   </section>`);
   majCalculsCouts();
   majApercuLot();
@@ -3141,8 +3470,8 @@ async function initVendeur() {
   try { proprio = await user.isOwner(); } catch (e) {}
   if (!proprio) return;
   S.vendeur = true;
-  const o = lire('bp-onglet');
-  if (o && ONGLETS.some(x => x[0] === o)) S.onglet = o;
+  const o = lire(CLE_ONGLET);
+  S.onglet = o && ONGLETS.some(x => x[0] === o) ? o : 'accueil';
   if (S.ongletApres) S.onglet = S.ongletApres;
   rendre();
   let db = null;
@@ -3168,6 +3497,8 @@ function majPanneauDb() {
   if (S.onglet === 'ventes') { rendreVentesDyn(); const b = document.getElementById('v-ok'); if (b && S.dbEtat === 'pret') b.disabled = false; }
   if (S.onglet === 'couts') rendreCouts();
   if (S.onglet === 'stock') rendreFlacons();
+  if (S.onglet === 'accueil') rendreAccueil();
+  if (document.querySelector('#dlg.vente-dlg #v-ok')) majPrixVente();
 }
 
 /* ---------- espace vendeur sur le site hébergé (GitHub) ----------
@@ -3399,8 +3730,8 @@ async function validerConnexion() {
 }
 function entrerVendeur() {
   Object.assign(S, { hote: 'gh', vendeur: true, ghEtat: 'charge', ghErreur: '', db: null, dbEtat: 'charge', dbErreur: '', ventes: [], couts: null, modifs: 0 });
-  const o = lire('bp-onglet');
-  S.onglet = o && ONGLETS.some(x => x[0] === o) && o !== 'boutique' ? o : 'stock';
+  const o = lire(CLE_ONGLET);
+  S.onglet = o && ONGLETS.some(x => x[0] === o) && o !== 'boutique' ? o : 'accueil';
   fermer();
   rendre();
   window.scrollTo(0, 0);
@@ -3416,8 +3747,8 @@ function quitterVendeur() {
 }
 function panneauChargement() {
   if (S.ghEtat === 'ancien') return `<section class="panneau panneau-attente"><h2>Nouvelle version du site</h2><p class="aide">Une version plus récente de ton site est en ligne. Recharge la page pour continuer. Si ce message revient, attends deux minutes : GitHub met un peu de temps à diffuser la mise à jour.</p><div class="actions"><button type="button" class="btn plein" data-act="gh-recharger">Recharger</button></div></section>`;
-  if (S.ghEtat === 'erreur') return `<section class="panneau panneau-attente"><h2>Connexion à GitHub</h2><p class="alerte">${esc(S.ghErreur)}</p><div class="actions"><button type="button" class="btn plein" data-act="gh-reessayer">Réessayer</button><button type="button" class="btn discret" data-act="gh-changer">Nouveau jeton</button></div></section>`;
-  return '<section class="panneau panneau-attente"><p class="aide">Chargement de ta carte depuis GitHub…</p></section>';
+  if (S.ghEtat === 'erreur') return `<section class="panneau panneau-attente">${teteVendeur('Connexion à GitHub')}<p class="alerte">${esc(S.ghErreur)}</p><div class="actions"><button type="button" class="btn plein" data-act="gh-reessayer">Réessayer</button><button type="button" class="btn discret" data-act="gh-changer">Nouveau jeton</button></div></section>`;
+  return `<section class="panneau panneau-attente">${teteVendeur('Chargement…')}<p class="aide">Chargement de ta carte depuis GitHub…</p></section>`;
 }
 const trierVentes = () => S.ventes.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || (b.creeLe || 0) - (a.creeLe || 0));
 async function chargerGh() {
@@ -3593,11 +3924,12 @@ const actions = {
     });
   },
   fermer: () => fermer(),
-  onglet: el => { S.onglet = el.dataset.o; ecrire('bp-onglet', S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
+  onglet: el => { S.onglet = el.dataset.o; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
   publier: async () => {
     const ok = await publier('Carte publiée.');
     /* les boutons « Vendu » et les pastilles suivent les nouveaux prix et stocks */
     if (ok && S.hote === 'gh' && S.onglet === 'stock') { const y = scrollY; rendre(); scrollTo(0, y); }
+    if (S.onglet === 'accueil') rendreAccueil();
   },
   'annuler-modifs': () => { ST = normaliser(JSON.parse(BASE)); S.modifs = 0; rendre(); toast('Modifications annulées.'); },
   photo: el => ouvrirPhoto(el.dataset.id),
@@ -3631,7 +3963,7 @@ const actions = {
     fermer(); modifie(); rendre();
   },
   vendre: () => enregistrerVente(),
-  deduire: () => deduireEnAttente(),
+  deduire: async () => { await deduireEnAttente(); if (S.onglet === 'accueil') rendreAccueil(); },
   'suppr-vente': el => { S.confirmVente = el.dataset.id; rendreVentesDyn(); },
   'suppr-vente-non': () => { S.confirmVente = null; rendreVentesDyn(); },
   'suppr-vente-ok': el => supprimerVente(el.dataset.id),
@@ -3671,9 +4003,21 @@ const actions = {
   'cmd-lire': () => apercuCommande(),
   'cmd-ok': () => validerCommande(),
   export: () => exporterVentes(),
-  'vendu-ouvrir': el => { const z = document.getElementById('vr-' + el.dataset.id); if (!z) return; z.hidden = !z.hidden; el.setAttribute('aria-expanded', String(!z.hidden)); },
-  'vendu-fermer': el => { const z = document.getElementById('vr-' + el.dataset.id); if (z) z.hidden = true; const b = document.querySelector(`[data-act="vendu-ouvrir"][data-id="${el.dataset.id}"]`); if (b) b.setAttribute('aria-expanded', 'false'); },
-  vendu: el => venteRapide(el.dataset.id, Number(el.dataset.s)),
+  'vente-ouvrir': el => ouvrirVente('choix', el.dataset.id),
+  'vente-coller': () => ouvrirVente('coller'),
+  'vs-mode': el => { if (!S.vs) return; S.vs.etape = el.dataset.m === 'coller' ? 'coller' : S.vs.id ? 'details' : 'parfum'; rendreVente(); },
+  'vs-choisir': el => { const p = trouver(el.dataset.id); if (!p || !S.vs) return; Object.assign(S.vs, { id: p.id, taille: tailleParDefaut(p), etape: 'details' }); S.prixManuel = false; rendreVente(); },
+  'vs-retour': () => { if (!S.vs) return; S.vs.etape = 'parfum'; rendreVente(); const q = document.getElementById('vs-q'); if (q) q.focus({ preventScroll: true }); },
+  'vs-taille': el => { if (!S.vs) return; S.vs.taille = Number(el.dataset.s); S.prixManuel = false; document.querySelectorAll('#dlg .vs-taille').forEach(b => b.setAttribute('aria-pressed', String(b === el))); majPrixVente(); },
+  'vs-plus': () => { const i = document.getElementById('v-qte'); i.value = Math.max(1, Math.floor(nombre(i.value) || 1)) + 1; S.prixManuel = false; majPrixVente(); },
+  'vs-moins': () => { const i = document.getElementById('v-qte'); i.value = Math.max(1, Math.floor(nombre(i.value) || 1) - 1); S.prixManuel = false; majPrixVente(); },
+  'filtre-stock': el => { S.filtreStock = el.dataset.f; rendreListeStock(); },
+  'aller-vendeur': el => allerVendeur(el.dataset.o, el.dataset.f),
+  'partager-carte': () => {
+    const url = (adresseSite() || location.origin) + '/';
+    if (navigator.share) { navigator.share({ title: ST.boutique.nom, text: ST.boutique.titre || ST.boutique.nom, url }).catch(() => {}); return; }
+    copier(url).then(ok => toast(ok ? 'Lien de ta carte copié : colle-le où tu veux.' : url));
+  },
   lien: el => { const p = trouver(el.dataset.id); if (!p) return; copier(lienParfum(p)).then(ok => toast(ok ? `Lien de ${p.nom} copié : colle-le dans ta story ou en message.` : lienParfum(p))); },
   'sv-bascule': el => {
     const p = trouver(el.dataset.id); if (!p) return;
@@ -3707,16 +4051,17 @@ document.addEventListener('click', e => {
 document.addEventListener('input', e => {
   const t = e.target;
   if (t.id === 'q') { S.q = t.value; rendreGrille(); return; }
-  if (t.id === 'v-prix') { S.prixManuel = t.value.trim() !== ''; return; }
+  if (t.id === 'st-q') { S.qStock = t.value; rendreListeStock(); return; }
+  if (t.id === 'vs-q' && S.vs) { S.vs.q = t.value; const g = document.getElementById('vs-grille'); if (g) g.innerHTML = typo(grilleVente()); return; }
   if (t.id === 'v-qte') { majPrixVente(); return; }
+  if (t.id === 'cmd-texte') { clearTimeout(S.cmdMinuteur); S.cmdMinuteur = setTimeout(() => apercuCommande(true), 350); return; }
+  if (t.id === 'v-prix') { S.prixManuel = t.value.trim() !== ''; majPrixVente(); return; }
   if (t.closest && t.closest('#lot-form')) { majApercuLot(); return; }
   if (t.closest && t.closest('#couts-zone')) { S.coutsEdites = true; majCalculsCouts(); }
 });
 document.addEventListener('change', e => {
   const t = e.target;
   if (t.dataset && t.dataset.f && t.closest('.ligne-stock')) { champStock(t); return; }
-  if (t.id === 'v-parfum') { S.prixManuel = false; majFormulaireVente(false); return; }
-  if (t.id === 'v-taille') { S.prixManuel = false; majPrixVente(); return; }
   if (t.classList && t.classList.contains('fl-carte-c')) { basculerFormat(t); return; }
   if (t.id === 'fa-taille') {
     const autre = t.value === 'autre';
@@ -3731,6 +4076,8 @@ document.addEventListener('change', e => {
 document.addEventListener('toggle', e => {
   if (e.target && e.target.classList && e.target.classList.contains('saisons-verif')) S.svOuvert = e.target.open;
   if (e.target && e.target.classList && e.target.classList.contains('flacons')) S.flFerme = !e.target.open;
+  if (e.target && e.target.classList && e.target.classList.contains('couts-parfums')) S.cpOuvert = e.target.open;
+  if (e.target && e.target.classList && e.target.classList.contains('ligne-stock')) { const id = e.target.dataset.id; if (e.target.open) S.ouverts.add(id); else S.ouverts.delete(id); }
 }, true);
 document.addEventListener('submit', e => {
   if (e.target && e.target.id === 'gh-form') { e.preventDefault(); validerConnexion(); }
