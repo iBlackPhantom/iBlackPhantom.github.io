@@ -338,15 +338,31 @@ table.tab{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numer
 
 /* en-tête fixe */
 .entete{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:var(--nuit);border-bottom:1px solid var(--filet)}
-.entete-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:1180px;margin:0 auto;padding-block:.5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.marque{display:inline-flex;align-items:center;gap:.6rem;padding:0;border:0;background:none;color:var(--platine);font:500 1.1rem/1 var(--f-titre);letter-spacing:.02em}
+.entete-in{display:flex;align-items:center;justify-content:space-between;gap:.75rem;max-width:1180px;margin:0 auto;padding-block:.5rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.marque{flex:none;display:inline-flex;align-items:center;gap:.6rem;padding:0;border:0;background:none;color:var(--platine);font:500 1.1rem/1 var(--f-titre);letter-spacing:.02em}
 .marque img{width:34px;height:34px;border-radius:50%}
+/* la recherche, toujours en vue dans l'en-tête */
+.recherche-haut{position:relative;flex:1 1 auto;min-width:0;max-width:26rem;margin-left:auto}
+.recherche-haut .icone{position:absolute;left:.8rem;top:50%;width:1rem;height:1rem;transform:translateY(-50%);color:var(--fumee);pointer-events:none}
+.recherche-haut .icone svg{display:block;width:100%;height:100%}
+.recherche-haut input{display:block;width:100%;height:2.4rem;margin:0;padding:0 .8rem 0 2.25rem;border:1px solid var(--filet);border-radius:999px;background:rgba(255,255,255,.035);color:var(--platine);font-size:16px;text-overflow:ellipsis;-webkit-appearance:none;appearance:none;transition:border-color .2s ease,background-color .2s ease}
+.recherche-haut input::placeholder{color:var(--fumee);opacity:1}
+.recherche-haut input:focus{outline:none;border-color:var(--argent);background:var(--ecrin)}
+.recherche-haut input::-webkit-search-decoration{-webkit-appearance:none}
+@media (max-width:599px){.entete .marque span{display:none}}
+.entete-sac{position:relative;flex:none;display:inline-grid;place-items:center;width:2.4rem;height:2.4rem;padding:0;border:1px solid var(--filet);border-radius:50%;background:var(--ecrin);color:var(--platine)}
+.entete-sac[hidden]{display:none}
+.entete-sac svg{display:block;width:1.2rem;height:1.2rem}
+.entete-sac b{position:absolute;top:-.3rem;right:-.35rem;min-width:1.15rem;height:1.15rem;padding:0 .28rem;border-radius:999px;background:var(--platine);color:var(--nuit);font-size:.7rem;font-weight:600;line-height:1.15rem;text-align:center;font-variant-numeric:tabular-nums}
+/* ce que la recherche a trouvé, en tête des résultats */
+.res-recherche{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.3rem 1rem;margin:0 0 1.2rem;padding:.8rem 1rem;border:1px solid var(--filet);border-radius:var(--r-ecrin);background:var(--ecrin)}
+.res-recherche p{margin:0;color:var(--platine)}
 .menu-maisons{max-width:1180px;margin:0 auto}
 .menu-in{display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:none;padding-block:0 .45rem;padding-left:max(10px,env(safe-area-inset-left,0px));padding-right:max(10px,env(safe-area-inset-right,0px))}
 .menu-in::-webkit-scrollbar{display:none}
 .menu-lien{flex:none;padding:.3rem .65rem;border:0;border-bottom:1px solid transparent;background:none;color:var(--fumee);font-size:.9rem;white-space:nowrap}
 .menu-lien[aria-current="true"]{color:var(--platine);border-bottom-color:var(--platine)}
-.carte,.bloc-maison,#faq,#bientot,#infos,#trouver{scroll-margin-top:6.5rem}
+.carte,.bloc-maison,#faq,#bientot,#infos,#trouver,#sections{scroll-margin-top:6.5rem}
 
 /* sections par maison */
 #sections{display:grid;gap:3.4rem}
@@ -1623,7 +1639,8 @@ function vueEntete() {
   return `<header class="entete">
       <div class="entete-in">
         <button type="button" class="marque" data-act="haut" aria-label="${esc(B.nom)}, retour en haut"><img src="${LOGO}" alt="" width="34" height="34"><span>${esc(B.nom)}</span></button>
-        <button type="button" class="btn petit" id="entete-sel" data-act="panier" hidden></button>
+        <div class="recherche-haut" role="search"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="q" type="search" enterkeyhint="search" placeholder="Parfum, note, maison…" aria-label="Chercher un parfum, une note ou une maison" value="${esc(S.q)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+        <button type="button" class="entete-sac" id="entete-sel" data-act="panier" hidden></button>
       </div>
       <nav class="menu-maisons" aria-label="Maisons"><div class="menu-in">${liensMenu()}<button type="button" class="menu-lien" data-act="aller" data-cible="bientot">Bientôt</button><button type="button" class="menu-lien" data-act="aller" data-cible="infos">Infos</button></div></nav>
     </header>`;
@@ -1767,7 +1784,6 @@ function vueBoutique() {
       <div class="carte-tete"><h2 id="t-carte" class="chrome">La carte</h2><p>${n} ${n > 1 ? 'parfums' : 'parfum'} de ${nm} ${nm > 1 ? 'maisons' : 'maison'}, en ${esc(texteTailles())}${nmi ? `, et ${nmi} ${nmi > 1 ? "miniatures d'origine" : "miniature d'origine"}` : ''}.</p></div>
       <div class="trouver" id="trouver">
         <div class="trouver-tete"><h3>Trouve ton parfum</h3><p>Choisis une envie ou une saison, la carte s'adapte.</p></div>
-        <label class="recherche-zone"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="q" class="recherche" type="search" placeholder="Un parfum, une note, une maison" aria-label="Chercher un parfum" value="${esc(S.q)}" autocomplete="off"></label>
         <div class="filtre-bloc"><h4>Par envie</h4><div class="envies" role="group" aria-label="Famille olfactive">${FAMILLES.map(f => { const c = compteF(f[0]); if (!c) return ''; const au = AURA[f[0]]; return `<button type="button" class="envie" data-act="famille" data-f="${f[0]}" aria-pressed="${S.famille === f[0]}" style="--a:${au[0]};--b:${au[1]}"><span class="envie-nom">${f[1]}</span><span class="envie-compte">${c} ${c > 1 ? 'parfums' : 'parfum'}</span></button>`; }).join('')}</div></div>
         <div class="filtre-bloc"><h4>Par saison</h4><div class="saisons" role="group" aria-label="Saison">${SAISONS.map(x => `<button type="button" class="saison" data-act="filtre" data-f="${x[0]}" aria-pressed="${S.filtre === x[0]}"><span class="icone" aria-hidden="true">${IC[x[0]]}</span><span>${x[1]}</span></button>`).join('')}</div></div>
         <div id="filtres-actifs" class="filtres-actifs" aria-live="polite"></div>
@@ -1830,13 +1846,28 @@ function rendreGrille() {
     </section>`);
   });
   const html = grandes.join('') + blocMinis() + (petites.length ? `<div class="petites-maisons">${petites.join('')}</div>` : '');
-  z.innerHTML = typo(html) || '<div class="vide"><p>Aucun parfum ne correspond.</p><button type="button" class="btn discret" data-act="tout-voir">Tout afficher</button></div>';
+  const q = S.q.trim();
+  const nb = q ? ST.parfums.filter(filtrer).length : 0;
+  const tete = q && nb ? `<div class="res-recherche" role="status"><p>${nb} ${nb > 1 ? 'résultats' : 'résultat'} pour « ${esc(q)} »</p><button type="button" class="lien" data-act="effacer">Tout afficher</button></div>` : '';
+  z.innerHTML = html ? typo(tete + html) : `<div class="vide"${q ? ' role="status"' : ''}><p>${q ? `Aucun parfum pour « ${esc(q)} ». Essaie un nom, une maison ou une note : vanille, rose, oud…` : 'Aucun parfum ne correspond.'}</p><button type="button" class="btn discret" data-act="tout-voir">Tout afficher</button></div>`;
   rendreBarre();
   majFiltres();
   S.menuActif = undefined;
   majMenu();
   suivreLumiere();
 }
+/* recherche depuis l'en-tête : si le début des résultats n'est pas à l'écran, on y va (vers le haut ou le bas) */
+function versResultats() {
+  if (!S.q.trim()) return;
+  const z = document.getElementById('sections');
+  if (!z) return;
+  const haut = z.getBoundingClientRect().top, h = hauteurFixe();
+  const vue = window.visualViewport ? visualViewport.height : innerHeight;
+  if (haut >= h - 8 && haut < vue * .5) return;
+  S.verrou = null;
+  defiler(z);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && e.target.id === 'q') { e.preventDefault(); e.target.blur(); } });
 /* Défilement vers une section : animation faite main, qui recalcule la cible à chaque image.
    Elle absorbe les décalages de mise en page et évite les défilements doux du navigateur,
    qui s'interrompent entre eux sur iPhone. */
@@ -2124,7 +2155,7 @@ function rendreBarre() {
   const c = contenuPanier();
   const el = document.getElementById('barre');
   const h = document.getElementById('entete-sel');
-  if (h) { h.hidden = !c.n; h.textContent = c.n ? `Mon panier (${c.n})` : ''; }
+  if (h) { h.hidden = !c.n; h.innerHTML = c.n ? `${IC_SAC}<b>${c.n}</b>` : ''; h.setAttribute('aria-label', c.n ? `Mon panier, ${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}` : 'Mon panier'); }
   if (!el) return;
   if (!c.n) { el.hidden = true; el.innerHTML = ''; return; }
   el.hidden = false;
@@ -4416,7 +4447,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => {
   const t = e.target;
-  if (t.id === 'q') { S.q = t.value; rendreGrille(); return; }
+  if (t.id === 'q') { S.q = t.value; rendreGrille(); versResultats(); return; }
   if (t.id === 'st-q') { S.qStock = t.value; rendreListeStock(); return; }
   if (t.id === 'vs-q' && S.vs) { S.vs.q = t.value; const g = document.getElementById('vs-grille'); if (g) g.innerHTML = typo(grilleVente()); return; }
   if (t.id === 'v-qte') { majPrixVente(); return; }
