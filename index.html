@@ -1719,7 +1719,7 @@ function blocFaq() {
     ["C'est quoi un décant ?", `C'est un parfum transvasé depuis son flacon d'origine dans un petit vaporisateur. Tu as exactement le même jus, en ${texteTailles()}, pour une fraction du prix du flacon entier. Idéal pour découvrir un parfum, varier selon les saisons ou l'emporter partout.`],
     ['Les parfums sont-ils authentiques ?', "Oui. Chaque décant est prélevé sur un flacon d'origine de la maison, jamais sur une imitation."],
     ['Combien de temps dure un 10 ml ?', "Un 10 ml donne en général une centaine de pulvérisations ou un peu plus. À trois ou quatre sprays par jour, ça fait plusieurs semaines."],
-    ['Comment commander ?', `Ouvre la fiche d'un parfum, choisis ta taille et touche « Acheter » : ta commande est copiée, colle-la en message ${reseauxTexte()}. Pour plusieurs parfums, ajoute-les à ta sélection puis commande en une fois.`]
+    ['Comment commander ?', `Ouvre la fiche d'un parfum, choisis ta taille et touche « Acheter » : ta commande est copiée, colle-la en message ${reseauxTexte()}. Pour plusieurs parfums, ajoute-les à ton panier puis commande en une fois.`]
   ];
   if (B.lieuRemise || B.zoneLivraison) q.push(['Retrait ou livraison ?', [B.lieuRemise ? `La remise en main propre à ${B.lieuRemise} est gratuite, sans minimum d'achat.` : '', B.zoneLivraison ? `La livraison à ${B.zoneLivraison} est possible ${seuilTexte()}.` : ''].filter(Boolean).join(' ')]);
   return `<section class="faq" aria-labelledby="t-faq">${ornement()}<h2 id="t-faq">Questions fréquentes</h2>${q.map(x => `<details><summary>${esc(x[0])}</summary><p>${esc(x[1])}</p></details>`).join('')}</section>`;
@@ -2221,8 +2221,8 @@ function majPuceFiche(attente) {
   const n = contenuPanier().n;
   b.hidden = !n;
   b.classList.toggle('attend', !!attente);
-  b.innerHTML = `${IC_SAC}<span>Ma sélection</span><b>${n}</b>`;
-  b.setAttribute('aria-label', `Ma sélection, ${n} ${n > 1 ? 'parfums' : 'parfum'}`);
+  b.innerHTML = `${IC_SAC}<span>Mon panier</span><b>${n}</b>`;
+  b.setAttribute('aria-label', `Mon panier, ${n} ${n > 1 ? 'parfums' : 'parfum'}`);
 }
 function rebond(el) { if (!el) return; el.classList.remove('rebond'); void el.offsetWidth; el.classList.add('rebond'); }
 function envolSelection(depart, s) {
@@ -2253,11 +2253,11 @@ function rendreBarre() {
   const c = contenuPanier();
   const el = document.getElementById('barre');
   const h = document.getElementById('entete-sel');
-  if (h) { h.hidden = !c.n; h.textContent = c.n ? `Ma sélection (${c.n})` : ''; }
+  if (h) { h.hidden = !c.n; h.textContent = c.n ? `Mon panier (${c.n})` : ''; }
   if (!el) return;
   if (!c.n) { el.hidden = true; el.innerHTML = ''; return; }
   el.hidden = false;
-  el.innerHTML = `<div class="barre-in"><span><small>Ma sélection</small><b>${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}</b></span><button type="button" class="btn plein" data-act="panier">Commander</button></div><div class="barre-progres">${progression(c)}</div>`;
+  el.innerHTML = `<div class="barre-in"><span><small>Mon panier</small><b>${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}</b></span><button type="button" class="btn plein" data-act="panier">Commander</button></div><div class="barre-progres">${progression(c)}</div>`;
 }
 function ouvrirPanier() { ouvrir('', 'leger'); remplirPanier(); }
 function remplirPanier() {
@@ -2273,7 +2273,7 @@ function remplirPanier() {
   if (B.lieuRemise) modes.push(`<label class="mode"><input type="radio" name="mode" value="remise" ${S.mode !== 'livraison' ? 'checked' : ''}><b>Remise en main propre à ${esc(B.lieuRemise)}</b><small>Gratuite, sans minimum d'achat.</small></label>`);
   if (B.zoneLivraison) modes.push(`<label class="mode${ok ? '' : ' off'}"><input type="radio" name="mode" value="livraison" ${S.mode === 'livraison' ? 'checked' : ''} ${ok ? '' : 'disabled'}><b>Livraison à ${esc(B.zoneLivraison)}</b><small>${ok ? 'Tu m\'envoies ton adresse en message.' : manque(c)}</small></label>`);
   d.querySelector('.fen').innerHTML = typo(`
-    <div class="fen-tete"><h2>Ma sélection</h2><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>
+    <div class="fen-tete"><h2>Mon panier</h2><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>
     <ul class="lignes">${c.lignes.map(l => `<li>
       <span class="ligne-flacon">${miniFlacon(l.s)}</span>
       <div><b>${esc(l.p.nom)}</b><span>${esc(libTailleMaj(l.p, l.s))} à ${eur(l.prix)}</span></div>
@@ -2281,7 +2281,7 @@ function remplirPanier() {
       <span class="somme">${eur(l.somme)}</span></li>`).join('')}</ul>
     <p class="total"><span>Total</span><b>${eur(c.total)}</b></p>
     ${progression(c)}
-    <p class="sel-outils"><button type="button" class="btn petit discret" data-act="vider-selection">Vider ma sélection</button></p>
+    <p class="sel-outils"><button type="button" class="btn petit discret" data-act="vider-selection">Vider mon panier</button></p>
     ${modes.length ? `<fieldset class="modes"><legend>Retrait ou livraison</legend>${modes.join('')}</fieldset>` : ''}
     <div class="section"><h3>Ton message</h3><pre class="message" id="msg">${esc(messageSelection())}</pre></div>
     <div class="achat">
@@ -2290,10 +2290,10 @@ function remplirPanier() {
       <p class="aide">En touchant « Acheter », ta commande est copiée : colle-la en message privé.</p>
     </div>`);
 }
-function boutonsAchat(origine, id, verbe) {
+function boutonsAchat(origine, id, verbe, secondaires) {
   const b = [];
   const snap = lienSnap(), insta = lienInsta(), v = verbe || 'Acheter';
-  if (snap) b.push(`<a class="btn plein large" href="${snap}" target="_blank" rel="noopener" data-act="acheter" data-o="${origine}" data-id="${esc(id)}">${v} sur Snapchat</a>`);
+  if (snap) b.push(`<a class="btn ${secondaires ? '' : 'plein '}large" href="${snap}" target="_blank" rel="noopener" data-act="acheter" data-o="${origine}" data-id="${esc(id)}">${v} sur Snapchat</a>`);
   if (insta) b.push(`<a class="btn large" href="${insta}" target="_blank" rel="noopener" data-act="acheter" data-o="${origine}" data-id="${esc(id)}">${v} sur Instagram</a>`);
   return b.join('');
 }
@@ -2454,9 +2454,9 @@ function blocAchat(p) {
     ${boutonsPrevenir(p)}`;
   return `${choix}${eco}
     ${st === 'bas' ? `<span class="etat bas">${mini || texteBas(p) === 'Dernier décant' ? esc(texteBas(p)) : `Plus que ${ml(p.stock)} en stock`}</span>` : ''}
-    ${boutonsAchat('produit', p.id, o.length ? 'Acheter' : 'Demander le prix')}
-    ${o.length ? `<button type="button" class="btn discret large" data-act="ajouter" data-id="${p.id}">Ajouter à ma sélection</button>` : ''}
-    <p class="aide">${o.length ? 'En touchant « Acheter », ta commande est copiée : colle-la en message privé.' : 'Ton message est copié : colle-le en message privé, je te réponds vite.'}</p>`;
+    ${o.length ? `<button type="button" class="btn plein large" data-act="ajouter" data-id="${p.id}">${IC_SAC}Ajouter à mon panier</button>` : ''}
+    ${boutonsAchat('produit', p.id, o.length ? 'Acheter' : 'Demander le prix', o.length > 0)}
+    <p class="aide">${o.length ? 'Ton panier garde tes parfums pour tout commander en une fois. « Acheter » copie la commande de ce parfum seul : colle-la en message privé.' : 'Ton message est copié : colle-le en message privé, je te réponds vite.'}</p>`;
 }
 function suggestions(p) {
   const f = familleDe(p);
@@ -2477,7 +2477,7 @@ function ouvrirFiche(id) {
   const nSel = contenuPanier().n;
   S.ficheId = p.id;
   ouvrir(`<button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button>
-    <button type="button" class="fiche-sel" id="fiche-sel" data-act="panier"${nSel ? '' : ' hidden'}>${IC_SAC}<span>Ma sélection</span><b>${nSel}</b></button>
+    <button type="button" class="fiche-sel" id="fiche-sel" data-act="panier"${nSel ? '' : ' hidden'}>${IC_SAC}<span>Mon panier</span><b>${nSel}</b></button>
     <div class="produit-grille">
       <div class="plaque${avecTrio ? ' avec-trio' : ''}${p.photo ? ' relief' : ''}${etat(p) === 'epuise' ? ' rupture' : ''}" id="fiche-plaque">${avecTrio ? trio(p, choixDe(p)) : plaqueContenu(p)}${drapeaux(p, true)}${p.photo ? '<span class="brillance" aria-hidden="true"></span>' : ''}</div>
       <div class="produit-info">
@@ -4376,7 +4376,7 @@ const actions = {
     S.panier[k] = (S.panier[k] || 0) + 1;
     rendreBarre(); rafraichirAchat();
     envolSelection(depart, s);
-    toast(`${p.nom}, ${libTaille(p, s)}, ajouté à ta sélection.`);
+    toast(`${p.nom}, ${libTaille(p, s)}, ajouté à ton panier.`);
   },
   'activer-3d': () => activer3d(false),
   acheter: el => {
@@ -4386,7 +4386,7 @@ const actions = {
     copier(texte).then(ok => toast(ok ? (question ? 'Message copié : colle-le dans la conversation.' : 'Commande copiée : colle-la dans la conversation.') : 'La copie a échoué : recopie le message de ta commande.'));
   },
   panier: () => ouvrirPanier(),
-  'vider-selection': () => { S.panier = {}; rendreBarre(); fermer(); rafraichirAchat(); toast('Ta sélection est vide.'); },
+  'vider-selection': () => { S.panier = {}; rendreBarre(); fermer(); rafraichirAchat(); toast('Ton panier est vide.'); },
   plus: el => { const [id, s] = el.dataset.k.split('|'); const p = trouver(id); if (p && dispo(p, Number(s))) S.panier[el.dataset.k]++; remplirPanier(); rendreBarre(); },
   moins: el => { const k = el.dataset.k; if (--S.panier[k] <= 0) delete S.panier[k]; rendreBarre(); remplirPanier(); },
   copier: el => {
