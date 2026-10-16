@@ -1043,9 +1043,9 @@ details.couts-parfums[open] > summary{margin-bottom:.6rem}
 .relief3d > .r-corps{position:absolute;inset:0;transform:translate3d(calc(var(--qx) * 3.6%),calc(var(--qy) * 2.8%),0) rotateY(calc(var(--qx) * 11deg)) rotateX(calc(var(--qy) * -6deg));transform-origin:50% 82%}
 .r-corps .r-flacon{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:drop-shadow(0 8px 10px rgba(0,0,0,.55))}
 #fiche-plaque.relief3d .r-flacon{filter:drop-shadow(calc(var(--qx) * -7px) 12px 14px rgba(0,0,0,.6))}
-.r-eclat{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask:var(--m) center/cover no-repeat;mask:var(--m) center/cover no-repeat;mix-blend-mode:screen}
-.r-eclat::before{content:"";position:absolute;top:-25%;bottom:-25%;left:-70%;right:-70%;background:linear-gradient(102deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.5) 48.5%,rgba(255,255,255,.14) 52%,rgba(255,255,255,0) 59%);transform:translateX(calc(var(--qx) * -34% + var(--qy) * 24%))}
-.r-eclat::after{content:"";position:absolute;inset:0;background:radial-gradient(38% 26% at calc(50% - var(--qx) * 35%) calc(30% - var(--qy) * 25%),rgba(255,255,255,.22),rgba(255,255,255,0) 70%)}
+.r-eclat{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask:var(--m) center/cover no-repeat;mask:var(--m) center/cover no-repeat;mix-blend-mode:soft-light}
+.r-eclat::before{content:"";position:absolute;top:-25%;bottom:-25%;left:-70%;right:-70%;background:linear-gradient(102deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.75) 49%,rgba(255,255,255,.2) 52%,rgba(255,255,255,0) 58%);transform:translateX(calc(var(--qx) * -34% + var(--qy) * 24%))}
+.r-eclat::after{content:"";position:absolute;inset:0;opacity:.5;background:radial-gradient(38% 26% at calc(50% - var(--qx) * 35%) calc(30% - var(--qy) * 25%),rgba(255,255,255,.22),rgba(255,255,255,0) 70%)}
 /* fiche : même cadrage que la photo, balancement lent, éclat qui traverse le verre à l'ouverture */
 .produit .plaque.relief3d .r-flacon{object-position:50% 42%}
 .produit .plaque.relief3d .r-eclat{-webkit-mask-position:50% 42%;mask-position:50% 42%}
@@ -1280,11 +1280,24 @@ function relief(p) {
 function contenuRelief(p) {
   const r = relief(p);
   if (!r) return plaqueContenu(p);
-  return `<img class="r-fond" src="${r}-fond.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="r-corps"><img class="r-flacon" src="${r}-relief.webp" alt="${estMini(p) ? 'Miniature' : 'Flacon'} de ${esc(p.nom)}" loading="lazy" decoding="async"><span class="r-eclat" style="--m:url(${r}-eclat.webp)" aria-hidden="true"></span></span>`;
+  return `<img class="r-fond" src="${r}-fond.jpg" data-hd="${r}-fond-hd.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="r-corps"><img class="r-flacon" src="${r}-relief.webp" data-hd="${r}-relief-hd.webp" alt="${estMini(p) ? 'Miniature' : 'Flacon'} de ${esc(p.nom)}" loading="lazy" decoding="async"><span class="r-eclat" style="--m:url(${r}-eclat.webp)" aria-hidden="true"></span></span>`;
+}
+/* fiche : on affiche d'abord l'image déjà chargée par la vignette, puis la version HD dès qu'elle est prête */
+function versionHD(zone) {
+  if (!zone) return;
+  zone.querySelectorAll('img[data-hd]').forEach(img => {
+    const hd = img.dataset.hd;
+    if (!hd || img.dataset.hdOk) return;
+    const tmp = new Image();
+    tmp.decoding = 'async';
+    tmp.onload = () => { if (!img.isConnected) return; const go = () => { img.src = hd; img.dataset.hdOk = '1'; }; tmp.decode ? tmp.decode().then(go, go) : go(); };
+    tmp.src = hd;
+  });
 }
 const classeRelief = p => relief(p) ? ' relief3d' : '';
 function plaqueContenu(p) {
-  if (p.photo) return `<img src="${esc(srcPhoto(p))}" alt="${estMini(p) ? 'Miniature' : 'Flacon'} de ${esc(p.nom)}" loading="lazy">`;
+  const hd = !surClaude() && !S.apercus[p.photo] && /^flacon-([a-z0-9-]+)\.jpg$/.test(p.photo || '') && RELIEFS.has(p.photo.slice(7, -4)) ? ` data-hd="${p.photo.replace(/\.jpg$/, '-hd.jpg')}"` : '';
+  if (p.photo) return `<img src="${esc(srcPhoto(p))}"${hd} alt="${estMini(p) ? 'Miniature' : 'Flacon'} de ${esc(p.nom)}" loading="lazy">`;
   return estMini(p) ? ecrin(p) : scene(p, tailles(p)[0] || 10);
 }
 /* miniature sans photo : un écrin à son nom, plutôt qu'un flacon inventé */
@@ -2553,6 +2566,7 @@ function ouvrirFiche(id) {
       </div>
     </div>`, 'produit leger');
   majAdresse('#' + encodeURIComponent(p.id));
+  versionHD(document.getElementById('fiche-plaque'));
   /* les barres d'accords et le parfum des fioles se remplissent quand on arrive dessus */
   aLaVue(document.querySelectorAll('#dlg .accords, #dlg .trio'));
 }
