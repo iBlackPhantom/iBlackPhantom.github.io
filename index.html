@@ -1454,15 +1454,60 @@ function tuile(p, compacte) {
     </span>
   </button>`;
 }
+/* ---------- recherche tolérante ----------
+   Sans accents ni majuscules, apostrophes, tirets et espaces ignorés (« bois d argent » = « Bois d'Argent »),
+   mots dans n'importe quel ordre (« dior bois »), et une faute de frappe pardonnée (« tobacolr »)
+   quand rien ne correspond exactement. */
+const plier = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/œ/g, 'oe').replace(/æ/g, 'ae');
+const motsDe = s => plier(s).split(/[^a-z0-9]+/).filter(Boolean);
+const colle = s => motsDe(s).join('');
+function distance(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prec = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    let mini = i;
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prec[j] + 1, cur[j - 1] + 1, prec[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (cur[j] < mini) mini = cur[j];
+    }
+    if (mini > max) return max + 1;
+    prec = cur;
+  }
+  return prec[b.length];
+}
+/* un mot tapé est « proche » d'un mot du parfum : une faute (deux pour les mots longs), même s'il n'est pas fini */
+function proche(m, w) {
+  if (m.length < 4) return false;
+  const tol = m.length >= 8 ? 2 : 1;
+  return distance(m, w, tol) <= tol || (w.length > m.length && distance(m, w.slice(0, m.length), tol) <= tol);
+}
+/* renvoie un test p => bool. Plusieurs mots qui forment le nom d'un parfum (« la colle noir ») : ce parfum seulement.
+   Sinon chaque mot doit se retrouver dans la fiche ; les fautes ne sont pardonnées que si rien ne correspond. */
+function rechercheur(requete, texteDe, liste) {
+  const mots = motsDe(requete);
+  if (!mots.length) return () => true;
+  const joint = mots.join('');
+  const parNom = p => colle(p.nom).includes(joint);
+  if (mots.length > 1 && liste.some(parNom)) return parNom;
+  const exact = p => { const c = colle(texteDe(p)); return c.includes(joint) || mots.every(m => c.includes(m)); };
+  if (liste.some(exact)) return exact;
+  return p => { const ws = motsDe(texteDe(p)); const c = ws.join(''); return mots.every(m => c.includes(m) || ws.some(w => proche(m, w))); };
+}
+const texteRecherche = p => {
+  const n = p.notes || {};
+  return [p.nom, p.maison, p.collection, estMini(p) ? 'miniature mini' : '', nomFamille(familleDe(p)), ...(p.accords || []).map(a => a.n), ...(n.tete || []), ...(n.coeur || []), ...(n.fond || []), ...(n.plat || [])].join(' ');
+};
+const texteAdmin = p => `${p.nom} ${p.maison} ${estMini(p) ? 'miniature mini' : ''}`;
+let rechCarte = { cle: null, f: null };
 function filtrer(p) {
   if (!p.visible) return false;
   if (S.filtre !== 'tous' && !(p.saisons || []).includes(S.filtre)) return false;
   if (S.famille !== 'toutes' && familleDe(p) !== S.famille) return false;
-  const q = S.q.trim().toLowerCase();
-  if (!q) return true;
-  const n = p.notes || {};
-  const texte = [p.nom, p.maison, p.collection, nomFamille(familleDe(p)), ...(p.accords || []).map(a => a.n), ...(n.tete || []), ...(n.coeur || []), ...(n.fond || []), ...(n.plat || [])].join(' ').toLowerCase();
-  return texte.includes(q);
+  if (!S.q.trim()) return true;
+  const cle = S.q + '|' + ST.parfums.length;
+  if (rechCarte.cle !== cle) rechCarte = { cle, f: rechercheur(S.q, texteRecherche, ST.parfums.filter(x => x.visible)) };
+  return rechCarte.f(p);
 }
 const RANG_ETAT = { ok: 0, bas: 0, bientot: 1, epuise: 2 };
 const parEtat = (a, b) => RANG_ETAT[etat(a)] - RANG_ETAT[etat(b)];
@@ -2401,8 +2446,12 @@ function filtreStockOk(p, f) {
   if (f === 'surveiller' && !aSurveiller(p)) return false;
   if (f === 'minis' && !estMini(p)) return false;
   if (f === 'masques' && p.visible) return false;
-  const q = sansAccents(S.qStock).trim();
-  return !q || sansAccents(p.nom + ' ' + p.maison).includes(q);
+  return !S.qStock.trim() || rechStock()(p);
+}
+let rechSt = { cle: null, f: null };
+function rechStock() {
+  if (rechSt.cle !== S.qStock) rechSt = { cle: S.qStock, f: rechercheur(S.qStock, texteAdmin, ST.parfums) };
+  return rechSt.f;
 }
 function pastilleStock(p) {
   const st = etat(p);
@@ -2865,8 +2914,8 @@ function tailleParDefaut(p) {
 const taillesVente = p => { const o = tailles(p); return o.length ? o : estMini(p) ? [p.contenance] : ST.tailles; };
 const clientsConnus = () => [...new Set(S.ventes.map(v => String(v.client || '').trim()).filter(Boolean))].slice(0, 60);
 function grilleVente() {
-  const q = sansAccents(S.vs.q).trim();
-  const l = ST.parfums.filter(p => !q || sansAccents(p.nom + ' ' + p.maison).includes(q))
+  const test = rechercheur(S.vs.q, texteAdmin, ST.parfums);
+  const l = ST.parfums.filter(test)
     .sort((a, b) => (vendable(b) - vendable(a)) || (b.visible - a.visible));
   if (!l.length) return '<p class="vide">Aucun parfum ne correspond.</p>';
   return l.map(p => {
@@ -3012,7 +3061,8 @@ function lireCommande(texte) {
     if (/^(salut|bonjour|hello|coucou|total|remise|livraison|je voudrais|merci)/.test(n)) return;
     /* « miniature » dans la ligne : la miniature, sinon le décant du même nom */
     const veutMini = /\bmini(ature)?s?\b/.test(n);
-    const cands = parfums.filter(x => n.includes(sansAccents(x.nom)));
+    const nc = colle(n);
+    const cands = parfums.filter(x => nc.includes(colle(x.nom)));
     const p = cands.find(x => estMini(x) === veutMini) || cands[0];
     if (!p) { if (/\d\s*ml/.test(n)) ignorees.push(l); return; }
     const mt = n.match(/(\d+(?:[.,]\d+)?)\s*ml/);
