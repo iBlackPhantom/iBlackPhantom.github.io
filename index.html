@@ -948,6 +948,85 @@ details.couts-parfums[open] > summary{margin-bottom:.6rem}
 @keyframes vg-vient{0%{transform:translateY(10px) scale(.97);box-shadow:0 0 0 0 rgba(227,185,111,.6)}60%{box-shadow:0 0 0 8px rgba(227,185,111,0)}100%{transform:none}}
 @media (prefers-reduced-motion:reduce){.vs-groupe-barre.vient{animation:none}}
 .sel-outils{display:flex;justify-content:flex-end;margin:-.4rem 0 0}
+
+/* ================= effets : gyroscope, fioles, sélection, zoom, vitrine en arc, sceau, reflet du cuir ================= */
+/* bouton d'activation du gyroscope (iPhone) */
+.btn-3d{display:inline-flex;align-items:center;gap:.45rem;margin-top:-.2rem;padding:.42rem .95rem .42rem .8rem;border:1px solid rgba(201,204,210,.32);border-radius:999px;background:rgba(10,10,12,.55);color:var(--argent);font-size:.82rem;letter-spacing:.02em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.btn-3d svg{width:17px;height:17px}
+.btn-3d[hidden]{display:none}
+/* gyroscope : l'emblème suit l'inclinaison et le reflet glisse sur le relief */
+.gyro .embleme-zone{transform:perspective(700px) rotateX(calc(var(--h,0) * 34deg + var(--gy,0) * -9deg)) rotateY(calc(var(--gx,0) * 13deg)) translateZ(calc(var(--h,0) * -70px))}
+.gyro .embleme-zone .reflet{animation:none;background-image:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.95) 50%,rgba(255,255,255,0) 62%);background-position:calc(50% - var(--gx,0) * 80%) calc(50% + var(--gy,0) * 20%);background-size:300% 140%;opacity:.85}
+.gyro .embleme.cuir{filter:drop-shadow(calc(var(--gx,0) * -7px) calc(5px + var(--gy,0) * 5px) 7px rgba(0,0,0,.65))}
+.gyro .tuile .plaque,.gyro .decouvrir-p .plaque{transform:perspective(900px) rotateX(calc(var(--rx,0deg) + var(--dy,0) * -7deg + var(--gy,0) * -7deg)) rotateY(calc(var(--ry,0deg) + var(--vx,0) * -18deg + var(--gx,0) * 11deg))}
+.gyro .tuile .plaque > img{transform:scale(1.07) translate(calc(var(--gx,0) * -2%),calc(var(--dy,0) * -2.5% + var(--gy,0) * -1.5%))}
+.gyro #fiche-plaque.relief:not(.tourne) > img{transform:rotateY(calc(var(--gx,0) * 14deg)) rotateX(calc(var(--gy,0) * 8deg)) scale(1.06);transition:none}
+.gyro #fiche-plaque.relief .brillance{opacity:.9;background:radial-gradient(circle at calc(50% + (var(--tx,0) + var(--gx,0) * .45) * 110%) calc(42% + (var(--ty,0) - var(--gy,0) * .35) * 90%),rgba(255,255,255,.2),rgba(255,255,255,0) 42%)}
+
+/* le parfum dans les fioles : il monte dans la taille choisie, reste à plat quand on penche, et clapote */
+.flacon .jus{transform:rotate(calc(var(--gx,0) * -24deg))}
+.flacon .jus-niveau{transform-box:fill-box;transition:transform 1.15s cubic-bezier(.3,.75,.25,1)}
+.trio-f:not(.choisi) .jus-niveau,.trio.attend:not(.vu) .jus-niveau{transform:translateY(100%)}
+@media (prefers-reduced-motion:no-preference){
+  .trio-f.choisi .jus-vague{animation:clapote 1.9s cubic-bezier(.3,.6,.4,1) .45s both}
+  .trio.attend:not(.vu) .trio-f.choisi .jus-vague{animation:none}
+}
+@keyframes clapote{0%{transform:rotate(0)}16%{transform:rotate(8deg)}36%{transform:rotate(-6deg)}56%{transform:rotate(3.5deg)}76%{transform:rotate(-1.5deg)}100%{transform:rotate(0)}}
+
+/* la sélection, visible dans la fiche ; la fiole s'y envole */
+.fiche-sel{position:fixed;z-index:2;top:calc(.8rem + env(safe-area-inset-top,0px));right:calc(max(.8rem,env(safe-area-inset-right,0px)) + 3.05rem);display:inline-flex;align-items:center;gap:.4rem;height:2.5rem;padding:0 .55rem 0 .75rem;border:1px solid var(--filet);border-radius:999px;background:rgba(17,17,19,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--platine);font-size:.85rem;font-weight:500}
+.fiche-sel svg{width:18px;height:18px}
+.fiche-sel b{display:grid;place-items:center;min-width:1.4rem;height:1.4rem;padding:0 .3rem;border-radius:999px;background:var(--platine);color:var(--nuit);font-size:.76rem;font-variant-numeric:tabular-nums}
+.fiche-sel[hidden]{display:none}
+.fiche-sel.attend b{opacity:.45}
+.fiche-sel.rebond{animation:rebond .55s cubic-bezier(.3,1.7,.5,1)}
+@keyframes rebond{0%{transform:scale(1)}35%{transform:scale(1.2)}100%{transform:scale(1)}}
+@media (min-width:860px){.fiche-sel{position:absolute}}
+.envol{position:fixed;z-index:5;width:40px;height:62px;pointer-events:none;color:var(--platine);transform:translate(-50%,-50%) scale(1.5);filter:drop-shadow(0 0 12px rgba(244,245,247,.6))}
+.envol svg{display:block;width:100%;height:100%}
+@media (prefers-reduced-motion:no-preference){.barre:not([hidden]){animation:barre-monte .5s cubic-bezier(.2,.8,.2,1)}}
+@keyframes barre-monte{from{transform:translateY(100%)}to{transform:none}}
+
+/* ouverture et fermeture de la fiche en zoom */
+::view-transition-group(bp-flacon){animation-duration:.5s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+::view-transition-old(bp-flacon),::view-transition-new(bp-flacon){height:100%;object-fit:cover}
+.vt-fiche::view-transition-old(root),.vt-fiche::view-transition-new(root){animation-duration:.34s}
+
+/* « À découvrir aujourd'hui » : vitrine en arc */
+.ouverture .decouvrir{max-width:46rem}
+.vitrine-arc{--cw:clamp(7.4rem,31vw,10.5rem);display:flex;gap:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;padding:.8rem calc(50% - var(--cw) / 2) 1.1rem;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));perspective:950px;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.vitrine-arc::-webkit-scrollbar{display:none}
+.vitrine-arc .decouvrir-p{position:relative;flex:0 0 var(--cw);scroll-snap-align:center;transform:rotateY(calc(var(--o,0) * -40deg)) scale(calc(1 - var(--oa,0) * .13));transform-origin:50% 45%}
+.vitrine-arc .decouvrir-p .nom,.vitrine-arc .decouvrir-p .prix{opacity:calc(1 - var(--oa,0) * 1.15)}
+.vitrine-arc .decouvrir-p .plaque{box-shadow:0 18px 40px rgba(0,0,0,.6)}
+@media (min-width:860px){.vitrine-arc{margin:0;--cw:10.5rem}}
+
+/* sceau « Rupture », frappé en relief */
+.sceau{position:absolute;z-index:2;top:.4rem;right:.4rem;width:4.5rem;height:4.5rem;transform:rotate(-14deg);pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.sceau svg{display:block;width:100%;height:100%;overflow:visible}
+.sc-fond{fill:rgba(12,12,14,.84);stroke:rgba(255,255,255,.16);stroke-width:1}
+.sc-trait{fill:none;stroke:url(#bp-sceau-metal);stroke-width:1.1;opacity:.8}
+.sc-tour{font:600 8.2px var(--f-texte);fill:url(#bp-sceau-metal);text-transform:uppercase}
+.sc-mot{font:italic 500 15.5px var(--f-titre);fill:#E7A497}
+.sc-bp{font:500 8px var(--f-titre);letter-spacing:2.4px;fill:#C9CCD2}
+.bloc-maison.petite .sceau,.decouvrir-p .sceau{width:3.9rem;height:3.9rem}
+.sceau.grand{top:auto;bottom:1.1rem;right:1.1rem;width:7.4rem;height:7.4rem}
+@media (prefers-reduced-motion:no-preference){.sceau.grand{animation:frappe .65s cubic-bezier(.3,1.4,.5,1) .3s backwards}}
+@keyframes frappe{from{transform:rotate(-14deg) scale(1.75);opacity:0}to{transform:rotate(-14deg) scale(1);opacity:1}}
+
+/* reflet sur le cuir du fond : il glisse quand on descend (et quand on penche) */
+.lustre{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.lustre::before{content:"";position:absolute;left:-45vmax;top:-48vmax;width:115vmax;height:72vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.11),rgba(255,255,255,.04) 55%,rgba(255,255,255,0));transform:translate3d(calc(var(--sy,0) * 60vw + var(--gx,0) * 16vw),calc(var(--sy,0) * 108vh + var(--gy,0) * 7vh),0) rotate(-24deg);will-change:transform}
+@media (prefers-reduced-motion:reduce){.lustre{display:none}}
+
+/* barres d'accords qui se remplissent */
+@media (prefers-reduced-motion:no-preference){
+  .accords.attend:not(.vu) .jauge span{width:0}
+  .accords.vu .jauge span{animation:jauge 1.1s cubic-bezier(.2,.8,.2,1) calc(var(--i,0) * .09s) both}
+  .accords.attend li{opacity:.35;transition:opacity .5s ease calc(var(--i,0) * .09s)}
+  .accords.vu li{opacity:1}
+}
+@keyframes jauge{from{width:0}}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":25,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":0,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":20,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":200,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"30":70},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy."},"deduitJusqua":1792081553367,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -1205,8 +1284,13 @@ function installerDegrades() {
     <linearGradient id="bp-fondu-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF"/><stop offset=".42" stop-color="#FFF" stop-opacity="0"/></linearGradient>
     <mask id="bp-fondu" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#bp-fondu-g)"/></mask>
     <radialGradient id="bp-ombre"><stop offset="0" stop-color="#000" stop-opacity=".7"/><stop offset=".6" stop-color="#000" stop-opacity=".25"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <filter id="bp-relief" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy=".8" stdDeviation="0" flood-color="#000" flood-opacity=".95"/><feDropShadow dx="0" dy="-.55" stdDeviation="0" flood-color="#FFF" flood-opacity=".28"/></filter>
+    <path id="bp-sceau-arc" d="M50,50 m-36.5,0 a36.5,36.5 0 1,1 73,0 a36.5,36.5 0 1,1 -73,0"/>
+    <linearGradient id="bp-sceau-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9CCD2"/><stop offset=".55" stop-color="#8E9199"/><stop offset="1" stop-color="#E2E4E8"/></linearGradient>
   </defs></svg>`;
   document.body.appendChild(d.firstChild);
+  /* reflet posé sur le cuir du fond */
+  if (!document.querySelector('.lustre')) { const l = document.createElement('div'); l.className = 'lustre'; l.setAttribute('aria-hidden', 'true'); document.body.insertBefore(l, document.body.firstChild); }
 }
 function lignesNom(nom) {
   const n = String(nom || '');
@@ -1244,12 +1328,18 @@ function flacon(p, ml, nom) {
     txt = `<text x="${cx}" y="${ey + eh * .5 + fs * .34}" text-anchor="middle" font-family="'Bodoni Moda',Didot,Georgia,serif" font-style="italic" font-size="${fs.toFixed(2)}" fill="#E9EBEF">BP</text>`;
   }
   const id = 'bpf' + (++numFlacon), Hr = H + REFLET;
+  /* le jus : coupé à l'intérieur du verre, il monte quand on choisit la taille et reste à plat quand on penche le téléphone */
+  const cj = JUS[fam] || JUS[''], yS = (yJus + hJus / 2).toFixed(2);
   return `<svg class="flacon" viewBox="0 0 ${W.toFixed(1)} ${Hr.toFixed(1)}" aria-hidden="true" focusable="false">
+    <defs><clipPath id="${id}c"><rect x="${xi}" y="${(yCorps + .6).toFixed(2)}" width="${wi}" height="${(yBas - base - yCorps - .6).toFixed(2)}" rx="${(rx * .8).toFixed(2)}"/></clipPath>
+      <linearGradient id="${id}j" gradientUnits="userSpaceOnUse" x1="${xi}" x2="${(xi + wi).toFixed(2)}" y1="0" y2="0"><stop offset="0" stop-color="${cj[1]}"/><stop offset=".3" stop-color="${cj[0]}"/><stop offset=".62" stop-color="${cj[0]}"/><stop offset="1" stop-color="${cj[1]}"/></linearGradient></defs>
     <use href="#${id}" transform="translate(0 ${(yBas * 2 + .4).toFixed(2)}) scale(1 -1)" mask="url(#bp-fondu)" opacity=".3"/>
     <ellipse cx="${cx}" cy="${yBas + .6}" rx="${f.d * .62}" ry="${Math.max(1.6, f.d * .07)}" fill="url(#bp-ombre)"/>
     <g id="${id}">
-    <rect x="${xi}" y="${yJus}" width="${wi}" height="${hJus}" fill="url(#bp-jus-${fam || 'x'})"/>
-    <ellipse cx="${cx}" cy="${yJus}" rx="${wi / 2}" ry=".9" fill="${JUS[fam] ? JUS[fam][0] : JUS[''][0]}" opacity=".95"/>
+    <g clip-path="url(#${id}c)"><g class="jus" style="transform-origin:${cx}px ${yS}px"><g class="jus-vague" style="transform-origin:${cx}px ${yS}px"><g class="jus-niveau">
+      <rect x="${(xi - wi).toFixed(2)}" y="${yJus.toFixed(2)}" width="${(wi * 3).toFixed(2)}" height="${(hJus + wi).toFixed(2)}" fill="url(#${id}j)"/>
+      <ellipse cx="${cx}" cy="${yJus.toFixed(2)}" rx="${(wi * .9).toFixed(2)}" ry=".9" fill="${cj[0]}" opacity=".95"/>
+    </g></g></g></g>
     <line x1="${cx + f.d * .08}" y1="${yCorps}" x2="${cx + f.d * .1}" y2="${yBas - base - .8}" stroke="#FFFFFF" stroke-opacity=".55" stroke-width=".45"/>
     <rect x="${cx - f.d / 2}" y="${yCorps}" width="${f.d}" height="${f.h}" rx="${rx}" fill="url(#bp-verre)" stroke="#E2E4E8" stroke-opacity=".38" stroke-width=".35"/>
     <rect x="${cx - f.d / 2 + .5}" y="${yBas - base}" width="${f.d - 1}" height="${base - .5}" rx="${rx * .7}" fill="url(#bp-socle)"/>
@@ -1296,8 +1386,19 @@ document.addEventListener('scroll', e => {
   if (!lumiereRaf && vues.size) lumiereRaf = requestAnimationFrame(majLumiere);
   const r = e.target;
   if (r && r.classList && r.classList.contains('rangee')) elan(r);
-  if (r === document) majEmbleme();
+  if (r && r.id === 'vitrine-arc' && !arcRaf) arcRaf = requestAnimationFrame(majArc);
+  if (r === document) { majEmbleme(); majLustre(); }
 }, { passive: true, capture: true });
+/* le reflet sur le cuir glisse quand on descend */
+let lustreRaf = 0;
+function majLustre() {
+  if (lustreRaf || sansMouvement()) return;
+  lustreRaf = requestAnimationFrame(() => {
+    lustreRaf = 0;
+    const h = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    document.documentElement.style.setProperty('--sy', Math.max(0, Math.min(1, scrollY / h)).toFixed(4));
+  });
+}
 
 /* ---------- 3D ---------- */
 const sansMouvement = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -1373,6 +1474,59 @@ if (window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matche
     if (pl && !pl.contains(e.relatedTarget)) { pl.style.removeProperty('--rx'); pl.style.removeProperty('--ry'); }
   });
 }
+/* ---------- gyroscope : en penchant le téléphone, le relief accroche la lumière et les flacons pivotent ----------
+   iPhone : il faut l'accord du client (bouton « Activer l'effet 3D »). Android : automatique.
+   --gx et --gy (de -1 à 1) sont posés sur la page et lissés ; le CSS s'en sert partout. */
+const CLE_3D = 'bp-3d';
+const G3 = { on: false, x: 0, y: 0, cx: 0, cy: 0, x0: null, y0: null, raf: 0, ecoute: false, demande: false };
+const borne = (v, a) => Math.max(-a, Math.min(a, v));
+function orientation(e) {
+  if (e.gamma == null || e.beta == null) return;
+  const ang = screen.orientation && typeof screen.orientation.angle === 'number' ? screen.orientation.angle : Number(window.orientation) || 0;
+  let gx = e.gamma, gy = e.beta;
+  if (ang === 90) { gx = e.beta; gy = -e.gamma; } else if (ang === 270 || ang === -90) { gx = -e.beta; gy = e.gamma; }
+  /* la position de repos suit lentement la façon de tenir le téléphone */
+  if (G3.x0 == null) { G3.x0 = gx; G3.y0 = gy; }
+  G3.x0 += (gx - G3.x0) * .004; G3.y0 += (gy - G3.y0) * .012;
+  G3.x = borne((gx - G3.x0) / 24, 1); G3.y = borne((gy - G3.y0) / 18, 1);
+  if (!G3.on) { G3.on = true; document.documentElement.classList.add('gyro'); majBouton3d(); }
+  if (!G3.raf) G3.raf = requestAnimationFrame(animer3d);
+}
+function animer3d() {
+  G3.raf = 0;
+  G3.cx += (G3.x - G3.cx) * .14; G3.cy += (G3.y - G3.cy) * .14;
+  const r = document.documentElement.style;
+  r.setProperty('--gx', G3.cx.toFixed(3)); r.setProperty('--gy', G3.cy.toFixed(3));
+  if (Math.abs(G3.x - G3.cx) > .002 || Math.abs(G3.y - G3.cy) > .002) G3.raf = requestAnimationFrame(animer3d);
+}
+const avecGyro = () => typeof DeviceOrientationEvent !== 'undefined' && !sansMouvement() && !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+const gyroSurDemande = () => typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+function ecouter3d() { if (!G3.ecoute) { G3.ecoute = true; addEventListener('deviceorientation', orientation); } }
+const montrer3d = () => avecGyro() && gyroSurDemande() && !G3.on && !S.vendeur;
+function majBouton3d() { document.querySelectorAll('.btn-3d').forEach(b => { b.hidden = !montrer3d(); }); }
+async function activer3d(silencieux) {
+  if (G3.demande) return;
+  G3.demande = true;
+  try {
+    if (gyroSurDemande()) {
+      const r = await DeviceOrientationEvent.requestPermission();
+      if (r !== 'granted') { if (!silencieux) toast("Effet 3D refusé. Pour le réactiver, ferme et rouvre Safari, puis touche à nouveau « Activer l'effet 3D »."); return; }
+    }
+    ecouter3d();
+    ecrire(CLE_3D, 'oui');
+    if (!silencieux) toast("Effet 3D activé : incline doucement ton téléphone.");
+  } catch (e) { if (!silencieux) toast("L'effet 3D n'est pas disponible sur ce téléphone."); }
+  finally { G3.demande = false; }
+}
+function init3d() {
+  if (!avecGyro()) return;
+  ecouter3d();
+  /* iPhone : déjà activé une fois ? On redemande au premier toucher (Safari s'en souvient souvent sans rien afficher) */
+  if (gyroSurDemande() && lire(CLE_3D) === 'oui') {
+    const une = () => { removeEventListener('touchend', une, true); if (!G3.on) activer3d(true); };
+    addEventListener('touchend', une, true);
+  }
+}
 /* une scène : le flacon sur son plateau, avec le halo de sa famille */
 function scene(p, ml, nom) {
   const au = AURA[familleDe(p)] || ['#C9CCD2', '#8E9199'];
@@ -1425,12 +1579,18 @@ function listeTailles(p) {
   if (o.length < 2) return o.length ? o[0] + ' ml' : '';
   return o.slice(0, -1).join(', ') + ' et ' + o[o.length - 1] + ' ml';
 }
+/* sceau frappé : un tampon rond, en relief, pour les parfums en rupture */
+const sceau = grand => `<span class="sceau${grand ? ' grand' : ''}" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false">
+    <circle cx="50" cy="50" r="47" class="sc-fond"/><circle cx="50" cy="50" r="44.5" class="sc-trait"/><circle cx="50" cy="50" r="29" class="sc-trait"/>
+    <text class="sc-tour" filter="url(#bp-relief)"><textPath href="#bp-sceau-arc" xlink:href="#bp-sceau-arc" textLength="216" lengthAdjust="spacing">BLACKPHANTOM · HORS STOCK · BLACKPHANTOM · HORS STOCK ·</textPath></text>
+    <text x="50" y="49" text-anchor="middle" class="sc-mot" filter="url(#bp-relief)">Rupture</text><text x="50" y="62" text-anchor="middle" class="sc-bp" filter="url(#bp-relief)">BP</text>
+  </svg></span>`;
 /* pastilles et états posés sur la photo */
 function drapeaux(p, fiche) {
   const st = etat(p);
   return (p.badge ? `<span class="drapeau marque-badge${p.badge === 'Rare' ? ' rare' : ''}">${esc(p.badge)}</span>` : '')
     + (st === 'bas' ? `<span class="drapeau stock bas">${esc(texteBas(p))}</span>` : '')
-    + (st === 'epuise' ? (fiche ? '<span class="voile rupture" aria-hidden="true"><span class="voile-txt">Rupture de stock</span></span>' : '<span class="ruban" aria-hidden="true"><span>Rupture</span></span>') : '')
+    + (st === 'epuise' ? (fiche ? `<span class="voile rupture" aria-hidden="true"></span>${sceau(true)}` : sceau(false)) : '')
     + (st === 'bientot' ? '<span class="voile" aria-hidden="true"><span class="voile-txt"><span class="voile-point"></span>Bientôt disponible</span></span>' : '')
     + (estMini(p) && p.photo ? `<span class="drapeau format">${esc(ml(p.contenance))}</span>` : '');
 }
@@ -1642,25 +1802,49 @@ function texteTailles() {
   const t = prop.length ? prop : ST.tailles;
   return t.length > 1 ? t.slice(0, -1).join(', ') + ' ou ' + t[t.length - 1] + ' ml' : (t[0] || '') + ' ml';
 }
-/* trois flacons sous le titre : ceux mis en avant d'abord, puis une sélection qui change chaque jour */
+/* flacons sous le titre : ceux mis en avant d'abord, puis une sélection qui change chaque jour */
 function choixDecouvrir() {
   const vis = ST.parfums.filter(p => vendable(p) && p.photo && !estMini(p));
   const mis = vis.filter(p => p.badge), reste = vis.filter(p => !p.badge);
   const j = Math.floor(Date.now() / 864e5) * 3;
-  return [...mis, ...reste.map((_, i) => reste[(i + j) % reste.length])].slice(0, 3);
+  return [...mis, ...reste.map((_, i) => reste[(i + j) % reste.length])].slice(0, 7);
 }
+/* vitrine en arc : celui du milieu en avant, les autres tournés sur les côtés */
 function blocDecouvrir() {
   const l = choixDecouvrir();
   if (l.length < 3) return '';
   return `<div class="decouvrir" aria-labelledby="t-decouvrir"><p class="decouvrir-titre" id="t-decouvrir">À découvrir aujourd'hui</p>
-    <div class="decouvrir-liste">${l.map(p => `<button type="button" class="decouvrir-p" data-act="fiche" data-id="${p.id}"><span class="plaque">${plaqueContenu(p)}</span><span class="nom">${esc(p.nom)}</span><span class="prix">dès&nbsp;${eur(prixMin(p))}</span></button>`).join('')}</div></div>`;
+    <div class="decouvrir-liste vitrine-arc" id="vitrine-arc">${l.map(p => `<button type="button" class="decouvrir-p" data-act="fiche" data-id="${p.id}"><span class="plaque">${plaqueContenu(p)}</span><span class="nom">${esc(p.nom)}</span><span class="prix">dès&nbsp;${eur(prixMin(p))}</span></button>`).join('')}</div></div>`;
 }
+let arcRaf = 0;
+function majArc() {
+  arcRaf = 0;
+  const c = document.getElementById('vitrine-arc');
+  if (!c) return;
+  const r = c.getBoundingClientRect(), mil = r.left + r.width / 2;
+  c.querySelectorAll('.decouvrir-p').forEach(b => {
+    const q = b.getBoundingClientRect();
+    const o = borne((q.left + q.width / 2 - mil) / (q.width || 1), 2.6);
+    b.style.setProperty('--o', borne(o, 1.25).toFixed(3)); b.style.setProperty('--oa', Math.abs(o).toFixed(3));
+    b.style.zIndex = String(10 - Math.round(Math.abs(o) * 2));
+  });
+}
+function initArc() {
+  const c = document.getElementById('vitrine-arc');
+  if (!c) return;
+  const items = c.querySelectorAll('.decouvrir-p');
+  const cible = items[Math.min(1, items.length - 1)];
+  if (cible) c.scrollLeft = cible.offsetLeft + cible.offsetWidth / 2 - c.clientWidth / 2;
+  majArc();
+}
+addEventListener('resize', () => { if (!arcRaf) arcRaf = requestAnimationFrame(initArc); });
 function vueOuverture() {
   const B = ST.boutique;
   return `<section class="ouverture" aria-labelledby="t-ouverture">
       <canvas id="fumee" aria-hidden="true"></canvas>
       ${surClaude() ? `<img class="embleme" src="${LOGO}" alt="${esc(B.nom)}" width="240" height="240">`
         : `<span class="embleme-zone"><img class="embleme cuir" src="cuir2-embleme.webp" alt="${esc(B.nom)}" width="270" height="310"><span class="reflet" aria-hidden="true"></span></span>`}
+      <button type="button" class="btn-3d" data-act="activer-3d"${montrer3d() ? '' : ' hidden'}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.4" transform="rotate(-14 12 12)"/><path d="M3.5 9.5c-1 1.6-1 3.4 0 5M20.5 9.5c1 1.6 1 3.4 0 5" stroke-linecap="round"/></svg>Activer l'effet 3D</button>
       <h1 id="t-ouverture" class="chrome">${esc(B.titre || B.nom)}</h1>
       ${B.accroche ? `<p class="accroche">${esc(B.accroche)}</p>` : ''}
       <div class="actions"><button type="button" class="btn plein" data-act="aller" data-cible="carte">Découvrir la carte</button><button type="button" class="btn" data-act="quiz">Trouver mon parfum</button></div>
@@ -2029,8 +2213,43 @@ function chargerSelection() {
     if (d.mode === 'livraison' || d.mode === 'remise') S.mode = d.mode;
   } catch (e) {}
 }
+/* dans la fiche, la sélection reste visible en haut : la fiole y atterrit */
+const IC_SAC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10" stroke-linecap="round"/></svg>';
+function majPuceFiche(attente) {
+  const b = document.getElementById('fiche-sel');
+  if (!b) return;
+  const n = contenuPanier().n;
+  b.hidden = !n;
+  b.classList.toggle('attend', !!attente);
+  b.innerHTML = `${IC_SAC}<span>Ma sélection</span><b>${n}</b>`;
+  b.setAttribute('aria-label', `Ma sélection, ${n} ${n > 1 ? 'parfums' : 'parfum'}`);
+}
+function rebond(el) { if (!el) return; el.classList.remove('rebond'); void el.offsetWidth; el.classList.add('rebond'); }
+function envolSelection(depart, s) {
+  const puce = document.getElementById('fiche-sel');
+  if (!puce || sansMouvement() || !depart || typeof Element.prototype.animate !== 'function') { majPuceFiche(); rebond(puce); return; }
+  majPuceFiche(true);
+  const b = puce.getBoundingClientRect();
+  const x0 = depart.left + depart.width / 2, y0 = depart.top + depart.height / 2;
+  const dx = b.left + b.width / 2 - x0, dy = b.top + b.height / 2 - y0;
+  const v = document.createElement('span');
+  v.className = 'envol'; v.innerHTML = miniFlacon(s);
+  v.style.left = x0 + 'px'; v.style.top = y0 + 'px';
+  (document.getElementById('dlg') || document.body).appendChild(v);
+  /* trajet en courbe : la fiole monte, puis file vers la puce en rapetissant */
+  const im = [];
+  for (let i = 0; i <= 16; i++) {
+    const t = i / 16, u = 1 - t;
+    const x = 2 * u * t * (dx * .1) + t * t * dx, y = 2 * u * t * (dy * .95) + t * t * dy;
+    im.push({ transform: `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${(1.5 - .95 * t).toFixed(3)}) rotate(${(-18 * t).toFixed(1)}deg)`, opacity: t > .88 ? (1 - t) / .12 : 1 });
+  }
+  const a = v.animate(im, { duration: 720, easing: 'cubic-bezier(.5,.05,.35,1)' });
+  const fin = () => { v.remove(); majPuceFiche(); rebond(puce); };
+  a.onfinish = fin; a.oncancel = fin;
+}
 function rendreBarre() {
   sauverSelection();
+  majPuceFiche();
   const c = contenuPanier();
   const el = document.getElementById('barre');
   const h = document.getElementById('entete-sel');
@@ -2255,7 +2474,10 @@ function ouvrirFiche(id) {
   const quand = (p.saisons && p.saisons.length) || (p.moment && p.moment.length);
   const mini = estMini(p), j = jumeau(p);
   const avecTrio = !p.photo && !mini;
+  const nSel = contenuPanier().n;
+  S.ficheId = p.id;
   ouvrir(`<button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button>
+    <button type="button" class="fiche-sel" id="fiche-sel" data-act="panier"${nSel ? '' : ' hidden'}>${IC_SAC}<span>Ma sélection</span><b>${nSel}</b></button>
     <div class="produit-grille">
       <div class="plaque${avecTrio ? ' avec-trio' : ''}${p.photo ? ' relief' : ''}${etat(p) === 'epuise' ? ' rupture' : ''}" id="fiche-plaque">${avecTrio ? trio(p, choixDe(p)) : plaqueContenu(p)}${drapeaux(p, true)}${p.photo ? '<span class="brillance" aria-hidden="true"></span>' : ''}</div>
       <div class="produit-info">
@@ -2271,13 +2493,57 @@ function ouvrirFiche(id) {
         ${quand ? `<section class="section"><h3>Quand le porter</h3>
           <div class="quand">${SAISONS.map(s => { const o = p.saisons.includes(s[0]); return `<span class="case${o ? ' oui' : ''}">${s[1]}<span class="vh">${o ? ', conseillé' : ''}</span></span>`; }).join('')}</div>
           <div class="quand duo">${MOMENTS.map(m => { const o = p.moment.includes(m[0]); return `<span class="case${o ? ' oui' : ''}">${m[1]}<span class="vh">${o ? ', conseillé' : ''}</span></span>`; }).join('')}</div></section>` : ''}
-        ${acc.length ? `<section class="section"><h3>Accords principaux</h3><ul class="accords">${acc.map(a => `<li><span>${esc(a.n)}</span>${a.v != null ? `<span class="jauge" aria-hidden="true"><span style="--c:${couleur(a.n)};--w:${Math.max(4, Math.min(100, a.v))}%"></span></span>` : '<span></span>'}</li>`).join('')}</ul></section>` : ''}
+        ${acc.length ? `<section class="section"><h3>Accords principaux</h3><ul class="accords">${acc.map((a, i) => `<li style="--i:${i}"><span>${esc(a.n)}</span>${a.v != null ? `<span class="jauge" aria-hidden="true"><span style="--c:${couleur(a.n)};--w:${Math.max(4, Math.min(100, a.v))}%"></span></span>` : '<span></span>'}</li>`).join('')}</ul></section>` : ''}
         <section class="section"><h3>Notes</h3>${pyramide(p)}</section>
         ${p.fragrantica ? `<p class="source">Notes et accords : <a href="${esc(p.fragrantica)}" target="_blank" rel="noopener">fiche Fragrantica de ${esc(p.nom)}</a></p>` : ''}
         ${suggestions(p)}
       </div>
     </div>`, 'produit leger');
   majAdresse('#' + encodeURIComponent(p.id));
+  /* les barres d'accords et le parfum des fioles se remplissent quand on arrive dessus */
+  aLaVue(document.querySelectorAll('#dlg .accords, #dlg .trio'));
+}
+function aLaVue(els) {
+  if (!('IntersectionObserver' in window) || sansMouvement()) return;
+  els.forEach(el => {
+    el.classList.add('attend');
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { el.classList.add('vu'); io.disconnect(); } }, { threshold: .35 });
+    io.observe(el);
+  });
+}
+/* ouverture en zoom : la photo de la vignette grandit jusqu'à la fiche (iPhone à jour ; sinon ouverture normale) */
+const zoomPossible = () => typeof document.startViewTransition === 'function' && !sansMouvement();
+const visibleALEcran = el => { if (!el || !el.isConnected) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth; };
+function ficheEnZoom(el, id) {
+  const src = el && el.querySelector && el.querySelector('.plaque');
+  if (!zoomPossible() || !visibleALEcran(src)) { ouvrirFiche(id); return; }
+  src.style.viewTransitionName = 'bp-flacon';
+  document.documentElement.classList.add('vt-fiche');
+  let t;
+  try {
+    t = document.startViewTransition(() => {
+      src.style.viewTransitionName = '';
+      ouvrirFiche(id);
+      const pl = document.getElementById('fiche-plaque');
+      if (pl) pl.style.viewTransitionName = 'bp-flacon';
+    });
+  } catch (e) { src.style.viewTransitionName = ''; document.documentElement.classList.remove('vt-fiche'); ouvrirFiche(id); return; }
+  const fin = () => { const pl = document.getElementById('fiche-plaque'); if (pl) pl.style.viewTransitionName = ''; document.documentElement.classList.remove('vt-fiche'); };
+  t.finished.then(fin, fin);
+}
+/* fermeture : la photo retourne dans sa vignette si elle est à l'écran */
+function fermerEnZoom(fermeture) {
+  const d = document.getElementById('dlg');
+  const pl = d && d.classList.contains('produit') ? document.getElementById('fiche-plaque') : null;
+  const cible = pl && S.ficheId ? [...document.querySelectorAll(`#app [data-act=fiche][data-id="${CSS.escape(S.ficheId)}"] .plaque`)].find(visibleALEcran) : null;
+  if (!zoomPossible() || !visibleALEcran(pl) || !cible) { fermeture(); return; }
+  pl.style.viewTransitionName = 'bp-flacon';
+  document.documentElement.classList.add('vt-fiche');
+  let t;
+  try { t = document.startViewTransition(() => { pl.style.viewTransitionName = ''; fermeture(); cible.style.viewTransitionName = 'bp-flacon'; }); }
+  catch (e) { pl.style.viewTransitionName = ''; document.documentElement.classList.remove('vt-fiche'); fermeture(); return; }
+  const fin = () => { cible.style.viewTransitionName = ''; document.documentElement.classList.remove('vt-fiche'); };
+  t.finished.then(fin, fin);
 }
 
 function rafraichirAchat() {
@@ -2300,16 +2566,18 @@ function ouvrir(html, cls) {
     rangerToast(); if ($calque.contains(d)) $calque.innerHTML = ''; S.photoTemp = null; S.confirmSuppr = false;
     if (trouver(decodeURIComponent(location.hash.slice(1)))) majAdresse('');
   });
+  d.addEventListener('cancel', e => { if (d.classList.contains('produit') && zoomPossible()) { e.preventDefault(); fermer(); } });
   try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
   suivreLumiere();
   return d;
 }
-function fermer() {
+function fermerTout() {
   rangerToast();
   const d = document.getElementById('dlg');
   if (d) { try { d.close(); } catch (e) {} }
   $calque.innerHTML = '';
 }
+function fermer() { fermerEnZoom(fermerTout); }
 
 /* ---------- espace vendeur ---------- */
 function console_() {
@@ -2345,7 +2613,7 @@ function rendre() {
     + `<div class="page${S.vendeur && o !== 'boutique' ? ' page-vendeur' : ''}">${contenu}</div><div id="barre" class="barre" hidden></div>`
     + (S.vendeur ? `${fab}<div id="console" class="console">${console_()}</div>` : ''));
   if (S.annonceStop) { S.annonceStop(); S.annonceStop = null; }
-  if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); }
+  if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); initArc(); }
   if (!document.querySelector('.page .panneau-attente')) {
     if (o === 'ventes') rendreVentesDyn();
     if (o === 'couts') rendreCouts();
@@ -4090,7 +4358,7 @@ const actions = {
     defiler(c, () => { if (menu && S.verrou && S.verrou.id === id) S.verrou.y = scrollY; });
   },
   haut: () => { S.verrou = null; defiler(null); },
-  fiche: el => ouvrirFiche(el.dataset.id),
+  fiche: el => ficheEnZoom(el, el.dataset.id),
   taille: el => {
     const p = trouver(el.dataset.id); if (!p) return;
     const s = Number(el.dataset.s);
@@ -4104,10 +4372,13 @@ const actions = {
     const s = choixDe(p);
     if (s == null || !dispo(p, s)) { toast('Cette taille n\'est plus disponible.'); rafraichirAchat(); return; }
     const k = p.id + '|' + s;
+    const depart = el.getBoundingClientRect();
     S.panier[k] = (S.panier[k] || 0) + 1;
     rendreBarre(); rafraichirAchat();
+    envolSelection(depart, s);
     toast(`${p.nom}, ${libTaille(p, s)}, ajouté à ta sélection.`);
   },
+  'activer-3d': () => activer3d(false),
   acheter: el => {
     const p = el.dataset.o === 'produit' ? trouver(el.dataset.id) : null;
     const question = p && !tailles(p).length;
@@ -4309,6 +4580,7 @@ function demarrer(donnees) {
   try { apres = JSON.parse(sessionStorage.getItem('bp-apres') || 'null'); sessionStorage.removeItem('bp-apres'); } catch (e) {}
   if (apres && apres.onglet) S.ongletApres = apres.onglet;
   rendre();
+  init3d();
   if (apres && apres.msg) toast(apres.msg);
   if (surClaude()) { initVendeur(); return; }
   /* site hébergé : l'adresse …/#vendeur ouvre directement la connexion */
