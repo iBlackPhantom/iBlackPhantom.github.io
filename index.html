@@ -1301,6 +1301,56 @@ body:has(.a-publier) .bandeau-vente{bottom:calc(150px + env(safe-area-inset-bott
 .vue-vendeur :is(#v-dyn,#acc-dyn,#couts-zone) > *{min-width:0;margin-block:0}
 .vue-vendeur #v-dyn:empty,.vue-vendeur #acc-dyn:empty{display:none}
 .vue-vendeur .panneau{gap:1.4rem}
+/* la vente : un client, plusieurs parfums, offres appliquées toutes seules */
+.vs-pied[hidden],.vp-offres[hidden],.vp-offre-ligne[hidden]{display:none}
+.vs-consigne{margin:0;padding:0 .2rem;font-size:.92rem;color:var(--argent)}
+.vs-p.pris .plaque{box-shadow:0 0 0 2px var(--platine),0 8px 20px rgba(0,0,0,.45)}
+.vs-nb.vient{animation:nb-vient .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes nb-vient{0%{transform:scale(.3)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+.mode-vendeur dialog.vente-dlg .vs-pied{bottom:-1.1rem;margin:0 -1rem -1.1rem;padding:1.4rem 1rem 1.1rem}
+.vp-offres-note{display:grid;gap:.2rem}
+.vp-offres-note p,.vp-offres p{display:flex;align-items:center;gap:.5rem;margin:0;color:var(--offre);font-size:.95rem}
+.vp-offres-note svg,.vp-offres svg,.vp-offre-ligne svg{flex:none;width:18px;height:18px}
+.vp-offres-note b,.vp-offres b{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}
+.vp-liste{display:grid;margin:0;padding:0;list-style:none;border-radius:20px;background:#2A2A2D;overflow:hidden}
+.vp-liste > li + li{border-top:1px solid var(--i-sep)}
+.vp-tete{display:grid;grid-template-columns:48px minmax(0,1fr) auto 14px;align-items:center;gap:.75rem;width:100%;min-height:66px;padding:.55rem .85rem .55rem .7rem;border:0;background:none;color:inherit;font:inherit;text-align:left}
+.vp-tete:active{background:rgba(255,255,255,.05)}
+.vp-tete .plaque{width:48px;aspect-ratio:1;border-radius:10px}
+.vp-tete > svg{width:14px;height:14px;color:#6A6D75}
+.vp-txt{display:grid;gap:.08rem;min-width:0;line-height:1.3}
+.vp-txt b{overflow:hidden;font:600 1rem/1.3 var(--i-ui);color:var(--platine);text-overflow:ellipsis;white-space:nowrap}
+.vp-txt small{font-size:.84rem;color:var(--fumee)}
+.vp-txt small.err{color:var(--epuise)}
+.vp-tag{display:flex;align-items:center;gap:.3rem;color:var(--offre)}
+.vp-tag svg{flex:none;width:14px;height:14px}
+.vp-sous{display:grid;gap:.05rem}
+.vp-prix{font-weight:600;font-size:1rem;color:var(--platine);font-variant-numeric:tabular-nums}
+.vp-ligne.ouverte{display:grid;gap:.75rem;padding:.8rem .85rem .9rem;background:#323236}
+.mode-vendeur .vp-ligne .vs-produit{grid-template-columns:56px minmax(0,1fr) auto;padding:0;border-radius:0;background:none}
+.mode-vendeur .vp-ligne .vs-produit .plaque{width:56px}
+.vp-retirer{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:22px;background:rgba(221,144,132,.14);color:var(--epuise)}
+.vp-retirer svg{width:19px;height:19px}
+.vp-ligne .gi-ligne{margin-left:0;padding:.2rem 0;border-top:1px solid var(--i-sep)}
+.vp-ligne .gi-ligne .pas{background:#232326}
+.mode-vendeur dialog.vente-dlg .vp-ligne .v-remise{padding:0}
+.vp-offre-ligne{display:flex;align-items:center;gap:.5rem;margin:0;color:var(--offre);font-size:.9rem}
+.vp-offre-ligne b{font-weight:600}
+.vp-ligne .v-apres{padding:.7rem .8rem;border-radius:14px;background:#2A2A2D}
+.vp-ligne .v-apres:has(.v-fiole[hidden]){padding:0;background:none}
+.vp-offres{display:grid;gap:.2rem;padding:.75rem 1rem;background:rgba(140,195,163,.08)}
+.vp-ajout{display:flex;align-items:center;gap:.75rem;width:100%;min-height:54px;padding:0 1rem 0 .85rem;border:0;background:none;color:var(--platine);font:500 1rem var(--i-ui);text-align:left}
+.vp-ajout:active{background:rgba(255,255,255,.05)}
+.vp-plus{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--platine);color:#000}
+.vp-plus svg{width:17px;height:17px;stroke-width:2}
+.vp-total{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:0 .2rem;color:var(--platine);font-size:1rem}
+.vp-total small{font-size:.88rem;color:var(--fumee)}
+.vp-total b{font:600 1.55rem/1 var(--i-ui);font-variant-numeric:tabular-nums}
+.vs-abandon{display:grid;gap:.55rem;padding:1rem;border-radius:22px;background:#2A2A2D;box-shadow:0 -8px 30px rgba(0,0,0,.45)}
+.vs-abandon p{margin:0;text-align:center}
+.vs-abandon p:first-child{font-weight:600;font-size:1.05rem;color:var(--platine)}
+.vs-abandon p + p{margin-bottom:.35rem;font-size:.9rem;color:var(--argent)}
+:root{--offre:#8CC3A3}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[],"offres":[{"id":"duo-jean-couturier","nom":"Duo Jean Couturier","ids":["neuf-vanilla-exotica","neuf-rose-khayali"],"prix":160}]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":60,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":0,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":10,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":190,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"30":70},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"neuf-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Vanilla-Exotica-57967.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":69},{"n":"Noix de coco","v":60},{"n":"Fruité","v":54},{"n":"Fleur blanche","v":50},{"n":"Poudré","v":40}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille","Noix de coco","Pêche","Fleur de tiaré","Notes boisées","Jasmin","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-vanilla-exotica.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Rose-Khayali-83664.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Rose","v":87},{"n":"Cuir","v":75},{"n":"Fumé","v":71},{"n":"Boisé","v":70},{"n":"Patchouli","v":29}],"notes":{"tete":["Safran","Cardamome","Papyrus"],"coeur":["Rose","Fumée","Cuir"],"fond":["Patchouli","Cèdre","Vanille"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-rose-khayali.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-roses-vanille","maison":"Mancera","nom":"Roses Vanille","collection":"","annee":2011,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Mancera/Roses-Vanille-15210.html","accords":[{"n":"Rose","v":100},{"n":"Vanillé","v":94},{"n":"Poudré","v":55},{"n":"Musqué","v":43},{"n":"Floral","v":30},{"n":"Boisé","v":25}],"notes":{"tete":["Citron d'Italie"],"coeur":["Rose de Turquie"],"fond":["Vanille","Musc blanc","Cèdre"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"120":100},"stock":120,"visible":true,"photo":"flacon-neuf-roses-vanille.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":120,"statut":"","mention":"Neuf, dans sa boîte (sans blister).","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy.","Jean Couturier":"Maison de parfum parisienne, connue depuis 1973 pour Coriandre.","Mancera":"Maison parisienne fondée en 2008 par le parfumeur Pierre Montale."},"deduitJusqua":1792254863939,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -1349,7 +1399,8 @@ const ICV = {
   corbeille: svgT('<path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/>'),
   reglages: svgT('<circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/>'),
   retour: svgT('<path d="M14.5 6L8.5 12l6 6"/>'),
-  suite: svgT('<path d="M9.5 6l6 6-6 6"/>')
+  suite: svgT('<path d="M9.5 6l6 6-6 6"/>'),
+  offre: svgT('<path d="M4 12.5V5h7.5L20 13.5 13.5 20z"/><circle cx="8.5" cy="9" r="1.2"/>')
 };
 const COULEURS = {
   'sucré': '#D98FAE', 'miel': '#DBA640', 'vanillé': '#E8D5A4', 'lavande': '#A08FD4', 'tabac': '#93704E', 'agrumes': '#E4D65C',
@@ -2369,20 +2420,26 @@ function contenuPanier() {
     total += prix * q; n += q;
   }
   lignes.sort((a, b) => a.p.nom.localeCompare(b.p.nom, 'fr') || a.s - b.s);
-  const brut = total, remises = [];
+  const brut = total, remises = appliquerOffres(lignes);
+  lignes.forEach(l => { if (l.offre) l.sommeMsg = l.sommeOffre; });
+  remises.forEach(r => { total = arrondi(total - r.remise); });
+  return { lignes, total, n, brut, remises };
+}
+/* offres d'ensemble sur des lignes { p, s (taille), q (quantité), prix (unitaire) } : quand toutes les pièces d'une offre
+   sont là à leur taille d'offre, chacune reçoit l.offre et l.sommeOffre (sa part du prix d'ensemble, en proportion de son prix).
+   Renvoie les remises { o, k (nombre d'ensembles), remise }. */
+function appliquerOffres(lignes) {
+  const remises = [];
   for (const o of ST.boutique.offres || []) {
-    const ls = o.ids.map(id => lignes.find(l => l.p.id === id && !l.offre && l.s === tailleOffre(l.p)));
+    const ls = o.ids.map(id => lignes.find(l => l.p && l.p.id === id && !l.offre && l.prix != null && l.s === tailleOffre(l.p)));
     if (ls.some(l => !l)) continue;
     const k = Math.min(...ls.map(l => l.q)), normal = ls.reduce((t, l) => t + l.prix, 0);
     if (!(k > 0) || !(normal > o.prix)) continue;
-    /* part de chaque pièce dans le prix d'ensemble, pour le message de commande */
     let reste = o.prix;
-    ls.forEach((l, i) => { const part = i === ls.length - 1 ? reste : arrondi(l.prix * o.prix / normal); reste = arrondi(reste - part); l.offre = o; l.sommeMsg = arrondi(part * k + l.prix * (l.q - k)); });
-    const r = arrondi((normal - o.prix) * k);
-    remises.push({ o, k, remise: r });
-    total = arrondi(total - r);
+    ls.forEach((l, i) => { const part = i === ls.length - 1 ? reste : arrondi(l.prix * o.prix / normal); reste = arrondi(reste - part); l.offre = o; l.sommeOffre = arrondi(part * k + l.prix * (l.q - k)); });
+    remises.push({ o, k, remise: arrondi((normal - o.prix) * k) });
   }
-  return { lignes, total, n, brut, remises };
+  return remises;
 }
 /* ---------- offres groupées ---------- */
 const tailleOffre = p => tailles(p)[0];
@@ -2944,7 +3001,7 @@ const listeNoms = l => l.length <= 3 ? l.map(p => p.nom).join(', ') : l.slice(0,
 function taches() {
   const t = [];
   const vis = ST.parfums.filter(p => p.visible);
-  if (groupe().length) t.push({ niv: 'urgent', txt: `${nVentes(groupe().length)} en attente : pas encore ${groupe().length > 1 ? 'enregistrées' : 'enregistrée'} (${eur(totalGroupe()) || '0 €'}).`, act: 'groupe-ouvrir', lbl: 'Voir' });
+  if (groupe().length) t.push({ niv: 'urgent', txt: `Vente en cours, pas encore enregistrée : ${nParfums(nPiecesVente())}, ${eur(totalVente())}.`, act: 'groupe-ouvrir', lbl: 'Voir' });
   if (S.modifs) t.push({ niv: 'urgent', txt: `${S.modifs} ${S.modifs > 1 ? 'modifications pas encore publiées' : 'modification pas encore publiée'} : tes clients voient l'ancienne carte.`, act: 'publier', lbl: 'Publier' });
   if (S.dbEtat === 'pret') { const nd = nonDeduites(); if (nd.length) t.push({ niv: 'urgent', txt: `${nd.length} ${nd.length > 1 ? 'ventes pas encore retirées' : 'vente pas encore retirée'} du stock de la carte.`, act: 'deduire', lbl: 'Retirer' }); }
   const ep = vis.filter(p => etat(p) === 'epuise' && p.statut !== 'rupture');
@@ -3466,47 +3523,77 @@ function panneauVentes() {
     <p class="aide">${S.hote === 'gh' ? 'Le journal et tes clients restent privés : ils sont enregistrés dans ton dépôt privé GitHub, jamais sur le site.' : 'Le journal et tes clients restent privés : seul ton compte peut les lire.'} Le stock de la carte est mis à jour à chaque vente.</p>
   </section>`;
 }
-/* ---------- vente en trois touches : parfum, taille, enregistrer ---------- */
-/* ventes groupées : plusieurs ventes notées une par une (plusieurs clients au même endroit), enregistrées en une fois.
-   Gardées sur le téléphone tant qu'elles ne sont pas enregistrées, même si la feuille se ferme. */
+/* ---------- la vente : un client, un ou plusieurs parfums ---------- */
+/* On touche chaque parfum pris par le client, puis on vérifie la vente (taille, quantité, prix) et on enregistre tout d'un coup.
+   Les offres d'ensemble (le duo…) s'appliquent toutes seules dès que leurs pièces sont dans la vente.
+   La vente en cours reste gardée sur le téléphone tant qu'elle n'est pas enregistrée, même si la feuille se ferme. */
 const CLE_GROUPE = 'bp-ventes-attente';
 function groupe() {
   if (!S.groupe) {
-    let g = [];
-    try { g = JSON.parse(lire(CLE_GROUPE) || '[]'); } catch (e) {}
-    S.groupe = Array.isArray(g) ? g.filter(l => l && trouver(l.id) && l.taille > 0 && l.qte >= 1) : [];
+    let g = null;
+    try { g = JSON.parse(lire(CLE_GROUPE) || 'null'); } catch (e) {}
+    /* ancien format : une liste de ventes en attente, chacune avec son prix déjà fixé */
+    const ancien = Array.isArray(g);
+    const ls = ancien ? g : g && Array.isArray(g.lignes) ? g.lignes : [];
+    S.groupe = ls.filter(l => l && trouver(l.id) && Number(l.taille) > 0 && Number(l.qte) >= 1)
+      .map(l => ({ id: l.id, taille: Number(l.taille), qte: Math.floor(Number(l.qte)), prix: typeof l.prix === 'number' ? l.prix : null, manuel: ancien || !!l.manuel }));
+    const info = (ancien ? g[0] : g) || {};
+    S.venteInfo = { client: String(info.client || '').slice(0, 80), date: /^\d{4}-\d{2}-\d{2}$/.test(info.date || '') ? info.date : '' };
   }
   return S.groupe;
 }
-function sauverGroupe() {
-  try { if (S.groupe && S.groupe.length) localStorage.setItem(CLE_GROUPE, JSON.stringify(S.groupe)); else localStorage.removeItem(CLE_GROUPE); } catch (e) {}
+function sauverGroupe(leger) {
+  const G = groupe(), I = S.venteInfo;
+  try { if (G.length) localStorage.setItem(CLE_GROUPE, JSON.stringify({ lignes: G, client: I.client, date: I.date })); else localStorage.removeItem(CLE_GROUPE); } catch (e) {}
   const f = document.querySelector('.fab');
   if (f) f.innerHTML = typo(contenuFab());
-  rendreAccueil();
+  if (!leger) rendreAccueil();
 }
-const totalGroupe = () => groupe().reduce((t, l) => t + (l.prix || 0), 0);
-const dejaGroupe = id => groupe().filter(l => l.id === id).reduce((t, l) => t + l.taille * l.qte, 0);
-const fiolesGroupe = s => groupe().filter(l => l.taille === s && trouver(l.id) && !estMini(trouver(l.id))).reduce((t, l) => t + l.qte, 0);
+function viderVente() { S.groupe = []; S.venteInfo = { client: '', date: '' }; sauverGroupe(); }
+const ligneVente = () => S.vs ? groupe()[S.vs.i] : null;
+const nPiecesVente = () => groupe().reduce((t, l) => t + l.qte, 0);
+const nParfums = n => `${n} ${n > 1 ? 'parfums' : 'parfum'}`;
+/* ml et flacons vides déjà pris par les autres lignes de la vente (sauf la ligne d'indice « sauf ») */
+const dejaGroupe = (id, sauf) => groupe().filter((l, i) => i !== sauf && l.id === id).reduce((t, l) => t + l.taille * l.qte, 0);
+const fiolesGroupe = (s, sauf) => groupe().filter((l, i) => i !== sauf && l.taille === s && trouver(l.id) && !estMini(trouver(l.id))).reduce((t, l) => t + l.qte, 0);
 const nVentes = n => `${n} ${n > 1 ? 'ventes' : 'vente'}`;
-const contenuFab = () => `${ICV.plus}<span class="vh">Nouvelle vente</span>${groupe().length ? `<span class="fab-nb" aria-label="${nVentes(groupe().length)} en attente">${groupe().length}</span>` : ''}`;
-function ligneGroupeTexte(l) {
-  const p = trouver(l.id);
-  return `${p.nom} ${estMini(p) ? motPiece(p) : l.taille + ' ml'}${l.qte > 1 ? ' × ' + l.qte : ''}`;
-}
-function barreGroupe() {
-  const G = groupe();
-  return `<button type="button" class="vs-groupe-barre" data-act="vs-groupe"><span class="vg-nb">${G.length}</span><span class="vg-txt"><b>${nVentes(G.length)} en attente</b><small>${esc(G.map(ligneGroupeTexte).join(', '))}</small></span><span class="vg-total">${eur(totalGroupe())}</span>${ICV.suite}</button>`;
-}
+const contenuFab = () => { const n = nPiecesVente(); return `${ICV.plus}<span class="vh">Nouvelle vente</span>${n ? `<span class="fab-nb" aria-label="${nParfums(n)} dans la vente en cours">${n}</span>` : ''}`; };
 const texteTout = (n, total) => `Enregistrer ${n > 1 ? `les ${n} ventes` : 'la vente'}${total > 0 ? ' · ' + eur(total) : ''}`;
+/* prix de chaque ligne : la carte, sa part d'une offre d'ensemble quand toutes les pièces de l'offre sont dans la vente, ou le prix tapé */
+function prixVente() {
+  const ls = groupe().map(l => { const p = trouver(l.id); return { l, p, s: l.taille, q: l.qte, prix: prixDe(p, l.taille) }; });
+  const remises = appliquerOffres(ls);
+  const lignes = ls.map(x => {
+    const carte = x.prix == null ? null : arrondi(x.prix * x.q);
+    const auto = x.offre ? x.sommeOffre : carte;
+    return { carte, auto, offre: x.offre || null, final: x.l.manuel ? x.l.prix : auto };
+  });
+  return { lignes, remises, total: arrondi(lignes.reduce((t, x) => t + (x.final > 0 ? x.final : 0), 0)) };
+}
+const totalVente = () => prixVente().total;
 
 function ouvrirVente(mode, id) {
   const p = id ? trouver(id) : null;
-  const G = groupe(), der = G[G.length - 1];
-  S.vs = { etape: mode === 'coller' ? 'coller' : mode === 'groupe' && G.length ? 'groupe' : p ? 'details' : 'parfum', id: p ? p.id : null, taille: p ? tailleParDefaut(p) : null, q: '',
-    client: der ? der.client || '' : '', date: der ? der.date : aujourdhui() };
-  S.prixManuel = false;
+  const G = groupe();
+  S.vs = { etape: 'parfum', i: -1, q: '', abandon: false };
+  S.prixConfirme = new Set();
+  if (mode === 'coller') S.vs.etape = 'coller';
+  else if (p) {
+    const i = G.findIndex(l => l.id === p.id);
+    if (i >= 0) S.vs.i = i; else ajouterLigneVente(p);
+    S.vs.etape = 'panier';
+  } else if (G.length) { S.vs.etape = 'panier'; S.vs.i = G.length === 1 ? 0 : -1; }
   ouvrir('', 'leger vente-dlg');
   rendreVente();
+}
+/* un parfum touché dans la grille : une ligne de plus, ou une pièce de plus sur la même ligne */
+function ajouterLigneVente(p) {
+  const G = groupe(), s = tailleParDefaut(p);
+  let i = G.findIndex(l => l.id === p.id && l.taille === s && !l.manuel);
+  if (i >= 0) G[i].qte++;
+  else { G.push({ id: p.id, taille: s, qte: 1, prix: null, manuel: false }); i = G.length - 1; }
+  S.vs.i = i;
+  sauverGroupe(true);
 }
 function tailleParDefaut(p) {
   const o = tailles(p);
@@ -3525,8 +3612,16 @@ function grilleVente() {
     const st = etat(p);
     const info = !p.visible ? 'Masqué' : st === 'bientot' ? 'Bientôt' : p.stock == null ? 'Stock libre' : stockTexte(p);
     const n = groupe().filter(l => l.id === p.id).reduce((t, l) => t + l.qte, 0);
-    return `<button type="button" class="vs-p${vendable(p) ? '' : ' off'}" data-act="vs-choisir" data-id="${p.id}"><span class="plaque">${plaqueContenu(p)}${n ? `<span class="vs-nb">${n}</span>` : ''}</span><b>${esc(p.nom)}</b><small>${estMini(p) ? MotPiece(p) + ' · ' : ''}${esc(info)}</small></button>`;
+    return `<button type="button" class="vs-p${vendable(p) ? '' : ' off'}${n ? ' pris' : ''}" data-act="vs-choisir" data-id="${p.id}" aria-label="${esc(p.nom)}, ${esc(info)}${n ? `, ${n} dans la vente` : ''}"><span class="plaque">${plaqueContenu(p)}${n ? `<span class="vs-nb">${n}</span>` : ''}</span><b>${esc(p.nom)}</b><small>${estMini(p) ? MotPiece(p) + ' · ' : ''}${esc(info)}</small></button>`;
   }).join('');
+}
+const htmlOffresVente = remises => remises.map(r => `<p>${ICV.offre}<span>${esc(r.o.nom)}${r.k > 1 ? ' × ' + r.k : ''}</span><b>${eur(-r.remise)}</b></p>`).join('');
+/* bas de la grille : de quoi passer à la vérification, avec le total (offres comprises) */
+function piedGrille() {
+  const n = nPiecesVente();
+  if (!n) return '';
+  const P = prixVente();
+  return `${P.remises.length ? `<div class="vp-offres-note">${htmlOffresVente(P.remises)}</div>` : ''}<button type="button" class="btn plein large" id="vs-continuer" data-act="vs-panier">Continuer · ${nParfums(n)} · ${eur(P.total)}</button>`;
 }
 function htmlColler() {
   return `<p class="aide">Copie le message de commande de ton client (Snap, Insta…) et colle-le ici : la commande se lit toute seule, parfums, tailles et prix compris.</p>
@@ -3540,92 +3635,115 @@ function htmlColler() {
     <p id="cmd-err" class="err" role="alert"></p>
     <div id="cmd-apercu" aria-live="polite"></div>`;
 }
+/* « Annuler » alors que des parfums sont choisis : on demande avant de tout retirer */
+function htmlAbandon() {
+  const n = nPiecesVente();
+  return `<div class="vs-abandon" role="alertdialog" aria-labelledby="vs-ab-t" aria-describedby="vs-ab-d"><p id="vs-ab-t">Abandonner cette vente ?</p><p id="vs-ab-d">${nParfums(n)}, ${eur(totalVente())}. Rien n'est encore enregistré.</p><button type="button" class="btn danger large" id="vs-abandonner" data-act="vs-abandonner">Abandonner la vente</button><button type="button" class="btn large" data-act="vs-garder">Continuer la saisie</button></div>`;
+}
+const sousLigneVente = (p, l, x) => `${esc(libTailleMaj(p, l.taille))}${l.qte > 1 ? ' × ' + l.qte : ''}${x && x.offre && !l.manuel ? `<span class="vp-tag">${ICV.offre}${esc(x.offre.nom)}</span>` : ''}`;
+function ligneFermee(l, i, x, court) {
+  const p = trouver(l.id);
+  return `<li class="vp-ligne"><button type="button" class="vp-tete" data-act="vs-ligne" data-i="${i}" aria-expanded="false"><span class="plaque">${plaqueContenu(p)}</span><span class="vp-txt"><b>${esc(p.nom)}</b><small class="vp-sous" data-i="${i}">${sousLigneVente(p, l, x)}</small>${court ? `<small class="err">Stock insuffisant : ${esc(stockTexte(p) || ml(0))}</small>` : ''}</span><span class="vp-prix" data-i="${i}">${x.final != null ? eur(x.final) : 'Prix ?'}</span>${ICV.suite}</button></li>`;
+}
+function ligneOuverte(l, i) {
+  const p = trouver(l.id);
+  return `<li class="vp-ligne ouverte">
+      <div class="vs-produit"><span class="plaque">${plaqueContenu(p)}</span><div><p class="maison">${esc(p.maison)}</p><h3>${esc(p.nom)}</h3><p class="meta">${p.stock == null ? 'Stock non suivi' : 'En stock : ' + esc(stockTexte(p))}</p></div><button type="button" class="vp-retirer" data-act="vs-retirer" data-i="${i}" aria-label="Retirer ${esc(p.nom)} de la vente" title="Retirer">${ICV.corbeille}</button></div>
+      <div class="vs-tailles" role="group" aria-label="${estMini(p) ? 'Format' : 'Taille'}">${taillesVente(p).map(s => `<button type="button" class="vs-taille" data-act="vs-taille" data-s="${s}" aria-pressed="${s === l.taille}"><b>${esc(libTailleMaj(p, s))}</b><span>${prixDe(p, s) != null ? eur(prixDe(p, s)) : 'prix libre'}</span></button>`).join('')}</div>
+      <div class="gi-ligne"><label for="v-qte">Quantité</label><div class="pas"><button type="button" class="rond" data-act="vs-moins" aria-label="Une de moins">−</button><input id="v-qte" inputmode="numeric" value="${l.qte}" autocomplete="off"><button type="button" class="rond" data-act="vs-plus" aria-label="Une de plus">+</button></div></div>
+      <div class="gi-ligne"><label for="v-prix">Prix encaissé (€)</label><input id="v-prix" inputmode="decimal" autocomplete="off" value="${l.manuel && l.prix != null ? String(l.prix).replace('.', ',') : ''}"></div>
+      <p id="v-remise" class="v-remise" aria-live="polite" hidden></p>
+      <p id="v-offre" class="vp-offre-ligne" hidden></p>
+      <div class="v-apres" id="v-apres"><div class="v-fiole" id="v-fiole" hidden></div><p id="v-stock" class="aide"></p></div>
+    </li>`;
+}
+function htmlPanierVente() {
+  const G = groupe(), V = S.vs, P = prixVente(), I = S.venteInfo;
+  if (!(V.i >= -1 && V.i < G.length)) V.i = G.length - 1;
+  if (G.length === 1) V.i = 0;
+  const court = new Set(G.filter(l => { const p = trouver(l.id); return p.stock != null && dejaGroupe(p.id) > p.stock + 1e-9; }).map(l => l.id));
+  return `<ul class="vp-liste" id="vp-liste">${G.map((l, i) => i === V.i ? ligneOuverte(l, i) : ligneFermee(l, i, P.lignes[i], court.has(l.id))).join('')}
+      <li class="vp-offres" id="vp-offres"${P.remises.length ? '' : ' hidden'}>${htmlOffresVente(P.remises)}</li>
+      <li><button type="button" class="vp-ajout" data-act="vs-retour"><span class="vp-plus" aria-hidden="true">${ICV.plus}</span>Ajouter un parfum</button></li>
+    </ul>
+    <div class="groupe-ios formulaire">
+      <div class="gi-ligne"><label for="v-client">Client</label><input id="v-client" list="vs-clients" autocomplete="off" placeholder="Facultatif" value="${esc(I.client)}"></div>
+      <div class="gi-ligne"><label for="v-date">Date</label><input id="v-date" type="date" value="${esc(I.date || aujourdhui())}"></div>
+    </div>
+    <datalist id="vs-clients">${clientsConnus().map(c => `<option value="${esc(c)}"></option>`).join('')}</datalist>
+    <div class="vs-pied" id="vs-pied">${V.abandon ? htmlAbandon() : `<p class="vp-total"><span>Total <small id="v-n">${nParfums(nPiecesVente())}</small></span><b id="v-total">${eur(P.total)}</b></p><p id="v-err" class="err" role="alert"></p><button type="button" class="btn plein large" id="v-ok" data-act="vendre">${texteTout(G.length, P.total)}</button>`}</div>`;
+}
 function rendreVente() {
   const f = document.querySelector('#dlg.vente-dlg .fen');
   if (!f || !S.vs) return;
   const V = S.vs;
   const G = groupe();
-  if (V.etape === 'groupe' && !G.length) V.etape = 'parfum';
-  const titre = V.etape === 'coller' ? 'Coller une commande' : V.etape === 'groupe' ? 'Ventes en attente' : G.length ? 'Ajouter une vente' : 'Nouvelle vente';
-  const tete = `<div class="fen-tete feuille-tete"><button type="button" class="feuille-annuler" data-act="fermer">Annuler</button><h2>${titre}</h2><span aria-hidden="true"></span></div>
-    ${V.etape === 'groupe' ? '' : `<div class="vs-modes" role="group" aria-label="Façon d'enregistrer"><button type="button" class="vs-mode" data-act="vs-mode" data-m="choix" aria-pressed="${V.etape !== 'coller'}">Choisir un parfum</button><button type="button" class="vs-mode" data-act="vs-mode" data-m="coller" aria-pressed="${V.etape === 'coller'}">Coller une commande</button></div>`}`;
+  if (V.etape === 'panier' && !G.length) V.etape = 'parfum';
+  if (!G.length) V.abandon = false;
+  const titre = V.etape === 'coller' ? 'Coller une commande' : 'Nouvelle vente';
+  const tete = `<div class="fen-tete feuille-tete"><button type="button" class="feuille-annuler" data-act="vs-annuler">Annuler</button><h2>${titre}</h2><span aria-hidden="true"></span></div>
+    <div class="vs-modes" role="group" aria-label="Façon d'enregistrer"><button type="button" class="vs-mode" data-act="vs-mode" data-m="choix" aria-pressed="${V.etape !== 'coller'}">Choisir les parfums</button><button type="button" class="vs-mode" data-act="vs-mode" data-m="coller" aria-pressed="${V.etape === 'coller'}">Coller une commande</button></div>`;
   if (V.etape === 'coller') { f.innerHTML = typo(tete + htmlColler()); return; }
-  if (V.etape === 'groupe') {
-    /* stock insuffisant si les ventes en attente d'un même parfum dépassent ce qu'il reste */
-    const court = new Set(G.filter(l => { const p = trouver(l.id); return p.stock != null && dejaGroupe(p.id) > p.stock + 1e-9; }).map(l => l.id));
-    f.innerHTML = typo(tete + `<p class="aide">Vérifie, puis enregistre tout d'un coup. Elles restent gardées sur ton téléphone tant que tu ne les as pas enregistrées.</p>
-      <ul class="vs-liste">${G.map((l, i) => { const p = trouver(l.id); return `<li><span class="plaque">${plaqueContenu(p)}</span><span class="vl-txt"><b>${esc(p.nom)}</b><small>${esc(libTailleMaj(p, l.taille))}${l.qte > 1 ? ' × ' + l.qte : ''}${l.client ? ' · ' + esc(l.client) : ''}${l.date !== aujourdhui() ? ' · ' + esc(dateCourte(l.date)) : ''}</small>${court.has(l.id) ? `<small class="err">Stock insuffisant : ${esc(stockTexte(p))}</small>` : ''}</span><span class="vl-prix">${eur(l.prix) || '0 €'}</span><button type="button" class="suppr" data-act="vs-retirer" data-i="${i}" aria-label="Retirer ${esc(p.nom)}" title="Retirer">${ICV.corbeille}</button></li>`; }).join('')}</ul>
-      <p class="total"><span>Total</span><b>${eur(totalGroupe()) || '0 €'}</b></p>
-      <p id="v-err" class="err" role="alert"></p>
-      <button type="button" class="btn large" data-act="vs-retour">${ICV.plus}Ajouter une autre vente</button>
-      <button type="button" class="btn plein large" id="v-tout" data-act="vs-tout">${texteTout(G.length, totalGroupe())}</button>`);
-    return;
-  }
   if (V.etape === 'parfum') {
-    f.innerHTML = typo(tete + `<label class="recherche-zone"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="vs-q" class="recherche" type="search" placeholder="Chercher un parfum" aria-label="Chercher un parfum" value="${esc(V.q)}" autocomplete="off"></label>
+    f.innerHTML = typo(tete + `${G.length ? '' : '<p class="vs-consigne">Touche chaque parfum pris par ton client.</p>'}
+      <label class="recherche-zone"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="vs-q" class="recherche" type="search" placeholder="Chercher un parfum" aria-label="Chercher un parfum" value="${esc(V.q)}" autocomplete="off"></label>
       <div class="vs-grille" id="vs-grille">${grilleVente()}</div>
-      ${G.length ? `<div class="vs-pied">${barreGroupe()}<p id="v-err" class="err" role="alert"></p><button type="button" class="btn plein large" id="v-tout" data-act="vs-tout">${texteTout(G.length, totalGroupe())}</button></div>` : ''}`);
-    return;
+      <div class="vs-pied" id="vs-pied"${G.length ? '' : ' hidden'}>${V.abandon ? htmlAbandon() : piedGrille()}</div>`);
+  } else {
+    f.innerHTML = typo(tete + htmlPanierVente());
+    majPrixVente();
   }
-  const p = trouver(V.id);
-  if (!p) { V.etape = 'parfum'; rendreVente(); return; }
-  f.innerHTML = typo(tete + `
-    ${G.length ? barreGroupe() : ''}
-    <div class="vs-produit"><span class="plaque">${plaqueContenu(p)}</span><div><p class="maison">${esc(p.maison)}</p><h3>${esc(p.nom)}</h3><p class="meta">${p.stock == null ? 'Stock non suivi' : 'En stock : ' + esc(stockTexte(p))}</p></div><button type="button" class="btn petit discret" data-act="vs-retour">${ICV.retour}Changer</button></div>
-    <div class="vs-bloc"><span class="lbl">${estMini(p) ? 'Format' : 'Taille'}</span><div class="vs-tailles">${taillesVente(p).map(s => `<button type="button" class="vs-taille" data-act="vs-taille" data-s="${s}" aria-pressed="${s === V.taille}"><b>${esc(libTailleMaj(p, s))}</b><span>${prixDe(p, s) != null ? eur(prixDe(p, s)) : 'prix libre'}</span></button>`).join('')}</div></div>
-    <div class="groupe-ios formulaire">
-      <div class="gi-ligne"><label for="v-qte">Quantité</label><div class="pas"><button type="button" class="rond" data-act="vs-moins" aria-label="Une de moins">−</button><input id="v-qte" inputmode="numeric" value="1" autocomplete="off"><button type="button" class="rond" data-act="vs-plus" aria-label="Une de plus">+</button></div></div>
-      <div class="gi-ligne"><label for="v-prix">Prix encaissé (€)</label><input id="v-prix" inputmode="decimal" autocomplete="off"></div>
-    </div>
-    <p id="v-remise" class="v-remise" aria-live="polite" hidden></p>
-    <div class="groupe-ios formulaire">
-      <div class="gi-ligne"><label for="v-client">Client</label><input id="v-client" list="vs-clients" autocomplete="off" placeholder="Facultatif" value="${esc(V.client || '')}"></div>
-      <div class="gi-ligne"><label for="v-date">Date</label><input id="v-date" type="date" value="${esc(V.date || aujourdhui())}"></div>
-    </div>
-    <datalist id="vs-clients">${clientsConnus().map(c => `<option value="${esc(c)}"></option>`).join('')}</datalist>
-    <div class="v-apres" id="v-apres"><div class="v-fiole" id="v-fiole" hidden></div><p id="v-stock" class="aide"></p></div>
-    <p id="v-err" class="err" role="alert"></p>
-    <div class="vs-boutons">
-      <button type="button" class="btn large" id="v-ajout" data-act="vs-ajouter">${ICV.plus}Ajouter une autre vente</button>
-      <button type="button" class="btn plein large" id="v-ok" data-act="vendre">Enregistrer la vente</button>
-    </div>`);
-  majPrixVente();
+  if (V.abandon) { const b = document.getElementById('vs-abandonner'); if (b) b.focus(); }
 }
+/* met à jour la vente pendant la saisie : prix des lignes, offres, total, et le détail de la ligne ouverte */
 function majPrixVente() {
-  const V = S.vs, p = V && trouver(V.id);
-  const champ = document.getElementById('v-prix'), info = document.getElementById('v-stock'), ok = document.getElementById('v-ok');
+  const V = S.vs;
+  if (!V) return;
+  const G = groupe(), P = prixVente();
+  document.querySelectorAll('#vp-liste .vp-prix[data-i]').forEach(e => { const x = P.lignes[Number(e.dataset.i)]; if (x) e.textContent = x.final != null ? eur(x.final) : 'Prix ?'; });
+  document.querySelectorAll('#vp-liste .vp-sous[data-i]').forEach(e => { const k = Number(e.dataset.i), l = G[k]; if (l) e.innerHTML = typo(sousLigneVente(trouver(l.id), l, P.lignes[k])); });
+  const of = document.getElementById('vp-offres');
+  if (of) { of.innerHTML = typo(htmlOffresVente(P.remises)); of.hidden = !P.remises.length; }
+  const tot = document.getElementById('v-total'); if (tot) tot.textContent = eur(P.total);
+  const vn = document.getElementById('v-n'); if (vn) vn.textContent = nParfums(nPiecesVente());
+  const ok = document.getElementById('v-ok');
+  if (ok && !ok.disabled) ok.textContent = texteTout(G.length, P.total);
+  sauverGroupe(true);
+  const L = G[V.i], p = L && trouver(L.id);
+  const champ = document.getElementById('v-prix'), info = document.getElementById('v-stock');
   if (!p || !champ || !info) return;
-  const s = Number(V.taille);
-  const q = Math.max(1, Math.floor(nombre(document.getElementById('v-qte').value) || 1));
-  const px = prixDe(p, s);
-  if (!S.prixManuel) champ.value = px != null ? String(arrondi(px * q)).replace('.', ',') : '';
+  const x = P.lignes[V.i], s = L.taille, q = L.qte;
+  if (!L.manuel) champ.value = x.auto != null ? String(x.auto).replace('.', ',') : '';
   const total = nombre(champ.value);
-  /* prix arrangé (un ami, un geste) : on rappelle le prix de la carte et la remise, avec de quoi y revenir */
+  /* prix arrangé (un ami, un geste) : on rappelle le prix de référence (carte ou offre) et la remise, avec de quoi y revenir */
   const rz = document.getElementById('v-remise');
   if (rz) {
-    const carte = px != null ? arrondi(px * q) : null;
+    const ref = x.auto, nomRef = x.offre ? `Prix avec ${x.offre.nom}` : 'Prix de la carte';
     let h = '';
-    if (S.prixManuel && carte != null) {
+    if (L.manuel && ref != null) {
       const brut = champ.value.trim();
       const lisible = brut && total != null && !Number.isNaN(total) && total >= 0;
-      if (!brut) h = `<span>Prix de la carte : ${eur(carte)}. Tape le prix encaissé.</span>`;
+      if (!brut) h = `<span>${nomRef} : ${eur(ref)}. Tape le prix encaissé.</span>`;
       else if (!lisible) h = `<span class="err">Prix illisible : écris un nombre, par exemple 60.</span>`;
-      else if (total < carte) h = `<span>Prix de la carte : ${eur(carte)}, remise de <b>${eur(arrondi(carte - total))}</b>.</span>`;
-      else if (prixTropHaut(total, carte)) h = `<span class="err">Attention : bien plus que le prix de la carte (${eur(carte)}).</span>`;
-      else if (total > carte) h = `<span>Prix de la carte : ${eur(carte)}.</span>`;
-      if (h) h += `<button type="button" class="lien" data-act="vs-prix-carte">Remettre ${eur(carte)}</button>`;
+      else if (total < ref) h = `<span>${nomRef} : ${eur(ref)}, remise de <b>${eur(arrondi(ref - total))}</b>.</span>`;
+      else if (prixTropHaut(total, ref)) h = `<span class="err">Attention : bien plus que ${x.offre ? 'le prix avec ' + esc(x.offre.nom) : 'le prix de la carte'} (${eur(ref)}).</span>`;
+      else if (total > ref) h = `<span>${nomRef} : ${eur(ref)}.</span>`;
+      if (h) h += `<button type="button" class="lien" data-act="vs-prix-carte">Remettre ${eur(ref)}</button>`;
     }
-    rz.innerHTML = h; rz.hidden = !h;
+    rz.innerHTML = typo(h); rz.hidden = !h;
   }
-  const nG = groupe().length;
-  if (ok && !ok.disabled) ok.textContent = texteTout(nG + 1, totalGroupe() + (total > 0 ? total : 0));
-  const deja = dejaGroupe(p.id);
+  const vo = document.getElementById('v-offre');
+  if (vo) {
+    const h = x.offre && !L.manuel ? `${ICV.offre}<span><b>${esc(x.offre.nom)}</b> : ${eur(x.auto)} au lieu de ${eur(x.carte)}</span>` : '';
+    vo.innerHTML = typo(h); vo.hidden = !h;
+  }
+  const deja = dejaGroupe(p.id, V.i);
   const besoin = s * q + deja;
   const txt = v => estMini(p) ? nPieces(Math.round(v / p.contenance)) : ml(v);
   const ces = deja > 0 ? 'ces ventes' : 'cette vente';
   if (p.stock == null) info.textContent = `Stock non suivi pour ${p.nom}.`;
   else if (p.stock >= besoin - 1e-9) info.textContent = `Après ${ces} : ${txt(p.stock - besoin)} de ${p.nom}.`;
-  else info.textContent = `Attention : il ne reste que ${txt(p.stock)} de ${p.nom}${deja > 0 ? `, dont ${txt(deja)} déjà en attente` : ''}. La vente reste possible, le stock passera à ${txt(0)}.`;
+  else info.textContent = `Attention : il ne reste que ${txt(p.stock)} de ${p.nom}${deja > 0 ? `, dont ${txt(deja)} déjà dans cette vente` : ''}. La vente reste possible, le stock passera à ${txt(0)}.`;
   const vf = document.getElementById('v-fiole');
   if (vf) {
     if (p.stock == null || !(p.stock > 0)) { vf.hidden = true; vf.innerHTML = ''; }
@@ -3638,7 +3756,7 @@ function majPrixVente() {
       vf.innerHTML = `<span class="vf-tube" aria-hidden="true"><span class="vf-reste" style="width:${(reste / p.stock * 100).toFixed(1)}%"></span><span class="vf-pris" style="width:${(pris / p.stock * 100).toFixed(1)}%"></span></span><span class="vf-txt">${esc(txt(p.stock))} → <b>${esc(txt(reste))}</b></span>`;
     }
   }
-  const nf = estMini(p) ? null : (resteFioles(s) == null ? null : resteFioles(s) - fiolesGroupe(s));
+  const nf = estMini(p) ? null : (resteFioles(s) == null ? null : resteFioles(s) - fiolesGroupe(s, V.i));
   if (nf != null) info.textContent += nf >= q ? ` Flacons vides de ${s} ml : il en restera ${nf - q}.` : ` Attention : ${texteFioles(nf, s)} vide${nf > 1 ? 's' : ''} en stock.`;
 }
 /* Sur Claude, la carte retient les identifiants des ventes déduites (retirés de la vitrine).
@@ -3802,70 +3920,50 @@ async function exporterVentes() {
 
 /* un prix encaissé très au-dessus de la carte est sans doute une faute de frappe (7060 au lieu de 60) */
 const prixTropHaut = (prix, carte) => prix > Math.max(carte * 2, carte + 50);
-/* lit la vente en cours dans la feuille ; renvoie { ligne } ou { erreur } */
-function lireDetailsVente() {
-  const p = S.vs && trouver(S.vs.id);
-  const taille = Number(S.vs && S.vs.taille);
-  const qte = nombre(document.getElementById('v-qte').value);
-  const prix = nombre(document.getElementById('v-prix').value);
-  const date = document.getElementById('v-date').value;
-  if (!p) return { erreur: 'Choisis un parfum.' };
-  if (!(taille > 0)) return { erreur: 'Choisis une taille.' };
-  if (!(qte >= 1) || !Number.isInteger(qte)) return { erreur: 'La quantité doit être un nombre entier, par exemple 1.' };
-  if (prix == null || Number.isNaN(prix) || prix < 0) return { erreur: 'Indique le prix encaissé en euros, par exemple 30.' };
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { erreur: 'Indique la date de la vente.' };
-  const carte = prixDe(p, taille) != null ? arrondi(prixDe(p, taille) * qte) : null;
-  if (carte != null && prixTropHaut(prix, carte)) {
-    const cle = [p.id, taille, qte, prix].join('|');
-    if (S.prixConfirme !== cle) { S.prixConfirme = cle; return { erreur: `${eur(prix)} pour ${p.nom}, ${libTaille(p, taille)}${qte > 1 ? ' × ' + qte : ''} : c'est bien plus que le prix de la carte (${eur(carte)}). Vérifie le prix, ou touche à nouveau le bouton pour confirmer.` }; }
+/* lit la vente avant de l'enregistrer ; renvoie { lignes, client, date } ou { erreur, i } (i : la ligne à corriger) */
+function lireVente() {
+  const G = groupe(), V = S.vs, L = G[V.i];
+  if (!G.length) return { erreur: 'Choisis au moins un parfum.' };
+  const cq = document.getElementById('v-qte');
+  if (L && cq) {
+    const qte = nombre(cq.value);
+    if (!(qte >= 1) || !Number.isInteger(qte)) return { erreur: 'La quantité doit être un nombre entier, par exemple 1.' };
+    L.qte = qte;
   }
-  return { ligne: { p, taille, qte, prix, client: document.getElementById('v-client').value.trim().slice(0, 80), date } };
+  const P = prixVente(), lignes = [];
+  for (let i = 0; i < G.length; i++) {
+    const l = G[i], p = trouver(l.id), x = P.lignes[i];
+    if (x.final == null || Number.isNaN(x.final) || x.final < 0) return { erreur: G.length > 1 ? `Indique le prix encaissé pour ${p.nom}, par exemple 30.` : 'Indique le prix encaissé en euros, par exemple 30.', i };
+    if (l.manuel && x.auto != null && prixTropHaut(x.final, x.auto)) {
+      const cle = [p.id, l.taille, l.qte, x.final].join('|');
+      if (!S.prixConfirme.has(cle)) {
+        S.prixConfirme.add(cle);
+        return { erreur: `${eur(x.final)} pour ${p.nom}, ${libTaille(p, l.taille)}${l.qte > 1 ? ' × ' + l.qte : ''} : c'est bien plus que ${x.offre ? 'le prix avec ' + x.offre.nom : 'le prix de la carte'} (${eur(x.auto)}). Vérifie le prix, ou touche à nouveau le bouton pour confirmer.`, i };
+      }
+    }
+    lignes.push({ p, taille: l.taille, qte: l.qte, prix: x.final });
+  }
+  const date = document.getElementById('v-date').value;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { erreur: 'Indique la date de la vente.' };
+  return { lignes, client: document.getElementById('v-client').value.trim().slice(0, 80), date };
 }
+/* enregistre toute la vente : une ligne du journal par parfum, le même client et la même date */
 async function enregistrerVente() {
-  const err = document.getElementById('v-err');
-  err.textContent = '';
-  if (!S.db || S.dbEtat !== 'pret') { err.textContent = "Le journal des ventes n'est pas encore chargé. Patiente quelques secondes."; return; }
-  const r0 = lireDetailsVente();
-  if (r0.erreur) { err.textContent = r0.erreur; return; }
-  if (groupe().length) return enregistrerGroupe(r0.ligne);
+  const msg = t => { const e = document.getElementById('v-err'); if (e) e.textContent = t; };
+  msg('');
+  if (!S.db || S.dbEtat !== 'pret') { msg("Le journal des ventes n'est pas encore chargé. Patiente quelques secondes."); return; }
+  const r = lireVente();
+  if (r.erreur) {
+    if (r.i != null && r.i !== S.vs.i) { S.vs.i = r.i; rendreVente(); const o = document.querySelector('#vp-liste .ouverte'); if (o) o.scrollIntoView({ block: 'nearest' }); }
+    msg(r.erreur);
+    return;
+  }
   const btn = document.getElementById('v-ok');
   btn.disabled = true; btn.textContent = 'Enregistrement…';
-  const r = await enregistrerVentes([r0.ligne], '', r0.ligne.date);
-  if (r.erreur) { err.textContent = r.erreur; btn.disabled = false; majPrixVente(); return; }
-  S.prixManuel = false; S.vs = null;
-  fermer();
-  rendre();
-}
-/* garde la vente en cours de côté et revient au choix du parfum */
-function ajouterAuGroupe() {
-  const err = document.getElementById('v-err');
-  err.textContent = '';
-  const r = lireDetailsVente();
-  if (r.erreur) { err.textContent = r.erreur; return; }
-  const l = r.ligne;
-  groupe().push({ id: l.p.id, taille: l.taille, qte: l.qte, prix: arrondi(l.prix), client: l.client, date: l.date });
-  sauverGroupe();
-  Object.assign(S.vs, { etape: 'parfum', id: null, taille: null, q: '', client: l.client, date: l.date });
-  S.prixManuel = false;
-  rendreVente();
-  const f = document.querySelector('#dlg .fen'); if (f) f.scrollTop = 0;
-  const barre = document.querySelector('#dlg .vs-groupe-barre'); if (barre) barre.classList.add('vient');
-}
-/* enregistre les ventes en attente, plus celle de la feuille si elle est donnée */
-async function enregistrerGroupe(enCours) {
-  const err = document.getElementById('v-err');
-  if (err) err.textContent = '';
-  if (!S.db || S.dbEtat !== 'pret') { if (err) err.textContent = "Le journal des ventes n'est pas encore chargé. Patiente quelques secondes."; return; }
-  const lignes = groupe().map(l => ({ p: trouver(l.id), taille: l.taille, qte: l.qte, prix: l.prix, client: l.client, date: l.date })).filter(l => l.p);
-  if (enCours) lignes.push(enCours);
-  if (!lignes.length) return;
-  const btn = document.getElementById(enCours ? 'v-ok' : 'v-tout');
-  const avant = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Enregistrement…'; }
-  const r = await enregistrerVentes(lignes, '', aujourdhui());
-  if (r.erreur) { if (err) err.textContent = r.erreur; if (btn) { btn.disabled = false; btn.textContent = avant; } return; }
-  S.groupe = []; sauverGroupe();
-  S.prixManuel = false; S.vs = null;
+  const res = await enregistrerVentes(r.lignes, r.client, r.date);
+  if (res.erreur) { msg(res.erreur); btn.disabled = false; majPrixVente(); return; }
+  viderVente();
+  S.vs = null;
   fermer();
   rendre();
 }
@@ -5061,18 +5159,27 @@ const actions = {
   'ls-ajuster': el => { const d = document.getElementById('ls-' + el.dataset.id); if (!d) return; d.classList.remove('glisse'); d.open = true; },
   'annuler-ventes': el => annulerVentes(String(el.dataset.ids || '').split(',').filter(Boolean)),
   'vente-coller': () => ouvrirVente('coller'),
-  'groupe-ouvrir': () => ouvrirVente('groupe'),
-  'vs-ajouter': () => ajouterAuGroupe(),
-  'vs-prix-carte': () => { S.prixManuel = false; majPrixVente(); const c = document.getElementById('v-prix'); if (c) c.focus(); },
-  'vs-tout': () => enregistrerGroupe(),
-  'vs-groupe': () => { if (!S.vs) return; S.vs.etape = 'groupe'; rendreVente(); },
-  'vs-retirer': el => { const G = groupe(); const i = Number(el.dataset.i); if (!(i >= 0 && i < G.length)) return; G.splice(i, 1); sauverGroupe(); if (S.vs) rendreVente(); },
-  'vs-mode': el => { if (!S.vs) return; S.vs.etape = el.dataset.m === 'coller' ? 'coller' : S.vs.id ? 'details' : 'parfum'; rendreVente(); },
-  'vs-choisir': el => { const p = trouver(el.dataset.id); if (!p || !S.vs) return; Object.assign(S.vs, { id: p.id, taille: tailleParDefaut(p), etape: 'details' }); S.prixManuel = false; rendreVente(); },
-  'vs-retour': () => { if (!S.vs) return; S.vs.etape = 'parfum'; rendreVente(); const f = document.querySelector('#dlg .fen'); if (f) f.scrollTop = 0; },
-  'vs-taille': el => { if (!S.vs) return; S.vs.taille = Number(el.dataset.s); S.prixManuel = false; document.querySelectorAll('#dlg .vs-taille').forEach(b => b.setAttribute('aria-pressed', String(b === el))); majPrixVente(); },
-  'vs-plus': () => { const i = document.getElementById('v-qte'); i.value = Math.max(1, Math.floor(nombre(i.value) || 1)) + 1; S.prixManuel = false; majPrixVente(); },
-  'vs-moins': () => { const i = document.getElementById('v-qte'); i.value = Math.max(1, Math.floor(nombre(i.value) || 1) - 1); S.prixManuel = false; majPrixVente(); },
+  'groupe-ouvrir': () => ouvrirVente('panier'),
+  'vs-prix-carte': () => { const L = ligneVente(); if (L) { L.manuel = false; L.prix = null; } majPrixVente(); const c = document.getElementById('v-prix'); if (c) c.focus(); },
+  'vs-annuler': () => { if (!S.vs || !groupe().length) { fermer(); return; } S.vs.abandon = true; rendreVente(); },
+  'vs-garder': () => { if (!S.vs) return; S.vs.abandon = false; rendreVente(); },
+  'vs-abandonner': () => { viderVente(); S.vs = null; fermer(); rendre(); },
+  'vs-panier': () => { if (!S.vs || !groupe().length) return; S.vs.etape = 'panier'; rendreVente(); const f = document.querySelector('#dlg .fen'); if (f) f.scrollTop = 0; },
+  'vs-ligne': el => { const i = Number(el.dataset.i); if (!S.vs || !(i >= 0 && i < groupe().length)) return; S.vs.i = i; rendreVente(); const o = document.querySelector('#vp-liste .ouverte'); if (o) o.scrollIntoView({ block: 'nearest' }); },
+  'vs-retirer': el => { const G = groupe(), i = Number(el.dataset.i); if (!(i >= 0 && i < G.length)) return; G.splice(i, 1); sauverGroupe(); if (S.vs) { S.vs.i = -1; rendreVente(); } },
+  'vs-mode': el => { if (!S.vs) return; S.vs.etape = el.dataset.m === 'coller' ? 'coller' : groupe().length ? 'panier' : 'parfum'; rendreVente(); },
+  'vs-choisir': el => {
+    const p = trouver(el.dataset.id); if (!p || !S.vs) return;
+    ajouterLigneVente(p);
+    const g = document.getElementById('vs-grille'); if (g) g.innerHTML = typo(grilleVente());
+    const nb = g && [...g.querySelectorAll('[data-act=vs-choisir]')].find(b => b.dataset.id === p.id);
+    if (nb && nb.querySelector('.vs-nb')) nb.querySelector('.vs-nb').classList.add('vient');
+    const pied = document.getElementById('vs-pied'); if (pied) { pied.innerHTML = typo(piedGrille()); pied.hidden = false; }
+  },
+  'vs-retour': () => { if (!S.vs) return; S.vs.etape = 'parfum'; S.vs.abandon = false; rendreVente(); const f = document.querySelector('#dlg .fen'); if (f) f.scrollTop = 0; },
+  'vs-taille': el => { const L = ligneVente(); if (!L) return; L.taille = Number(el.dataset.s); L.manuel = false; L.prix = null; document.querySelectorAll('#dlg .vs-taille').forEach(b => b.setAttribute('aria-pressed', String(b === el))); majPrixVente(); },
+  'vs-plus': () => { const L = ligneVente(), i = document.getElementById('v-qte'); if (!L || !i) return; L.qte = Math.max(1, Math.floor(nombre(i.value) || 1)) + 1; i.value = L.qte; L.manuel = false; L.prix = null; majPrixVente(); },
+  'vs-moins': () => { const L = ligneVente(), i = document.getElementById('v-qte'); if (!L || !i) return; L.qte = Math.max(1, Math.floor(nombre(i.value) || 1) - 1); i.value = L.qte; L.manuel = false; L.prix = null; majPrixVente(); },
   'filtre-stock': el => { S.filtreStock = el.dataset.f; rendreListeStock(); },
   'aller-vendeur': el => allerVendeur(el.dataset.o, el.dataset.f),
   'partager-carte': () => {
@@ -5135,9 +5242,10 @@ document.addEventListener('input', e => {
   if (t.id === 'q') { S.q = t.value; rendreGrille(); versResultats(); return; }
   if (t.id === 'st-q') { S.qStock = t.value; rendreListeStock(); return; }
   if (t.id === 'vs-q' && S.vs) { S.vs.q = t.value; const g = document.getElementById('vs-grille'); if (g) g.innerHTML = typo(grilleVente()); return; }
-  if (t.id === 'v-qte') { majPrixVente(); return; }
+  if (t.id === 'v-qte') { const L = ligneVente(), q = nombre(t.value); if (L && q >= 1 && Number.isInteger(q)) L.qte = q; majPrixVente(); return; }
+  if ((t.id === 'v-client' || t.id === 'v-date') && S.vs) { groupe(); S.venteInfo[t.id === 'v-client' ? 'client' : 'date'] = t.id === 'v-client' ? t.value.slice(0, 80) : t.value; sauverGroupe(true); return; }
   if (t.id === 'cmd-texte') { clearTimeout(S.cmdMinuteur); S.cmdMinuteur = setTimeout(() => apercuCommande(true), 350); return; }
-  if (t.id === 'v-prix') { S.prixManuel = true; majPrixVente(); return; }
+  if (t.id === 'v-prix') { const L = ligneVente(); if (L) { const x = nombre(t.value); L.manuel = true; L.prix = x != null && !Number.isNaN(x) && x >= 0 ? arrondi(x) : null; } majPrixVente(); return; }
   if (t.closest && t.closest('#lot-form')) { majApercuLot(); return; }
   if (t.closest && t.closest('#couts-zone')) { S.coutsEdites = true; majCalculsCouts(); }
 });
