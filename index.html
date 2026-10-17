@@ -261,6 +261,21 @@ dialog.produit .fen{max-height:100dvh;height:100dvh;padding:0;gap:0}
 .sortie svg{width:17px;height:17px}
 .connexion{display:grid;gap:1rem}
 .connexion > .lien{justify-self:start}
+/* Face ID */
+.btn-faceid{display:inline-flex;align-items:center;justify-content:center;gap:.6rem}
+.btn-faceid svg{width:22px;height:22px}
+.btn-faceid[hidden]{display:none}
+.connexion .ou{display:flex;align-items:center;gap:.8rem;margin:0;color:var(--fumee);font-size:.85rem}
+.connexion .ou::before,.connexion .ou::after{content:"";flex:1;height:1px;background:var(--filet)}
+.connexion .ou[hidden]{display:none}
+.faceid-carte{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:.8rem;margin:0 0 1.2rem;padding:.85rem .95rem;border:1px solid var(--filet);border-radius:var(--r-ecrin);background:var(--ecrin)}
+.faceid-carte .ic,.faceid-etat .ic{display:grid;place-items:center;color:var(--platine)}
+.faceid-carte .ic svg{width:28px;height:28px}
+.fi-txt{display:grid;gap:.15rem;min-width:0}
+.fi-txt b{font-weight:500;color:var(--platine)}
+.fi-txt small{font-size:.82rem;line-height:1.4;color:var(--fumee)}
+.faceid-etat{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:1.4rem 0 0;font-size:.88rem;color:var(--fumee)}
+.faceid-etat .ic svg{width:18px;height:18px}
 .champ-ligne{display:flex;gap:.5rem;align-items:stretch}
 .champ-ligne input{flex:1}
 .champ-ligne .btn{flex:none}
@@ -2545,7 +2560,7 @@ function rendre() {
     if (o === 'ventes') rendreVentesDyn();
     if (o === 'couts') rendreCouts();
     if (o === 'stock') { rendreListeStock(); rendreFlacons(); }
-    if (o === 'accueil') rendreAccueil();
+    if (o === 'accueil') { rendreAccueil(); majFaceId(); }
   }
 }
 
@@ -2576,8 +2591,10 @@ function panneauAccueil() {
       <button type="button" class="raccourci" data-act="nouveau"><span class="ic">${ICV.ajout}</span><b>Ajouter un parfum</b><small>À la carte</small></button>
       <button type="button" class="raccourci" data-act="partager-carte"><span class="ic">${IC.partage}</span><b>Partager ma carte</b><small>Story, message, bio</small></button>
     </div>
+    <div id="faceid-haut"></div>
     <div id="acc-dyn"></div>
     ${blocSite()}
+    <div id="faceid-bas"></div>
   </section>`;
 }
 const listeNoms = l => l.length <= 3 ? l.map(p => p.nom).join(', ') : l.slice(0, 2).map(p => p.nom).join(', ') + ` et ${l.length - 2} autres`;
@@ -3980,6 +3997,155 @@ async function dechiffrer(c, mdp) {
   return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: depuisB64(c.iv) }, k, depuisB64(c.ct)));
 }
 
+/* ---------- Face ID : une clé d'accès (passkey) de l'iPhone remplace le mot de passe ----------
+   L'extension PRF de WebAuthn donne un secret que seul Face ID libère, propre à cette clé d'accès.
+   Ce secret chiffre le jeton dans ce navigateur : sans le visage du vendeur, le jeton reste illisible.
+   Le mot de passe continue de marcher (nouveau téléphone, données de Safari effacées). */
+const CLE_FACEID = 'bp-faceid';
+const IC_FACEID = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8V6a2.5 2.5 0 0 1 2.5-2.5h2M16 3.5h2A2.5 2.5 0 0 1 20.5 6v2M20.5 16v2a2.5 2.5 0 0 1-2.5 2.5h-2M8 20.5H6A2.5 2.5 0 0 1 3.5 18v-2"/><path d="M9 9.5v1.2M15 9.5v1.2M12 9.5v3.3l-1 .7M9.3 15.6c1.6 1.3 3.8 1.3 5.4 0"/></svg>';
+let faceIdDispo = null;
+async function faceIdPossible() {
+  if (faceIdDispo !== null) return faceIdDispo;
+  try {
+    faceIdDispo = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && window.crypto && crypto.subtle
+      && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function'
+      && await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable());
+  } catch (e) { faceIdDispo = false; }
+  return faceIdDispo;
+}
+function faceIdConfig() {
+  try { const c = JSON.parse(lire(CLE_FACEID) || 'null'); return c && c.v === 1 && c.id && c.sel && c.iv && c.ct && c.proprio && c.depot ? c : null; } catch (e) { return null; }
+}
+const oublier = k => { try { localStorage.removeItem(k); } catch (e) {} };
+async function cleFaceId(secret) {
+  const base = await crypto.subtle.importKey('raw', secret, 'HKDF', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(32), info: octets('BlackPhantom Face ID v1') }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+const secretPrf = cred => {
+  const r = cred && typeof cred.getClientExtensionResults === 'function' ? cred.getClientExtensionResults() : null;
+  const f = r && r.prf && r.prf.results && r.prf.results.first;
+  return f ? new Uint8Array(f) : null;
+};
+/* Face ID, puis le secret de la clé d'accès */
+async function demanderFaceId(id, sel) {
+  const cred = await navigator.credentials.get({ publicKey: {
+    challenge: crypto.getRandomValues(new Uint8Array(32)), rpId: location.hostname,
+    allowCredentials: [{ type: 'public-key', id: depuisB64(id) }], userVerification: 'required', timeout: 120000,
+    extensions: { prf: { eval: { first: depuisB64(sel) } } }
+  } });
+  return secretPrf(cred);
+}
+const faceIdIncompatible = "Ton iPhone ne permet pas encore d'entrer avec Face ID sur un site. Mets-le à jour (iOS 18.4 ou plus récent, dans Réglages, Général, Mise à jour logicielle), puis réessaie.";
+/* Safari n'accepte Face ID que juste après un toucher : rien d'asynchrone avant la demande */
+async function activerFaceId(btn) {
+  if (!S.gh || !S.gh.jeton || S.faceIdEnCours) return;
+  if (faceIdDispo === false || !window.PublicKeyCredential || !navigator.credentials) { toast(faceIdIncompatible); return; }
+  S.faceIdEnCours = true;
+  const avant = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Face ID…'; }
+  const fin = msg => { S.faceIdEnCours = false; if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = avant; } if (msg) toast(msg); };
+  try {
+    const nom = ST.boutique.nom || 'BlackPhantom';
+    const sel = crypto.getRandomValues(new Uint8Array(32));
+    /* même identifiant à chaque activation : l'iPhone remplace l'ancienne clé au lieu d'en empiler */
+    const uid = octets('bp-vendeur:' + S.gh.proprio + '/' + S.gh.depot).slice(0, 64);
+    let cred;
+    try {
+      cred = await navigator.credentials.create({ publicKey: {
+        rp: { name: nom, id: location.hostname },
+        user: { id: uid, name: nom + ' (espace vendeur)', displayName: nom + ' (espace vendeur)' },
+        challenge: crypto.getRandomValues(new Uint8Array(32)),
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+        authenticatorSelection: { authenticatorAttachment: 'platform', residentKey: 'required', requireResidentKey: true, userVerification: 'required' },
+        attestation: 'none', timeout: 120000,
+        extensions: { prf: { eval: { first: sel } } }
+      } });
+    } catch (e) { fin(e && e.name === 'NotAllowedError' ? 'Activation annulée. Tu peux réessayer quand tu veux.' : faceIdIncompatible); return; }
+    const res = cred && typeof cred.getClientExtensionResults === 'function' ? cred.getClientExtensionResults() : {};
+    const id = versB64(new Uint8Array(cred.rawId));
+    if (!res.prf || res.prf.enabled === false) { oublierCleAcces(id); fin(faceIdIncompatible); return; }
+    const secret = secretPrf(cred);
+    /* l'iPhone n'a pas donné le secret à la création : une dernière étape, avec un nouveau toucher */
+    if (!secret) { S.faceIdAttente = { id, sel: versB64(sel) }; fin(); majFaceId(); return; }
+    await sauverFaceId(secret, id, versB64(sel));
+    fin(faceIdConfig() ? 'Face ID activé : la prochaine fois, touche « Entrer avec Face ID ».' : "Safari n'a pas pu garder l'accès Face ID (navigation privée ?). Ouvre le site dans un onglet normal, puis réessaie.");
+    majFaceId();
+  } catch (e) { fin(faceIdIncompatible); }
+}
+async function confirmerFaceId(btn) {
+  const a = S.faceIdAttente;
+  if (!a || !S.gh || !S.gh.jeton || (btn && btn.disabled)) return;
+  if (btn) btn.disabled = true;
+  try {
+    const secret = await demanderFaceId(a.id, a.sel);
+    if (!secret) { S.faceIdAttente = null; oublierCleAcces(a.id); toast(faceIdIncompatible); majFaceId(); return; }
+    await sauverFaceId(secret, a.id, a.sel);
+    S.faceIdAttente = null;
+    toast(faceIdConfig() ? 'Face ID activé : la prochaine fois, touche « Entrer avec Face ID ».' : "Safari n'a pas pu garder l'accès Face ID (navigation privée ?). Ouvre le site dans un onglet normal, puis réessaie.");
+    majFaceId();
+  } catch (e) {
+    if (btn && btn.isConnected) btn.disabled = false;
+    toast(e && e.name === 'NotAllowedError' ? 'Face ID annulé. Touche « Confirmer » pour terminer.' : faceIdIncompatible);
+  }
+}
+async function sauverFaceId(secret, id, sel) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await cleFaceId(secret), octets(S.gh.jeton)));
+  ecrire(CLE_FACEID, JSON.stringify({ v: 1, id, sel, iv: versB64(iv), ct: versB64(ct), proprio: S.gh.proprio, depot: S.gh.depot, prive: S.gh.prive, cree: Date.now() }));
+}
+/* demande à l'iPhone de ranger une clé d'accès devenue inutile (Safari récent seulement) */
+function oublierCleAcces(id) {
+  try { if (PublicKeyCredential.signalUnknownCredential) PublicKeyCredential.signalUnknownCredential({ rpId: location.hostname, credentialId: String(id).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') }).catch(() => {}); } catch (e) {}
+}
+function retirerFaceId() {
+  const c = faceIdConfig();
+  oublier(CLE_FACEID);
+  /* demande aussi à l'iPhone de ranger la clé d'accès devenue inutile, s'il sait le faire */
+  if (c) oublierCleAcces(c.id);
+  toast('Face ID désactivé sur cet iPhone. Ton mot de passe reste valable.');
+  majFaceId();
+}
+async function entrerFaceId(btn) {
+  const c = faceIdConfig();
+  const err = document.getElementById('gh-err');
+  if (!c || !btn || btn.disabled) return;
+  if (err) err.textContent = '';
+  const avant = btn.innerHTML;
+  btn.disabled = true;
+  try {
+    const secret = await demanderFaceId(c.id, c.sel);
+    if (!secret) throw { prf: true };
+    const jeton = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: depuisB64(c.iv) }, await cleFaceId(secret), depuisB64(c.ct)));
+    S.gh = { jeton, proprio: c.proprio, depot: c.depot, prive: c.prive };
+    entrerVendeur();
+  } catch (e) {
+    if (!btn.isConnected) return;
+    btn.disabled = false; btn.innerHTML = avant;
+    if (e && e.name === 'NotAllowedError') { if (err) err.textContent = 'Face ID annulé. Touche à nouveau le bouton, ou entre ton mot de passe.'; return; }
+    /* clé d'accès supprimée de l'iPhone, ou secret qui ne correspond plus : on repasse au mot de passe */
+    oublier(CLE_FACEID);
+    btn.hidden = true;
+    const ou = document.getElementById('gh-ou'); if (ou) ou.hidden = true;
+    if (err) err.textContent = "Face ID n'a pas pu ouvrir ton accès. Entre ton mot de passe : tu pourras réactiver Face ID depuis ton tableau de bord.";
+  }
+}
+/* tableau de bord : la proposition d'activer Face ID (en haut), ou son état (en bas) */
+async function majFaceId() {
+  const haut = document.getElementById('faceid-haut'), bas = document.getElementById('faceid-bas');
+  if (!haut || !bas) return;
+  const ok = S.hote === 'gh' && S.gh && await faceIdPossible();
+  if (!haut.isConnected) return;
+  const c = faceIdConfig();
+  const actif = ok && c && c.depot === S.gh.depot && c.proprio === S.gh.proprio;
+  if (ok && S.faceIdAttente) {
+    haut.innerHTML = `<div class="faceid-carte"><span class="ic">${IC_FACEID}</span><span class="fi-txt"><b>Dernière étape</b><small>Confirme avec Face ID pour terminer l'activation.</small></span><button type="button" class="btn petit plein" data-act="faceid-confirmer">Confirmer</button></div>`;
+    bas.innerHTML = '';
+    return;
+  }
+  haut.innerHTML = ok && !actif ? `<div class="faceid-carte"><span class="ic">${IC_FACEID}</span><span class="fi-txt"><b>Entrer avec Face ID</b><small>Active-le une fois : ensuite, plus besoin de taper ton mot de passe sur cet iPhone.</small></span><button type="button" class="btn petit plein" data-act="faceid-activer">Activer</button></div>` : '';
+  bas.innerHTML = actif ? `<p class="faceid-etat"><span class="ic">${IC_FACEID}</span><span>Face ID activé sur cet iPhone.</span><button type="button" class="lien" data-act="faceid-retirer">Désactiver</button></p>` : '';
+}
+
 /* API GitHub : les erreurs remontent sous la forme { statut, limite } */
 async function gh(methode, chemin, corps, accept) {
   let r;
@@ -4046,11 +4212,13 @@ function ouvrirConnexion(nouveau) {
   }
   const c = nouveau ? null : (ghConfig() || accesSite());
   const ident = `<input type="text" class="vh" autocomplete="username" value="${esc(ST.boutique.nom)}" tabindex="-1" aria-hidden="true" readonly>`;
+  const fid = c && faceIdConfig() && window.PublicKeyCredential ? faceIdConfig() : null;
   if (c) {
     ouvrir(tete + `<form id="gh-form" class="connexion" data-mode="entrer" novalidate>${ident}
+      ${fid ? `<button type="button" class="btn plein large btn-faceid" id="gh-faceid" data-act="gh-faceid">${IC_FACEID}Entrer avec Face ID</button><p class="ou" id="gh-ou"><span>ou avec ton mot de passe</span></p>` : ''}
       <div class="champ"><label for="gh-mdp">Mot de passe admin</label><input id="gh-mdp" type="password" autocomplete="current-password" enterkeyhint="go"></div>
       <p id="gh-err" class="err" role="alert"></p>
-      <div class="actions"><button type="submit" class="btn plein">Entrer</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
+      <div class="actions"><button type="submit" class="btn${fid ? '' : ' plein'}">Entrer</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
       <button type="button" class="lien" data-act="gh-nouveau">Mot de passe oublié ou nouveau jeton</button>
     </form>`, 'edition connexion');
   } else {
@@ -4072,7 +4240,8 @@ function ouvrirConnexion(nouveau) {
       <div class="actions"><button type="submit" class="btn plein">Se connecter</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
     </form>`, 'edition connexion');
   }
-  const champ = document.getElementById(c ? 'gh-mdp' : 'gh-jeton');
+  /* avec Face ID, pas de clavier qui s'ouvre tout seul : le bouton suffit */
+  const champ = document.getElementById(c ? (fid ? 'gh-faceid' : 'gh-mdp') : 'gh-jeton');
   if (champ) setTimeout(() => { try { champ.focus(); } catch (e) {} }, 60);
 }
 /* retrouve le jeton dans le texte collé, même entouré d'autres caractères ou avec une majuscule ajoutée au début */
@@ -4145,6 +4314,7 @@ async function validerConnexion() {
   catch (e) { occupe(false, 'Se connecter'); err.textContent = e.texte || messageGh(e, conf.depot); return; }
   const cle = Object.assign({ v: 1, site: partout }, conf, await chiffrer(jeton, mdp, partout ? ITERATIONS_SITE : ITERATIONS));
   ecrire(CLE_GH, JSON.stringify(cle));
+  oublier(CLE_FACEID);
   S.gh = Object.assign({ jeton }, conf, { acces: partout ? { publier: cle } : { retirer: true } });
   entrerVendeur();
 }
@@ -4159,7 +4329,7 @@ function entrerVendeur() {
 }
 function quitterVendeur() {
   if (S.modifs) { toast('Publie ou annule tes modifications avant de quitter.'); return; }
-  Object.assign(S, { hote: '', vendeur: false, gh: null, ghEtat: '', db: null, dbEtat: 'attente', ventes: [], couts: null, confirmVente: null });
+  Object.assign(S, { faceIdAttente: null, hote: '', vendeur: false, gh: null, ghEtat: '', db: null, dbEtat: 'attente', ventes: [], couts: null, confirmVente: null });
   if (location.hash === '#vendeur') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
   rendre();
   window.scrollTo(0, 0);
@@ -4464,6 +4634,10 @@ const actions = {
   'quiz-refaire': () => { S.quiz = { etape: 0, r: {} }; rendreQuiz(); },
   'vendeur-entree': () => ouvrirConnexion(false),
   'gh-nouveau': () => ouvrirConnexion(true),
+  'gh-faceid': el => entrerFaceId(el),
+  'faceid-activer': el => activerFaceId(el),
+  'faceid-retirer': () => retirerFaceId(),
+  'faceid-confirmer': el => confirmerFaceId(el),
   'gh-voir': el => { const i = document.getElementById('gh-jeton'); if (!i) return; const cache = i.classList.toggle('masque'); el.textContent = cache ? 'Afficher' : 'Masquer'; },
   deconnexion: () => quitterVendeur(),
   'gh-reessayer': () => { rendre(); chargerGh(); },
