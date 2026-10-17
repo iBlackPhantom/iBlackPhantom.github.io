@@ -1621,6 +1621,45 @@ dialog.cv-dlg .vp-total{display:flex;justify-content:space-between;align-items:b
 dialog.cv-dlg .vp-total b{font-size:1.4rem}
 dialog.cv-dlg .vp-total small{display:block;font-size:.8rem;color:var(--fumee)}
 .cmd-liste small.cmd-res{display:block;color:var(--or)}
+
+/* ================= l'onglet « Sur commande » : un écran à part ================= */
+.page-cmd{padding-bottom:7rem}
+.vue-cmd{padding-top:max(1.6rem,calc(env(safe-area-inset-top,0px) + .8rem));padding-bottom:0}
+.vue-cmd .cmd-tete h1{margin:0;font:500 clamp(2.3rem,10vw,3rem)/1.05 var(--f-titre)}
+.vue-cmd > *{min-width:0}
+@media (min-width:760px){.vue-cmd .cmd-jauge,.vue-cmd .cmd-etapes{max-width:560px}}
+/* la jauge se remplit à l'arrivée sur l'onglet */
+@media (prefers-reduced-motion:no-preference){
+  .vue-cmd .cmd-jus{animation:jauge 1.2s cubic-bezier(.2,.8,.2,1) .2s both}
+  .vue-cmd .cmd-tuile{animation:cmd-monte .5s cubic-bezier(.2,.8,.2,1) both}
+  .vue-cmd .cmd-tuile:nth-child(2){animation-delay:.05s}
+  .vue-cmd .cmd-tuile:nth-child(3){animation-delay:.1s}
+  .vue-cmd .cmd-tuile:nth-child(4){animation-delay:.15s}
+}
+@keyframes cmd-monte{from{opacity:0;transform:translateY(10px)}}
+/* les maisons restent sous la main en faisant défiler la grille */
+.cmd-puces-zone{position:sticky;top:0;z-index:20;min-width:0;margin:0 calc(50% - 50vw);padding:max(10px,env(safe-area-inset-top,0px)) 0 10px}
+.cmd-puces-zone::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(7,7,7,.82);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid transparent;transition:border-color .2s}
+.cmd-puces-zone .cmd-puces{margin:0;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px),calc((100vw - 1180px) / 2 + 16px));scroll-padding-inline:max(16px,calc((100vw - 1180px) / 2 + 16px))}
+.page.page-cmd{padding-left:0;padding-right:0}
+.cmd-rayon{display:grid;gap:18px;min-width:0}
+.page-cmd{overflow-x:clip}
+.cmd-faq{margin-top:1.6rem}
+.cmd-faq > h2{font-size:clamp(1.5rem,6vw,2rem)}
+.cmd-retour{justify-self:start;min-height:44px;margin:-.6rem 0 -.4rem -.3rem;padding:0 .3rem;border:0;background:none;color:var(--platine);font:400 1rem var(--f-texte)}
+/* dans la carte : l'entrée vers l'onglet */
+.cmd-entree{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;margin:1.4rem 0 .4rem;padding:12px 14px 12px 12px;border:1px solid rgba(227,185,111,.28);border-radius:20px;background:linear-gradient(120deg,rgba(227,185,111,.12),rgba(21,21,23,.92) 55%);color:var(--argent);text-align:left;font:inherit}
+.cmd-entree:active{transform:scale(.99)}
+.cmd-entree-img{display:flex}
+.cmd-entree-img span{display:block;width:44px;height:56px;padding:3px;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.45)}
+.cmd-entree-img span + span{margin-left:-18px}
+.cmd-entree-img span:nth-child(2){transform:translateY(-4px)}
+.cmd-entree-img img{display:block;width:100%;height:100%;object-fit:contain}
+.cmd-entree-t{display:grid;gap:1px;min-width:0}
+.cmd-entree-t small{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--or)}
+.cmd-entree-t b{font:500 1.2rem/1.2 var(--f-titre);color:var(--platine)}
+.cmd-entree-t > span{font-size:.84rem;line-height:1.35;color:var(--fumee)}
+.cmd-entree-p{display:grid;place-items:center;min-width:52px;height:30px;padding:0 10px;border-radius:15px;background:rgba(227,185,111,.16);color:var(--or);font-weight:600;font-size:.86rem;font-variant-numeric:tabular-nums}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[],"offres":[{"id":"duo-jean-couturier","nom":"Duo Jean Couturier","ids":["neuf-vanilla-exotica","neuf-rose-khayali"],"prix":160}]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":60,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":0,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":10,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":190,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"30":70},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"neuf-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Vanilla-Exotica-57967.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":69},{"n":"Noix de coco","v":60},{"n":"Fruité","v":54},{"n":"Fleur blanche","v":50},{"n":"Poudré","v":40}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille","Noix de coco","Pêche","Fleur de tiaré","Notes boisées","Jasmin","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-vanilla-exotica.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Rose-Khayali-83664.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Rose","v":87},{"n":"Cuir","v":75},{"n":"Fumé","v":71},{"n":"Boisé","v":70},{"n":"Patchouli","v":29}],"notes":{"tete":["Safran","Cardamome","Papyrus"],"coeur":["Rose","Fumée","Cuir"],"fond":["Patchouli","Cèdre","Vanille"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-rose-khayali.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-roses-vanille","maison":"Mancera","nom":"Roses Vanille","collection":"","annee":2011,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Mancera/Roses-Vanille-15210.html","accords":[{"n":"Rose","v":100},{"n":"Vanillé","v":94},{"n":"Poudré","v":55},{"n":"Musqué","v":43},{"n":"Floral","v":30},{"n":"Boisé","v":25}],"notes":{"tete":["Citron d'Italie"],"coeur":["Rose de Turquie"],"fond":["Vanille","Musc blanc","Cèdre"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"120":100},"stock":120,"visible":true,"photo":"flacon-neuf-roses-vanille.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":120,"statut":"","mention":"Neuf, dans sa boîte (sans blister).","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy.","Jean Couturier":"Maison de parfum parisienne, connue depuis 1973 pour Coriandre.","Mancera":"Maison parisienne fondée en 2008 par le parfumeur Pierre Montale."},"deduitJusqua":1792254863939,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="},"commande":{"remplie":0,"jours":30,"produits":[{"id":"cmd-taraf","maison":"Arabian Oud","nom":"Taraf","ml":100,"format":"Eau de parfum","prix":155,"ailleurs":197.9,"photo":"commande/taraf.jpg"},{"id":"cmd-madawi-white","maison":"Arabian Oud","nom":"Madawi White","ml":100,"format":"Eau de parfum","prix":165,"ailleurs":199.99,"photo":"commande/madawi-white.jpg"},{"id":"cmd-rosewood","maison":"Arabian Oud","nom":"Rosewood","ml":100,"format":"Eau de parfum","prix":140,"ailleurs":null,"photo":"commande/rosewood.jpg"},{"id":"cmd-madawi-gold","maison":"Arabian Oud","nom":"Madawi Gold","ml":100,"format":"Eau de parfum","prix":160,"ailleurs":197.9,"photo":"commande/madawi-gold.jpg"},{"id":"cmd-kashmir-musk","maison":"Arabian Oud","nom":"Kashmir Musk","ml":100,"format":"Parfum","prix":170,"ailleurs":240.6,"photo":"commande/kashmir-musk.jpg"},{"id":"cmd-sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","ml":100,"format":"Extrait de parfum","prix":160,"ailleurs":245,"photo":"commande/sucre-noir.jpg"},{"id":"cmd-burgundy-oud","maison":"Atelier Materi","nom":"Burgundy Oud","ml":50,"format":"Extrait de parfum","prix":195,"ailleurs":255,"photo":"commande/burgundy-oud.jpg"},{"id":"cmd-mixed-emotions","maison":"Byredo","nom":"Mixed Emotions","ml":100,"format":"Eau de parfum","prix":190,"ailleurs":245,"photo":"commande/mixed-emotions.jpg"},{"id":"cmd-de-los-santos","maison":"Byredo","nom":"De Los Santos","ml":100,"format":"Eau de parfum","prix":190,"ailleurs":245,"photo":"commande/de-los-santos.jpg"},{"id":"cmd-the-chronic","maison":"Byron","nom":"The Chronic","ml":75,"format":"Extrait de parfum","prix":160,"ailleurs":210,"photo":"commande/the-chronic.jpg"},{"id":"cmd-mula-mula-rouge","maison":"Byron","nom":"Mula Mula Rouge Extrême","ml":75,"format":"Extrait de parfum","prix":160,"ailleurs":210,"photo":"commande/mula-mula-rouge.jpg"},{"id":"cmd-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","ml":100,"format":"Eau de parfum","prix":100,"ailleurs":180,"photo":"commande/vanilla-exotica.jpg"},{"id":"cmd-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","ml":100,"format":"Eau de parfum","prix":100,"ailleurs":null,"photo":"commande/rose-khayali.jpg"},{"id":"cmd-angels-share","maison":"Kilian","nom":"Angels’ Share","ml":50,"format":"Eau de parfum","prix":200,"ailleurs":250,"photo":"commande/angels-share.jpg"},{"id":"cmd-vanille-absolu","maison":"Montale","nom":"Vanille Absolu","ml":100,"format":"Eau de parfum","prix":80,"ailleurs":100,"photo":"commande/vanille-absolu.jpg"},{"id":"cmd-dark-vanilla","maison":"Montale","nom":"Dark Vanilla","ml":100,"format":"Eau de parfum","prix":105,"ailleurs":140,"photo":"commande/dark-vanilla.jpg"},{"id":"cmd-tuberoza","maison":"Nishane","nom":"Tuberóza","ml":50,"format":"Extrait de parfum","prix":150,"ailleurs":225,"photo":"commande/tuberoza.jpg"},{"id":"cmd-ani-x","maison":"Nishane","nom":"Ani X","ml":100,"format":"Extrait de parfum","prix":220,"ailleurs":345,"photo":"commande/ani-x.jpg"},{"id":"cmd-vanilla-baby","maison":"Stéphanie de Bruijn","nom":"Vanilla Baby","ml":100,"format":"Extrait de parfum","prix":160,"ailleurs":220,"photo":"commande/vanilla-baby.jpg"},{"id":"cmd-kirke-overdose","maison":"Tiziana Terenzi","nom":"Kirke Overdose","ml":100,"format":"Extrait de parfum","prix":240,"ailleurs":350,"photo":"commande/kirke-overdose.jpg"},{"id":"cmd-kirke","maison":"Tiziana Terenzi","nom":"Kirke","ml":100,"format":"","prix":150,"ailleurs":210,"photo":"commande/kirke.jpg"},{"id":"cmd-alexandria-ii","maison":"Xerjoff","nom":"Alexandria II","ml":100,"format":"Parfum","prix":290,"ailleurs":350.8,"photo":"commande/alexandria-ii.jpg"},{"id":"cmd-naxos","maison":"Xerjoff","nom":"Naxos","ml":100,"format":"","prix":165,"ailleurs":205.5,"photo":"commande/naxos.jpg"},{"id":"cmd-la-capitale","maison":"Xerjoff","nom":"La Capitale","ml":50,"format":"Parfum","prix":150,"ailleurs":184.5,"photo":"commande/la-capitale.jpg"},{"id":"cmd-erba-pura","maison":"Xerjoff","nom":"Erba Pura","ml":100,"format":"Eau de parfum","prix":165,"ailleurs":205.4,"photo":"commande/erba-pura.jpg"}]}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -2259,7 +2298,6 @@ function liensMenu() {
   const grandes = c.filter(e => e[1] > 1), petites = c.filter(e => e[1] <= 1);
   return grandes.map(e => lien('m-' + slug(e[0]), court(e[0]))).join('')
     + (flaconVisibles().length ? lien('flacons', 'Flacons neufs') : '')
-    + (cmdVisibles().length ? lien('sur-commande', 'Sur commande') : '')
     + (miniVisibles().length ? lien('miniatures', 'Miniatures') : '')
     + petites.map(e => lien('m-' + slug(e[0]), court(e[0]))).join('');
 }
@@ -2422,9 +2460,9 @@ function vueBoutique() {
         <button type="button" class="quiz-entree" data-act="quiz"><span><b>Tu hésites ?</b><span>Réponds à 3 questions, je te propose tes parfums.</span></span><span class="icone" aria-hidden="true">${IC.goutte}</span></button>
       </div>
       ${blocCoffret()}
+      ${entreeCommande()}
       <div id="sections"></div>
     </section>
-    ${blocCommande()}
     ${blocBientot()}
     <div id="infos">${blocService()}${blocAvis()}${blocFaq()}</div>
     ${blocFinal()}
@@ -2464,20 +2502,83 @@ function grilleCmd() {
       <span class="cmd-p"><b>${eur(p.prix)}</b>${p.ailleurs ? `<span>ailleurs dès ${eur(p.ailleurs)}</span>` : ''}</span>
     </button>`).join('');
 }
-function blocCommande() {
-  const L = cmdVisibles();
-  if (!L.length) return '';
-  const C = ST.commande;
+/* l'onglet « Sur commande » : un écran à lui, comme dans une app ; la carte garde sa place quand on y revient */
+const enCommande = () => S.vue === 'commande' && cmdVisibles().length > 0 && (!S.vendeur || S.onglet === 'boutique');
+function faqCmd() {
+  const q = [
+    ['Comment réserver ?', `Touche un flacon, puis « Réserver » : il va dans ton panier. Touche « Commander sur Snapchat », ta demande est copiée : colle-la en message ${reseauxTexte()}. Je te dis comment régler l'acompte.`],
+    ['Pourquoi un acompte ?', "Je commande ton flacon exprès pour toi : l'acompte de 50 % réserve ta place dans la commande. Tu règles le reste quand tu le récupères."],
+    ['Quand part la commande ?', "Dès que les réservations de tous mes clients remplissent la jauge : mon fournisseur ne livre qu'à partir d'un minimum. Je te préviens quand ton flacon est arrivé."],
+    ['Et si elle ne part pas ?', `Si elle n'est pas partie dans les ${ST.commande.jours} jours après ton acompte, je te le rends. Un flacon peut aussi manquer chez mon fournisseur : dans ce cas aussi, ton acompte t'est rendu.`]
+  ];
+  return `<section class="faq cmd-faq" aria-labelledby="t-cmd-faq"><h2 id="t-cmd-faq">Questions</h2>${q.map(x => `<details><summary>${esc(x[0])}</summary><p>${esc(x[1])}</p></details>`).join('')}</section>`;
+}
+function vueCommande() {
+  const L = cmdVisibles(), C = ST.commande;
   const maisons = [...new Set(L.map(p => p.maison))];
   if (S.cmdMaison && !maisons.includes(S.cmdMaison)) S.cmdMaison = '';
-  return `<section class="commande" id="sur-commande" aria-labelledby="h-commande">
-    <div class="cmd-tete"><h2 id="h-commande" class="chrome">Sur commande</h2><p>Des flacons neufs, commandés pour toi chez mon fournisseur.</p></div>
+  return `<section class="commande vue-cmd" id="sur-commande" aria-labelledby="h-commande">
+    ${S.vendeur ? '<button type="button" class="cmd-retour" data-act="vue" data-v="carte">‹ La carte</button>' : ''}
+    <div class="cmd-tete"><h1 id="h-commande" class="chrome">Sur commande</h1><p>Des flacons neufs dans leur boîte, commandés pour toi chez mon fournisseur.</p></div>
     ${jaugeCmd(C.remplie)}
-    <ol class="cmd-etapes" aria-label="Comment ça marche"><li><span aria-hidden="true">1</span>Tu réserves avec 50 % d'acompte</li><li><span aria-hidden="true">2</span>La commande part à 100 %</li><li><span aria-hidden="true">3</span>Tu récupères ton flacon et règles le reste</li></ol>
-    ${maisons.length > 1 ? `<div class="cmd-puces" role="group" aria-label="Maisons">${['', ...maisons].map(m => `<button type="button" class="cmd-puce" data-act="cmd-maison" data-m="${esc(m)}" aria-pressed="${(S.cmdMaison || '') === m}">${m ? esc(court(m)) : 'Tout'}</button>`).join('')}</div>` : ''}
+    <ol class="cmd-etapes" aria-label="Comment ça marche"><li><span aria-hidden="true">1</span>Tu réserves avec 50 % d'acompte</li><li><span aria-hidden="true">2</span>La commande part à 100 %</li><li><span aria-hidden="true">3</span>Tu récupères ton flacon et règles le reste</li></ol>
+    <div class="cmd-rayon">
+    ${maisons.length > 1 ? `<div class="cmd-puces-zone" id="cmd-puces"><div class="cmd-puces" role="group" aria-label="Maisons">${['', ...maisons].map(m => `<button type="button" class="cmd-puce" data-act="cmd-maison" data-m="${esc(m)}" aria-pressed="${(S.cmdMaison || '') === m}">${m ? esc(court(m)) : 'Tout'}</button>`).join('')}</div></div>` : ''}
     <div class="cmd-grille" id="cmd-grille">${grilleCmd()}</div>
-    <p class="cmd-note">Si la commande n'est pas partie dans les ${C.jours} jours, ton acompte t'est rendu. Sous réserve de disponibilité chez mon fournisseur.</p>
-  </section>`;
+    </div>
+    <p class="cmd-note">Sous réserve de disponibilité chez mon fournisseur. Si la commande n'est pas partie dans les ${C.jours} jours, ton acompte t'est rendu.</p>
+    ${faqCmd()}
+  </section>
+  ${pied()}`;
+}
+/* dans la carte : une entrée vers l'onglet, avec trois flacons et la jauge */
+function entreeCommande() {
+  const L = cmdVisibles();
+  if (!L.length) return '';
+  const min = Math.min(...L.map(p => p.prix)), photos = L.filter(p => p.photo).slice(0, 3);
+  return `<button type="button" class="cmd-entree" data-act="vue" data-v="commande">
+      <span class="cmd-entree-img" aria-hidden="true">${photos.map(p => `<span><img src="${esc(p.photo)}" alt="" loading="lazy"></span>`).join('')}</span>
+      <span class="cmd-entree-t"><small>Nouveau</small><b>Sur commande</b><span>${L.length} flacons neufs dans leur boîte, dès ${eur(min)}</span></span>
+      <span class="cmd-entree-p" aria-label="Commande remplie à ${ST.commande.remplie} %">${ST.commande.remplie} %</span>
+    </button>`;
+}
+/* la carte retrouve sa place au retour : on retient le bloc à l'écran et son décalage, pas un nombre de pixels
+   (la carte se reconstruit, ses images et ses polices peuvent arriver un peu après) */
+const SEL_ANCRES = '.ouverture, #carte, #trouver, .cmd-entree, .bloc-maison, #flacons, #miniatures, .petites-maisons, #bientot, #infos, .final, .pied';
+function ancreCarte() {
+  let a = null;
+  document.querySelectorAll(SEL_ANCRES).forEach((e, i) => { const t = e.getBoundingClientRect().top; if (t <= innerHeight / 3) a = { i, dy: t }; });
+  return a;
+}
+function revenirAncre(a) {
+  const e = a && document.querySelectorAll(SEL_ANCRES)[a.i];
+  if (!e) return;
+  window.scrollTo(0, Math.max(0, Math.round(scrollY + e.getBoundingClientRect().top - a.dy)));
+}
+function changerVue(v, cible) {
+  if (v === 'commande' && !cmdVisibles().length) return;
+  /* l'onglet déjà ouvert : on remonte en haut, comme sur iPhone */
+  if ((v === 'commande') === enCommande()) {
+    if (v === 'commande') { arreterDefil(); defiler(null); return; }
+    return false;
+  }
+  arreterDefil();
+  if (v === 'commande') S.ancre = ancreCarte();
+  S.vue = v;
+  S.navActif = v === 'commande' ? 'commande' : cible === 'trouver' ? 'trouver' : cible === 'infos' ? 'infos' : 'carte';
+  rendre();
+  majAdresse(v === 'commande' ? '#sur-commande' : '');
+  if (v === 'commande') { window.scrollTo(0, 0); return; }
+  const c = cible && document.getElementById(cible);
+  window.scrollTo(0, 0);
+  revenirAncre(S.ancre);
+  if (c) { S.verrou = null; defiler(c); }
+  else {
+    /* encore une fois, une fois les images en place, si personne n'a bougé entre-temps */
+    const y = scrollY, a = S.ancre;
+    setTimeout(() => { if (!enCommande() && scrollY === y && !defil) revenirAncre(a); majNavFlot(); }, 400);
+  }
+  majNavFlot();
 }
 function ouvrirFicheCmd(id) {
   const c = ficheCmd(id);
@@ -2671,7 +2772,7 @@ function majMenu() {
     const ligne = hauteurFixe() + innerHeight * 0.3;
     let haut = -Infinity;
     /* deux petites maisons côte à côte ont le même haut : la première l'emporte */
-    document.querySelectorAll('.bloc-maison, #sur-commande, #bientot, #infos').forEach(s => {
+    document.querySelectorAll('.bloc-maison, #bientot, #infos').forEach(s => {
       const t = s.getBoundingClientRect().top;
       if (t <= ligne && t > haut + 1) { haut = t; actif = s.id; }
     });
@@ -2901,10 +3002,10 @@ function rendreBarre() {
 /* l'onglet allumé suit la partie de la page à l'écran */
 function majNavFlot() {
   const t = id => { const e = document.getElementById(id); return e ? e.getBoundingClientRect() : null; };
-  const ligne = innerHeight * 0.45, inf = t('infos'), tr = t('trouver'), cm = t('sur-commande');
+  const ligne = innerHeight * 0.45, inf = t('infos'), tr = t('trouver');
   let ici = 'carte';
-  if (inf && (inf.top < ligne || scrollY + innerHeight >= document.documentElement.scrollHeight - 4)) ici = 'infos';
-  else if (cm && cm.top < ligne && cm.bottom > innerHeight * 0.2) ici = 'commande';
+  if (enCommande()) ici = 'commande';
+  else if (inf && (inf.top < ligne || scrollY + innerHeight >= document.documentElement.scrollHeight - 4)) ici = 'infos';
   else if (tr && tr.top < ligne && tr.bottom > innerHeight * 0.2) ici = 'trouver';
   if (ici === S.navActif) return;
   S.navActif = ici;
@@ -3286,7 +3387,7 @@ function ouvrir(html, cls) {
   const d = document.getElementById('dlg');
   d.addEventListener('close', () => {
     rangerToast(); if ($calque.contains(d)) $calque.innerHTML = ''; S.photoTemp = null; S.confirmSuppr = false;
-    { const h = decodeURIComponent(location.hash.slice(1)); if (trouver(h) || ficheCmd(h)) majAdresse(''); }
+    { const h = decodeURIComponent(location.hash.slice(1)); if (trouver(h) || ficheCmd(h)) majAdresse(enCommande() ? '#sur-commande' : ''); }
   });
   d.addEventListener('cancel', e => { if (d.classList.contains('produit') && zoomPossible()) { e.preventDefault(); fermer(); } });
   try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
@@ -3324,7 +3425,7 @@ function rendre() {
   const o = S.vendeur ? S.onglet : 'boutique';
   let contenu = '';
   if (S.vendeur && S.hote === 'gh' && S.ghEtat !== 'pret' && o !== 'boutique') contenu = panneauChargement();
-  else if (o === 'boutique') contenu = vueBoutique();
+  else if (o === 'boutique') contenu = enCommande() ? vueCommande() : vueBoutique();
   else if (o === 'accueil') contenu = panneauAccueil();
   else if (o === 'stock') contenu = panneauStock();
   else if (o === 'ventes') contenu = panneauVentes();
@@ -3335,11 +3436,14 @@ function rendre() {
   document.body.classList.toggle('vue-vendeur', S.vendeur && o !== 'boutique');
   const fab = S.vendeur && ['accueil', 'stock', 'ventes'].includes(o) && !(S.hote === 'gh' && S.ghEtat !== 'pret')
     ? `<button type="button" class="fab" data-act="vente-ouvrir" aria-label="Nouvelle vente">${contenuFab()}</button>` : '';
-  $app.innerHTML = typo((o === 'boutique' ? vueAnnonce() + vueEntete() + vueOuverture() : '')
-    + `<div class="page${S.vendeur && o !== 'boutique' ? ' page-vendeur' : ''}">${contenu}</div><div id="barre" class="barre" hidden></div>`
+  const cmd = o === 'boutique' && enCommande();
+  document.body.classList.toggle('vue-commande', cmd);
+  $app.innerHTML = typo((o === 'boutique' && !cmd ? vueAnnonce() + vueEntete() + vueOuverture() : '')
+    + `<div class="page${S.vendeur && o !== 'boutique' ? ' page-vendeur' : ''}${cmd ? ' page-cmd' : ''}">${contenu}</div><div id="barre" class="barre" hidden></div>`
     + (S.vendeur ? `${fab}<div id="console" class="console${fab ? '' : ' sans-fab'}">${console_()}</div>` : ''));
   if (S.annonceStop) { S.annonceStop(); S.annonceStop = null; }
-  if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); initArc(); }
+  if (cmd) { rendreBarre(); majNavFlot(); }
+  else if (o === 'boutique') { rendreGrille(); demarrerFumee(); demarrerAnnonce(); initArc(); }
   if (!document.querySelector('.page .panneau-attente')) {
     if (o === 'ventes') rendreVentesDyn();
     if (o === 'couts') rendreCouts();
@@ -5729,8 +5833,12 @@ const actions = {
   ecrire: () => {},
   effacer: () => { S.q = ''; S.filtre = 'tous'; S.famille = 'toutes'; const q = document.getElementById('q'); if (q) q.value = ''; majBoutonsFiltres(); rendreGrille(); },
   'tout-voir': () => actions.effacer(),
+  vue: el => changerVue(el.dataset.v),
   aller: el => {
     const id = el.dataset.cible;
+    if (id === 'sur-commande') { changerVue('commande'); return; }
+    /* depuis l'écran Sur commande : retour à la carte, là où on l'avait laissée (ou à Trouver, Infos) */
+    if (enCommande()) { changerVue('carte', el.dataset.nav === 'carte' ? null : id); return; }
     let c = document.getElementById(id);
     /* une maison masquée par un filtre : on retire les filtres pour l'afficher */
     if (!c && /^m-/.test(id) && (S.q.trim() || S.filtre !== 'tous' || S.famille !== 'toutes')) { actions.effacer(); c = document.getElementById(id); }
@@ -5784,6 +5892,8 @@ const actions = {
     S.cmdMaison = el.dataset.m || '';
     document.querySelectorAll('[data-act="cmd-maison"]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.m || '') === S.cmdMaison)));
     const g = document.getElementById('cmd-grille'); if (g) g.innerHTML = typo(grilleCmd());
+    const z = document.getElementById('cmd-puces');
+    if (z && z.getBoundingClientRect().top < 2) window.scrollTo(0, Math.max(0, scrollY + g.getBoundingClientRect().top - z.offsetHeight - 8));
   },
   reserver: el => {
     const c = ficheCmd(el.dataset.id); if (!c) { toast("Ce flacon n'est plus proposé sur commande."); return; }
@@ -6112,6 +6222,7 @@ function demarrer(donnees) {
   let apres = null;
   try { apres = JSON.parse(sessionStorage.getItem('bp-apres') || 'null'); sessionStorage.removeItem('bp-apres'); } catch (e) {}
   if (apres && apres.onglet) S.ongletApres = apres.onglet;
+  { const h0 = decodeURIComponent(location.hash.slice(1)); if (h0 === 'sur-commande' || ficheCmd(h0)) S.vue = 'commande'; }
   rendre();
   if (apres && apres.msg) toast(apres.msg);
   if (surClaude()) { initVendeur(); return; }
@@ -6119,9 +6230,10 @@ function demarrer(donnees) {
   if (/[?&]v=\d+/.test(location.search)) { try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {} }
   const porte = () => {
     if (location.hash === '#vendeur') { if (!S.vendeur) ouvrirConnexion(false); return; }
+    if (location.hash === '#sur-commande') { if (!enCommande()) changerVue('commande'); return; }
     const h = decodeURIComponent(location.hash.slice(1)), p = trouver(h), ouverte = document.getElementById('dlg') && document.getElementById('dlg').open;
     if (p && p.visible && !ouverte) ouvrirFiche(p.id);
-    else if (ficheCmd(h) && !ouverte) ouvrirFicheCmd(h);
+    else if (ficheCmd(h) && !ouverte) { if (!enCommande()) changerVue('commande'); ouvrirFicheCmd(h); }
   };
   window.addEventListener('hashchange', porte);
   porte();
