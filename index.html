@@ -198,7 +198,8 @@ dialog.produit .fen{max-height:100dvh;height:100dvh;padding:0;gap:0}
   .produit-info{padding:2.2rem}
 }
 
-.choix{display:grid;grid-template-columns:repeat(auto-fit,minmax(5.6rem,1fr));gap:.5rem;margin:0;padding:0;border:0}
+.choix{display:block;min-width:0;margin:0;padding:0;border:0}
+.choix-rang{display:grid;grid-template-columns:repeat(auto-fit,minmax(5.6rem,1fr));gap:.5rem}
 .choix legend{margin-bottom:.5rem;font-size:.86rem;color:var(--fumee)}
 .choix-taille{display:grid;gap:.1rem;padding:.65rem .8rem;border:1px solid var(--filet);border-radius:var(--r-petit);background:transparent;text-align:left;line-height:1.25}
 .choix-taille .t{font-size:.84rem;color:var(--fumee)}
@@ -689,7 +690,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .jumeau b{display:block;font:500 1.02rem/1.25 var(--f-titre);color:var(--platine)}
 .jumeau span > span{font-size:.86rem;color:var(--argent)}
 .jumeau .fleche{font-size:1.2rem;color:var(--argent)}
-.choix.unique{grid-template-columns:minmax(0,1fr)}
+.choix.unique .choix-rang{grid-template-columns:minmax(0,1fr)}
 .choix.unique .choix-taille{padding-right:3rem}
 
 /* ---------- bientôt : les flacons qui arrivent ---------- */
@@ -1351,6 +1352,141 @@ body:has(.a-publier) .bandeau-vente{bottom:calc(150px + env(safe-area-inset-bott
 .vs-abandon p:first-child{font-weight:600;font-size:1.05rem;color:var(--platine)}
 .vs-abandon p + p{margin-bottom:.35rem;font-size:.9rem;color:var(--argent)}
 :root{--offre:#8CC3A3}
+
+/* ===== vitrine façon app : barre flottante, « Ajouté », fiche et panier en feuilles ===== */
+:root{--verre:rgba(17,17,19,.9);--verre-fil:rgba(255,255,255,.12);--feuille:#0E0E10;--feuille-cel:#151517}
+/* barre flottante : la carte, trouver, infos, et le panier rond */
+.barre{left:0;right:0;bottom:0;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;max-width:560px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-left,0px)) calc(14px + env(safe-area-inset-bottom,0px));border:0;background:none;pointer-events:none}
+.barre > *{pointer-events:auto}
+.nav-flot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:0 1 280px;height:64px;padding:4px;border:1px solid var(--verre-fil);border-radius:32px;background:var(--verre);-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);box-shadow:0 10px 30px rgba(0,0,0,.55)}
+.nav-b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;padding:0;border:0;border-radius:28px;background:transparent;color:#A9ACB3;font:500 .7rem/1.1 var(--f-texte);transition:background .25s,color .25s}
+.nav-b svg{width:23px;height:23px}
+.nav-b[aria-current]{background:rgba(255,255,255,.12);color:var(--platine)}
+.sac-flot{position:relative;display:grid;place-items:center;flex:none;width:64px;height:64px;margin-left:auto;padding:0;border:0;border-radius:32px;background:var(--platine);color:#000;box-shadow:0 10px 28px rgba(0,0,0,.55)}
+.sac-flot svg{width:26px;height:26px}
+.sac-flot.vide{border:1px solid var(--verre-fil);background:var(--verre);color:var(--platine);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+.sac-nb{position:absolute;top:-3px;right:-2px;display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border:2px solid #000;border-radius:11px;background:#E3B96F;color:#1A1206;font:600 .75rem/1 var(--f-texte);font-variant-numeric:tabular-nums}
+.sac-flot.rebond{animation:rebond .55s cubic-bezier(.3,1.7,.5,1)}
+.page{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.mode-vendeur .barre{bottom:calc(92px + env(safe-area-inset-bottom,0px));padding-bottom:0}
+.toast{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+@media (prefers-reduced-motion:no-preference){.barre:not([hidden]){animation:none}.nav-flot,.sac-flot{animation:barre-monte .5s cubic-bezier(.2,.8,.2,1)}}
+/* « Ajouté à ton panier » */
+.ajout-flot{position:fixed;z-index:30;left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));bottom:calc(90px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;max-width:532px;min-height:64px;margin:0 auto;padding:8px 8px 8px 10px;border:1px solid var(--verre-fil);border-radius:32px;background:rgba(22,22,25,.94);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:0 12px 34px rgba(0,0,0,.6)}
+.ajout-flot[hidden]{display:none}
+.af-img{flex:none;width:46px;height:46px;border-radius:23px;overflow:hidden}
+.af-img > *{width:100%;height:100%}
+.af-img img{object-fit:cover}
+.af-txt{display:grid;flex:1;min-width:0;line-height:1.25}
+.af-txt b{font-weight:500;font-size:.95rem;color:var(--platine)}
+.af-txt small{overflow:hidden;font-size:.82rem;color:#A9ACB3;text-overflow:ellipsis;white-space:nowrap}
+.af-voir{flex:none;height:44px;padding:0 18px;border:0;border-radius:22px;background:var(--platine);color:#000;font:600 .95rem var(--f-texte)}
+.ajout-flot.vient{animation:af-vient .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes af-vient{from{opacity:0;transform:translateY(18px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){.ajout-flot.vient,.nav-flot,.sac-flot{animation:none}}
+
+/* feuilles (fiche et panier) : sur téléphone, elles montent du bas, coins arrondis, poignée */
+@media (max-width:859px){
+  dialog.feuille{width:100vw;max-width:100vw;height:calc(100dvh - 54px - env(safe-area-inset-top,0px));max-height:none;margin:auto 0 0;border:0;border-top:1px solid rgba(255,255,255,.1);border-radius:28px 28px 0 0;background:var(--feuille);box-shadow:0 -10px 40px rgba(0,0,0,.6);overflow:hidden}
+  dialog.feuille::backdrop{background:rgba(0,0,0,.66)}
+  dialog.feuille .fen{height:100%;max-height:100%;overscroll-behavior:contain}
+  dialog.feuille::before{content:"";position:absolute;z-index:4;top:8px;left:50%;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:rgba(255,255,255,.45);pointer-events:none}
+  @media (prefers-reduced-motion:no-preference){dialog.feuille[open]{animation:feuille-monte .42s cubic-bezier(.2,.85,.25,1)}}
+  /* la fiche */
+  dialog.produit.feuille{height:calc(100dvh - 54px - env(safe-area-inset-top,0px))}
+  dialog.produit.feuille .fen{height:100%;max-height:100%}
+  .produit.feuille .plaque#fiche-plaque{aspect-ratio:auto;height:min(318px,40dvh)}
+  .produit.feuille .fermer,.produit.feuille .partager-rond{position:absolute;top:16px}
+  .produit.feuille .produit-info{gap:1.3rem;padding-top:1rem;padding-bottom:1.6rem}
+  .produit.feuille .produit-tete h2{font-size:clamp(1.9rem,8.6vw,2.4rem)}
+}
+@keyframes feuille-monte{from{transform:translateY(40%);opacity:.4}}
+.produit .fermer,.partager-rond{display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.14);border-radius:22px;background:rgba(10,10,12,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--platine);font-size:1.4rem;line-height:1}
+.partager-rond{position:fixed;z-index:2;top:calc(.8rem + env(safe-area-inset-top,0px));left:max(.8rem,env(safe-area-inset-left,0px));padding:0}
+.partager-rond svg{width:19px;height:19px}
+.produit .fermer{right:16px}
+.partager-rond{left:16px}
+#fiche-plaque .drapeau.marque-badge{top:4.6rem}
+@media (min-width:860px){.partager-rond{position:absolute;top:.8rem}}
+/* tailles : trois grands boutons côte à côte, prix et prix au ml */
+.produit .choix:not(.unique) .choix-rang{grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:4px;padding:4px;border:1px solid var(--filet);border-radius:20px;background:var(--feuille-cel)}
+.produit .choix legend{margin:0 0 .7rem;padding:0;font-size:.88rem}
+.produit .choix:not(.unique) .choix-taille{justify-items:center;gap:0;min-height:78px;padding:.55rem .25rem;border:0;border-radius:16px;background:transparent;text-align:center}
+.produit .choix:not(.unique) .choix-taille .t{font-size:.92rem;color:var(--platine)}
+.produit .choix:not(.unique) .choix-taille .p{font-size:1.3rem;line-height:1.2}
+.produit .choix:not(.unique) .choix-taille .u{font-size:.72rem}
+.produit .choix:not(.unique) .choix-taille .mini{display:none}
+.produit .choix:not(.unique) .choix-taille[aria-pressed="true"]{background:var(--platine);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.produit .choix:not(.unique) .choix-taille[aria-pressed="true"] :is(.t,.p){color:#000}
+.produit .choix:not(.unique) .choix-taille[aria-pressed="true"] .u{color:#4B4E55}
+.produit .choix:not(.unique) .choix-taille .tag{top:-11px;left:50%;transform:translateX(-50%);padding:1px 8px;border:1px solid rgba(227,185,111,.5);background:#1E1A12;color:#E3B96F;font-weight:500;font-size:.66rem;white-space:nowrap}
+.produit .choix:not(.unique){margin-top:.2rem}
+.achat-seul{margin:0;font-size:.86rem;color:var(--fumee)}
+.achat-seul a{color:var(--argent)}
+/* bas de la fiche : Snapchat et « Ajouter · prix », toujours à portée du pouce */
+.fiche-pied{position:sticky;bottom:0;z-index:3;display:flex;gap:10px;padding:26px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(rgba(14,14,16,0),var(--feuille) 30%)}
+.fiche-pied[hidden]{display:none}
+.fiche-pied .btn{flex:1;gap:8px;height:56px;min-height:56px;border-radius:28px;font-weight:600}
+.fiche-pied .btn svg{width:20px;height:20px}
+.rond-snap{display:grid;place-items:center;flex:none;width:56px;height:56px;border:1px solid #3A3B40;border-radius:28px;background:var(--feuille-cel);color:var(--platine)}
+.rond-snap svg{width:22px;height:22px}
+@media (min-width:860px){.fiche-pied{grid-column:1/-1;background:linear-gradient(rgba(17,17,19,0),var(--ecrin) 30%)}}
+/* le panier */
+.panier .fen{gap:1rem;padding:1.5rem max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.panier-tete{display:flex;align-items:center;justify-content:space-between}
+.panier-tete h2{margin:0;font:500 1.75rem/1.2 var(--f-titre);color:var(--platine)}
+.fermer-txt{min-height:44px;padding:0 4px;border:0;background:none;color:var(--platine);font:400 1rem var(--f-texte)}
+.panier .lignes{border:1px solid var(--filet);border-radius:22px;background:var(--feuille-cel);overflow:hidden}
+.panier .lignes li{grid-template-columns:54px minmax(0,1fr) auto;gap:12px;padding:11px 10px 11px 12px;border-bottom:0}
+.panier .lignes li + li{border-top:1px solid var(--filet)}
+.ligne-img{width:54px;height:54px;border-radius:12px;overflow:hidden}
+.ligne-img > *{width:100%;height:100%}
+.ligne-img img{object-fit:cover}
+.ligne-txt{display:grid;min-width:0;line-height:1.25}
+.panier .ligne-txt b{font:500 1.1rem/1.2 var(--f-titre)}
+.panier .ligne-txt span{font-size:.82rem;color:var(--fumee)}
+.panier .ligne-txt .somme{min-width:0;text-align:left;font:600 .95rem var(--f-texte);color:var(--platine)}
+.panier .qte{gap:0;border-radius:22px;background:#232327}
+.panier .qte .rond{width:44px;height:44px;border:0;background:none;color:var(--platine);font-size:1.35rem}
+.panier .qte .rond:disabled{color:#55585F}
+.panier .qte span{width:16px;text-align:center;font-weight:600;color:var(--platine)}
+.panier .lignes li.remise-offre{display:flex;align-items:center;gap:8px;min-height:50px;margin:0;padding:0 18px;background:rgba(140,195,163,.07);color:#8CC3A3}
+.panier .remise-offre svg{flex:none;width:18px;height:18px}
+.panier .remise-offre span{flex:1;font-size:.95rem;color:#8CC3A3}
+.panier .remise-offre b{font:500 1.25rem var(--f-titre);color:#8CC3A3}
+.panier .sel-outils{margin:-.4rem 4px 0}
+.panier .sel-outils .lien{font-size:.86rem;color:var(--fumee)}
+.panier .modes{margin:0}
+.modes-choix{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px;padding:4px;border:1px solid var(--filet);border-radius:20px;background:var(--feuille-cel)}
+.panier .mode{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-height:56px;padding:.3rem .4rem;border:0;border-radius:16px;text-align:center}
+.panier .mode input{position:absolute;opacity:0;pointer-events:none}
+.panier .mode b{font-size:.95rem;color:var(--platine)}
+.panier .mode small{font-size:.74rem;color:var(--fumee)}
+.panier .mode:has(input:checked){background:var(--platine);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.panier .mode:has(input:checked) b{color:#000}
+.panier .mode:has(input:checked) small{color:#4B4E55}
+.panier .mode:has(input:focus-visible){outline:2px solid var(--platine);outline-offset:2px}
+.panier .mode.off{opacity:.45}
+.mode-info{display:flex;align-items:flex-start;gap:8px;margin:-.4rem 4px 0;font-size:.88rem;color:var(--fumee)}
+.mode-info.ok{color:#8CC3A3}
+.mode-info svg{flex:none;width:16px;height:16px;margin-top:.15rem}
+.panier .progres{margin:-.3rem 4px 0}
+.msg-voir{border:1px solid var(--filet);border-radius:16px}
+.msg-voir summary{display:flex;align-items:center;justify-content:space-between;min-height:50px;padding:0 16px;color:var(--platine);font-size:.95rem;cursor:pointer;list-style:none}
+.msg-voir summary::-webkit-details-marker{display:none}
+.msg-voir summary::after{content:"";width:8px;height:8px;border-right:1.6px solid var(--fumee);border-bottom:1.6px solid var(--fumee);transform:rotate(-45deg);transition:transform .2s}
+.msg-voir[open] summary::after{transform:rotate(45deg)}
+.msg-voir[open]{display:grid;gap:.7rem;padding-bottom:12px}
+.msg-voir .message,.msg-voir .btn{margin:0 12px}
+.panier-pied{position:sticky;bottom:0;z-index:2;display:grid;gap:10px;margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:24px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px));background:linear-gradient(rgba(14,14,16,0),var(--feuille) 22px)}
+.panier-pied .total{margin:0 4px 2px}
+.panier-pied .total span{color:var(--argent)}
+.panier-pied .total b{font-size:2rem;line-height:1}
+.panier-pied .btn{height:56px;min-height:56px;border-radius:28px;font-weight:600}
+.panier-pied .aide{margin:0;text-align:center;font-size:.8rem}
+.panier-pied .aide a{color:var(--argent)}
+.panier .fen > :nth-last-child(2){margin-bottom:.4rem}
+@media (min-width:860px){.panier-pied{background:linear-gradient(rgba(17,17,19,0),var(--ecrin) 22%)}}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[],"offres":[{"id":"duo-jean-couturier","nom":"Duo Jean Couturier","ids":["neuf-vanilla-exotica","neuf-rose-khayali"],"prix":160}]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré","v":100},{"n":"Miel","v":83},{"n":"Vanillé","v":79},{"n":"Lavande","v":59},{"n":"Tabac","v":59},{"n":"Agrumes","v":57}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes","v":100},{"n":"Boisé","v":79},{"n":"Aromatique","v":68},{"n":"Épicé frais","v":62},{"n":"Vanillé","v":61},{"n":"Frais","v":61}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré","v":100},{"n":"Tabac","v":74},{"n":"Miel","v":72},{"n":"Ambré","v":67},{"n":"Fruité","v":64},{"n":"Fumé","v":46}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité","v":100},{"n":"Sucré","v":52},{"n":"Agrumes","v":33},{"n":"Musqué","v":26},{"n":"Boisé","v":21}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":60,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes","v":100},{"n":"Frais","v":53},{"n":"Musqué","v":46},{"n":"Fleur blanche","v":29},{"n":"Épicé frais","v":26},{"n":"Poudré","v":23}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré","v":100},{"n":"Vanillé","v":74},{"n":"Poudré","v":28},{"n":"Sucré","v":26},{"n":"Aromatique","v":16}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":0,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":90},{"n":"Poudré","v":31},{"n":"Floral","v":21},{"n":"Balsamique","v":11}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":10,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité","v":100},{"n":"Fleur blanche","v":81},{"n":"Floral","v":60},{"n":"Poudré","v":46},{"n":"Lacté","v":34},{"n":"Sucré","v":31}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":190,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel","v":100},{"n":"Épicé chaud","v":87},{"n":"Boisé","v":79},{"n":"Sucré","v":65},{"n":"Vert","v":50},{"n":"Fruité","v":49}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé","v":100},{"n":"Rose","v":99},{"n":"Boisé","v":96},{"n":"Sucré","v":34},{"n":"Floral","v":30},{"n":"Ambré","v":26}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"30":70},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud","v":100},{"n":"Rose","v":95},{"n":"Boisé","v":94},{"n":"Épicé chaud","v":51},{"n":"Ambré","v":49},{"n":"Patchouli","v":35}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose","v":100},{"n":"Floral","v":69},{"n":"Poudré","v":47},{"n":"Frais","v":43},{"n":"Fruité","v":41},{"n":"Musqué","v":38}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral","v":100},{"n":"Poudré","v":48},{"n":"Frais","v":44},{"n":"Vert","v":38},{"n":"Rose","v":32},{"n":"Musqué","v":27}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique","v":100},{"n":"Épicé doux","v":89},{"n":"Lavande","v":82},{"n":"Herbacé","v":73},{"n":"Café","v":69},{"n":"Sucré","v":69}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Notes vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise"},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris","v":100},{"n":"Poudré","v":91},{"n":"Ambré","v":90},{"n":"Musqué","v":62},{"n":"Floral","v":57},{"n":"Violette","v":50}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":""},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Boisé","v":100},{"n":"Sucré","v":86},{"n":"Vanillé","v":73},{"n":"Cannelle","v":69},{"n":"Ambré","v":29}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":""},{"id":"neuf-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Vanilla-Exotica-57967.html","accords":[{"n":"Vanillé","v":100},{"n":"Sucré","v":69},{"n":"Noix de coco","v":60},{"n":"Fruité","v":54},{"n":"Fleur blanche","v":50},{"n":"Poudré","v":40}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille","Noix de coco","Pêche","Fleur de tiaré","Notes boisées","Jasmin","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-vanilla-exotica.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Rose-Khayali-83664.html","accords":[{"n":"Épicé chaud","v":100},{"n":"Rose","v":87},{"n":"Cuir","v":75},{"n":"Fumé","v":71},{"n":"Boisé","v":70},{"n":"Patchouli","v":29}],"notes":{"tete":["Safran","Cardamome","Papyrus"],"coeur":["Rose","Fumée","Cuir"],"fond":["Patchouli","Cèdre","Vanille"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-rose-khayali.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":""},{"id":"neuf-roses-vanille","maison":"Mancera","nom":"Roses Vanille","collection":"","annee":2011,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Mancera/Roses-Vanille-15210.html","accords":[{"n":"Rose","v":100},{"n":"Vanillé","v":94},{"n":"Poudré","v":55},{"n":"Musqué","v":43},{"n":"Floral","v":30},{"n":"Boisé","v":25}],"notes":{"tete":["Citron d'Italie"],"coeur":["Rose de Turquie"],"fond":["Vanille","Musc blanc","Cèdre"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"120":100},"stock":120,"visible":true,"photo":"flacon-neuf-roses-vanille.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":120,"statut":"","mention":"Neuf, dans sa boîte (sans blister).","famille":""}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy.","Jean Couturier":"Maison de parfum parisienne, connue depuis 1973 pour Coriandre.","Mancera":"Maison parisienne fondée en 2008 par le parfumeur Pierre Montale."},"deduitJusqua":1792254863939,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -1918,6 +2054,16 @@ const IC = {
   cercle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5v15M4.5 12h15" stroke-opacity=".5"/></svg>',
   hiver: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M12 2.5v19M3.8 7.2l16.4 9.6M3.8 16.8l16.4-9.6"/><path d="M9.6 4.2L12 6.4l2.4-2.2M9.6 19.8L12 17.6l2.4 2.2M4 10.6l3.1.8-.7 3.1M20 13.4l-3.1-.8.7-3.1"/></svg>'
 };
+/* barre flottante de la vitrine : la carte, trouver, infos */
+const IC_NAV = {
+  carte: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>',
+  trouver: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.5-6 5.5-10z"/></svg>',
+  infos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8h.01"/></svg>'
+};
+const NAV_VITRINE = [['carte', 'La carte'], ['trouver', 'Trouver'], ['infos', 'Infos']];
+const IC_SNAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/></svg>';
+const IC_ETIQUETTE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5V5h7.5L20 13.5 13.5 20z"/><circle cx="8.5" cy="9" r="1.2"/></svg>';
+const IC_COCHE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 const AURA = { gourmand: ['#D98FAE', '#DBA640'], frais: ['#E4D65C', '#7FCFD3'], floral: ['#E2647F', '#F0E6D8'], boise: ['#CB8932', '#7A5640'] };
 const ornement = () => '<div class="ornement" aria-hidden="true"><span></span></div>';
 function blocService() {
@@ -1976,7 +2122,6 @@ function vueEntete() {
       <div class="entete-in">
         <button type="button" class="marque" data-act="haut" aria-label="${esc(B.nom)}, retour en haut"><img src="${LOGO}" alt="" width="34" height="34"><span>${esc(B.nom)}</span></button>
         <div class="recherche-haut" role="search"><span class="icone" aria-hidden="true">${IC.loupe}</span><input id="q" type="search" enterkeyhint="search" placeholder="Parfum, note, maison…" aria-label="Chercher un parfum, une note ou une maison" value="${esc(S.q)}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
-        <button type="button" class="entete-sac" id="entete-sel" data-act="panier" hidden></button>
       </div>
       <nav class="menu-maisons" aria-label="Maisons"><div class="menu-in">${liensMenu()}<button type="button" class="menu-lien" data-act="aller" data-cible="bientot">Bientôt</button><button type="button" class="menu-lien" data-act="aller" data-cible="infos">Infos</button></div></nav>
     </header>`;
@@ -2296,6 +2441,7 @@ function marquerMenu(id) {
     if (defil || !m.scrollTo) m.scrollLeft = x; else m.scrollTo({ left: x, behavior: 'smooth' });
   });
 }
+let navRaf = 0;
 function majMenu() {
   menuRaf = 0;
   if (!document.querySelector('.menu-lien')) return;
@@ -2317,6 +2463,7 @@ function majMenu() {
   marquerMenu(actif);
 }
 addEventListener('scroll', () => { if (!menuRaf) menuRaf = requestAnimationFrame(majMenu); }, { passive: true });
+addEventListener('scroll', () => { if (!navRaf) navRaf = requestAnimationFrame(() => { navRaf = 0; majNavFlot(); }); }, { passive: true });
 addEventListener('resize', () => { if (!menuRaf) menuRaf = requestAnimationFrame(majMenu); });
 
 /* fumée de l'ouverture */
@@ -2517,53 +2664,48 @@ function chargerSelection() {
     if (d.mode === 'livraison' || d.mode === 'remise') S.mode = d.mode;
   } catch (e) {}
 }
-/* dans la fiche, la sélection reste visible en haut : la fiole y atterrit */
 const IC_SAC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10" stroke-linecap="round"/></svg>';
-function majPuceFiche(attente) {
-  const b = document.getElementById('fiche-sel');
-  if (!b) return;
-  const n = contenuPanier().n;
-  b.hidden = !n;
-  b.classList.toggle('attend', !!attente);
-  b.innerHTML = `${IC_SAC}<span>Mon panier</span><b>${n}</b>`;
-  b.setAttribute('aria-label', `Mon panier, ${n} ${n > 1 ? 'parfums' : 'parfum'}`);
-}
 function rebond(el) { if (!el) return; el.classList.remove('rebond'); void el.offsetWidth; el.classList.add('rebond'); }
-function envolSelection(depart, s) {
-  const puce = document.getElementById('fiche-sel');
-  if (!puce || sansMouvement() || !depart || typeof Element.prototype.animate !== 'function') { majPuceFiche(); rebond(puce); return; }
-  majPuceFiche(true);
-  const b = puce.getBoundingClientRect();
-  const x0 = depart.left + depart.width / 2, y0 = depart.top + depart.height / 2;
-  const dx = b.left + b.width / 2 - x0, dy = b.top + b.height / 2 - y0;
-  const v = document.createElement('span');
-  v.className = 'envol'; v.innerHTML = miniFlacon(s);
-  v.style.left = x0 + 'px'; v.style.top = y0 + 'px';
-  (document.getElementById('dlg') || document.body).appendChild(v);
-  /* trajet en courbe : la fiole monte, puis file vers la puce en rapetissant */
-  const im = [];
-  for (let i = 0; i <= 16; i++) {
-    const t = i / 16, u = 1 - t;
-    const x = 2 * u * t * (dx * .1) + t * t * dx, y = 2 * u * t * (dy * .95) + t * t * dy;
-    im.push({ transform: `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${(1.5 - .95 * t).toFixed(3)}) rotate(${(-18 * t).toFixed(1)}deg)`, opacity: t > .88 ? (1 - t) / .12 : 1 });
-  }
-  const a = v.animate(im, { duration: 720, easing: 'cubic-bezier(.5,.05,.35,1)' });
-  const fin = () => { v.remove(); majPuceFiche(); rebond(puce); };
-  a.onfinish = fin; a.oncancel = fin;
-}
+/* barre flottante, comme une app : la carte, trouver, infos, et le panier rond avec sa pastille */
 function rendreBarre() {
   sauverSelection();
-  majPuceFiche();
   const c = contenuPanier();
   const el = document.getElementById('barre');
-  const h = document.getElementById('entete-sel');
-  if (h) { h.hidden = !c.n; h.innerHTML = c.n ? `${IC_SAC}<b>${c.n}</b>` : ''; h.setAttribute('aria-label', c.n ? `Mon panier, ${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}` : 'Mon panier'); }
   if (!el) return;
-  if (!c.n) { el.hidden = true; el.innerHTML = ''; return; }
+  const surVitrine = !S.vendeur || S.onglet === 'boutique';
+  if (!surVitrine || (S.vendeur && !c.n)) { el.hidden = true; el.innerHTML = ''; return; }
+  const ici = S.navActif || 'carte';
   el.hidden = false;
-  el.innerHTML = `<div class="barre-in"><span><small>Mon panier</small><b>${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}</b></span><button type="button" class="btn plein" data-act="panier">Commander</button></div><div class="barre-progres">${progression(c)}</div>`;
+  el.innerHTML = `${S.vendeur ? '' : `<nav class="nav-flot" aria-label="Navigation">${NAV_VITRINE.map(([id, lb]) => `<button type="button" class="nav-b" data-act="aller" data-cible="${id === 'carte' ? 'sections' : id}" data-nav="${id}"${ici === id ? ' aria-current="true"' : ''}>${IC_NAV[id]}<span>${lb}</span></button>`).join('')}</nav>`}<button type="button" class="sac-flot${c.n ? '' : ' vide'}" data-act="panier">${IC_SAC}${c.n ? `<b class="sac-nb" aria-hidden="true">${c.n}</b>` : ''}<span class="vh">Mon panier : ${c.n ? `${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}` : 'vide'}</span></button>`;
 }
-function ouvrirPanier() { ouvrir('', 'leger'); remplirPanier(); }
+/* l'onglet allumé suit la partie de la page à l'écran */
+function majNavFlot() {
+  const t = id => { const e = document.getElementById(id); return e ? e.getBoundingClientRect() : null; };
+  const ligne = innerHeight * 0.45, inf = t('infos'), tr = t('trouver');
+  let ici = 'carte';
+  if (inf && (inf.top < ligne || scrollY + innerHeight >= document.documentElement.scrollHeight - 4)) ici = 'infos';
+  else if (tr && tr.top < ligne && tr.bottom > innerHeight * 0.2) ici = 'trouver';
+  if (ici === S.navActif) return;
+  S.navActif = ici;
+  document.querySelectorAll('#barre .nav-b').forEach(b => { if (b.dataset.nav === ici) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+}
+/* « Ajouté à ton panier », au-dessus de la barre, avec de quoi aller voir */
+function bandeauAjout(p, texte) {
+  let b = document.getElementById('ajout-flot');
+  if (!b) { b = document.createElement('div'); b.id = 'ajout-flot'; b.className = 'ajout-flot'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
+  b.innerHTML = typo(`<span class="af-img" aria-hidden="true">${plaqueContenu(p)}</span><span class="af-txt"><b>Ajouté à ton panier</b><small>${esc(texte)}</small></span><button type="button" class="af-voir" data-act="panier">Voir</button>`);
+  b.hidden = false; b.classList.remove('vient'); void b.offsetWidth; b.classList.add('vient');
+  $toast.hidden = true;
+  clearTimeout(S.afMinuteur);
+  S.afMinuteur = setTimeout(() => { b.hidden = true; }, 4500);
+}
+const cacherBandeauAjout = () => { clearTimeout(S.afMinuteur); const b = document.getElementById('ajout-flot'); if (b) b.hidden = true; };
+function ouvrirPanier() {
+  if (!contenuPanier().n) { toast('Ton panier est vide : choisis un parfum et sa taille, puis « Ajouter ».'); return; }
+  cacherBandeauAjout();
+  ouvrir('', 'leger feuille panier');
+  remplirPanier();
+}
 function remplirPanier() {
   const d = document.getElementById('dlg');
   if (!d) return;
@@ -2573,26 +2715,29 @@ function remplirPanier() {
   const ok = livrable(c);
   if (S.mode === 'livraison' && !ok) S.mode = 'remise';
   if (!B.lieuRemise && ok) S.mode = 'livraison';
+  const vu = d.querySelector('.msg-voir'), msgOuvert = !!(vu && vu.open);
   const modes = [];
-  if (B.lieuRemise) modes.push(`<label class="mode"><input type="radio" name="mode" value="remise" ${S.mode !== 'livraison' ? 'checked' : ''}><b>Remise en main propre à ${esc(B.lieuRemise)}</b><small>Gratuite, sans minimum d'achat.</small></label>`);
-  if (B.zoneLivraison) modes.push(`<label class="mode${ok ? '' : ' off'}"><input type="radio" name="mode" value="livraison" ${S.mode === 'livraison' ? 'checked' : ''} ${ok ? '' : 'disabled'}><b>Livraison à ${esc(B.zoneLivraison)}</b><small>${ok ? 'Tu m\'envoies ton adresse en message.' : manque(c)}</small></label>`);
+  if (B.lieuRemise) modes.push(`<label class="mode"><input type="radio" name="mode" value="remise" ${S.mode !== 'livraison' ? 'checked' : ''}><b>Main propre</b><small>${esc(B.lieuRemise)}</small></label>`);
+  if (B.zoneLivraison) modes.push(`<label class="mode${ok ? '' : ' off'}"><input type="radio" name="mode" value="livraison" ${S.mode === 'livraison' ? 'checked' : ''} ${ok ? '' : 'disabled'}><b>Livraison</b><small>${esc(B.zoneLivraison)}</small></label>`);
+  const info = S.mode === 'livraison' ? `<p class="mode-info ok">${IC_COCHE}Livraison débloquée : tu m'envoies ton adresse en message.</p>`
+    : B.lieuRemise ? `<p class="mode-info">Remise en main propre à ${esc(B.lieuRemise)} : gratuite, sans minimum d'achat.</p>` : '';
+  const snap = lienSnap(), insta = lienInsta();
   d.querySelector('.fen').innerHTML = typo(`
-    <div class="fen-tete"><h2>Mon panier</h2><button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button></div>
+    <div class="fen-tete panier-tete"><h2>Mon panier</h2><button type="button" class="fermer-txt" data-act="fermer">Fermer</button></div>
     <ul class="lignes">${c.lignes.map(l => `<li>
-      <span class="ligne-flacon">${miniFlacon(l.s)}</span>
-      <div><b>${esc(l.p.nom)}</b><span>${esc(libTailleMaj(l.p, l.s))} à ${eur(l.prix)}</span></div>
-      <div class="qte"><button type="button" class="rond" data-act="moins" data-k="${l.k}" aria-label="Retirer : ${esc(l.p.nom)}, ${esc(libTaille(l.p, l.s))}">−</button><span>${l.q}</span><button type="button" class="rond" data-act="plus" data-k="${l.k}" aria-label="Ajouter : ${esc(l.p.nom)}, ${esc(libTaille(l.p, l.s))}" ${dispo(l.p, l.s) ? '' : 'disabled'}>+</button></div>
-      <span class="somme">${eur(l.somme)}</span></li>`).join('')}</ul>
-    ${c.remises.map(r => `<p class="remise-offre"><span>${esc(r.o.nom)}${r.k > 1 ? ' × ' + r.k : ''}</span><b>${eur(-r.remise)}</b></p>`).join('')}
-    <p class="total"><span>Total</span><b>${eur(c.total)}</b></p>
-    ${progression(c)}
-    <p class="sel-outils"><button type="button" class="btn petit discret" data-act="vider-selection">Vider mon panier</button></p>
-    ${modes.length ? `<fieldset class="modes"><legend>Retrait ou livraison</legend>${modes.join('')}</fieldset>` : ''}
-    <div class="section"><h3>Ton message</h3><pre class="message" id="msg">${esc(messageSelection())}</pre></div>
-    <div class="achat">
-      ${boutonsAchat('panier', '')}
-      <button type="button" class="btn discret large" data-act="copier">Copier ma commande</button>
-      <p class="aide">En touchant « Acheter », ta commande est copiée : colle-la en message privé.</p>
+      <span class="ligne-img" aria-hidden="true">${plaqueContenu(l.p)}</span>
+      <div class="ligne-txt"><b>${esc(l.p.nom)}</b><span>${esc(libTailleMaj(l.p, l.s))}${l.q > 1 ? ` · ${eur(l.prix)} l'unité` : ''}</span><span class="somme">${eur(l.somme)}</span></div>
+      <div class="qte"><button type="button" class="rond" data-act="moins" data-k="${l.k}" aria-label="Retirer : ${esc(l.p.nom)}, ${esc(libTaille(l.p, l.s))}">−</button><span>${l.q}</span><button type="button" class="rond" data-act="plus" data-k="${l.k}" aria-label="Ajouter : ${esc(l.p.nom)}, ${esc(libTaille(l.p, l.s))}" ${dispo(l.p, l.s) ? '' : 'disabled'}>+</button></div></li>`).join('')}
+      ${c.remises.map(r => `<li class="remise-offre">${IC_ETIQUETTE}<span>${esc(r.o.nom)}${r.k > 1 ? ' × ' + r.k : ''}</span><b>${eur(-r.remise)}</b></li>`).join('')}</ul>
+    <p class="sel-outils"><button type="button" class="lien" data-act="vider-selection">Vider mon panier</button></p>
+    ${modes.length ? `<fieldset class="modes"><legend class="vh">Retrait ou livraison</legend><div class="modes-choix">${modes.join('')}</div></fieldset>${info}` : ''}
+    ${ok ? '' : progression(c)}
+    <details class="msg-voir"${msgOuvert ? ' open' : ''}><summary>Voir mon message de commande</summary><pre class="message" id="msg">${esc(messageSelection())}</pre><button type="button" class="btn discret large" data-act="copier">Copier ma commande</button></details>
+    <div class="panier-pied">
+      <p class="total"><span>Total, ${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}</span><b>${eur(c.total)}</b></p>
+      ${snap ? `<a class="btn plein large" href="${snap}" target="_blank" rel="noopener" data-act="acheter" data-o="panier" data-id="">Acheter sur Snapchat · ${eur(c.total)}</a>` : ''}
+      ${insta && !snap ? `<a class="btn plein large" href="${insta}" target="_blank" rel="noopener" data-act="acheter" data-o="panier" data-id="">Acheter sur Instagram · ${eur(c.total)}</a>` : ''}
+      <p class="aide">Ta commande est copiée : colle-la en message privé${insta && snap ? `, ou <a href="${insta}" target="_blank" rel="noopener" data-act="acheter" data-o="panier" data-id="">sur Instagram</a>` : ''}.</p>
     </div>`);
 }
 function boutonsAchat(origine, id, verbe, secondaires) {
@@ -2765,7 +2910,7 @@ function blocAchat(p) {
   const mini = estMini(p);
   const meilleur = o.length > 1 ? o.reduce((m, t) => prixDe(p, t) / t < prixDe(p, m) / m ? t : m, o[0]) : null;
   const choix = o.length
-    ? `<fieldset class="choix${mini ? ' unique' : ''}"><legend>${mini ? (estFlacon(p) ? 'Le flacon' : 'La miniature') : 'Choisis ta taille'}</legend>${o.map(t => { const ok = dispo(p, t); const px = prixDe(p, t); return `<button type="button" class="choix-taille" data-act="taille" data-id="${p.id}" data-s="${t}" aria-pressed="${t === s}" ${ok ? '' : 'disabled'}>${t === meilleur && ok ? '<span class="tag">Meilleur prix au ml</span>' : ''}<span class="t">${esc(libTailleMaj(p, t))}</span><span class="p">${eur(px)}</span><span class="u">${!ok ? 'Indisponible' : mini ? (estFlacon(p) ? 'Neuf, dans sa boîte' : "Flacon d'origine entier") : parMl(px, t)}</span>${miniFlacon(t)}</button>`; }).join('')}</fieldset>`
+    ? `<fieldset class="choix${mini ? ' unique' : ''}"><legend>${mini ? (estFlacon(p) ? 'Le flacon' : 'La miniature') : 'Choisis ta taille'}</legend><div class="choix-rang">${o.map(t => { const ok = dispo(p, t); const px = prixDe(p, t); return `<button type="button" class="choix-taille" data-act="taille" data-id="${p.id}" data-s="${t}" aria-pressed="${t === s}" ${ok ? '' : 'disabled'}>${t === meilleur && ok ? '<span class="tag">Meilleur prix au ml</span>' : ''}<span class="t">${esc(libTailleMaj(p, t))}</span><span class="p">${eur(px)}</span><span class="u">${!ok ? 'Indisponible' : mini ? (estFlacon(p) ? 'Neuf, dans sa boîte' : "Flacon d'origine entier") : parMl(px, t)}</span>${miniFlacon(t)}</button>`; }).join('')}</div></fieldset>`
     : '<p class="meta">Prix sur demande.</p>';
   const eco = p.prixFlacon > 0 && p.mlFlacon > 0 && !mini ? `<p class="economie">En boutique, ce parfum se vend en flacon de ${p.mlFlacon} ml à ${eur(p.prixFlacon)}. Ici, tu le découvres dès ${eur(prixMin(p))}.</p>` : '';
   if (st === 'bientot') return `<span class="etat a-venir"><span class="voile-point" aria-hidden="true"></span>Bientôt disponible</span>
@@ -2777,10 +2922,24 @@ function blocAchat(p) {
     ${boutonsPrevenir(p)}`;
   return `${choix}${eco}
     ${st === 'bas' ? `<span class="etat bas">${mini || texteBas(p) === 'Dernier décant' ? esc(texteBas(p)) : `Plus que ${ml(p.stock)} en stock`}</span>` : ''}
-    ${o.length ? `<button type="button" class="btn plein large" data-act="ajouter" data-id="${p.id}">${IC_SAC}Ajouter à mon panier</button>` : ''}
     ${offresDispo().filter(x => x.ids.includes(p.id)).map(x => { const autres = piecesOffre(x).filter(q => q.id !== p.id); return `<button type="button" class="jumeau offre-ligne" data-act="offre" data-o="${esc(x.id)}"><span class="plaque">${plaqueContenu(autres[0])}</span><span><small>${esc(x.nom)}</small><b>Avec ${esc(autres.map(q => q.nom).join(' et '))} : ${eur(x.prix)} ${autres.length === 1 ? 'les deux' : 'le tout'}</b><span>au lieu de ${eur(prixNormalOffre(x))}</span></span><span class="fleche" aria-hidden="true">+</span></button>`; }).join('')}
-    ${boutonsAchat('produit', p.id, o.length ? 'Acheter' : 'Demander le prix', o.length > 0)}
-    <p class="aide">${o.length ? 'Ton panier garde tes parfums pour tout commander en une fois. « Acheter » copie la commande de ce parfum seul : colle-la en message privé.' : 'Ton message est copié : colle-le en message privé, je te réponds vite.'}</p>`;
+    ${o.length ? (lienInsta() ? `<p class="achat-seul">Ce parfum seul ? <a href="${lienInsta()}" target="_blank" rel="noopener" data-act="acheter" data-o="produit" data-id="${p.id}">Commande-le sur Instagram</a>${lienSnap() ? ' ou avec le bouton Snapchat' : ''}, ta commande est copiée.</p>` : '')
+      : `${boutonsAchat('produit', p.id, 'Demander le prix')}<p class="aide">Ton message est copié : colle-le en message privé, je te réponds vite.</p>`}`;
+}
+/* bas de la fiche, toujours à portée du pouce : Snapchat et « Ajouter · prix » */
+function piedFiche(p) {
+  const o = tailles(p), s = choixDe(p);
+  if (!o.length || !vendable(p) || ['epuise', 'bientot'].includes(etat(p))) return '';
+  const snap = lienSnap();
+  if (s == null || !dispo(p, s)) return `<button type="button" class="btn large" disabled>${S.panier[p.id + '|' + s] > 0 ? 'Déjà dans ton panier' : 'Plus disponible pour le moment'}</button>`;
+  return `${snap ? `<a class="rond-snap" href="${snap}" target="_blank" rel="noopener" data-act="acheter" data-o="produit" data-id="${p.id}" aria-label="Acheter ${esc(p.nom)} sur Snapchat">${IC_SNAP}</a>` : ''}<button type="button" class="btn plein large" data-act="ajouter" data-id="${p.id}">${IC_SAC}Ajouter${s != null && prixDe(p, s) != null ? ' · ' + eur(prixDe(p, s)) : ''}</button>`;
+}
+function majPiedFiche() {
+  const z = document.getElementById('fiche-pied'), a = document.getElementById('achat');
+  if (!z || !a) return;
+  const p = trouver(a.dataset.id);
+  const h = p ? piedFiche(p) : '';
+  z.innerHTML = typo(h); z.hidden = !h;
 }
 function suggestions(p) {
   const f = familleDe(p);
@@ -2798,16 +2957,16 @@ function ouvrirFiche(id) {
   const quand = (p.saisons && p.saisons.length) || (p.moment && p.moment.length);
   const mini = estMini(p), j = jumeau(p);
   const avecTrio = !p.photo && !mini;
-  const nSel = contenuPanier().n;
   S.ficheId = p.id;
+  cacherBandeauAjout();
+  const pied = piedFiche(p);
   ouvrir(`<button type="button" class="fermer" data-act="fermer" aria-label="Fermer">×</button>
-    <button type="button" class="fiche-sel" id="fiche-sel" data-act="panier"${nSel ? '' : ' hidden'}>${IC_SAC}<span>Mon panier</span><b>${nSel}</b></button>
+    <button type="button" class="partager-rond" data-act="partager" data-id="${p.id}" aria-label="Partager ${mini && !estFlacon(p) ? 'cette miniature' : 'ce parfum'}">${IC.partage}</button>
     <div class="produit-grille">
       <div class="plaque${avecTrio ? ' avec-trio' : ''}${etat(p) === 'epuise' ? ' rupture' : ''}" id="fiche-plaque">${avecTrio ? trio(p, choixDe(p)) : plaqueContenu(p)}${drapeaux(p, true)}</div>
       <div class="produit-info">
         <div class="produit-tete"><p class="maison">${esc(p.maison)}</p><h2>${esc(p.nom)}</h2><p class="meta">${meta(p)}</p>
           ${p.mention ? `<p class="mention">${esc(p.mention)}</p>` : ''}
-          <button type="button" class="partager" data-act="partager" data-id="${p.id}"><span class="icone" aria-hidden="true">${IC.partage}</span>Partager ${mini && !estFlacon(p) ? 'cette miniature' : 'ce parfum'}</button>
           ${f ? `<p class="famille-ligne"><span class="points">${points(p)}</span>${esc(nomFamille(f))} : ${esc(accordsTexte(p).toLowerCase())}</p>` : ''}</div>
         ${phrase ? `<p class="porter">${phrase}</p>` : ''}
         <div class="achat" id="achat" data-id="${p.id}">${blocAchat(p)}</div>
@@ -2823,7 +2982,8 @@ function ouvrirFiche(id) {
         ${p.fragrantica ? `<p class="source">Notes et accords : <a href="${esc(p.fragrantica)}" target="_blank" rel="noopener">fiche Fragrantica de ${esc(p.nom)}</a></p>` : ''}
         ${suggestions(p)}
       </div>
-    </div>`, 'produit leger');
+    </div>
+    <div class="fiche-pied" id="fiche-pied"${pied ? '' : ' hidden'}>${pied}</div>`, 'produit leger feuille');
   majAdresse('#' + encodeURIComponent(p.id));
   versionHD(document.getElementById('fiche-plaque'));
   /* les barres d'accords et le parfum des fioles se remplissent quand on arrive dessus */
@@ -2878,6 +3038,7 @@ function rafraichirAchat() {
   const p = trouver(a.dataset.id);
   if (!p) return;
   a.innerHTML = typo(blocAchat(p));
+  majPiedFiche();
   const c = String(choixDe(p));
   document.querySelectorAll('#dlg .trio-f').forEach(f => f.classList.toggle('choisi', f.dataset.s === c));
 }
@@ -5039,25 +5200,29 @@ const actions = {
     S.choix[p.id] = s;
     document.querySelectorAll('#achat .choix-taille').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.s === el.dataset.s)));
     document.querySelectorAll('#dlg .trio-f').forEach(f => f.classList.toggle('choisi', f.dataset.s === el.dataset.s));
+    majPiedFiche();
   },
   ajouter: el => {
     const p = trouver(el.dataset.id); if (!p) return;
     const s = choixDe(p);
     if (s == null || !dispo(p, s)) { toast('Cette taille n\'est plus disponible.'); rafraichirAchat(); return; }
     const k = p.id + '|' + s;
-    const depart = el.getBoundingClientRect();
     S.panier[k] = (S.panier[k] || 0) + 1;
-    rendreBarre(); rafraichirAchat();
-    envolSelection(depart, s);
-    toast(`${p.nom}, ${libTaille(p, s)}, ajouté à ton panier.`);
+    rendreBarre();
+    if (el.closest('#dlg')) fermer();
+    bandeauAjout(p, `${p.nom}, ${libTaille(p, s)} · ${eur(prixDe(p, s))}`);
+    rebond(document.querySelector('#barre .sac-flot'));
   },
   offre: el => {
     const o = (ST.boutique.offres || []).find(x => x.id === el.dataset.o);
     if (!o || !offreDispo(o)) { toast("Cette offre n'est plus disponible."); return; }
     const r = ajouterOffre(o);
     if (r.erreur) { toast(r.erreur); rendreBarre(); rafraichirAchat(); return; }
-    rendreBarre(); rafraichirAchat(); majPuceFiche(); rebond(document.getElementById('fiche-sel'));
-    toast(r.ajout ? `${o.nom} ajouté à ton panier : ${eur(o.prix)} ${o.ids.length === 2 ? 'les deux' : 'le tout'}.` : `${o.nom} est déjà dans ton panier.`);
+    rendreBarre();
+    if (!r.ajout) { toast(`${o.nom} est déjà dans ton panier.`); return; }
+    if (el.closest('#dlg')) fermer();
+    bandeauAjout(piecesOffre(o)[0], `${o.nom} : ${nomsOffre(o)} · ${eur(o.prix)}`);
+    rebond(document.querySelector('#barre .sac-flot'));
   },
   acheter: el => {
     const p = el.dataset.o === 'produit' ? trouver(el.dataset.id) : null;
@@ -5261,8 +5426,42 @@ document.addEventListener('change', e => {
     return;
   }
   if (t.id === 'ph-fichier' && t.files && t.files[0]) recevoirImage(t.files[0]);
-  if (t.name === 'mode') { S.mode = t.value; sauverSelection(); const m = document.getElementById('msg'); if (m) m.textContent = document.querySelector('#dlg.coffret-dlg') ? messageCoffret() : messageSelection(); }
+  if (t.name === 'mode') { S.mode = t.value; sauverSelection(); if (document.querySelector('#dlg.panier')) { remplirPanier(); return; } const m = document.getElementById('msg'); if (m) m.textContent = document.querySelector('#dlg.coffret-dlg') ? messageCoffret() : messageSelection(); }
 });
+/* feuilles (fiche, panier) : tirer vers le bas depuis le haut pour les ranger, comme sur iPhone */
+let tire = null;
+document.addEventListener('touchstart', e => {
+  tire = null;
+  const d = e.target.closest && e.target.closest('dialog.feuille');
+  if (!d || !(window.matchMedia && matchMedia('(max-width: 859px)').matches)) return;
+  const f = d.querySelector('.fen');
+  if (f && f.scrollTop > 0) return;
+  const t = e.touches[0];
+  tire = { d, x: t.clientX, y: t.clientY, dy: 0, t0: Date.now(), actif: false };
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!tire) return;
+  const t = e.touches[0], dx = t.clientX - tire.x, dy = t.clientY - tire.y;
+  if (!tire.actif) {
+    if (Math.abs(dy) < 8 && Math.abs(dx) < 8) return;
+    if (dy <= 0 || Math.abs(dx) > Math.abs(dy)) { tire = null; return; }
+    tire.actif = true; tire.d.style.transition = 'none'; tire.d.style.animation = 'none';
+  }
+  tire.dy = Math.max(0, dy);
+  tire.d.style.transform = `translateY(${tire.dy}px)`;
+  e.preventDefault();
+}, { passive: false });
+const finTire = () => {
+  if (!tire) return;
+  const { d, dy, t0, actif } = tire; tire = null;
+  if (!actif) return;
+  const v = dy / Math.max(1, Date.now() - t0);
+  d.style.transition = sansMouvement() ? 'none' : 'transform .26s cubic-bezier(.2,.8,.2,1)';
+  if (dy > 120 || (dy > 50 && v > 0.6)) { d.style.transform = 'translateY(100%)'; setTimeout(fermerTout, sansMouvement() ? 0 : 220); }
+  else { d.style.transform = ''; setTimeout(() => { if (d.isConnected) d.style.transition = ''; }, 300); }
+};
+document.addEventListener('touchend', finTire);
+document.addEventListener('touchcancel', finTire);
 /* stock : glisser une ligne vers la gauche montre « Ajuster » et « Vendre », comme dans Mail ou Rappels */
 let glisse = null;
 const fermerGlisses = sauf => document.querySelectorAll('.ligne-stock.glisse').forEach(d => { if (d !== sauf) d.classList.remove('glisse'); });
