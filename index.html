@@ -912,6 +912,12 @@ dialog.vente-dlg .recherche-zone{margin:0}
 .pas input{width:3.2rem;text-align:center;padding-inline:.2rem}
 .pas .rond{flex:none}
 #v-ok{font-size:1.05rem}
+/* prix arrangé : prix de la carte et remise, sous le prix encaissé */
+.v-remise{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .9rem;margin:0;font-size:.88rem;line-height:1.45;color:var(--argent)}
+.v-remise[hidden]{display:none}
+.v-remise b{font-weight:500;color:var(--platine)}
+.v-remise .err{color:var(--epuise)}
+.v-remise .lien{font-size:.88rem}
 
 /* finitions de l'espace vendeur */
 .toast{width:max-content;max-width:min(calc(100vw - 32px),28rem);text-align:center;box-shadow:0 12px 32px rgba(0,0,0,.45)}
@@ -3184,6 +3190,7 @@ function rendreVente() {
       <div class="champ"><label for="v-qte">Quantité</label><div class="pas"><button type="button" class="rond" data-act="vs-moins" aria-label="Une de moins">−</button><input id="v-qte" inputmode="numeric" value="1" autocomplete="off"><button type="button" class="rond" data-act="vs-plus" aria-label="Une de plus">+</button></div></div>
       <div class="champ"><label for="v-prix">Prix encaissé (€)</label><input id="v-prix" inputmode="decimal" autocomplete="off"></div>
     </div>
+    <p id="v-remise" class="v-remise" aria-live="polite" hidden></p>
     <div class="champs">
       <div class="champ"><label for="v-client">Client (facultatif)</label><input id="v-client" list="vs-clients" autocomplete="off" placeholder="Pseudo Snap ou prénom" value="${esc(V.client || '')}"></div>
       <div class="champ"><label for="v-date">Date</label><input id="v-date" type="date" value="${esc(V.date || aujourdhui())}"></div>
@@ -3206,6 +3213,23 @@ function majPrixVente() {
   const px = prixDe(p, s);
   if (!S.prixManuel) champ.value = px != null ? String(arrondi(px * q)).replace('.', ',') : '';
   const total = nombre(champ.value);
+  /* prix arrangé (un ami, un geste) : on rappelle le prix de la carte et la remise, avec de quoi y revenir */
+  const rz = document.getElementById('v-remise');
+  if (rz) {
+    const carte = px != null ? arrondi(px * q) : null;
+    let h = '';
+    if (S.prixManuel && carte != null) {
+      const brut = champ.value.trim();
+      const lisible = brut && total != null && !Number.isNaN(total) && total >= 0;
+      if (!brut) h = `<span>Prix de la carte : ${eur(carte)}. Tape le prix encaissé.</span>`;
+      else if (!lisible) h = `<span class="err">Prix illisible : écris un nombre, par exemple 60.</span>`;
+      else if (total < carte) h = `<span>Prix de la carte : ${eur(carte)}, remise de <b>${eur(arrondi(carte - total))}</b>.</span>`;
+      else if (prixTropHaut(total, carte)) h = `<span class="err">Attention : bien plus que le prix de la carte (${eur(carte)}).</span>`;
+      else if (total > carte) h = `<span>Prix de la carte : ${eur(carte)}.</span>`;
+      if (h) h += `<button type="button" class="lien" data-act="vs-prix-carte">Remettre ${eur(carte)}</button>`;
+    }
+    rz.innerHTML = h; rz.hidden = !h;
+  }
   const nG = groupe().length;
   if (ok && !ok.disabled) ok.textContent = texteTout(nG + 1, totalGroupe() + (total > 0 ? total : 0));
   const deja = dejaGroupe(p.id);
@@ -3336,6 +3360,8 @@ async function exporterVentes() {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
 }
 
+/* un prix encaissé très au-dessus de la carte est sans doute une faute de frappe (7060 au lieu de 60) */
+const prixTropHaut = (prix, carte) => prix > Math.max(carte * 2, carte + 50);
 /* lit la vente en cours dans la feuille ; renvoie { ligne } ou { erreur } */
 function lireDetailsVente() {
   const p = S.vs && trouver(S.vs.id);
@@ -3348,6 +3374,11 @@ function lireDetailsVente() {
   if (!(qte >= 1) || !Number.isInteger(qte)) return { erreur: 'La quantité doit être un nombre entier, par exemple 1.' };
   if (prix == null || Number.isNaN(prix) || prix < 0) return { erreur: 'Indique le prix encaissé en euros, par exemple 30.' };
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { erreur: 'Indique la date de la vente.' };
+  const carte = prixDe(p, taille) != null ? arrondi(prixDe(p, taille) * qte) : null;
+  if (carte != null && prixTropHaut(prix, carte)) {
+    const cle = [p.id, taille, qte, prix].join('|');
+    if (S.prixConfirme !== cle) { S.prixConfirme = cle; return { erreur: `${eur(prix)} pour ${p.nom}, ${libTaille(p, taille)}${qte > 1 ? ' × ' + qte : ''} : c'est bien plus que le prix de la carte (${eur(carte)}). Vérifie le prix, ou touche à nouveau le bouton pour confirmer.` }; }
+  }
   return { ligne: { p, taille, qte, prix, client: document.getElementById('v-client').value.trim().slice(0, 80), date } };
 }
 async function enregistrerVente() {
@@ -4399,6 +4430,7 @@ const actions = {
   'vente-coller': () => ouvrirVente('coller'),
   'groupe-ouvrir': () => ouvrirVente('groupe'),
   'vs-ajouter': () => ajouterAuGroupe(),
+  'vs-prix-carte': () => { S.prixManuel = false; majPrixVente(); const c = document.getElementById('v-prix'); if (c) c.focus(); },
   'vs-tout': () => enregistrerGroupe(),
   'vs-groupe': () => { if (!S.vs) return; S.vs.etape = 'groupe'; rendreVente(); },
   'vs-retirer': el => { const G = groupe(); const i = Number(el.dataset.i); if (!(i >= 0 && i < G.length)) return; G.splice(i, 1); sauverGroupe(); if (S.vs) rendreVente(); },
@@ -4445,6 +4477,22 @@ document.addEventListener('click', e => {
   const d = document.getElementById('dlg');
   if (d && e.target === d && d.classList.contains('leger')) fermer();
 });
+/* le doigt place le curseur après le focus : on sélectionne tout au focus, puis encore juste après le toucher */
+function toutSelectionner(t) {
+  if (document.activeElement !== t) return;
+  try { t.setSelectionRange(0, t.value.length); } catch (er) { try { t.select(); } catch (er2) {} }
+}
+document.addEventListener('focusin', e => {
+  const t = e.target;
+  if (!t || t.id !== 'v-prix') return;
+  t.dataset.toutSel = '1';
+  setTimeout(() => toutSelectionner(t), 0);
+  setTimeout(() => { delete t.dataset.toutSel; }, 600);
+});
+document.addEventListener('click', e => {
+  const t = e.target;
+  if (t && t.id === 'v-prix' && t.dataset.toutSel) { delete t.dataset.toutSel; setTimeout(() => toutSelectionner(t), 0); }
+});
 document.addEventListener('input', e => {
   const t = e.target;
   if (t.id === 'q') { S.q = t.value; rendreGrille(); versResultats(); return; }
@@ -4452,7 +4500,7 @@ document.addEventListener('input', e => {
   if (t.id === 'vs-q' && S.vs) { S.vs.q = t.value; const g = document.getElementById('vs-grille'); if (g) g.innerHTML = typo(grilleVente()); return; }
   if (t.id === 'v-qte') { majPrixVente(); return; }
   if (t.id === 'cmd-texte') { clearTimeout(S.cmdMinuteur); S.cmdMinuteur = setTimeout(() => apercuCommande(true), 350); return; }
-  if (t.id === 'v-prix') { S.prixManuel = t.value.trim() !== ''; majPrixVente(); return; }
+  if (t.id === 'v-prix') { S.prixManuel = true; majPrixVente(); return; }
   if (t.closest && t.closest('#lot-form')) { majApercuLot(); return; }
   if (t.closest && t.closest('#couts-zone')) { S.coutsEdites = true; majCalculsCouts(); }
 });
