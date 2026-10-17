@@ -165,6 +165,9 @@ a{color:var(--platine)}
 /* feuilles */
 dialog{width:100%;max-width:min(640px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:0;border:1px solid var(--filet);border-radius:16px;background:var(--ecrin);color:var(--argent)}
 dialog::backdrop{background:rgba(0,0,0,.75)}
+/* connexion : centrée dans la partie visible de l'écran (clavier, fenêtre Face ID de l'iPhone) */
+dialog.connexion{position:fixed;inset:var(--vv-haut,0px) 0 var(--vv-bas,0px);margin:auto;max-height:calc(var(--vv-h,100dvh) - 24px)}
+dialog.connexion .fen{max-height:calc(var(--vv-h,100dvh) - 26px)}
 .fen{display:grid;grid-auto-rows:max-content;align-content:start;gap:1rem;padding:1.3rem;overflow:auto;max-height:calc(100dvh - 26px)}
 .fen-tete{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
 .fen-tete h2{margin:0;font:500 1.6rem/1.15 var(--f-titre);color:var(--platine);text-wrap:balance}
@@ -2500,6 +2503,18 @@ function rafraichirAchat() {
 
 /* fenêtres */
 function rangerToast() { if ($toast.parentNode !== document.body) document.body.appendChild($toast); }
+/* iPhone : la fenêtre de connexion reste centrée dans la partie visible de l'écran, même quand
+   la fenêtre Face ID ou le clavier décalent la vue (sinon elle glisse un peu plus à chaque essai) */
+function suivreVue() {
+  const d = document.getElementById('dlg'), vv = window.visualViewport;
+  if (!d || !vv) return;
+  const haut = Math.max(0, Math.round(vv.offsetTop)), h = Math.round(vv.height);
+  const bas = Math.max(0, Math.round(document.documentElement.clientHeight - vv.offsetTop - vv.height));
+  d.style.setProperty('--vv-haut', haut + 'px');
+  d.style.setProperty('--vv-bas', bas + 'px');
+  d.style.setProperty('--vv-h', h + 'px');
+}
+if (window.visualViewport) { visualViewport.addEventListener('resize', suivreVue); visualViewport.addEventListener('scroll', suivreVue); }
 function ouvrir(html, cls) {
   rangerToast();
   $calque.innerHTML = typo(`<dialog id="dlg" class="${cls || ''}" aria-label="Détails"><div class="fen">${html}</div></dialog>`);
@@ -2510,6 +2525,7 @@ function ouvrir(html, cls) {
   });
   d.addEventListener('cancel', e => { if (d.classList.contains('produit') && zoomPossible()) { e.preventDefault(); fermer(); } });
   try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
+  suivreVue();
   suivreLumiere();
   return d;
 }
@@ -4111,10 +4127,13 @@ function retirerFaceId() {
 async function entrerFaceId(btn) {
   const c = faceIdConfig();
   const err = document.getElementById('gh-err');
-  if (!c || !btn || btn.disabled) return;
+  if (!c || !btn || btn.dataset.occupe) return;
   if (err) err.textContent = '';
   const avant = btn.innerHTML;
-  btn.disabled = true;
+  btn.dataset.occupe = '1'; btn.setAttribute('aria-busy', 'true');
+  const x0 = scrollX, y0 = scrollY;
+  /* après la fenêtre Face ID de l'iPhone : la page et la fenêtre reprennent leur place */
+  const replacer = () => { if (Math.abs(scrollY - y0) > 1 || Math.abs(scrollX - x0) > 1) window.scrollTo(x0, y0); suivreVue(); setTimeout(suivreVue, 350); };
   try {
     const secret = await demanderFaceId(c.id, c.sel);
     if (!secret) throw { prf: true };
@@ -4123,7 +4142,8 @@ async function entrerFaceId(btn) {
     entrerVendeur();
   } catch (e) {
     if (!btn.isConnected) return;
-    btn.disabled = false; btn.innerHTML = avant;
+    delete btn.dataset.occupe; btn.removeAttribute('aria-busy'); btn.innerHTML = avant;
+    replacer();
     if (e && e.name === 'NotAllowedError') { if (err) err.textContent = 'Face ID annulé. Touche à nouveau le bouton, ou entre ton mot de passe.'; return; }
     /* clé d'accès supprimée de l'iPhone, ou secret qui ne correspond plus : on repasse au mot de passe */
     oublier(CLE_FACEID);
@@ -4243,8 +4263,8 @@ function ouvrirConnexion(nouveau) {
       <div class="actions"><button type="submit" class="btn plein">Se connecter</button><button type="button" class="btn discret" data-act="fermer">Annuler</button></div>
     </form>`, 'edition connexion');
   }
-  /* avec Face ID, pas de clavier qui s'ouvre tout seul : le bouton suffit */
-  const champ = document.getElementById(c ? (fid ? 'gh-faceid' : 'gh-mdp') : 'gh-jeton');
+  /* avec Face ID, pas de clavier qui s'ouvre tout seul, et rien de sélectionné : le bouton suffit */
+  const champ = fid ? null : document.getElementById(c ? 'gh-mdp' : 'gh-jeton');
   if (champ) setTimeout(() => { try { champ.focus(); } catch (e) {} }, 60);
 }
 /* retrouve le jeton dans le texte collé, même entouré d'autres caractères ou avec une majuscule ajoutée au début */
