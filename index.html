@@ -1646,7 +1646,11 @@ dialog.cv-dlg .vp-total small{display:block;font-size:.8rem;color:var(--fumee)}
 .page-cmd{overflow-x:clip}
 .cmd-faq{margin-top:1.6rem}
 .cmd-faq > h2{font-size:clamp(1.5rem,6vw,2rem)}
-.cmd-retour{justify-self:start;min-height:44px;margin:-.6rem 0 -.4rem -.3rem;padding:0 .3rem;border:0;background:none;color:var(--platine);font:400 1rem var(--f-texte)}
+.cmd-retour{justify-self:start;display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-.7rem 0 -.5rem -.5rem;padding:0 .6rem 0 .1rem;border:0;background:none;color:var(--platine);font:400 1rem var(--f-texte)}
+.cmd-retour svg{width:24px;height:24px}
+.cmd-fin{justify-self:center;margin-top:.6rem}
+.menu-lien.menu-cmd{display:inline-flex;align-items:center;gap:.35rem;color:var(--or)}
+.menu-cmd svg{width:15px;height:15px}
 /* dans la carte : l'entrée vers l'onglet */
 .cmd-entree{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;margin:1.4rem 0 .4rem;padding:12px 14px 12px 12px;border:1px solid rgba(227,185,111,.28);border-radius:20px;background:linear-gradient(120deg,rgba(227,185,111,.12),rgba(21,21,23,.92) 55%);color:var(--argent);text-align:left;font:inherit}
 .cmd-entree:active{transform:scale(.99)}
@@ -2296,7 +2300,8 @@ function liensMenu() {
   const lien = (cible, txt) => `<button type="button" class="menu-lien" data-act="aller" data-cible="${cible}">${esc(txt)}</button>`;
   const c = comptesMaisons();
   const grandes = c.filter(e => e[1] > 1), petites = c.filter(e => e[1] <= 1);
-  return grandes.map(e => lien('m-' + slug(e[0]), court(e[0]))).join('')
+  return (cmdVisibles().length ? `<button type="button" class="menu-lien menu-cmd" data-act="vue" data-v="commande">${IC_NAV.commande}Sur commande</button>` : '')
+    + grandes.map(e => lien('m-' + slug(e[0]), court(e[0]))).join('')
     + (flaconVisibles().length ? lien('flacons', 'Flacons neufs') : '')
     + (miniVisibles().length ? lien('miniatures', 'Miniatures') : '')
     + petites.map(e => lien('m-' + slug(e[0]), court(e[0]))).join('');
@@ -2518,7 +2523,7 @@ function vueCommande() {
   const maisons = [...new Set(L.map(p => p.maison))];
   if (S.cmdMaison && !maisons.includes(S.cmdMaison)) S.cmdMaison = '';
   return `<section class="commande vue-cmd" id="sur-commande" aria-labelledby="h-commande">
-    ${S.vendeur ? '<button type="button" class="cmd-retour" data-act="vue" data-v="carte">‹ La carte</button>' : ''}
+    <button type="button" class="cmd-retour" data-act="vue" data-v="carte">${ICV.retour}La carte</button>
     <div class="cmd-tete"><h1 id="h-commande" class="chrome">Sur commande</h1><p>Des flacons neufs dans leur boîte, commandés pour toi chez mon fournisseur.</p></div>
     ${jaugeCmd(C.remplie)}
     <ol class="cmd-etapes" aria-label="Comment ça marche"><li><span aria-hidden="true">1</span>Tu réserves avec 50 % d'acompte</li><li><span aria-hidden="true">2</span>La commande part à 100 %</li><li><span aria-hidden="true">3</span>Tu récupères ton flacon et règles le reste</li></ol>
@@ -2528,6 +2533,7 @@ function vueCommande() {
     </div>
     <p class="cmd-note">Sous réserve de disponibilité chez mon fournisseur. Si la commande n'est pas partie dans les ${C.jours} jours, ton acompte t'est rendu.</p>
     ${faqCmd()}
+    <button type="button" class="btn cmd-fin" data-act="vue" data-v="carte">Voir la carte des décants</button>
   </section>
   ${pied()}`;
 }
@@ -2986,7 +2992,7 @@ function chargerSelection() {
 }
 const IC_SAC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10" stroke-linecap="round"/></svg>';
 function rebond(el) { if (!el) return; el.classList.remove('rebond'); void el.offsetWidth; el.classList.add('rebond'); }
-/* barre flottante, comme une app : la carte, trouver, infos, et le panier rond avec sa pastille */
+/* le panier rond en bas à droite, avec sa pastille : seul bouton flottant de la vitrine */
 function rendreBarre() {
   sauverSelection();
   const c = contenuPanier();
@@ -2994,10 +3000,8 @@ function rendreBarre() {
   if (!el) return;
   const surVitrine = !S.vendeur || S.onglet === 'boutique';
   if (!surVitrine || (S.vendeur && !c.n)) { el.hidden = true; el.innerHTML = ''; return; }
-  const ici = S.navActif || 'carte';
   el.hidden = false;
-  const nav = navVitrine();
-  el.innerHTML = `${S.vendeur ? '' : `<nav class="nav-flot${nav.length > 3 ? ' quatre' : ''}" aria-label="Navigation">${nav.map(([id, lb, cible]) => `<button type="button" class="nav-b" data-act="aller" data-cible="${cible}" data-nav="${id}"${ici === id ? ' aria-current="true"' : ''}>${IC_NAV[id]}<span>${lb}</span></button>`).join('')}</nav>`}<button type="button" class="sac-flot${c.n ? '' : ' vide'}" data-act="panier">${IC_SAC}${c.n ? `<b class="sac-nb" aria-hidden="true">${c.n}</b>` : ''}<span class="vh">Mon panier : ${c.n ? `${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}` : 'vide'}</span></button>`;
+  el.innerHTML = `<button type="button" class="sac-flot${c.n ? '' : ' vide'}" data-act="panier">${IC_SAC}${c.n ? `<b class="sac-nb" aria-hidden="true">${c.n}</b>` : ''}<span class="vh">Mon panier : ${c.n ? `${c.n} ${c.n > 1 ? 'parfums' : 'parfum'}, ${eur(c.total)}` : 'vide'}</span></button>`;
 }
 /* l'onglet allumé suit la partie de la page à l'écran */
 function majNavFlot() {
