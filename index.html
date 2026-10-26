@@ -3813,7 +3813,8 @@ function enBref(p) {
   const m = p.moment || [];
   const quand = [s.length === 4 ? "Toute l'année" : s.join(', '), m.includes('jour') && m.includes('soir') ? 'jour et soir' : m.includes('soir') ? 'plutôt le soir' : m.includes('jour') ? 'plutôt le jour' : ''].filter(Boolean).join(' · ');
   const f = familleDe(p);
-  const l = [['Famille', f ? nomFamille(f) : ''], ['Quand', quand], ['Pour', p.genre], ['Concentration', p.concentration], ['Tenue', p.tenue], ['Sillage', p.sillage], ['Sortie', p.annee], ['Collection', p.collection]]
+  /* la famille une seule fois : celle de Fragrantica quand elle est connue, sinon celle de la carte */
+  const l = [['Famille', (p.ficheSource && p.ficheSource.famille) || (f ? nomFamille(f) : '')], ['Quand', quand], ['Pour', p.genre], ['Concentration', p.concentration], ['Tenue', p.tenue], ['Sillage', p.sillage], ['Sortie', p.annee], ['Collection', p.collection]]
     .filter(r => r[1] !== '' && r[1] != null);
   if (!l.length) return '';
   return `<section class="section bref"><h3>En bref.</h3><dl>${l.map(r => `<div><dt>${esc(r[0])}</dt><dd>${esc(String(r[1]))}</dd></div>`).join('')}</dl></section>`;
@@ -3841,7 +3842,7 @@ function ouvrirFiche(id) {
     <div class="produit-grille">
       <div class="plaque${avecTrio ? ' avec-trio' : ''}${etat(p) === 'epuise' ? ' rupture' : ''}" id="fiche-plaque">${avecTrio ? trio(p, choixDe(p)) : plaqueContenu(p)}${drapeaux(p, true)}</div>
       <div class="produit-info">
-        <div class="produit-tete"><p class="maison">${esc(p.maison)}</p><h2>${esc(p.nom)}</h2><p class="meta">${meta(p)}</p>${p.ficheSource ? `<p class="bp-origine">${[p.ficheSource.famille,p.ficheSource.parfumeur ? 'Parfumeur : '+p.ficheSource.parfumeur : ''].filter(Boolean).map(esc).join(' · ')}</p>` : ''}
+        <div class="produit-tete"><p class="maison">${esc(p.maison)}</p><h2>${esc(p.nom)}</h2><p class="meta">${meta(p)}</p>${p.ficheSource && p.ficheSource.parfumeur ? `<p class="bp-origine">Parfumeur : ${esc(p.ficheSource.parfumeur)}</p>` : ''}
           ${p.mention ? `<p class="mention">${esc(p.mention)}</p>` : ''}
           ${f || nc ? `<p class="famille-ligne odeur"><span class="points">${points(p)}</span><span>${f ? `<b>${esc(nomFamille(f))}.</b> ` : ''}${esc(nc)}</span></p>` : ''}</div>
         <div class="achat" id="achat" data-id="${p.id}">${blocAchat(p)}</div>${pyramide(p)}
