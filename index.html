@@ -2498,6 +2498,53 @@ button.g-ligne:disabled{opacity:1;cursor:default}
 @keyframes bp-voile-in{from{opacity:0}}
 @keyframes bp-note-in{from{opacity:0;transform:translateY(8px) scale(.94)}}
 .bp-diapo .bp-hero-caption{flex:1}
+/* ---------- arranger du doigt ---------- */
+.arr-entree{display:flex;align-items:center;gap:14px;width:100%;margin:0 0 18px;padding:14px 16px;border:1px solid rgba(200,179,151,.35);border-radius:18px;background:linear-gradient(135deg,rgba(200,179,151,.14),rgba(200,179,151,.04));color:var(--bp-ivory,#f0ece3);font:inherit;text-align:left;cursor:pointer}
+.arr-entree>span:nth-child(2){flex:1;min-width:0}
+.arr-entree b{display:block;font-size:16px;font-weight:600}
+.arr-entree small{display:block;margin-top:3px;font-size:13px;line-height:1.35;color:#b5b1a8}
+.arr-entree>span:last-child{font-size:24px;color:#c8b397}
+.arr-entree-ic{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:12px;background:rgba(200,179,151,.18);color:#e6d3b3}
+.arr-entree-ic svg{width:22px;height:22px}
+.arr-barre{position:fixed;z-index:60;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(14,14,16,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid rgba(200,179,151,.3)}
+.arr-barre-txt b{display:block;font-size:15px;color:#e6d3b3}
+.arr-barre-txt small{display:block;font-size:12px;color:#a5a5ae}
+.arr-fini{min-height:40px;padding:0 18px;border:0;border-radius:999px;background:var(--bp-ivory,#f0ece3);color:#151515;font:600 15px/1 var(--f-texte);cursor:pointer}
+body.arranger .bp-annonce,body.arranger .annonce,body.arranger .entete,body.arranger .menu-maisons,body.arranger .puces-maisons,body.arranger .filtres,body.arranger .barre{display:none!important}
+body.arranger #app{padding-top:calc(64px + env(safe-area-inset-top))}
+.arr-zone{margin:0 0 22px;padding:16px;border:1px dashed rgba(200,179,151,.45);border-radius:20px;background:rgba(200,179,151,.05)}
+.bp-hero .arr-une{align-self:start;width:100%;max-width:440px;justify-self:center;box-sizing:border-box}
+.arr-tete b{display:block;font-size:15px;font-weight:600;color:var(--bp-ivory,#f0ece3)}
+.arr-tete small{display:block;margin-top:3px;font-size:12.5px;line-height:1.4;color:#a5a5ae}
+.arr-liste{margin-top:12px}
+.arr-h{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}
+.arr-h::-webkit-scrollbar{display:none}
+.arr-carte{position:relative;flex:0 0 104px;display:flex;flex-direction:column;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:#111112;text-align:center}
+.arr-carte .plaque{display:block;height:110px;aspect-ratio:auto;border-radius:10px;background:#080809;overflow:hidden}
+.arr-carte .plaque img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.arr-carte b{font-size:11.5px;font-weight:500;line-height:1.25;color:var(--bp-ivory,#f0ece3);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.arr-x{position:absolute;top:-6px;right:-6px;display:grid;place-items:center;width:26px;height:26px;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:#2a2a2e;color:#fff;font:500 16px/1 var(--f-texte);cursor:pointer}
+.arr-x[disabled]{display:none}
+.arr-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px}
+.arr-actions select{flex:1;min-width:0;min-height:40px;padding:0 12px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:#151517;color:var(--bp-ivory,#f0ece3);font:500 16px var(--f-texte)}
+.arr-v{display:flex;flex-direction:column;gap:6px}
+.arr-ligne{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#151517}
+.arr-ligne b{font-size:15px;font-weight:500;color:var(--bp-ivory,#f0ece3)}
+.arr-poignee{display:grid;place-items:center;color:#c8b397}
+.arr-poignee svg{width:18px;height:18px}
+body.arranger :is(.arr-carte,.arr-ligne,.grille[data-cle]>.tuile){-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;cursor:grab}
+body.arranger .grille[data-cle]>.tuile{position:relative;outline:1px dashed rgba(200,179,151,.4);outline-offset:-1px}
+body.arranger .grille[data-cle]>.tuile::after{content:"";position:absolute;z-index:2;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(12,12,14,.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e6d3b3' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3'/%3E%3C/svg%3E") center/15px no-repeat;border:1px solid rgba(255,255,255,.14);pointer-events:none}
+body.arranger .tuile .drapeau.stock,body.arranger .tuile .drapeau.offre-d{right:auto;left:.45rem;bottom:.45rem}
+body.arranger .tuile .drapeau.format{display:none}
+.leve{position:relative;z-index:80!important;box-shadow:0 24px 48px rgba(0,0,0,.65),0 0 0 2px rgba(230,211,179,.8)!important;opacity:.96;cursor:grabbing}
+body.glisse-en-cours{-webkit-user-select:none;user-select:none}
+body.arranger .bp-hero-copy .actions,body.arranger .bp-hero-copy .bp-hero-price{pointer-events:none;opacity:.5}
+
+/* pendant qu'on arrange : pas d'animation d'entrée sur les tuiles (elle bloquerait le déplacement au doigt), et la sélection reste dans l'écran */
+body.arranger :is(.grille[data-cle]>.tuile,.arr-carte,.arr-ligne){animation:none!important}
+.leve{animation:none!important}
+.bp-hero-inner>*,.arr-une,.arr-h{min-width:0}
 </style></head><body><noscript><p style="padding:16px;color:#C8CBD1">Active JavaScript pour afficher la carte.</p></noscript><div id="app"></div><div id="calque"></div><div id="toast" class="toast" role="status" aria-live="polite" hidden></div><script type="application/json" id="bp-data">{"boutique":{"nom":"BlackPhantom","titre":"Grands parfums, petits formats.","accroche":"Des flacons authentiques, décantés à la main en 10, 30 ou 50 ml. Pour porter un parfum d'exception sans acheter le flacon entier.","adresse":"https://iblackphantom.github.io","coffretPrix":0,"google":false,"snapchat":"i.blackphantom","instagram":"i.BlackPhantom18","whatsapp":"","lieuRemise":"Saint-Florent-sur-Cher","zoneLivraison":"Bourges et alentours","livraisonMin":150,"livraisonNb":3,"note":"Prix en euros, par décant ou par miniature.","bientot":[],"avis":[],"offres":[{"id":"duo-jean-couturier","nom":"Duo Jean Couturier","ids":["neuf-vanilla-exotica","neuf-rose-khayali"],"prix":160}]},"tailles":[10,30,50],"appliquees":[],"parfums":[{"id":"naxos","maison":"Xerjoff","nom":"Naxos","collection":"XJ 1861","annee":2015,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html","accords":[{"n":"Sucré"},{"n":"Miel"},{"n":"Vanillé"},{"n":"Lavande"},{"n":"Tabac"},{"n":"Agrumes"},{"n":"Aromatique"},{"n":"Floral"},{"n":"Poudré"},{"n":"Épicé chaud"}],"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-naxos.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Hespéridé gourmand","parfumeur":""}},{"id":"ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes"},{"n":"Boisé"},{"n":"Aromatique"},{"n":"Épicé frais"},{"n":"Vanillé"},{"n":"Frais"},{"n":"Épicé chaud"},{"n":"Poudré"},{"n":"Fruité"},{"n":"Aquatique"}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":100,"visible":true,"photo":"flacon-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"","parfumeur":"Cécile Zarokian"}},{"id":"tobacolor","maison":"Maison Christian Dior","nom":"Tobacolor","collection":"La Collection Privée","annee":2021,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Tobacolor-65551.html","accords":[{"n":"Sucré"},{"n":"Tabac"},{"n":"Miel"},{"n":"Ambré"},{"n":"Fruité"},{"n":"Fumé"},{"n":"Épicé chaud"},{"n":"Fleur blanche"},{"n":"Floral"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Tabac","Feuille de tabac","Miel","Fumée","Prune","Ambre","Notes orientales","Tabac blanc","Pêche","Agrumes"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":50,"visible":true,"photo":"flacon-tobacolor.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental","parfumeur":"François Demachy"}},{"id":"rouge-trafalgar","maison":"Maison Christian Dior","nom":"Rouge Trafalgar","collection":"La Collection Privée","annee":2020,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Dior/Rouge-Trafalgar-58665.html","accords":[{"n":"Fruité"},{"n":"Sucré"},{"n":"Agrumes"},{"n":"Musqué"},{"n":"Boisé"}],"notes":{"tete":["Framboise","Fraise","Cerise","Mandarine"],"coeur":["Cassis","Pamplemousse"],"fond":["Musc","Patchouli"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":60,"visible":true,"photo":"flacon-rouge-trafalgar.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Chypré fruité","parfumeur":""}},{"id":"cologne-royale","maison":"Maison Christian Dior","nom":"Cologne Royale","collection":"La Collection Privée","annee":2010,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Collection-Couturier-Parfumeur-Cologne-Royale-10627.html","accords":[{"n":"Agrumes"},{"n":"Frais"},{"n":"Musqué"},{"n":"Fleur blanche"},{"n":"Épicé frais"},{"n":"Poudré"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Agrumes","Néroli","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":30,"visible":true,"photo":"flacon-cologne-royale.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Hespéridé aromatique","parfumeur":"François Demachy"}},{"id":"grand-soir","maison":"Maison Francis Kurkdjian","nom":"Grand Soir","collection":"","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Francis-Kurkdjian/Grand-Soir-40816.html","accords":[{"n":"Ambré"},{"n":"Vanillé"},{"n":"Poudré"},{"n":"Sucré"},{"n":"Aromatique"}],"notes":{"tete":["Ciste labdanum d'Espagne","Orange"],"coeur":["Lavande","Benjoin de Siam"],"fond":["Ambre","Vanille","Fève tonka","Musc","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50,"30":120},"stock":0,"visible":true,"photo":"flacon-grand-soir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental","parfumeur":"Francis Kurkdjian"}},{"id":"sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","collection":"","annee":2013,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html","accords":[{"n":"Vanillé"},{"n":"Sucré"},{"n":"Poudré"},{"n":"Floral"},{"n":"Balsamique"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":10,"visible":true,"photo":"flacon-sucre-noir.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":""}},{"id":"jasmin-des-anges","maison":"Maison Christian Dior","nom":"Jasmin des Anges","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Jasmin-Des-Anges-48383.html","accords":[{"n":"Fruité"},{"n":"Fleur blanche"},{"n":"Floral"},{"n":"Poudré"},{"n":"Lacté"},{"n":"Sucré"},{"n":"Musqué"}],"notes":{"tete":["Bergamote"],"coeur":["Jasmin","Abricot","Osmanthus","Pêche"],"fond":["Musc blanc","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70,"50":90},"stock":190,"visible":true,"photo":"flacon-jasmin-des-anges.jpg","badge":"","prixFlacon":198,"mlFlacon":50,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Floral","parfumeur":"François Demachy"}},{"id":"miel-d-arabie","maison":"Chopard","nom":"Miel d'Arabie","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Miel-d-Arabie-48433.html","accords":[{"n":"Miel"},{"n":"Épicé chaud"},{"n":"Boisé"},{"n":"Sucré"},{"n":"Vert"},{"n":"Fruité"},{"n":"Épicé frais"},{"n":"Floral"},{"n":"Acidulé"},{"n":"Frais"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Épices","Miel","Grenade","Thé"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-miel-d-arabie.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental","parfumeur":"Alberto Morillas"}},{"id":"la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose"},{"n":"Floral"},{"n":"Poudré"},{"n":"Frais"},{"n":"Fruité"},{"n":"Musqué"},{"n":"Épicé chaud"},{"n":"Boisé"},{"n":"Fleur blanche"},{"n":"Ambré"}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Floral boisé musqué","parfumeur":"François Demachy"}},{"id":"rose-seljuke","maison":"Chopard","nom":"Rose Seljuke","collection":"Gardens of Paradise","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Chopard/Rose-Seljuke-48460.html","accords":[{"n":"Vanillé"},{"n":"Rose"},{"n":"Boisé"},{"n":"Sucré"},{"n":"Floral"},{"n":"Ambré"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Rose de Bulgarie","Notes boisées orientales","Vanille de Madagascar","Fève tonka"]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":50,"visible":true,"photo":"flacon-rose-seljuke.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental floral","parfumeur":"Alberto Morillas"}},{"id":"bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris"},{"n":"Poudré"},{"n":"Ambré"},{"n":"Musqué"},{"n":"Floral"},{"n":"Violette"},{"n":"Épicé chaud"},{"n":"Terreux"},{"n":"Sucré"},{"n":"Balsamique"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"30":70},"stock":30,"visible":true,"photo":"flacon-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"","parfumeur":"François Demachy"}},{"id":"oud-ispahan","maison":"Maison Christian Dior","nom":"Oud Ispahan","collection":"La Collection Privée","annee":2012,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Oud-Ispahan-15231.html","accords":[{"n":"Oud"},{"n":"Rose"},{"n":"Boisé"},{"n":"Épicé chaud"},{"n":"Ambré"},{"n":"Patchouli"},{"n":"Balsamique"},{"n":"Floral"},{"n":"Poudré"},{"n":"Épicé frais"}],"notes":{"tete":["Ciste labdanum"],"coeur":["Rose","Patchouli","Safran"],"fond":["Bois d'oud","Bois de santal","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":30,"30":70},"stock":100,"visible":true,"photo":"flacon-oud-ispahan.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental floral","parfumeur":"François Demachy"}},{"id":"vanilla-powder","maison":"Matière Première","nom":"Vanilla Powder Extrait","collection":"","annee":2025,"genre":"Mixte","fragrantica":"","accords":[{"n":"Sucré"},{"n":"Lacté"},{"n":"Poudré"},{"n":"Boisé"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille Bourbon","Fève tonka","Musc blanc","Poudre de noix de coco","Palo santo"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"10":50,"30":100},"stock":500,"visible":true,"photo":"flacon-vanilla-powder.jpg","badge":"","prixFlacon":250,"mlFlacon":50,"type":"","contenance":null,"statut":"","mention":"","famille":"gourmand","concentration":"Extrait de parfum","ficheSource":{"site":"Liberty London, Aedes","verifieLe":"2026-10-28","famille":"","parfumeur":"Aurélien Guichard"},"nouveauJusqua":"2026-11-27"},{"id":"mini-la-colle-noire","maison":"Maison Christian Dior","nom":"La Colle Noire","collection":"La Collection Privée","annee":2016,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/La-Colle-Noire-38153.html","accords":[{"n":"Rose"},{"n":"Floral"},{"n":"Poudré"},{"n":"Frais"},{"n":"Fruité"},{"n":"Musqué"},{"n":"Épicé chaud"},{"n":"Boisé"},{"n":"Fleur blanche"},{"n":"Ambré"}],"notes":{"tete":["Citron"],"coeur":["Rose de mai","Pivoine","Épices","Muguet","Cassis","Framboise","Pêche"],"fond":["Musc blanc","Ambre","Bois de santal","Héliotrope","Bois d'oud"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-la-colle-noire.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Floral boisé musqué","parfumeur":"François Demachy"}},{"id":"mini-sakura","maison":"Maison Christian Dior","nom":"Sakura","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Sakura-48379.html","accords":[{"n":"Floral"},{"n":"Poudré"},{"n":"Frais"},{"n":"Vert"},{"n":"Rose"},{"n":"Musqué"},{"n":"Violette"},{"n":"Fleur jaune"}],"notes":{"tete":["Notes vertes"],"coeur":["Fleur de cerisier du Japon","Rose","Jasmin","Hédione"],"fond":["Musc blanc","Mimosa","Violette"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-sakura.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Floral","parfumeur":"François Demachy"}},{"id":"mini-eau-noire","maison":"Maison Christian Dior","nom":"Eau Noire","collection":"La Collection Privée","annee":2004,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Eau-Noire-1378.html","accords":[{"n":"Aromatique"},{"n":"Épicé doux"},{"n":"Lavande"},{"n":"Herbacé"},{"n":"Café"},{"n":"Sucré"},{"n":"Épicé chaud"},{"n":"Épicé frais"},{"n":"Vanillé"},{"n":"Poudré"}],"notes":{"tete":["Thym","Sauge"],"coeur":["Lavande","Café","Immortelle","Cèdre de Virginie","Safran"],"fond":["Réglisse","Vanille","Violette","Cuir","Tiges vertes"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"7.5":50},"stock":7.5,"visible":true,"photo":"flacon-mini-eau-noire.jpg","badge":"Rare","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"Parfum arrêté par Dior : une pièce devenue rare.","famille":"boise","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental fougère","parfumeur":"Francis Kurkdjian"}},{"id":"mini-bois-d-argent","maison":"Maison Christian Dior","nom":"Bois d'Argent","collection":"La Collection Privée","annee":2018,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Dior/Bois-D-Argent-48396.html","accords":[{"n":"Iris"},{"n":"Poudré"},{"n":"Ambré"},{"n":"Musqué"},{"n":"Floral"},{"n":"Violette"},{"n":"Épicé chaud"},{"n":"Terreux"},{"n":"Sucré"},{"n":"Balsamique"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Myrrhe","Iris","Musc","Notes florales"]},"saisons":["automne","hiver"],"moment":["jour","soir"],"saisonsVerifiees":true,"prix":{"7.5":25},"stock":7.5,"visible":true,"photo":"flacon-mini-bois-d-argent.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"miniature","contenance":7.5,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"","parfumeur":"François Demachy"}},{"id":"angels-share","maison":"Kilian Paris","nom":"Angels' Share","collection":"The Liquors","annee":2020,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html","accords":[{"n":"Épicé chaud"},{"n":"Boisé"},{"n":"Sucré"},{"n":"Vanillé"},{"n":"Cannelle"},{"n":"Ambré"},{"n":"Poudré"}],"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":true,"prix":{"10":50},"stock":10,"visible":true,"photo":"flacon-angels-share.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"","contenance":null,"statut":"","mention":"","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":"Benoist Lapouza"}},{"id":"neuf-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Vanilla-Exotica-57967.html","accords":[{"n":"Vanillé"},{"n":"Sucré"},{"n":"Noix de coco"},{"n":"Fruité"},{"n":"Fleur blanche"},{"n":"Poudré"},{"n":"Boisé"},{"n":"Lacté"}],"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille","Noix de coco","Pêche","Fleur de tiaré","Notes boisées","Jasmin","Musc"]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-vanilla-exotica.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":""}},{"id":"neuf-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","collection":"Collection Aromatique","annee":2019,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Rose-Khayali-83664.html","accords":[{"n":"Épicé chaud"},{"n":"Rose"},{"n":"Cuir"},{"n":"Fumé"},{"n":"Boisé"},{"n":"Patchouli"},{"n":"Métallique"},{"n":"Floral"},{"n":"Vanillé"},{"n":"Animal"}],"notes":{"tete":["Safran","Cardamome","Papyrus"],"coeur":["Rose","Fumée","Cuir"],"fond":["Patchouli","Cèdre","Vanille"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"100":100},"stock":0,"visible":true,"photo":"flacon-neuf-rose-khayali.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental floral","parfumeur":""}},{"id":"neuf-roses-vanille","maison":"Mancera","nom":"Roses Vanille","collection":"","annee":2011,"genre":"Femme","fragrantica":"https://www.fragrantica.com/perfume/Mancera/Roses-Vanille-15210.html","accords":[{"n":"Rose"},{"n":"Vanillé"},{"n":"Poudré"},{"n":"Musqué"},{"n":"Floral"},{"n":"Boisé"},{"n":"Agrumes"},{"n":"Sucré"}],"notes":{"tete":["Citron d'Italie"],"coeur":["Rose de Turquie"],"fond":["Vanille","Musc blanc","Cèdre"],"plat":[]},"saisons":["printemps","automne"],"moment":["jour","soir"],"saisonsVerifiees":false,"prix":{"120":100},"stock":120,"visible":true,"photo":"flacon-neuf-roses-vanille.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":120,"statut":"","mention":"Neuf, dans sa boîte (sans blister).","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":"Pierre Montale"}},{"id":"neuf-la-rose-bleue","maison":"Maison Massimo","nom":"La Rose Bleue","collection":"Niche Édition","annee":2024,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Maison-Massimo/La-Rose-Bleue-96746.html","accords":[{"n":"Fruité"},{"n":"Sucré"},{"n":"Frais"},{"n":"Agrumes"},{"n":"Floral"}],"notes":{"tete":["Orange","Bergamote","Citron"],"coeur":["Fruits secs","Guimauve","Notes solaires"],"fond":["Musc","Ambre","Vanille"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":false,"prix":{"100":110},"stock":400,"visible":true,"photo":"flacon-neuf-la-rose-bleue.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":"gourmand","ficheSource":{"site":"Parfumo et Maison Massimo","verifieLe":"2026-10-28","famille":"","parfumeur":""},"nouveauJusqua":"2026-11-27"},{"id":"neuf-ani-x","maison":"Nishane","nom":"Ani X","collection":"","annee":2023,"genre":"Mixte","fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html","accords":[{"n":"Agrumes"},{"n":"Boisé"},{"n":"Aromatique"},{"n":"Épicé frais"},{"n":"Vanillé"},{"n":"Frais"},{"n":"Épicé chaud"},{"n":"Poudré"},{"n":"Fruité"},{"n":"Aquatique"}],"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"saisons":["printemps","ete"],"moment":["jour"],"saisonsVerifiees":true,"prix":{"100":220},"stock":100,"visible":true,"photo":"flacon-neuf-ani-x.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":100,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":"","ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"","parfumeur":"Cécile Zarokian"},"concentration":"Extrait de parfum","nouveauJusqua":"2026-11-27"},{"id":"neuf-nefs","maison":"Nishane","nom":"Nefs","collection":"","annee":"","genre":"Mixte","fragrantica":"","accords":[{"n":"Ambré"},{"n":"Miel"},{"n":"Boisé"},{"n":"Épicé chaud"},{"n":"Cuir"},{"n":"Floral"}],"notes":{"tete":["Miel","Safran","Figue","Violette","Sauge"],"coeur":["Rose","Osmanthus","Muscade","Jasmin","Géranium"],"fond":["Oud","Whisky","Vanille","Cuir","Ambre","Cannelle","Baume de gurjun","Cèdre"],"plat":[]},"saisons":["automne","hiver"],"moment":["soir"],"saisonsVerifiees":false,"prix":{"50":380},"stock":50,"visible":true,"photo":"flacon-neuf-nefs.jpg","badge":"","prixFlacon":null,"mlFlacon":null,"type":"flacon","contenance":50,"statut":"","mention":"Neuf, dans sa boîte sous blister.","famille":"boise","concentration":"Extrait de parfum","ficheSource":{"site":"La Maison du Parfum","verifieLe":"2026-10-28","famille":"","parfumeur":""},"nouveauJusqua":"2026-11-27"}],"maisons":{"Maison Christian Dior":"La ligne de haute parfumerie de Dior : des créations rares, autour de matières nobles.","Chopard":"Gardens of Paradise, la collection lancée par Chopard en 2018.","Xerjoff":"Maison italienne de parfumerie de luxe, née à Turin.","Nishane":"Maison de parfumerie de niche fondée à Istanbul.","Maison Francis Kurkdjian":"La maison parisienne du parfumeur Francis Kurkdjian.","Arte Profumi":"Maison de parfums italienne.","Kilian Paris":"Maison de haute parfumerie fondée à Paris en 2007 par Kilian Hennessy.","Jean Couturier":"Maison de parfum parisienne, connue depuis 1973 pour Coriandre.","Mancera":"Maison parisienne fondée en 2008 par le parfumeur Pierre Montale."},"deduitJusqua":1793001813449,"acces":{"v":1,"proprio":"iblackphantom","depot":"iblackphantom.github.io","prive":"blackphantom-gestion","sel":"9lkn7cy6f15sNrfhseus2A==","iv":"K4y29aUoAWEurbsi","iter":600000,"ct":"VL6jkedt32vao7gT08IzmovtthFFUsVHJtEa5Cu1iKiD1HAHlWmJ0sGYiZvycdLJJ9YYV7r/uQvMeFfArVYLVgdvseg+zeKIVeiFuD2/lF0jMvoNt5KdTzkTTiKI21Lzhh8a/qw2prfYEV5PwA=="},"commande":{"remplie":0,"jours":30,"ferme":true,"produits":[{"id":"cmd-taraf","maison":"Arabian Oud","nom":"Taraf","ml":100,"format":"Eau de parfum","prix":165,"ailleurs":216,"photo":"commande/taraf.jpg","visible":true,"notes":{"tete":["Bergamote","Sauge"],"coeur":["Rose de Bulgarie","Romarin"],"fond":["Ambre","Cuir","Cèdre"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Arabian-Oud/Taraf-91549.html"},{"id":"cmd-madawi-white","maison":"Arabian Oud","nom":"Madawi White","ml":100,"format":"Eau de parfum","prix":180,"ailleurs":290,"photo":"commande/madawi-white.jpg","visible":true,"notes":{"tete":["Poire"],"coeur":["Muguet","Noix de coco"],"fond":["Musc","Ambre gris"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Arabian-Oud/Madawi-White-127296.html"},{"id":"cmd-rosewood","maison":"Arabian Oud","nom":"Rosewood","ml":100,"format":"Eau de parfum","prix":140,"ailleurs":null,"photo":"commande/rosewood.jpg","visible":true,"notes":{"tete":["Rose","Oud du Cambodge"],"coeur":["Vanille de Madagascar"],"fond":["Oliban","Musc blanc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Arabian-Oud/Rosewood-53159.html"},{"id":"cmd-madawi-gold","maison":"Arabian Oud","nom":"Madawi Gold","ml":100,"format":"Eau de parfum","prix":180,"ailleurs":290,"photo":"commande/madawi-gold.jpg","visible":true,"notes":{"tete":["Notes fruitées","Cardamome"],"coeur":["Fève tonka","Fleur d'ananas","Jasmin"],"fond":["Vanille","Patchouli"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Arabian-Oud/Madawi-Gold-Edition-92704.html"},{"id":"cmd-kashmir-musk","maison":"Arabian Oud","nom":"Kashmir Musk","ml":100,"format":"Parfum","prix":170,"ailleurs":240.6,"photo":"commande/kashmir-musk.jpg","visible":true,"notes":{"tete":["Fleur de poirier","Poivre rose","Bergamote"],"coeur":["Jasmin","Tubéreuse"],"fond":["Musc","Patchouli"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Arabian-Oud/Kashmir-Musk-69013.html"},{"id":"cmd-sucre-noir","maison":"Arte Profumi","nom":"Sucre Noir","ml":100,"format":"Extrait de parfum","prix":150,"ailleurs":245,"photo":"commande/sucre-noir.jpg","visible":true,"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Gousse de vanille","Canne à sucre","Orchidée"]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":""},"fragrantica":"https://www.fragrantica.com/perfume/Arte-Profumi/Sucre-Noir-20786.html"},{"id":"cmd-burgundy-oud","maison":"Atelier Materi","nom":"Burgundy Oud","ml":50,"format":"Extrait de parfum","prix":195,"ailleurs":255,"photo":"commande/burgundy-oud.jpg","visible":true,"notes":{"tete":["Cassis","Bergamote","Cardamome du Guatemala"],"coeur":["Géranium","Magnolia","Davana"],"fond":["Oud","Cuir","Amyris"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Atelier-Materi/Burgundy-Oud-97177.html"},{"id":"cmd-mixed-emotions","maison":"Byredo","nom":"Mixed Emotions","ml":100,"format":"Eau de parfum","prix":190,"ailleurs":245,"photo":"commande/mixed-emotions.jpg","visible":true,"notes":{"tete":["Cassis","Maté"],"coeur":["Thé","Feuille de violette"],"fond":["Bouleau","Papyrus"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Byredo/Mixed-Emotions-65525.html"},{"id":"cmd-de-los-santos","maison":"Byredo","nom":"De Los Santos","ml":100,"format":"Eau de parfum","prix":190,"ailleurs":245,"photo":"commande/de-los-santos.jpg","visible":true,"notes":{"tete":["Sauge","Mirabelle"],"coeur":["Racine d'iris","Ciste incanus"],"fond":["Oliban","Musc","Ambroxan"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Byredo/De-Los-Santos-72693.html"},{"id":"cmd-the-chronic","maison":"Byron","nom":"The Chronic","ml":75,"format":"Extrait de parfum","prix":160,"ailleurs":210,"photo":"commande/the-chronic.jpg","visible":true,"notes":{"tete":["Cannelle","Poivre"],"coeur":["Ambre","Patchouli","Cuir"],"fond":["Bois de santal","Musc blanc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Byron-Parfums/The-Chronic-53452.html"},{"id":"cmd-mula-mula-rouge","maison":"Byron","nom":"Mula Mula Rouge Extrême","ml":75,"format":"Extrait de parfum","prix":160,"ailleurs":210,"photo":"commande/mula-mula-rouge.jpg","visible":true,"notes":{"tete":["Framboise","Crème fouettée","Melon","Poire"],"coeur":["Ambre","Épices","Cannelle"],"fond":["Patchouli","Bois de santal","Musc blanc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Byron-Parfums/Mula-Mula-Rouge-Extreme-62827.html"},{"id":"cmd-vanilla-exotica","maison":"Jean Couturier","nom":"Vanilla Exotica","ml":100,"format":"Eau de parfum","prix":100,"ailleurs":180,"photo":"commande/vanilla-exotica.jpg","visible":true,"notes":{"tete":[],"coeur":[],"fond":[],"plat":["Vanille","Noix de coco","Pêche","Fleur de tiaré","Notes boisées","Jasmin","Musc"]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":""},"fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Vanilla-Exotica-57967.html"},{"id":"cmd-rose-khayali","maison":"Jean Couturier","nom":"Rose Khayali","ml":100,"format":"Eau de parfum","prix":100,"ailleurs":null,"photo":"commande/rose-khayali.jpg","visible":true,"notes":{"tete":["Safran","Cardamome","Papyrus"],"coeur":["Rose","Fumée","Cuir"],"fond":["Patchouli","Cèdre","Vanille"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental floral","parfumeur":""},"fragrantica":"https://www.fragrantica.com/perfume/Jean-Couturier/Rose-Khayali-83664.html"},{"id":"cmd-angels-share","maison":"Kilian","nom":"Angels’ Share","ml":50,"format":"Eau de parfum","prix":200,"ailleurs":250,"photo":"commande/angels-share.jpg","visible":true,"notes":{"tete":["Cognac"],"coeur":["Cannelle","Fève tonka","Chêne","Hédione"],"fond":["Vanille","Praliné","Bois de santal","Amande confite"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Oriental vanillé","parfumeur":"Benoist Lapouza"},"fragrantica":"https://www.fragrantica.com/perfume/By-Kilian/Angels-Share-62615.html"},{"id":"cmd-vanille-absolu","maison":"Montale","nom":"Vanille Absolu","ml":100,"format":"Eau de parfum","prix":80,"ailleurs":100,"photo":"commande/vanille-absolu.jpg","visible":true,"notes":{"tete":["Prune","Cerise"],"coeur":["Vanille","Caramel"],"fond":["Musc blanc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.fr/parfum/Montale/Vanille-Absolu-4064.html"},{"id":"cmd-dark-vanilla","maison":"Montale","nom":"Dark Vanilla","ml":100,"format":"Eau de parfum","prix":105,"ailleurs":140,"photo":"commande/dark-vanilla.jpg","visible":true,"notes":{"tete":["Épices"],"coeur":["Cuir","Oud du Cambodge","Bois de santal","Patchouli"],"fond":["Vanille","Ambre"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Montale/Dark-Vanilla-64050.html"},{"id":"cmd-tuberoza","maison":"Nishane","nom":"Tuberóza","ml":50,"format":"Extrait de parfum","prix":135,"ailleurs":225,"photo":"commande/tuberoza.jpg","visible":true,"notes":{"tete":["Ylang-ylang","Fleur d'oranger","Armoise","Orange douce"],"coeur":["Tubéreuse","Gardénia","Jasmin","Tagète"],"fond":["Vétiver","Ambre","Musc","Bois de santal"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Nishane/Tuberoza-30581.html"},{"id":"cmd-ani-x","maison":"Nishane","nom":"Ani X","ml":100,"format":"Extrait de parfum","prix":220,"ailleurs":345,"photo":"commande/ani-x.jpg","visible":true,"notes":{"tete":["Citron","Gingembre","Bergamote","Melon","Cardamome","Notes aquatiques","Poivre rose"],"coeur":["Lavande","Pomme verte","Patchouli","Cassis","Sauge","Rose"],"fond":["Vanille","Bois de cachemire","Bois de santal","Cèdre","Ambre gris","Musc blanc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"","parfumeur":"Cécile Zarokian"},"fragrantica":"https://www.fragrantica.com/perfume/Nishane/Ani-X-80464.html"},{"id":"cmd-vanilla-baby","maison":"Stéphanie de Bruijn","nom":"Vanilla Baby","ml":100,"format":"Extrait de parfum","prix":160,"ailleurs":220,"photo":"commande/vanilla-baby.jpg","visible":false,"notes":{"tete":["Cardamome"],"coeur":["Caramel","Lait"],"fond":["Vanille","Vanille Bourbon","Caramel","Café","Bois de santal"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Stephanie-de-Bruijn-Parfum-sur-Mesure/Vanilla-Baby-126297.html"},{"id":"cmd-kirke-overdose","maison":"Tiziana Terenzi","nom":"Kirke Overdose","ml":100,"format":"Extrait de parfum","prix":240,"ailleurs":350,"photo":"commande/kirke-overdose.jpg","visible":true,"notes":{"tete":["Pêche","Fruit de la passion","Framboise","Rose de Bulgarie"],"coeur":["Gardénia","Sable","Jasmin sambac","Cassis","Muguet"],"fond":["Musc","Vanille Bourbon","Ambre gris","Héliotrope","Bois de santal d'Australie","Patchouli d'Inde"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Tiziana-Terenzi/Kirke-Overdose-103499.html"},{"id":"cmd-kirke","maison":"Tiziana Terenzi","nom":"Kirke","ml":100,"format":"","prix":150,"ailleurs":210,"photo":"commande/kirke.jpg","visible":true,"notes":{"tete":["Fruit de la passion","Pêche","Poire","Framboise","Cassis","Sable"],"coeur":["Muguet"],"fond":["Musc","Bois de santal","Vanille","Patchouli","Héliotrope"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Tiziana-Terenzi/Kirke-32172.html"},{"id":"cmd-alexandria-ii","maison":"Xerjoff","nom":"Alexandria II","ml":100,"format":"Parfum","prix":275,"ailleurs":350.8,"photo":"commande/alexandria-ii.jpg","visible":true,"notes":{"tete":["Palissandre","Lavande","Cannelle","Pomme"],"coeur":["Rose","Cèdre","Muguet"],"fond":["Oud","Bois de santal","Ambre","Vanille","Musc"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/Alexandria-II-17786.html"},{"id":"cmd-naxos","maison":"Xerjoff","nom":"Naxos","ml":100,"format":"","prix":165,"ailleurs":205.5,"photo":"commande/naxos.jpg","visible":true,"notes":{"tete":["Lavande","Bergamote","Citron"],"coeur":["Miel","Cannelle","Cashmeran","Jasmin sambac"],"fond":["Feuille de tabac","Vanille","Fève tonka"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-25","famille":"Hespéridé gourmand","parfumeur":""},"fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/XJ-1861-Naxos-30529.html"},{"id":"cmd-la-capitale","maison":"Xerjoff","nom":"La Capitale","ml":50,"format":"Parfum","prix":155,"ailleurs":176,"photo":"commande/la-capitale.jpg","visible":true,"notes":{"tete":["Fraise","Caramel","Pêche","Labdanum"],"coeur":["Cuir","Ambre","Safran","Rose","Gingembre"],"fond":["Vanille Bourbon","Benjoin"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/La-Capitale-55782.html"},{"id":"cmd-erba-pura","maison":"Xerjoff","nom":"Erba Pura","ml":100,"format":"Eau de parfum","prix":165,"ailleurs":205.4,"photo":"commande/erba-pura.jpg","visible":true,"notes":{"tete":["Orange de Sicile","Bergamote de Calabre","Citron de Sicile"],"coeur":["Fruits"],"fond":["Musc blanc","Vanille de Madagascar","Ambre"],"plat":[]},"ficheSource":{"site":"Fragrantica","verifieLe":"2026-10-27"},"fragrantica":"https://www.fragrantica.com/perfume/Xerjoff/Erba-Pura-55157.html"}]}}</script><script id="bp-code">(() => {
 'use strict';
 
@@ -2538,6 +2585,7 @@ const ongletNav = () => SOUS_PAGES.includes(S.onglet) ? 'menu' : S.onglet;
 const CLE_ONGLET = 'bp-onglet2';
 const svgT = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const ICV = {
+  glisser: svgT('<path d="M12 3v18M3 12h18"/><path d="M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>'),
   accueil: svgT('<path d="M3.5 10.5L12 4l8.5 6.5"/><path d="M5.5 9v10.5h13V9"/><path d="M10 19.5v-5h4v5"/>'),
   stock: svgT('<rect x="7" y="9" width="10" height="11.5" rx="2.2"/><path d="M10 9V6.5h4V9M9.2 3.5h5.6v3H9.2z"/><path d="M9.8 14h4.4"/>'),
   ventes: svgT('<path d="M4 20V11M9.3 20V6M14.6 20v-6.5M20 20V8.5"/>'),
@@ -2586,6 +2634,11 @@ function normaliser(d) {
   /* mise en avant : le parfum vedette (Rouge Trafalgar par défaut, comme avant), l'ordre des maisons, les blocs masqués */
   if (typeof d.boutique.vedette !== 'string') d.boutique.vedette = 'rouge-trafalgar';
   d.boutique.ordreMaisons = Array.isArray(d.boutique.ordreMaisons) ? d.boutique.ordreMaisons.filter(x => typeof x === 'string') : [];
+  /* disposition arrangée du doigt : ordre des rayons, ordre des parfums dans chaque rayon, parfums de la sélection du haut */
+  d.boutique.ordreRayons = Array.isArray(d.boutique.ordreRayons) ? d.boutique.ordreRayons.filter(x => typeof x === 'string') : [];
+  d.boutique.ordreParfums = d.boutique.ordreParfums && typeof d.boutique.ordreParfums === 'object' && !Array.isArray(d.boutique.ordreParfums)
+    ? Object.fromEntries(Object.entries(d.boutique.ordreParfums).filter(([k, v]) => Array.isArray(v) && v.length).map(([k, v]) => [k, v.filter(x => typeof x === 'string')])) : {};
+  d.boutique.selection = Array.isArray(d.boutique.selection) ? d.boutique.selection.filter(x => typeof x === 'string') : [];
   d.boutique.masquer = d.boutique.masquer && typeof d.boutique.masquer === 'object' && !Array.isArray(d.boutique.masquer) ? Object.fromEntries(Object.entries(d.boutique.masquer).filter(([k, v]) => v === true)) : {};
   /* offres groupées : un prix d'ensemble pour plusieurs pièces (ex. duo) */
   d.boutique.offres = (Array.isArray(d.boutique.offres) ? d.boutique.offres : [])
@@ -3100,6 +3153,33 @@ function comptesMaisons() {
 }
 /* l'ordre choisi dans « Mise en avant » d'abord, puis les maisons qui n'y sont pas encore, des plus fournies aux plus petites */
 const ordreMaisons = () => { const auto = comptesMaisons().map(e => e[0]), choix = (ST.boutique.ordreMaisons || []).filter(m => auto.includes(m)); return [...choix, ...auto.filter(m => !choix.includes(m))]; };
+/* les rayons de la carte, dans l'ordre : les maisons des décants, « Les autres maisons », les flacons neufs, les miniatures */
+const cleMaison = m => 'm:' + slug(m);
+function rayonsAuto() {
+  const ms = ordreMaisons(), compte = m => ST.parfums.filter(p => p.visible && !estMini(p) && (p.maison || 'Autres maisons') === m).length;
+  const k = ms.filter(m => compte(m) > 1).map(cleMaison);
+  if (ms.some(m => compte(m) === 1)) k.push('*autres');
+  if (flaconVisibles().length) k.push('*flacons');
+  if (miniVisibles().length) k.push('*minis');
+  return k;
+}
+/* l'ordre choisi du doigt ; un rayon apparu depuis se range après son voisin de l'ordre automatique */
+function ordreRayons() {
+  const auto = rayonsAuto(), res = (ST.boutique.ordreRayons || []).filter(k => auto.includes(k));
+  auto.forEach((k, i) => {
+    if (res.includes(k)) return;
+    let j = i - 1; while (j >= 0 && !res.includes(auto[j])) j--;
+    res.splice(j < 0 ? 0 : res.indexOf(auto[j]) + 1, 0, k);
+  });
+  return res;
+}
+function nomRayon(k) { return k === '*autres' ? 'Les autres maisons' : k === '*flacons' ? 'Les flacons neufs' : k === '*minis' ? 'Les miniatures' : (ordreMaisons().find(m => cleMaison(m) === k) || k.slice(2)); }
+/* dans un rayon : les ruptures en bas ; sinon l'ordre choisi du doigt, les nouveautés pas encore rangées en tête, le reste après */
+function trierRayon(l, cle) {
+  const o = (ST.boutique.ordreParfums || {})[cle] || [];
+  const rang = p => { const i = o.indexOf(p.id); return i >= 0 ? i : nouveauDispo(p) ? -1 : 1e6; };
+  return l.map((p, i) => [p, i]).sort((a, b) => (RANG_ETAT[etat(a[0])] - RANG_ETAT[etat(b[0])]) || (rang(a[0]) - rang(b[0])) || (nouveauDispo(b[0]) - nouveauDispo(a[0])) || a[1] - b[1]).map(x => x[0]);
+}
 const miniVisibles = () => ST.parfums.filter(p => p.visible && estMini(p) && !estFlacon(p));
 const flaconVisibles = () => ST.parfums.filter(p => p.visible && estFlacon(p));
 const IC = {
@@ -3292,6 +3372,9 @@ function flaconUne() {
 }
 /* la grande photo du haut : la vedette, puis les nouveautés, qui défilent toutes seules ; un petit bouton « Notes » sur chacune */
 function diaposUne() {
+  /* la sélection arrangée du doigt dans l'espace gestion, si elle existe */
+  const choisis = (ST.boutique.selection || []).map(id => ST.parfums.find(p => p.id === id)).filter(p => p && vendable(p) && p.photo);
+  if (choisis.length) return choisis.slice(0, 12);
   const ved = ST.boutique.vedette && ST.parfums.find(p => p.id === ST.boutique.vedette && vendable(p) && p.photo && !estMini(p));
   const nouv = ST.parfums.filter(p => estNouveau(p) && vendable(p) && p.photo && p.id !== (ved && ved.id))
     .map((p, i) => [p, i]).sort((a, b) => (b[0].nouveauJusqua || '').localeCompare(a[0].nouveauJusqua || '') || a[1] - b[1]).map(x => x[0]);
@@ -3380,7 +3463,7 @@ function demarrerUne() {
 }
 function vueOuverture() {
   const B=ST.boutique, pe=prixEntree();
-  return `<section class="ouverture bp-hero" aria-labelledby="t-ouverture"><div class="bp-hero-inner"><div class="bp-hero-copy"><p class="sur-titre"><span></span> La parfumerie, autrement.</p>${titreOuverture(B.titre || B.nom)}${B.accroche?`<p class="accroche">${esc(B.accroche)}</p>`:''}<div class="actions"><button type="button" class="btn plein" data-act="aller" data-cible="carte">Découvrir les parfums <span aria-hidden="true">↗</span></button><button type="button" class="lien-fleche" data-act="aller" data-cible="trouver">Trouver ma signature</button></div>${pe!=null?`<p class="bp-hero-price">${esc(texteTailles())} · dès ${eur(pe)}</p>`:''}</div>${blocUne()}</div><div class="bp-assurances"><span>${IC.flacon}Parfums authentiques</span><span>${IC.goutte}Décantés à la main</span>${B.lieuRemise?`<span>${IC.lieu}Remise en main propre</span>`:''}</div></section>${blocVisible('selections')?blocSelections():''}${blocVisible('formats')?blocFormats():''}`;
+  return `<section class="ouverture bp-hero" aria-labelledby="t-ouverture"><div class="bp-hero-inner"><div class="bp-hero-copy"><p class="sur-titre"><span></span> La parfumerie, autrement.</p>${titreOuverture(B.titre || B.nom)}${B.accroche?`<p class="accroche">${esc(B.accroche)}</p>`:''}<div class="actions"><button type="button" class="btn plein" data-act="aller" data-cible="carte">Découvrir les parfums <span aria-hidden="true">↗</span></button><button type="button" class="lien-fleche" data-act="aller" data-cible="trouver">Trouver ma signature</button></div>${pe!=null?`<p class="bp-hero-price">${esc(texteTailles())} · dès ${eur(pe)}</p>`:''}</div>${S.arranger ? blocUneArr() : blocUne()}</div><div class="bp-assurances"><span>${IC.flacon}Parfums authentiques</span><span>${IC.goutte}Décantés à la main</span>${B.lieuRemise?`<span>${IC.lieu}Remise en main propre</span>`:''}</div></section>${blocVisible('selections')?blocSelections():''}${blocVisible('formats')?blocFormats():''}`;
 }
 
 function blocSelections() {
@@ -3641,7 +3724,7 @@ function messageCmd(id) {
 /* le rayon des flacons neufs, vendus entiers dans leur boîte */
 function blocFlacons() {
   const tous = flaconVisibles();
-  const liste = tous.filter(filtrer).sort(parEtat);
+  const liste = trierRayon(tous.filter(filtrer), '*flacons');
   if (!liste.length) return '';
   const maisons = [...new Set(tous.map(p => court(p.maison)).filter(Boolean))];
   const uniques = tous.every(p => p.stock == null || pieces(p) <= 1);
@@ -3653,7 +3736,7 @@ function blocFlacons() {
         <p class="compte">${liste.length} ${liste.length > 1 ? 'flacons' : 'flacon'}</p>
       </div>
       ${offresDispo().filter(o => piecesOffre(o).every(estFlacon)).map(carteOffre).join('')}
-      <div class="grille">${liste.map(p => tuile(p)).join('')}</div>
+      <div class="grille" data-cle="*flacons">${liste.map(p => tuile(p)).join('')}</div>
     </section>`;
 }
 function carteOffre(o) {
@@ -3667,7 +3750,7 @@ function carteOffre(o) {
 /* le rayon des miniatures d'origine, vendues entières */
 function blocMinis() {
   const tous = miniVisibles();
-  const liste = tous.filter(filtrer).sort(parEtat);
+  const liste = trierRayon(tous.filter(filtrer), '*minis');
   if (!liste.length) return '';
   const maisons = [...new Set(tous.map(p => court(p.maison)).filter(Boolean))];
   const ct = [...new Set(tous.map(p => ml(p.contenance)))];
@@ -3678,40 +3761,52 @@ function blocMinis() {
         <p class="maison-texte">De vrais flacons miniatures, vendus entiers et tels quels : rien n'est transvasé. Quelques pièces seulement${tous.some(p => p.badge === 'Rare') ? ', dont certaines devenues rares' : ''}.</p>
         <p class="compte">${liste.length} ${liste.length > 1 ? 'miniatures' : 'miniature'}</p>
       </div>
-      <div class="grille">${liste.map(p => tuile(p)).join('')}</div>
+      <div class="grille" data-cle="*minis">${liste.map(p => tuile(p)).join('')}</div>
     </section>`;
 }
 function rendreGrille() {
   const z = document.getElementById('sections');
   if (!z) return;
   if (!ST.parfums.some(p => p.visible)) { z.innerHTML = '<p class="vide">La carte est en cours de mise à jour. Reviens un peu plus tard.</p>'; rendreBarre(); return; }
-  const blocs = [], seules = [];
+  const blocs = {}, seules = [];
   ordreMaisons().forEach(m => {
     const tous = ST.parfums.filter(p => p.visible && !estMini(p) && (p.maison || 'Autres maisons') === m);
-    const liste = tous.filter(filtrer).sort(parEtat);
+    const liste = trierRayon(tous.filter(filtrer), cleMaison(m));
     if (!liste.length) return;
     /* une maison d'un seul parfum rejoint « Les autres maisons » (sauf quand on la choisit) */
     if (tous.length === 1 && !S.maison) { seules.push(...liste); return; }
     const cols = [...new Set(tous.map(p => p.collection).filter(Boolean))];
     const id = 'm-' + slug(m);
-    blocs.push(`<section class="bloc-maison" id="${id}" aria-labelledby="h-${id}">
+    blocs[cleMaison(m)] = (`<section class="bloc-maison" id="${id}" aria-labelledby="h-${id}">
       <div class="maison-tete"><h3 id="h-${id}">${esc(m)}</h3>
         <p class="collection">${cols.length ? cols.map(esc).join(' et ') + ' · ' : ''}${liste.length} ${liste.length > 1 ? 'parfums' : 'parfum'}</p>
       </div>
-      <div class="grille">${liste.map(p => tuile(p)).join('')}</div>
+      <div class="grille" data-cle="${esc(cleMaison(m))}">${liste.map(p => tuile(p)).join('')}</div>
     </section>`);
   });
-  if (seules.length) blocs.push(`<section class="bloc-maison autres-maisons" id="m-autres" aria-labelledby="h-m-autres">
-      <div class="maison-tete"><h3 id="h-m-autres">${blocs.length ? 'Les autres maisons' : 'Les maisons'}</h3>
+  if (seules.length) blocs['*autres'] = `<section class="bloc-maison autres-maisons" id="m-autres" aria-labelledby="h-m-autres">
+      <div class="maison-tete"><h3 id="h-m-autres">${Object.keys(blocs).length ? 'Les autres maisons' : 'Les maisons'}</h3>
         <p class="collection">${esc(seules.map(p => court(p.maison)).join(', '))}</p></div>
-      <div class="grille">${seules.sort(parEtat).map(p => tuile(p, true)).join('')}</div>
-    </section>`);
-  const html = (blocs.length ? `<div id="decants" class="rayon">${blocs.join('')}</div>` : '') + (S.maison ? '' : blocFlacons() + blocMinis());
+      <div class="grille" data-cle="*autres">${trierRayon(seules, '*autres').map(p => tuile(p, true)).join('')}</div>
+    </section>`;
+  if (!S.maison) { blocs['*flacons'] = blocFlacons(); blocs['*minis'] = blocMinis(); }
+  /* les rayons dans l'ordre choisi ; les décants qui se suivent restent groupés (le lien « Décants » du menu mène au premier) */
+  const cles = ordreRayons().concat(Object.keys(blocs).filter(k => !ordreRayons().includes(k))).filter(k => blocs[k]);
+  let html = '', ouvert = false, premier = true;
+  cles.forEach(k => {
+    const dec = k.startsWith('m:') || k === '*autres';
+    if (dec && !ouvert) { html += `<div${premier ? ' id="decants"' : ''} class="rayon">`; ouvert = true; premier = false; }
+    if (!dec && ouvert) { html += '</div>'; ouvert = false; }
+    html += blocs[k];
+  });
+  if (ouvert) html += '</div>';
+  if (S.arranger) html = panneauRayonsArr(cles) + html;
   const q = S.q.trim();
   const nb = q ? ST.parfums.filter(filtrer).length : 0;
   const tete = q && nb ? `<div class="res-recherche" role="status"><p>${nb} ${nb > 1 ? 'résultats' : 'résultat'} pour « ${esc(q)} »</p><button type="button" class="lien" data-act="effacer">Tout afficher</button></div>` : '';
   z.innerHTML = html ? typo(tete + html) : `<div class="vide"${q ? ' role="status"' : ''}><p>${q ? `Aucun parfum pour « ${esc(q)} ». Essaie un nom, une maison ou une note : vanille, rose, oud…` : 'Aucun parfum ne correspond.'}</p><button type="button" class="btn discret" data-act="tout-voir">Tout afficher</button></div>`;
   rendreBarre();
+  if (S.arranger) activerGlisser(z);
   majFiltres();
   S.menuActif = undefined;
   majMenu();
@@ -4235,11 +4330,11 @@ function choixDe(p) {
   return libre != null ? libre : o[0];
 }
 /* Notes olfactives : collection de photographies illustratives, avec une initiale pour les futures notes encore sans image. */
-const PHOTOS_NOTES = new Set(["abricot", "amande-caramelisee", "ambre", "ambre-gris", "ambroxan", "amyris", "armoise", "baies-de-genevrier", "bergamote", "bois-de-cachemire", "bois-de-santal", "bouleau", "cafe", "canne-a-sucre", "cannelle", "caramel", "cardamome", "cassis", "cedre", "cerise", "chene", "ciste-incanus", "citron", "cognac", "creme-fouettee", "cuir", "cypres", "davana", "epices", "feuille-de-tabac", "feuille-de-violette", "feve-de-tonka", "fleur-d-ananas", "fleur-d-oranger", "fleur-de-cerisier-du-japon", "fleur-de-poirier", "fleur-de-tiare", "fraise", "framboise", "fruit-de-la-passion", "fruits-secs", "fumee", "gardenia", "geranium", "gingembre", "gousse-de-vanille", "grenade", "guimauve", "hedione", "heliotrope", "immortelle", "iris", "jasmin", "jasmin-sambac", "lait", "lavande", "magnolia", "mandarine", "mate", "melon", "miel", "mimosa", "mirabelle", "muguet", "musc", "musc-blanc", "myrrhe", "neroli", "noix-de-coco", "notes-aquatiques", "notes-boisees", "notes-florales", "notes-fruitees", "notes-orientales", "notes-solaires", "notes-vertes", "oliban", "orange", "orchidee", "osmanthus", "oud", "palissandre", "palo-santo", "pamplemousse", "papyrus", "patchouli", "peche", "pivoine", "poire", "poivre", "poivre-rose", "pomme", "pomme-verte", "poudre-de-noix-de-coco", "praline", "prune", "racine-d-iris", "reglisse", "resines", "romarin", "rose-de-mai", "sable", "safran", "sauge", "tagete", "the", "thym", "tubereuse", "vanille", "vetiver", "violette", "ylang-ylang"]);
+const PHOTOS_NOTES = new Set(["abricot", "amande-caramelisee", "ambre", "ambre-gris", "ambroxan", "amyris", "armoise", "baies-de-genevrier", "baume-de-gurjun", "bergamote", "bois-de-cachemire", "bois-de-santal", "bouleau", "cafe", "canne-a-sucre", "cannelle", "caramel", "cardamome", "cassis", "cedre", "cerise", "chene", "ciste-incanus", "citron", "cognac", "creme-fouettee", "cuir", "cypres", "davana", "epices", "feuille-de-tabac", "feuille-de-violette", "feve-de-tonka", "figue", "fleur-d-ananas", "fleur-d-oranger", "fleur-de-cerisier-du-japon", "fleur-de-poirier", "fleur-de-tiare", "fraise", "framboise", "fruit-de-la-passion", "fruits-secs", "fumee", "gardenia", "geranium", "gingembre", "gousse-de-vanille", "grenade", "guimauve", "hedione", "heliotrope", "immortelle", "iris", "jasmin", "jasmin-sambac", "lait", "lavande", "magnolia", "mandarine", "mate", "melon", "miel", "mimosa", "mirabelle", "muguet", "musc", "musc-blanc", "muscade", "myrrhe", "neroli", "noix-de-coco", "notes-aquatiques", "notes-boisees", "notes-florales", "notes-fruitees", "notes-orientales", "notes-solaires", "notes-vertes", "oliban", "orange", "orchidee", "osmanthus", "oud", "palissandre", "palo-santo", "pamplemousse", "papyrus", "patchouli", "peche", "pivoine", "poire", "poivre", "poivre-rose", "pomme", "pomme-verte", "poudre-de-noix-de-coco", "praline", "prune", "racine-d-iris", "reglisse", "resines", "romarin", "rose-de-mai", "sable", "safran", "sauge", "tagete", "the", "thym", "tubereuse", "vanille", "vetiver", "violette", "whisky", "ylang-ylang"]);
 /* noms du site qui n'ont pas la même orthographe que l'image */
 const NOTES_PAREILLES = {"feve-tonka": "feve-de-tonka", "cashmeran": "bois-de-cachemire", "amande-confite": "amande-caramelisee", "bois-d-oud": "oud", "rose": "rose-de-mai", "rose-de-bulgarie": "rose-de-mai", "vanille-de-madagascar": "vanille", "tabac": "feuille-de-tabac", "tabac-blanc": "feuille-de-tabac", "agrumes": "citron", "notes-boisees-orientales": "notes-boisees", "ciste-labdanum": "resines", "ciste-labdanum-d-espagne": "resines", "benjoin-de-siam": "resines", "citron-d-italie": "citron", "rose-de-turquie": "rose-de-mai", "cedre-de-virginie": "cedre", "tiges-vertes": "notes-vertes", "oud-du-cambodge": "oud", "cardamome-du-guatemala": "cardamome", "orange-douce": "orange", "orange-de-sicile": "orange", "bergamote-de-calabre": "bergamote", "citron-de-sicile": "citron", "vanille-bourbon": "vanille", "bois-de-santal-d-australie": "bois-de-santal", "patchouli-d-inde": "patchouli", "labdanum": "resines", "benjoin": "resines", "fruits": "notes-fruitees"};
 const slugNote = n => String(n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-const BP_NOTES_WEBP = new Set(["abricot", "amande-caramelisee", "ambre", "ambre-gris", "ambroxan", "amyris", "armoise", "bergamote", "bois-de-cachemire", "bois-de-santal", "bouleau", "cafe", "canne-a-sucre", "cannelle", "caramel", "cardamome", "cassis", "cedre", "cerise", "chene", "ciste-incanus", "citron", "cognac", "creme-fouettee", "cuir", "davana", "epices", "feuille-de-tabac", "feuille-de-violette", "feve-de-tonka", "fleur-d-ananas", "fleur-d-oranger", "fleur-de-cerisier-du-japon", "fleur-de-poirier", "fleur-de-tiare", "fraise", "framboise", "fruit-de-la-passion", "fruits-secs", "fumee", "gardenia", "geranium", "gingembre", "gousse-de-vanille", "grenade", "guimauve", "hedione", "heliotrope", "immortelle", "iris", "jasmin", "jasmin-sambac", "lait", "lavande", "magnolia", "mandarine", "mate", "melon", "miel", "mimosa", "mirabelle", "muguet", "musc", "musc-blanc", "myrrhe", "neroli", "noix-de-coco", "notes-aquatiques", "notes-boisees", "notes-florales", "notes-fruitees", "notes-orientales", "notes-solaires", "notes-vertes", "oliban", "orange", "orchidee", "osmanthus", "oud", "palissandre", "palo-santo", "pamplemousse", "papyrus", "patchouli", "peche", "pivoine", "poire", "poivre", "poivre-rose", "pomme", "pomme-verte", "poudre-de-noix-de-coco", "praline", "prune", "racine-d-iris", "reglisse", "resines", "romarin", "rose-de-mai", "sable", "safran", "sauge", "tagete", "the", "thym", "tubereuse", "vanille", "vetiver", "violette", "ylang-ylang"]);
+const BP_NOTES_WEBP = new Set(["abricot", "amande-caramelisee", "ambre", "ambre-gris", "ambroxan", "amyris", "armoise", "baume-de-gurjun", "bergamote", "bois-de-cachemire", "bois-de-santal", "bouleau", "cafe", "canne-a-sucre", "cannelle", "caramel", "cardamome", "cassis", "cedre", "cerise", "chene", "ciste-incanus", "citron", "cognac", "creme-fouettee", "cuir", "davana", "epices", "feuille-de-tabac", "feuille-de-violette", "feve-de-tonka", "figue", "fleur-d-ananas", "fleur-d-oranger", "fleur-de-cerisier-du-japon", "fleur-de-poirier", "fleur-de-tiare", "fraise", "framboise", "fruit-de-la-passion", "fruits-secs", "fumee", "gardenia", "geranium", "gingembre", "gousse-de-vanille", "grenade", "guimauve", "hedione", "heliotrope", "immortelle", "iris", "jasmin", "jasmin-sambac", "lait", "lavande", "magnolia", "mandarine", "mate", "melon", "miel", "mimosa", "mirabelle", "muguet", "musc", "musc-blanc", "muscade", "myrrhe", "neroli", "noix-de-coco", "notes-aquatiques", "notes-boisees", "notes-florales", "notes-fruitees", "notes-orientales", "notes-solaires", "notes-vertes", "oliban", "orange", "orchidee", "osmanthus", "oud", "palissandre", "palo-santo", "pamplemousse", "papyrus", "patchouli", "peche", "pivoine", "poire", "poivre", "poivre-rose", "pomme", "pomme-verte", "poudre-de-noix-de-coco", "praline", "prune", "racine-d-iris", "reglisse", "resines", "romarin", "rose-de-mai", "sable", "safran", "sauge", "tagete", "the", "thym", "tubereuse", "vanille", "vetiver", "violette", "whisky", "ylang-ylang"]);
 function photoNote(n) {
   if (surClaude()) return '';
   const s = slugNote(n);
@@ -4554,12 +4649,15 @@ function rendre() {
     ? `<button type="button" class="fab" data-act="vente-ouvrir" aria-label="Nouvelle vente">${contenuFab()}</button>` : '';
   const cmd = o === 'boutique' && enCommande();
   document.body.classList.toggle('vue-commande', cmd);
+  if (S.arranger && !(S.vendeur && o === 'boutique' && !cmd)) S.arranger = false;
+  document.body.classList.toggle('arranger', !!S.arranger);
   $app.innerHTML = typo((o === 'boutique' && !cmd ? vueAnnonce() + vueEntete() + vueOuverture() : '')
     + `<div class="page${S.vendeur && o !== 'boutique' ? ' page-vendeur' : ''}${cmd ? ' page-cmd' : ''}">${contenu}</div><div id="barre" class="barre" hidden></div>`
-    + (S.vendeur ? `${fab}<div id="console" class="console${fab ? '' : ' sans-fab'}">${console_()}</div>` : ''));
+    + (S.vendeur ? `${fab}<div id="console" class="console${fab ? '' : ' sans-fab'}">${console_()}</div>` : '')
+    + (S.arranger ? barreArr() : ''));
   if (S.annonceStop) { S.annonceStop(); S.annonceStop = null; }
   if (cmd) { rendreBarre(); majNavFlot(); }
-  else if (o === 'boutique') { rendreGrille(); demarrerAnnonce(); demarrerUne(); }
+  else if (o === 'boutique') { rendreGrille(); demarrerAnnonce(); demarrerUne(); if (S.arranger) activerGlisser(document); }
   if (!document.querySelector('.page .panneau-attente')) {
     if (o === 'ventes') { rendreVentesDyn(); rendreCmdsVentes(); }
     if (o === 'clients') rendreClients();
@@ -8092,19 +8190,185 @@ function sousVitrine() {
 }
 function panneauVitrine() {
   const B = ST.boutique, choix = ST.parfums.filter(p => p.visible && p.photo && !estMini(p));
-  const ordre = ordreMaisons();
+  const ordre = ordreRayons();
   return `<section class="panneau g-vitrine">${teteVendeur('Mise en avant', 'Ce que tes clients voient en premier')}
+    <button type="button" class="arr-entree" data-act="arranger"><span class="arr-entree-ic" aria-hidden="true">${ICV.glisser}</span><span><b>Arranger du doigt</b><small>Ta vraie carte : appuie sur un parfum ou un rayon, puis fais-le glisser</small></span><span aria-hidden="true">›</span></button>
     <div class="bloc"><h3>Parfum vedette</h3><p class="aide">En grand, en haut de ta carte. « Automatique » : un parfum avec une pastille, sinon un parfum en stock qui change chaque jour.</p>
       <div class="groupe-ios formulaire"><div class="gi-ligne"><label for="vi-vedette">Vedette</label><select id="vi-vedette" data-act-change="vedette"><option value="">Automatique</option>${choix.map(p => `<option value="${esc(p.id)}"${B.vedette === p.id ? ' selected' : ''}>${esc(p.nom)}${vendable(p) ? '' : ' (en rupture : pas affiché)'}</option>`).join('')}</select></div></div></div>
     <div class="bloc"><h3>Nouveautés</h3><p class="aide">Un badge « Nouveau » sur la photo pendant 30 jours, puis il s'en va tout seul.</p>
       ${ST.parfums.some(estNouveau) ? `<div class="groupe-ios g-liste">${ST.parfums.filter(estNouveau).map(p => `<div class="gi-ligne g-ligne"><span class="plaque g-plaque">${plaqueContenu(p)}</span><span class="g-txt"><b>${esc(p.nom)}</b><small>Nouveau jusqu'au ${esc(dateOffre(p.nouveauJusqua))}</small></span><button type="button" class="g-mini" data-act="nouveau-off" data-id="${esc(p.id)}">Retirer</button></div>`).join('')}</div>` : ''}
       <div class="groupe-ios formulaire"><div class="gi-ligne"><label for="vi-nouveau">Ajouter</label><select id="vi-nouveau"><option value="">Choisir un parfum</option>${ST.parfums.filter(p => p.visible && !estNouveau(p)).map(p => `<option value="${esc(p.id)}">${esc(p.nom)}${estMini(p) ? ' (' + motPiece(p) + ')' : ''}</option>`).join('')}</select></div></div></div>
-    <div class="bloc"><h3>Ordre des maisons</h3><p class="aide">L'ordre des rayons sur ta carte.</p>
-      <div class="groupe-ios g-liste">${ordre.map((m, i) => `<div class="gi-ligne g-ligne"><span class="g-txt"><b>${esc(court(m))}</b></span><span class="g-fleches"><button type="button" class="g-mini" data-act="maison-monter" data-i="${i}" aria-label="Monter ${esc(m)}"${i ? '' : ' disabled'}>${ICV.monter}</button><button type="button" class="g-mini" data-act="maison-descendre" data-i="${i}" aria-label="Descendre ${esc(m)}"${i < ordre.length - 1 ? '' : ' disabled'}>${ICV.descendre}</button></span></div>`).join('')}</div>
-      ${B.ordreMaisons && B.ordreMaisons.length ? '<button type="button" class="btn petit discret" data-act="maisons-auto">Revenir à l\'ordre automatique</button>' : ''}</div>
+    <div class="bloc"><h3>Ordre des rayons</h3><p class="aide">L'ordre des rayons sur ta carte. Pour aussi ranger les parfums et la sélection du haut, utilise « Arranger du doigt ».</p>
+      <div class="groupe-ios g-liste">${ordre.map((k, i) => `<div class="gi-ligne g-ligne"><span class="g-txt"><b>${esc(court(nomRayon(k)))}</b></span><span class="g-fleches"><button type="button" class="g-mini" data-act="maison-monter" data-i="${i}" aria-label="Monter ${esc(nomRayon(k))}"${i ? '' : ' disabled'}>${ICV.monter}</button><button type="button" class="g-mini" data-act="maison-descendre" data-i="${i}" aria-label="Descendre ${esc(nomRayon(k))}"${i < ordre.length - 1 ? '' : ' disabled'}>${ICV.descendre}</button></span></div>`).join('')}</div>
+      ${(B.ordreMaisons && B.ordreMaisons.length) || (B.ordreRayons && B.ordreRayons.length) ? '<button type="button" class="btn petit discret" data-act="maisons-auto">Revenir à l\'ordre automatique</button>' : ''}</div>
     <div class="bloc"><h3>Blocs de la page</h3>
       <div class="groupe-ios formulaire">${BLOCS_ACCUEIL.map(([k, l]) => `<label class="gi-ligne gi-bascule" for="vb-${k}"><span>${esc(l)}</span><span class="interrupteur"><input type="checkbox" id="vb-${k}" data-bloc="${k}"${blocVisible(k) ? ' checked' : ''}><span class="int-piste" aria-hidden="true"></span></span></label>`).join('')}</div></div>
   </section>`;
+}
+
+/* =====================================================================================================
+   ARRANGER DU DOIGT : sur la vraie carte, on appuie sur un parfum, un rayon ou une photo de la sélection, puis on glisse.
+   Tout passe par « Publier » (et « Annuler » remet comme avant).
+   ===================================================================================================== */
+function nomRayonDe(D, k) {
+  if (k === '*autres' || k === '*flacons' || k === '*minis') return nomRayon(k);
+  const m = [...new Set(D.parfums.map(p => p.maison || 'Autres maisons'))].find(x => cleMaison(x) === k);
+  return m ? court(m) : k.slice(2);
+}
+function barreArr() {
+  return `<div id="arr-barre" class="arr-barre" role="region" aria-label="Arranger la carte"><span class="arr-barre-txt"><b>Arranger</b><small>Appuie, puis glisse</small></span><button type="button" class="arr-fini" data-act="arranger-fin">Terminé</button></div>`;
+}
+/* la sélection du haut en mode arranger : les photos en ligne, à glisser, à retirer, à ajouter */
+function blocUneArr() {
+  const l = diaposUne(), perso = (ST.boutique.selection || []).length > 0;
+  const libres = ST.parfums.filter(p => vendable(p) && p.photo && !l.includes(p));
+  return `<section class="arr-zone arr-une" aria-label="La sélection du haut">
+    <div class="arr-tete"><b>La sélection du haut</b><small>${perso ? 'Ton choix, dans cet ordre' : 'Automatique : la vedette puis les nouveautés'}</small></div>
+    <div class="arr-liste arr-h" data-glisser="selection">${l.map(p => `<div class="arr-carte" data-id="${esc(p.id)}"><span class="plaque">${plaqueContenu(p)}</span><b>${esc(p.nom)}</b><button type="button" class="arr-x" data-act="arr-sel-retirer" data-id="${esc(p.id)}" aria-label="Retirer ${esc(p.nom)} de la sélection"${l.length < 2 ? ' disabled' : ''}>×</button></div>`).join('')}</div>
+    <div class="arr-actions">${libres.length ? `<select id="arr-sel-ajout" aria-label="Ajouter un parfum à la sélection"><option value="">+ Ajouter un parfum</option>${libres.map(p => `<option value="${esc(p.id)}">${esc(p.nom)}</option>`).join('')}</select>` : ''}${perso ? '<button type="button" class="btn petit discret" data-act="arr-sel-auto">Automatique</button>' : ''}</div>
+  </section>`;
+}
+/* l'ordre des rayons, en haut de la carte : des lignes courtes, plus faciles à glisser que des rayons entiers */
+function panneauRayonsArr(cles) {
+  const n = k => { const g = document.querySelector(`.grille[data-cle="${k}"]`); return g ? g.children.length : 0; };
+  const perso = (ST.boutique.ordreRayons || []).length > 0 || (ST.boutique.ordreMaisons || []).length > 0;
+  return `<section class="arr-zone arr-rayons" aria-label="L'ordre des rayons">
+    <div class="arr-tete"><b>L'ordre des rayons</b><small>Appuie sur un rayon, puis glisse. Les parfums se rangent de la même façon, dans chaque rayon plus bas.</small></div>
+    <div class="arr-liste arr-v" data-glisser="rayons">${cles.map(k => `<div class="arr-ligne" data-cle="${esc(k)}"><span class="arr-poignee" aria-hidden="true">${ICV.glisser}</span><b>${esc(court(nomRayon(k)))}</b></div>`).join('')}</div>
+    ${perso ? '<div class="arr-actions"><button type="button" class="btn petit discret" data-act="maisons-auto">Ordre automatique</button></div>' : ''}
+  </section>`;
+}
+/* un changement fait en arrangeant : « Annuler » réaffiche aussi la carte */
+function majArr(fn, titre) {
+  if (!majSite(fn, titre)) return false;
+  const a = S.annulerFn;
+  S.annulerFn = async () => { await a(); if (S.arranger) { const y = scrollY; rendre(); scrollTo(0, y); } };
+  return true;
+}
+function redessinerArr() { const y = scrollY; rendre(); scrollTo(0, y); }
+function finGlisser(type, cle, ids) {
+  if (type === 'selection') {
+    if (JSON.stringify(ids) === JSON.stringify(diaposUne().map(p => p.id))) return;
+    majArr(() => { ST.boutique.selection = ids; }, 'Sélection du haut arrangée');
+  } else if (type === 'rayons') {
+    if (JSON.stringify(ids) === JSON.stringify(ordreRayons())) return;
+    majArr(() => { ST.boutique.ordreRayons = ids; }, 'Ordre des rayons changé');
+    redessinerArr();
+  } else if (type === 'parfums') {
+    const avant = ((ST.boutique.ordreParfums || {})[cle] || []);
+    if (JSON.stringify(ids) === JSON.stringify(avant)) return;
+    majArr(() => { ST.boutique.ordreParfums = Object.assign({}, ST.boutique.ordreParfums || {}, { [cle]: ids }); }, `Ordre des parfums changé (${court(nomRayon(cle))})`);
+  }
+}
+function activerGlisser(racine) {
+  (racine || document).querySelectorAll('[data-glisser], .grille[data-cle]').forEach(l => {
+    if (l._glisse) return;
+    l._glisse = true;
+    if (!l.dataset.glisser) l.dataset.glisser = 'parfums';
+    glisser(l);
+  });
+}
+/* glisser au doigt : appui long (un quart de seconde) pour soulever, puis la page ne défile plus et l'élément suit le doigt.
+   Doigt : évènements tactiles (pour bloquer le défilement) ; souris : évènements pointeur. */
+function glisser(liste) {
+  const horiz = liste.classList.contains('arr-h');
+  const estItem = el => el && el.parentNode === liste && (el.dataset.id || el.dataset.cle);
+  let minut = 0, el = null, x0 = 0, y0 = 0, gx = 0, gy = 0, px = 0, py = 0, raf = 0, actif = false;
+  const items = () => [...liste.children].filter(estItem);
+  const placer = () => {
+    el.style.transform = 'none';
+    const r = el.getBoundingClientRect();
+    el.style.transform = `translate(${px - gx - r.left}px, ${py - gy - r.top}px) scale(1.04)`;
+  };
+  const flip = (avant) => {
+    items().forEach(it => {
+      if (it === el) return;
+      const a = avant.get(it), b = it.getBoundingClientRect();
+      if (!a || (a.left === b.left && a.top === b.top)) return;
+      /* pendant qu'il glisse à sa nouvelle place, un voisin ne sert pas de cible (sinon les deux s'échangent sans fin) */
+      it._anime = true; clearTimeout(it._animeT); it._animeT = setTimeout(() => { it._anime = false; }, 260);
+      it.style.transition = 'none';
+      it.style.transform = `translate(${a.left - b.left}px, ${a.top - b.top}px)`;
+      requestAnimationFrame(() => { it.style.transition = 'transform .22s cubic-bezier(.2,.7,.2,1)'; it.style.transform = ''; });
+    });
+  };
+  const viser = () => {
+    el.style.visibility = 'hidden';
+    const sous = document.elementFromPoint(px, py);
+    el.style.visibility = '';
+    let cible = sous && sous.closest('[data-id], [data-cle]');
+    while (cible && cible.parentNode !== liste) cible = cible.parentNode && cible.parentNode.closest ? cible.parentNode.closest('[data-id], [data-cle]') : null;
+    if (!cible || cible === el || !estItem(cible) || cible._anime) return;
+    const l = items(), i = l.indexOf(el), j = l.indexOf(cible);
+    const avant = new Map(l.map(it => [it, it.getBoundingClientRect()]));
+    liste.insertBefore(el, j > i ? cible.nextSibling : cible);
+    flip(avant);
+  };
+  const defile = () => {
+    if (!actif) return;
+    const marge = 70;
+    if (horiz) {
+      const r = liste.getBoundingClientRect();
+      if (px < r.left + marge) liste.scrollLeft -= 10; else if (px > r.right - marge) liste.scrollLeft += 10;
+    } else if (py < marge + 40) scrollBy(0, -12); else if (py > innerHeight - marge - 60) scrollBy(0, 12);
+    placer(); viser();
+    raf = requestAnimationFrame(defile);
+  };
+  let avantOrdre = '';
+  const soulever = () => {
+    actif = true;
+    avantOrdre = items().map(x => x.dataset.id || x.dataset.cle).join('|');
+    const r = el.getBoundingClientRect();
+    gx = x0 - r.left; gy = y0 - r.top; px = x0; py = y0;
+    el.style.transition = 'none';
+    el.classList.add('leve'); liste.classList.add('en-glisse'); document.body.classList.add('glisse-en-cours');
+    try { navigator.vibrate && navigator.vibrate(12); } catch (e) {}
+    placer();
+    raf = requestAnimationFrame(defile);
+  };
+  const lacher = () => {
+    clearTimeout(minut);
+    if (!actif) { el = null; return; }
+    actif = false; cancelAnimationFrame(raf);
+    const it = el; el = null;
+    it.classList.remove('leve'); liste.classList.remove('en-glisse'); document.body.classList.remove('glisse-en-cours');
+    it.style.transition = 'transform .2s ease'; it.style.transform = '';
+    setTimeout(() => { it.style.transition = ''; }, 220);
+    S.glisseFin = Date.now();
+    const ids = items().map(x => x.dataset.id || x.dataset.cle);
+    if (ids.join('|') === avantOrdre) return;
+    finGlisser(liste.dataset.glisser, liste.dataset.cle || '', ids);
+  };
+  const debut = (x, y, cible, delai) => {
+    const it = cible.closest && cible.closest('[data-id], [data-cle]');
+    let e2 = it; while (e2 && e2.parentNode !== liste) e2 = e2.parentNode && e2.parentNode.closest ? e2.parentNode.closest('[data-id], [data-cle]') : null;
+    if (!estItem(e2) || cible.closest('.arr-x, select, input')) return false;
+    el = e2; x0 = x; y0 = y;
+    clearTimeout(minut);
+    minut = setTimeout(soulever, delai);
+    return true;
+  };
+  /* doigt */
+  liste.addEventListener('touchstart', e => { if (e.touches.length === 1) debut(e.touches[0].clientX, e.touches[0].clientY, e.target, 260); }, { passive: true });
+  liste.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    if (!actif) { if (el && Math.hypot(t.clientX - x0, t.clientY - y0) > 8) { clearTimeout(minut); el = null; } return; }
+    e.preventDefault(); px = t.clientX; py = t.clientY;
+  }, { passive: false });
+  liste.addEventListener('touchend', lacher);
+  liste.addEventListener('touchcancel', lacher);
+  /* souris (ordinateur) */
+  liste.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    if (!debut(e.clientX, e.clientY, e.target, 160)) return;
+    const bouge = ev => {
+      if (!actif) { if (Math.hypot(ev.clientX - x0, ev.clientY - y0) > 6) { clearTimeout(minut); minut = 0; soulever(); } else return; }
+      px = ev.clientX; py = ev.clientY; ev.preventDefault();
+    };
+    const fin = () => { removeEventListener('pointermove', bouge); removeEventListener('pointerup', fin); lacher(); };
+    addEventListener('pointermove', bouge); addEventListener('pointerup', fin);
+  });
+  liste.addEventListener('contextmenu', e => { if (el || actif) e.preventDefault(); });
 }
 
 /* =====================================================================================================
@@ -8253,6 +8517,10 @@ function differences(A, B, avecStock, publi) {
   const ba = A.boutique, bb = B.boutique;
   if ((ba.vedette || '') !== (bb.vedette || '')) l.push(`Vedette : ${ba.vedette ? ((A.parfums.find(p => p.id === ba.vedette) || {}).nom || ba.vedette) : 'automatique'}`);
   if (J(ba.ordreMaisons) !== J(bb.ordreMaisons)) l.push('Ordre des maisons changé');
+  if (J(ba.ordreRayons) !== J(bb.ordreRayons)) l.push('Ordre des rayons changé');
+  const opa = ba.ordreParfums || {}, opb = bb.ordreParfums || {};
+  [...new Set([...Object.keys(opa), ...Object.keys(opb)])].forEach(k => { if (J(opa[k]) !== J(opb[k])) l.push(`Ordre des parfums changé (${nomRayonDe(A, k)})`); });
+  if (J(ba.selection) !== J(bb.selection)) l.push((ba.selection || []).length ? 'Sélection du haut arrangée' : 'Sélection du haut automatique');
   BLOCS_ACCUEIL.forEach(([k, lib]) => { const ma = !!(ba.masquer || {})[k], mb = !!(bb.masquer || {})[k]; if (ma !== mb) l.push(`Bloc « ${lib.replace(/ \(.*\)$/, '')} » ${ma ? 'masqué' : 'affiché'}`); });
   if (J(ba.offres) !== J(bb.offres)) l.push('Duos et lots modifiés');
   Object.entries(NOMS_REGLAGES).forEach(([k, lib]) => { if (J(ba[k]) !== J(bb[k])) l.push(`${lib} modifié${/s$/.test(lib) ? 's' : ''}`); });
@@ -8462,7 +8730,21 @@ const actionsG = {
   'nouveau-off': el => majSite(() => { const p = trouver(el.dataset.id); p.nouveauJusqua = ''; }, 'Badge « Nouveau » retiré'),
   'maison-monter': el => deplacerMaison(Number(el.dataset.i), -1),
   'maison-descendre': el => deplacerMaison(Number(el.dataset.i), 1),
-  'maisons-auto': () => majSite(() => { ST.boutique.ordreMaisons = []; }, 'Ordre automatique des maisons'),
+  'maisons-auto': () => { (S.arranger ? majArr : majSite)(() => { ST.boutique.ordreMaisons = []; ST.boutique.ordreRayons = []; }, 'Ordre automatique des rayons'); if (S.arranger) redessinerArr(); },
+  arranger: () => {
+    if (document.querySelector('#dlg')) fermerTout();
+    if (actions.effacer) actions.effacer();
+    S.arranger = true; S.onglet = 'boutique'; ecrire(CLE_ONGLET, S.onglet);
+    rendre(); scrollTo(0, 0);
+  },
+  'arranger-fin': () => { S.arranger = false; S.onglet = 'vitrine'; ecrire(CLE_ONGLET, S.onglet); rendre(); scrollTo(0, 0); },
+  'arr-sel-retirer': el => {
+    const ids = diaposUne().map(p => p.id).filter(x => x !== el.dataset.id);
+    if (!ids.length) return;
+    const p = trouver(el.dataset.id);
+    majArr(() => { ST.boutique.selection = ids; }, `${p ? p.nom : 'Parfum'} retiré de la sélection`); redessinerArr();
+  },
+  'arr-sel-auto': () => { majArr(() => { ST.boutique.selection = []; }, 'Sélection du haut automatique'); redessinerArr(); },
   'promo-nouvelle': () => ouvrirG('promo', null),
   'promo-edit': el => ouvrirG('promo', el.dataset.id),
   'promo-ok': () => enregistrerPromo(),
@@ -8488,11 +8770,11 @@ const actionsG = {
   'g-parfum': el => { const p = trouver(el.dataset.id); if (!p) return; S.gQ = ''; allerVendeur('stock'); S.qStock = p.nom; const i = document.getElementById('st-q'); if (i) { i.value = p.nom; rendreListeStock(); } }
 };
 function deplacerMaison(i, d) {
-  const l = ordreMaisons();
+  const l = ordreRayons();
   const j = i + d;
   if (j < 0 || j >= l.length) return;
   [l[i], l[j]] = [l[j], l[i]];
-  majSite(() => { ST.boutique.ordreMaisons = l; }, 'Ordre des maisons changé');
+  majSite(() => { ST.boutique.ordreRayons = l; }, 'Ordre des rayons changé');
 }
 
 /* ---------- saisies ---------- */
@@ -8509,6 +8791,7 @@ document.addEventListener('change', e => {
   const t = e.target;
   suivreFormCmd(t);
   if (t.id === 'vi-nouveau' && t.value) { const p = trouver(t.value); majSite(() => { p.nouveauJusqua = jourDecale(null, 30); }, `${p.nom} : badge « Nouveau »`); return; }
+  if (t.id === 'arr-sel-ajout' && t.value) { const p = trouver(t.value), ids = diaposUne().map(x => x.id).concat(t.value); majArr(() => { ST.boutique.selection = ids; }, `${p.nom} ajouté à la sélection`); redessinerArr(); return; }
   if (t.id === 'vi-vedette') { const v = t.value; majSite(() => { ST.boutique.vedette = v; }, v ? `Vedette : ${(trouver(v) || {}).nom}` : 'Vedette automatique'); return; }
   if (t.dataset && t.dataset.bloc) { const k = t.dataset.bloc, on = t.checked; majSite(() => { ST.boutique.masquer = Object.assign({}, ST.boutique.masquer || {}); if (on) delete ST.boutique.masquer[k]; else ST.boutique.masquer[k] = true; }, on ? 'Bloc affiché' : 'Bloc masqué'); return; }
   if (t.id === 'hv-stock' && S.gs) { S.gs.stock = t.checked; rendreG(); return; }
@@ -8545,7 +8828,7 @@ const actions = {
     defiler(c, () => { if (menu && S.verrou && S.verrou.id === id) S.verrou.y = scrollY; });
   },
   haut: () => { S.verrou = null; defiler(null); },
-  fiche: el => ficheEnZoom(el, el.dataset.id),
+  fiche: el => { if (S.arranger) return; ficheEnZoom(el, el.dataset.id); },
   'une-notes': el => {
     const d = el.closest('.bp-diapo'); if (!d) return;
     const ouvrir = !d.classList.contains('notes-ouvertes');
