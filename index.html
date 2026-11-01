@@ -2593,11 +2593,16 @@ body.arranger .tn-btn{display:none}
 /* ---------- vignettes, version affinée : la photo respire ----------
    en haut à gauche « Nouveau », en haut à droite le petit logo rond (décant ou flacon d'origine),
    en bas à gauche « Notes » ; « Pièce unique » passe sous la photo, avec le prix */
-/* le petit logo des vignettes : dessin + « Décant » ou « Original » ; seulement le dessin s'il n'y a pas la place à côté de « Nouveau » */
+/* le petit logo des vignettes : dessin + « Décant » ou « Flacon neuf » ; seulement le dessin s'il n'y a pas la place à côté de « Nouveau » */
 .tuile .type-logo,.cmd-photo .type-logo{top:.5rem;right:.5rem;height:24px;gap:4px;padding:0 8px 0 6px;border-color:rgba(255,255,255,.14);background:rgba(10,10,12,.5);font-size:10.5px}
 .tuile .type-logo svg,.cmd-photo .type-logo svg{width:13px;height:13px}
-@container (max-width:160px){.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo{width:24px;padding:0;justify-content:center}.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo .tl-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}}
+@container (max-width:150px){.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo{width:24px;padding:0;justify-content:center}.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo .tl-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}}
 .type-logo.origine{color:#E6C998;border-color:rgba(227,201,152,.32)}
+/* « Flacon neuf » est plus long que « Décant » : à côté de « Nouveau », le logo se resserre pour garder le mot */
+.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo.origine{gap:3px;padding:0 7px 0 5px;font-size:10px;letter-spacing:0}
+.plaque:has(.drapeau.nouveau,.drapeau.marque-badge) .type-logo.origine svg{width:12px;height:12px}
+.tuile .plaque:has(.type-logo.origine) .drapeau.nouveau,.cmd-photo:has(.type-logo.origine) .drapeau.nouveau{padding:2px 6px;letter-spacing:0;left:.4rem}
+.tuile .plaque:has(.drapeau.nouveau) .type-logo.origine,.cmd-photo:has(.drapeau.nouveau) .type-logo.origine{right:.4rem}
 #fiche-plaque .type-logo{gap:6px;background:rgba(10,10,12,.5);color:rgba(245,245,247,.88)}
 #fiche-plaque .type-logo.origine{color:#E6D3B3}
 .tn-btn{left:.5rem;bottom:.5rem;height:28px;gap:6px;padding:0 10px 0 3px;border-color:rgba(255,255,255,.1);background:rgba(10,10,12,.55);font-size:11px;font-weight:500;letter-spacing:.03em;box-shadow:0 4px 14px rgba(0,0,0,.35)}
@@ -3222,8 +3227,8 @@ function lignePrix(p) {
 const IC_FIOLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.8 3.5h4.4"/><path d="M10.6 3.5v3h2.8v-3"/><rect x="8.6" y="6.5" width="6.8" height="14" rx="1.9"/><path d="M8.6 12.6h6.8"/></svg>';
 function logoType(p, fiche) {
   const orig = !p || p.type === 'flacon' || p.type === 'miniature' || /^cmd-/.test(p.id || '');
-  const txt = orig ? (fiche ? 'Flacon d’origine' : 'Original') : 'Décant';
-  return `<span class="type-logo${orig ? ' origine' : ''}${fiche ? ' fiche' : ''}" title="${orig ? 'Flacon d’origine, vendu entier' : 'Décant : le parfum transvasé à la main'}">${orig ? IC.flacon : IC_FIOLE}<span class="tl-txt">${txt}</span></span>`;
+  const txt = orig ? 'Flacon neuf' : 'Décant';
+  return `<span class="type-logo${orig ? ' origine' : ''}${fiche ? ' fiche' : ''}" title="${orig ? 'Flacon neuf, vendu entier' : 'Décant : le vrai parfum, transvasé à la main'}">${orig ? IC.flacon : IC_FIOLE}<span class="tl-txt">${txt}</span></span>`;
 }
 document.addEventListener('click', e => { if (e.target && e.target.closest && !e.target.closest('.tn-voile, .tn-btn')) fermerNotesTuiles(); }, true);
 /* le petit bouton « Notes » sur chaque vignette, comme dans la sélection du haut */
