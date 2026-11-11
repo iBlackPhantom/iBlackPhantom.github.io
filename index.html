@@ -5426,9 +5426,15 @@ function ouvrirEditeur(id) {
       </div>
       <div class="champs">
         <div class="champ"><label for="e-type">Format vendu</label><select id="e-type"><option value=""${estMini(p) ? '' : ' selected'}>Décant (10, 30, 50 ml…)</option><option value="flacon"${estFlacon(p) ? ' selected' : ''}>Flacon neuf, vendu entier dans sa boîte</option><option value="miniature"${estMini(p) && !estFlacon(p) ? ' selected' : ''}>Miniature d'origine, vendue entière</option></select></div>
-        <div class="champ"><label for="e-cont">Contenance de la pièce (ml)</label><input id="e-cont" inputmode="decimal" value="${p.contenance > 0 ? String(p.contenance).replace('.', ',') : '7,5'}" autocomplete="off"><small>Pour une miniature (7,5) ou un flacon neuf (100).</small></div>
+        <div class="champ e-piece"${estMini(p) ? '' : ' hidden'}><label for="e-cont">Contenance de la pièce (ml)</label><input id="e-cont" inputmode="decimal" value="${p.contenance > 0 ? String(p.contenance).replace('.', ',') : '7,5'}" autocomplete="off"><small>Pour une miniature (7,5) ou un flacon neuf (100).</small></div>
         <div class="champ"><label for="e-statut">Sur la carte</label><select id="e-statut"><option value=""${p.statut ? '' : ' selected'}>Selon le stock</option><option value="rupture"${p.statut === 'rupture' ? ' selected' : ''}>Rupture</option><option value="bientot"${p.statut === 'bientot' ? ' selected' : ''}>Bientôt disponible</option></select></div>
       </div>
+      ${neuf ? `<div class="champs e-prix-neuf">
+        ${ST.tailles.map(t => `<div class="champ e-decant"><label for="e-px-${t}">Prix ${t} ml (€)</label><input id="e-px-${t}" inputmode="decimal" autocomplete="off" placeholder="pas proposé"></div>`).join('')}
+        <div class="champ e-decant"><label for="e-stock-ml">Stock (ml)</label><input id="e-stock-ml" inputmode="decimal" autocomplete="off" placeholder="non suivi"></div>
+        <div class="champ e-piece" hidden><label for="e-px-piece">Prix de la pièce (€)</label><input id="e-px-piece" inputmode="decimal" autocomplete="off"></div>
+        <div class="champ e-piece" hidden><label for="e-stock-p">En stock (pièces)</label><input id="e-stock-p" inputmode="numeric" autocomplete="off" placeholder="non suivi"></div>
+      </div>` : ''}
       <div class="champs">
         <div class="champ"><label for="e-badge">Mise en avant</label><select id="e-badge">${['', 'Coup de cœur', 'Nouveau', 'Best-seller', 'Rare', 'Édition limitée'].map(b => `<option value="${b}"${(p.badge || '') === b ? ' selected' : ''}>${b || 'Aucune'}</option>`).join('')}</select></div>
         <div class="champ"><label for="e-fam">Famille olfactive</label><select id="e-fam"><option value=""${p.famille ? '' : ' selected'}>Selon les accords</option>${FAMILLES.map(f => `<option value="${f[0]}"${p.famille === f[0] ? ' selected' : ''}>${f[1]}</option>`).join('')}</select></div>
@@ -5502,10 +5508,22 @@ function enregistrerEditeur() {
     const base = (data.type === 'miniature' ? 'mini-' : data.type === 'flacon' ? 'neuf-' : '') + (nom.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'parfum');
     let nid = base, i = 2;
     while (trouver(nid)) nid = base + '-' + i++;
-    ST.parfums.push(normaliser({ parfums: [Object.assign({ id: nid, prix: {}, stock: null, visible: true, photo: '' }, data)] }).parfums[0]);
+    const prix = {}; let stock = null;
+    if (data.type) {
+      const px = nombre(v('e-px-piece')), n = nombre(v('e-stock-p'));
+      if (px > 0) prix[String(data.contenance)] = arrondi(px);
+      if (n >= 0 && v('e-stock-p') !== '') stock = arrondi(Math.round(n) * data.contenance);
+    } else {
+      ST.tailles.forEach(t => { const px = nombre(v('e-px-' + t)); if (px > 0) prix[String(t)] = arrondi(px); });
+      const ml_ = nombre(v('e-stock-ml'));
+      if (ml_ >= 0 && v('e-stock-ml') !== '') stock = arrondi(ml_);
+    }
+    ST.parfums.push(normaliser({ parfums: [Object.assign({ id: nid, prix, stock, visible: true, photo: '' }, data)] }).parfums[0]);
+    S.ouverts.add(nid);
   }
   fermer(); modifie(); rendre();
-  toast(id ? 'Fiche modifiée. Publie pour mettre la carte à jour.' : 'Parfum ajouté. Indique ses prix, puis publie.');
+  const sansPrix = !id && !Object.keys((ST.parfums[ST.parfums.length - 1] || {}).prix || {}).length;
+  toast(id ? 'Fiche modifiée. Publie pour mettre la carte à jour.' : sansPrix ? 'Parfum ajouté. Indique ses prix dans sa ligne du stock, puis publie.' : 'Parfum ajouté. Ajoute sa photo, puis publie.');
 }
 
 /* réglages */
@@ -5760,7 +5778,7 @@ function rendreVente() {
   const G = groupe();
   if (V.etape === 'panier' && !G.length) V.etape = 'parfum';
   if (!G.length) V.abandon = false;
-  const titre = V.etape === 'coller' ? 'Coller une commande' : 'Nouvelle vente';
+  const titre = 'Nouvelle vente';
   const tete = `<div class="fen-tete feuille-tete"><button type="button" class="feuille-annuler" data-act="vs-annuler">Annuler</button><h2>${titre}</h2><span aria-hidden="true"></span></div>
     <div class="vs-modes" role="group" aria-label="Façon d'enregistrer"><button type="button" class="vs-mode" data-act="vs-mode" data-m="choix" aria-pressed="${V.etape !== 'coller'}">Choisir les parfums</button><button type="button" class="vs-mode" data-act="vs-mode" data-m="coller" aria-pressed="${V.etape === 'coller'}">Coller une commande</button></div>`;
   if (V.etape === 'coller') { f.innerHTML = typo(tete + htmlColler()); return; }
@@ -9427,7 +9445,7 @@ const actions = {
     });
   },
   fermer: () => fermer(),
-  onglet: el => { if (el.dataset.o === 'historique') S.histo = null; if (document.querySelector('#dlg.g-dlg')) fermerTout(); S.onglet = el.dataset.o; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
+  onglet: el => { if (el.dataset.o === 'historique') S.histo = null; if (el.dataset.o !== S.onglet && S.annulerFn) { S.annulerFn = null; const bv = document.getElementById('bandeau-vente'); if (bv && bv.querySelector('[data-act=annuler-dernier]')) { clearTimeout(S.bvMinuteur); bv.hidden = true; } }  /* changer d'onglet : le « Annuler » d'une promo, d'une fiche… s'en va (celui d'une vente reste, pour la retrouver dans le journal) */ if (document.querySelector('#dlg.g-dlg')) fermerTout(); S.onglet = el.dataset.o; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
   publier: async () => {
     const ok = await publier('Carte publiée.');
     /* une fois publié, le bandeau « Annuler » d'un changement de la carte n'a plus lieu d'être */
@@ -9651,6 +9669,14 @@ document.addEventListener('input', e => {
   if (t.closest && t.closest('#couts-zone')) { S.coutsEdites = true; majCalculsCouts(); }
 });
 document.addEventListener('change', e => {
+  if (e.target && e.target.id === 'e-type') {   /* l'éditeur : décant (prix par taille, ml) ou pièce entière (contenance, prix, pièces) */
+    const piece = !!e.target.value;
+    document.querySelectorAll('#edit .e-piece').forEach(x => { x.hidden = !piece; });
+    document.querySelectorAll('#edit .e-decant').forEach(x => { x.hidden = piece; });
+    const c = document.getElementById('e-cont');
+    if (c && piece && !c.value) c.value = e.target.value === 'flacon' ? '100' : '7,5';
+    if (c && e.target.value === 'flacon' && c.value === '7,5') c.value = '100';
+  }
   const t = e.target;
   if (t.dataset && t.dataset.f && t.closest('.ligne-stock')) { champStock(t); return; }
   if (t.classList && t.classList.contains('fl-carte-c')) { basculerFormat(t); return; }
