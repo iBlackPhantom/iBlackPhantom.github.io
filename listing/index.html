@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<title>Le listing · BlackPhantom</title>
+<link rel="icon" href="icone.png">
+<link rel="apple-touch-icon" href="icone.png">
+<style>
+:root{
+  --nuit:#000;
+  --ecrin:#F4F5F7;
+  --carte:#1C1C1E;
+  --carte2:#2C2C2E;
+  --texte:#F5F5F7;
+  --sous:#A1A1A6;
+  --trait:#ffffff1a;
+  --or:#E3B96F;
+  --vert:#8CC3A3;
+  --rupture:#DD9084;
+  --ui:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,"Helvetica Neue",sans-serif;
+  --titre:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,"Helvetica Neue",sans-serif;
+  --serif:ui-serif,"New York","Iowan Old Style",Georgia,serif;
+  --haut:env(safe-area-inset-top,0px);
+  --bas:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--nuit);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--nuit);color:var(--texte);font:400 15px/1.45 var(--ui);min-height:100vh;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--or)}
+img{display:block}
+:focus-visible{outline:2px solid var(--or);outline-offset:2px;border-radius:6px}
+.cache{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+/* ---------- haut ---------- */
+.tete{display:flex;align-items:center;gap:10px;padding:calc(14px + var(--haut)) 20px 6px}
+.sceau{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--texte);font:500 17px/1 var(--serif);letter-spacing:.01em}
+.sceau img{width:30px;height:30px;border-radius:50%}
+.tete .esp{flex:1}
+.bouton-demande{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:0;background:var(--carte)}
+.bouton-demande svg{width:20px;height:20px}
+.bouton-demande b{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--or);color:#000;font:600 11px/18px var(--ui);text-align:center}
+
+.ouverture{padding:18px 20px 4px}
+.ouverture h1{margin:0;font:700 clamp(34px,9.6vw,52px)/1.02 var(--titre);letter-spacing:-.025em}
+.ouverture p{margin:12px 0 0;max-width:34em;color:var(--sous);font-size:16px}
+
+/* barre collante : recherche + rayons */
+.barre{position:sticky;top:0;z-index:20;padding:calc(8px + var(--haut)) 0 0;margin-top:14px;background:rgba(0,0,0,.78);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid transparent;transition:border-color .2s}
+.barre.colle{border-bottom-color:var(--trait)}
+.cherche{position:relative;margin:0 20px}
+.cherche svg{position:absolute;left:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--sous);pointer-events:none}
+.cherche input{width:100%;height:46px;padding:0 44px 0 42px;border:0;border-radius:14px;background:var(--carte);font-size:17px;outline:none;-webkit-appearance:none;appearance:none}
+.cherche input::placeholder{color:#8a8a90}
+.cherche input::-webkit-search-cancel-button,.cherche input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.cherche input:focus{box-shadow:0 0 0 2px #E3B96F66}
+.cherche .vider{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:#3a3a3c;color:var(--texte);font-size:15px;line-height:1}
+.rayons{display:flex;gap:8px;overflow-x:auto;padding:12px 20px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rayons::-webkit-scrollbar{display:none}
+.puce{flex:none;height:34px;padding:0 14px;border-radius:17px;border:1px solid var(--trait);background:transparent;font-size:14px;font-weight:500;color:var(--texte);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.puce[aria-pressed="true"]{background:var(--texte);color:#000;border-color:var(--texte)}
+.puce .n{color:var(--sous);font-weight:400}
+.puce[aria-pressed="true"] .n{color:#555}
+.puce.maison-choisie{background:var(--or);color:#000;border-color:var(--or)}
+.puce .x{font-size:16px;line-height:1;margin-left:2px}
+.sep-puces{flex:none;width:1px;background:var(--trait);margin:6px 2px}
+
+/* ---------- nouveautés ---------- */
+.etagere{padding:22px 0 6px}
+.etagere h2,.groupe h2,.groupe h3{margin:0}
+.etagere h2{padding:0 20px;font:700 24px/1.15 var(--titre);letter-spacing:-.015em}
+.etagere .aide{padding:0 20px;margin:4px 0 0;color:var(--sous);font-size:14px}
+.rail{display:flex;gap:12px;overflow-x:auto;padding:14px 20px 6px;scroll-padding-inline:20px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.rail .fiche-mini{flex:none;width:min(46vw,210px);scroll-snap-align:start}
+
+/* ---------- vitrine ---------- */
+.vitrine{padding:6px 20px 120px}
+.compte{margin:14px 0 2px;color:var(--sous);font-size:14px}
+.groupe{padding-top:26px}
+.groupe h2{font:700 30px/1.1 var(--titre);letter-spacing:-.02em;padding:14px 0 2px}
+.groupe h3{display:flex;align-items:baseline;gap:8px;font:600 20px/1.2 var(--serif);letter-spacing:.005em;padding:20px 0 4px}
+.groupe h3 span{font:400 14px var(--ui);color:var(--sous)}
+.groupe .cond{margin:2px 0 6px;color:var(--or);font-size:14px}
+.grille{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px;margin-top:10px}
+@media (min-width:640px){.grille{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:960px){.grille{grid-template-columns:repeat(4,minmax(0,1fr))}.vitrine,.ouverture{max-width:1180px;margin-left:auto;margin-right:auto}}
+
+.fiche-mini{position:relative;min-width:0}
+.ouvrir{display:block;width:100%;padding:0;border:0;background:none;text-align:left;color:inherit}
+.ecrin{position:relative;aspect-ratio:1/1;border-radius:18px;background:var(--ecrin);overflow:hidden;isolation:isolate}
+.ecrin img{position:absolute;inset:9%;width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply}
+.ecrin .sans-photo{position:absolute;inset:0;display:grid;place-items:center;color:#8a8a90;font:500 13px var(--ui)}
+.fiche-mini.epuise .ecrin img{opacity:.45;filter:grayscale(.6)}
+.marques{position:absolute;left:8px;top:8px;right:8px;display:flex;flex-wrap:wrap;gap:4px;z-index:1}
+.marque{height:22px;padding:0 8px;border-radius:11px;font:600 11.5px/22px var(--ui);letter-spacing:.01em;background:#000000d9;color:#fff}
+.marque.nouveau{background:var(--or);color:#000}
+.marque.testeur{background:#24402f;color:#cfeedd}
+.marque.rupture{background:#5a2620;color:#ffd9d2}
+.infos{padding:10px 2px 0}
+.infos .m{display:block;font-size:13px;color:var(--sous);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.infos .n{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px;font:500 17px/1.22 var(--serif);color:var(--texte)}
+.infos .d{display:block;margin-top:4px;font-size:13px;color:var(--sous)}
+.infos .p{display:block;margin-top:4px;font-size:15px;font-weight:600;color:var(--texte)}
+.ecrin-box{position:relative}
+.ajout{position:absolute;right:8px;bottom:8px;z-index:2;width:36px;height:36px;border-radius:50%;border:0;background:#000;color:#fff;display:grid;place-items:center;box-shadow:0 2px 10px #0003;transition:transform .15s,background .15s}
+.ajout svg{width:18px;height:18px}
+.ajout[aria-pressed="true"]{background:var(--or);color:#000}
+.ajout:active{transform:scale(.9)}
+.fin-liste{height:1px}
+.vide{padding:40px 0;text-align:left}
+.vide h2{margin:0 0 8px;font:700 22px var(--titre)}
+.vide p{margin:0 0 16px;color:var(--sous)}
+
+/* ---------- pied ---------- */
+.pied{padding:10px 20px calc(110px + var(--bas));color:var(--sous);font-size:13px;max-width:1180px;margin:0 auto}
+.etapes{margin:0 0 26px;padding:20px;border-radius:20px;background:var(--carte)}
+.etapes h2{margin:0 0 12px;color:var(--texte);font:700 20px var(--titre)}
+.etapes ol{margin:0;padding:0;list-style:none;counter-reset:e}
+.etapes li{counter-increment:e;position:relative;padding:0 0 12px 36px;color:var(--sous);font-size:15px}
+.etapes li b{display:block;color:var(--texte);font-weight:600}
+.etapes li::before{content:counter(e);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--texte);color:#000;font:600 13px/24px var(--ui);text-align:center}
+.pied .lignes{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+.pied a{color:var(--sous)}
+.lien-vendeur{border:0;background:none;color:#5d5d63;font-size:12px;padding:8px 0}
+
+/* ---------- barre de demande ---------- */
+.flottant{position:fixed;left:12px;right:12px;bottom:calc(12px + var(--bas));z-index:30;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 18px;border-radius:22px;background:rgba(28,28,30,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 40px #000a;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:560px;margin:0 auto}
+.flottant.vu{transform:none}
+.flottant p{flex:1;margin:0;font-size:15px;line-height:1.25}
+.flottant p small{display:block;color:var(--sous);font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:24px;border:0;background:var(--carte2);color:var(--texte);font-size:16px;font-weight:600;text-decoration:none;text-align:center}
+.btn.or{background:var(--or);color:#000}
+.btn.clair{background:var(--texte);color:#000}
+.btn.large{width:100%}
+.btn.petit{min-height:36px;padding:0 14px;font-size:14px;border-radius:18px}
+.btn[disabled]{opacity:.45}
+.lien{border:0;background:none;padding:6px 0;color:var(--or);font-size:15px;text-decoration:none}
+
+/* ---------- feuilles (fiche, demande, maisons, vendeur) ---------- */
+.voile{position:fixed;inset:0;z-index:40;background:#000a;opacity:0;transition:opacity .25s}
+.voile.vu{opacity:1}
+.feuille{position:fixed;left:0;right:0;bottom:0;z-index:41;max-height:calc(100% - 28px - var(--haut));display:flex;flex-direction:column;border-radius:24px 24px 0 0;background:#111113;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1);max-width:640px;margin:0 auto;box-shadow:0 -10px 60px #000}
+.feuille.vu{transform:none}
+.feuille .poignee{flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px 6px 20px}
+.feuille .poignee h2{flex:1;margin:0;font:700 20px var(--titre)}
+.fermer{flex:none;margin-left:auto;width:34px;height:34px;border-radius:50%;border:0;background:var(--carte2);color:var(--texte);display:grid;place-items:center}
+.fermer svg{width:14px;height:14px}
+.feuille .corps{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:6px 20px calc(24px + var(--bas))}
+
+.f-photo{aspect-ratio:1/1;border-radius:22px;max-height:46vh;margin:0 auto}
+.f-photo img{inset:7%;width:86%;height:86%}
+.f-m{margin:18px 0 0;color:var(--sous);font-size:15px}
+.f-n{margin:2px 0 0;font:600 28px/1.15 var(--serif)}
+.f-d{margin:6px 0 0;color:var(--sous);font-size:15px}
+.f-prix{margin:10px 0 0;font:700 24px var(--titre)}
+.f-marques{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.f-marques .marque{position:static;height:26px;line-height:26px;font-size:12.5px;padding:0 10px;border-radius:13px}
+.bref{margin:20px 0 0;padding:0;border-radius:16px;background:var(--carte);list-style:none;overflow:hidden}
+.bref li{display:flex;gap:14px;padding:13px 16px;border-top:1px solid var(--trait)}
+.bref li:first-child{border-top:0}
+.bref li span{flex:none;width:7.6em;color:var(--sous)}
+.bref li b{font-weight:500}
+.f-actions{display:grid;gap:10px;margin-top:20px}
+.f-liens{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px}
+.libelle{margin:18px 0 0;color:#6e6e73;font-size:12.5px}
+
+.ligne-d{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--trait)}
+.ligne-d:first-child{border-top:0}
+.ligne-d .ecrin{flex:none;width:64px;border-radius:12px}
+.ligne-d .t{flex:1;min-width:0}
+.ligne-d .t b{display:block;font:500 16px/1.25 var(--serif)}
+.ligne-d .t small{display:block;color:var(--sous);font-size:13px}
+.qte{display:flex;align-items:center;gap:2px;background:var(--carte);border-radius:16px}
+.qte button{width:32px;height:32px;border:0;background:none;font-size:18px}
+.qte span{min-width:16px;text-align:center;font-weight:600}
+.message{white-space:pre-wrap;margin:10px 0 0;padding:14px;border-radius:14px;background:var(--carte);color:var(--sous);font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}
+.pied-d{display:grid;gap:10px;margin-top:18px}
+.aide{color:var(--sous);font-size:13.5px;margin:6px 0 0}
+details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15px}
+
+.liste-maisons{margin:8px 0 0;padding:0;list-style:none}
+.liste-maisons button{display:flex;width:100%;align-items:baseline;gap:8px;padding:13px 2px;border:0;border-top:1px solid var(--trait);background:none;text-align:left;font-size:17px}
+.liste-maisons button span{margin-left:auto;color:var(--sous);font-size:14px}
+.lettre{margin:18px 0 2px;color:var(--or);font:600 14px var(--ui)}
+
+/* vendeur */
+.v-bloc{margin:14px 0 0;padding:16px;border-radius:18px;background:var(--carte)}
+.v-bloc h3{margin:0 0 4px;font:700 17px var(--titre)}
+.v-bloc p{margin:0;color:var(--sous);font-size:14px}
+.champ{display:block;margin-top:12px}
+.champ span{display:block;color:var(--sous);font-size:13px;margin-bottom:6px}
+.champ input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--trait);background:#000;font-size:17px;outline:none}
+.champ input:focus{border-color:var(--or)}
+.erreur{color:var(--rupture);font-size:14px;margin:8px 0 0}
+.progres{height:6px;border-radius:3px;background:#2c2c2e;overflow:hidden;margin-top:12px}
+.progres i{display:block;height:100%;width:0;background:var(--or);transition:width .2s}
+.chiffres{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.chiffres div{padding:10px 12px;border-radius:12px;background:#000}
+.chiffres b{display:block;font:700 22px var(--titre)}
+.chiffres small{color:var(--sous);font-size:12.5px}
+.bascule{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--trait)}
+.bascule:first-of-type{border-top:0}
+.bascule span{flex:1}
+.bascule small{display:block;color:var(--sous);font-size:12.5px}
+.interrupteur{position:relative;flex:none;width:51px;height:31px;border-radius:16px;border:0;background:#39393d;transition:background .2s}
+.interrupteur::after{content:"";position:absolute;left:2px;top:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px #0004;transition:transform .2s}
+.interrupteur[aria-checked="true"]{background:#34c759}
+.interrupteur[aria-checked="true"]::after{transform:translateX(20px)}
+.avert{margin:8px 0 0;padding-left:18px;color:var(--sous);font-size:13px}
+.bandeau-apercu{position:sticky;top:0;z-index:25;padding:calc(8px + var(--haut)) 16px 8px;background:var(--or);color:#000;font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
+.bandeau-apercu span{flex:1}
+.bandeau-apercu button{border:0;background:#000;color:#fff;border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
+.toast{position:fixed;left:50%;top:calc(12px + var(--haut));z-index:60;transform:translate(-50%,-20px);opacity:0;max-width:calc(100% - 40px);padding:12px 16px;border-radius:14px;background:#f5f5f7;color:#000;font-size:14px;font-weight:500;transition:opacity .2s,transform .2s;pointer-events:none}
+.toast.vu{opacity:1;transform:translate(-50%,0)}
+.chargement{padding:60px 20px;color:var(--sous)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="apercu-bandeau"></div>
+<header class="tete">
+  <a class="sceau" href="https://iblackphantom.github.io/" aria-label="BlackPhantom, retour au site"><img src="icone.png" alt="" width="30" height="30">BlackPhantom</a>
+  <span class="esp"></span>
+  <button type="button" class="bouton-demande" id="b-demande" aria-label="Ma demande">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+    <b id="b-demande-n" hidden>0</b>
+  </button>
+</header>
+
+<main>
+  <section class="ouverture" aria-labelledby="titre">
+    <h1 id="titre">Le listing.</h1>
+    <p id="sous-titre">Des flacons neufs, que je commande pour toi chez mon fournisseur.</p>
+  </section>
+
+  <div class="barre" id="barre">
+    <div class="cherche" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label class="cache" for="q">Chercher un parfum</label>
+      <input id="q" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Sauvage, Dior, vanille, 50 ml…">
+      <button type="button" class="vider" id="q-vider" aria-label="Effacer la recherche" hidden>✕</button>
+    </div>
+    <nav class="rayons" id="rayons" aria-label="Rayons et filtres"></nav>
+  </div>
+
+  <section class="etagere" id="etagere" aria-labelledby="t-nouv" hidden>
+    <h2 id="t-nouv">Les nouveautés.</h2>
+    <p class="aide" id="nouv-aide"></p>
+    <div class="rail" id="rail"></div>
+  </section>
+
+  <section class="vitrine" id="vitrine" aria-live="polite">
+    <p class="chargement">Chargement du listing…</p>
+  </section>
+</main>
+
+<footer class="pied">
+  <section class="etapes" aria-labelledby="t-etapes">
+    <h2 id="t-etapes">Comment commander</h2>
+    <ol>
+      <li><b>Ajoute les flacons qui te plaisent</b>Touche le + sur la photo.</li>
+      <li><b>Envoie ta demande</b>Ta liste est copiée, tu la colles en message sur Snap.</li>
+      <li><b>Je te réponds</b>Avec le prix et le délai pour chaque flacon.</li>
+    </ol>
+    <a class="lien" href="https://iblackphantom.github.io/#sur-commande">Comment marche le sur commande</a>
+  </section>
+  <div class="lignes">
+    <span id="pied-maj"></span>
+    <a href="https://iblackphantom.github.io/">Le site BlackPhantom</a>
+    <button type="button" class="lien-vendeur" id="b-vendeur">Vendeur</button>
+  </div>
+</footer>
+
+<div class="flottant" id="flottant" aria-live="polite">
+  <p id="flottant-txt"></p>
+  <button type="button" class="btn or" id="flottant-btn">Voir ma demande</button>
+</div>
+
+<div class="voile" id="voile" hidden></div>
+<section class="feuille" id="feuille" role="dialog" aria-modal="true" aria-labelledby="feuille-titre" hidden>
+  <div class="poignee"><h2 id="feuille-titre"></h2><button type="button" class="fermer" id="feuille-fermer" aria-label="Fermer"><svg viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2 2 12"/></svg></button></div>
+  <div class="corps" id="feuille-corps"></div>
+</section>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module">
+/* ============ Le listing BlackPhantom ============
+   Page publique, hors Google, ouverte par lien. Données : data.json (publié par l'espace vendeur).
+   Aucun prix d'achat ni secret ici : le jeton GitHub reste chiffré dans la clé « acces » du site. */
+
+const CONTACT = { snap: 'i.blackphantom', insta: 'i.BlackPhantom18' };
+const COURT = { 'Niche & collection privée': 'Niche', 'Beauté & soins': 'Beauté' };
+const MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const CLE_DEMANDE = 'bp-listing-demande';
+
+const S = {
+  pub: null,          /* données publiées */
+  brouillon: null,    /* listing importé, pas encore publié (vendeur) */
+  q: '', rayon: 'tout', maison: '', filtres: new Set(),
+  demande: lire(CLE_DEMANDE, []),
+  vendeur: null,      /* { jeton, proprio, depot } */
+  modifie: false,     /* réglages changés, à publier */
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’'`]/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
+const eur = n => (Math.round(n * 100) / 100).toLocaleString('fr-FR', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €';
+function lire(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+function ecrire(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+const donnees = () => S.brouillon || S.pub;
+const reglages = () => (donnees() && donnees().reglages) || (donnees().reglages = { masquer: { sections: [], maisons: [] }, cacher: [], prix: {} });
+
+/* ---------- ce que voient les clients ---------- */
+function estVisible(r, R) {
+  R = R || reglages();
+  return !(R.masquer.sections || []).includes(r.section) && !(R.masquer.maisons || []).includes(r.maison) && !(R.cacher || []).includes(r.id);
+}
+const visibles = () => donnees().refs.filter(r => estVisible(r));
+const prixDe = r => { const p = reglages().prix && reglages().prix[r.id]; return p > 0 ? p : null; };
+const detail = r => [r.concentration, r.ml ? r.ml + ' ml' : ''].filter(Boolean).join(', ');
+const nomComplet = r => (r.maison ? r.maison + ' ' : '') + r.nom;
+function marques(r) {
+  const m = [];
+  if (r.rupture) m.push(['rupture', 'Rupture']);
+  if (r.nouveau || r.arrive) m.push(['nouveau', 'Nouveau']);
+  if (r.testeur) m.push(['testeur', 'Testeur']);
+  if (r.coffret) m.push(['', 'Coffret']);
+  for (const e of r.etat || []) if (!(r.testeur && /bo[iî]te/i.test(e))) m.push(['', e]);
+  return m;
+}
+const texteCherche = r => r.__t || (r.__t = norm([r.maison, r.nom, r.libelle, r.concentration, r.ml ? r.ml + 'ml ' + r.ml + ' ml' : '', r.section, r.testeur ? 'testeur' : '', r.coffret ? 'coffret' : '', r.nouveau ? 'nouveau nouveaute' : ''].join(' ')));
+
+function filtrer() {
+  const mots = norm(S.q).split(' ').filter(Boolean);
+  return visibles().filter(r => {
+    if (S.rayon !== 'tout' && r.section !== S.rayon) return false;
+    if (S.maison && r.maison !== S.maison) return false;
+    if (S.filtres.has('nouveau') && !(r.nouveau || r.arrive)) return false;
+    if (S.filtres.has('testeur') && !r.testeur) return false;
+    if (S.filtres.has('coffret') && !r.coffret) return false;
+    if (S.filtres.has('dispo') && r.rupture) return false;
+    if (mots.length) { const t = ' ' + texteCherche(r) + ' '; return mots.every(m => t.includes(' ' + m) || (m.length > 3 && t.includes(m))); }
+    return true;
+  });
+}
+
+/* ---------- dessin ---------- */
+const IC_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const IC_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+const dansDemande = id => S.demande.some(l => l.id === id);
+function photo(r, classe) {
+  const src = r.__url || (r.photo ? r.photo : '');
+  return `<div class="ecrin ${classe || ''}">${src ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async">` : '<span class="sans-photo">Pas de photo</span>'}</div>`;
+}
+function carte(r, sansMaison) {
+  const m = marques(r).slice(0, 2);
+  const p = prixDe(r);
+  const pris = dansDemande(r.id);
+  return `<article class="fiche-mini${r.rupture ? ' epuise' : ''}" data-id="${esc(r.id)}">
+    <div class="ecrin-box">
+      <button type="button" class="ouvrir" data-act="fiche" aria-label="${esc(nomComplet(r))}, ${esc(detail(r))}">${photo(r)}</button>
+      ${m.length ? `<div class="marques">${m.map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
+      ${r.rupture ? '' : `<button type="button" class="ajout" data-act="ajout" aria-pressed="${pris}" aria-label="${pris ? 'Retirer de' : 'Ajouter à'} ma demande : ${esc(r.nom)}">${pris ? IC_OK : IC_PLUS}</button>`}
+    </div>
+    <button type="button" class="ouvrir infos" data-act="fiche" tabindex="-1" aria-hidden="true">
+      ${sansMaison ? '' : `<span class="m">${esc(r.maison || r.section)}</span>`}<span class="n">${esc(r.nom)}</span><span class="d">${esc(detail(r))}</span>${p ? `<span class="p">${eur(p)}</span>` : ''}
+    </button>
+  </article>`;
+}
+
+let file = [], obs = null;
+function dessinerRayons() {
+  const vis = visibles();
+  const sections = [];
+  for (const r of vis) if (!sections.includes(r.section)) sections.push(r.section);
+  const n = s => vis.filter(r => r.section === s).length;
+  const b = [`<button type="button" class="puce" data-rayon="tout" aria-pressed="${S.rayon === 'tout'}">Tout</button>`];
+  for (const s of sections) b.push(`<button type="button" class="puce" data-rayon="${esc(s)}" aria-pressed="${S.rayon === s}">${esc(COURT[s] || s)} <span class="n">${n(s)}</span></button>`);
+  b.push('<span class="sep-puces" aria-hidden="true"></span>');
+  b.push(S.maison ? `<button type="button" class="puce maison-choisie" data-act="maison-x" aria-label="Retirer le filtre ${esc(S.maison)}">${esc(S.maison)} <span class="x" aria-hidden="true">×</span></button>`
+    : `<button type="button" class="puce" data-act="maisons">Maisons</button>`);
+  const f = [['nouveau', 'Nouveautés'], ['testeur', 'Testeurs'], ['coffret', 'Coffrets'], ['dispo', 'Disponibles']];
+  for (const [k, t] of f) b.push(`<button type="button" class="puce" data-filtre="${k}" aria-pressed="${S.filtres.has(k)}">${t}</button>`);
+  $('#rayons').innerHTML = b.join('');
+}
+
+function dessinerEtagere() {
+  const sec = $('#etagere');
+  const calme = !S.q && !S.maison && !S.filtres.size;
+  const nv = visibles().filter(r => (r.nouveau || r.arrive) && !r.rupture && (S.rayon === 'tout' || r.section === S.rayon));
+  if (!calme || nv.length < 2) { sec.hidden = true; return; }
+  sec.hidden = false;
+  $('#nouv-aide').textContent = `${nv.length} flacon${nv.length > 1 ? 's' : ''} arrivé${nv.length > 1 ? 's' : ''} sur le listing. Fais glisser.`;
+  $('#rail').innerHTML = nv.slice(0, 40).map(r => carte(r)).join('');
+}
+
+function dessinerVitrine() {
+  const liste = filtrer();
+  const v = $('#vitrine');
+  if (obs) { obs.disconnect(); obs = null; }
+  file = [];
+  if (!liste.length) {
+    v.innerHTML = `<div class="vide"><h2>Aucun flacon trouvé.</h2><p>${S.q ? `Rien pour « ${esc(S.q)} »` : 'Rien avec ces filtres'}${S.rayon !== 'tout' ? ' dans ' + esc(COURT[S.rayon] || S.rayon) : ''}. Essaie un autre mot, ou demande-moi directement : je peux aussi chercher hors listing.</p>
+      <button type="button" class="btn clair" data-act="tout-voir">Tout voir</button></div>`;
+    return;
+  }
+  const groupe = !S.q;
+  const html = [`<p class="compte">${liste.length} flacon${liste.length > 1 ? 's' : ''}${S.q ? ` pour « ${esc(S.q)} »` : ''}</p>`];
+  let sec = null, mai = null, grille = [];
+  const fermerGrille = () => { if (grille.length) { file.push(`<div class="grille">${grille.join('')}</div>`); grille = []; } };
+  if (!groupe) { file.push(`<div class="grille">${liste.slice(0, 2000).map(r => carte(r)).join('')}</div>`); }
+  else {
+    const notes = {};
+    for (const r of liste) if (r.note) notes[r.section + '|' + r.maison] = r.note;
+    for (const r of liste) {
+      if (r.section !== sec) {
+        fermerGrille(); sec = r.section; mai = null;
+        if (S.rayon === 'tout' && !S.maison) file.push(`<div class="groupe"><h2>${esc(sec)}</h2></div>`);
+      }
+      if (r.maison !== mai) {
+        fermerGrille(); mai = r.maison;
+        const n = liste.filter(x => x.section === sec && x.maison === mai).length;
+        const note = notes[sec + '|' + mai];
+        file.push(`<div class="groupe"><h3>${esc(mai || 'Divers')} <span>${n}</span></h3>${note ? `<p class="cond">${esc(note)}</p>` : ''}</div>`);
+      }
+      grille.push(carte(r, !!r.maison));
+      if (grille.length >= 24) fermerGrille();
+    }
+    fermerGrille();
+  }
+  v.innerHTML = html.join('') + '<div id="suite"></div><div class="fin-liste" id="fin-liste"></div>';
+  const suite = $('#suite');
+  const encore = () => { suite.insertAdjacentHTML('beforeend', file.splice(0, 6).join('')); };
+  encore(); encore();
+  if (file.length && 'IntersectionObserver' in window) {
+    obs = new IntersectionObserver(e => { if (e.some(x => x.isIntersecting)) { encore(); if (!file.length) obs.disconnect(); } }, { rootMargin: '1400px 0px' });
+    obs.observe($('#fin-liste'));
+  } else while (file.length) encore();
+}
+
+function dessinerTout() {
+  const d = donnees();
+  const date = majDate(d);
+  $('#titre').textContent = `Le listing de ${d.mois || (date ? MOIS[date.getMonth()] : 'ce mois')}.`;
+  const n = visibles().length;
+  $('#sous-titre').textContent = `${n} flacons neufs que je commande pour toi chez mon fournisseur. Ajoute ceux qui te plaisent, envoie-moi ta liste sur Snap : je te réponds avec les prix.`;
+  $('#pied-maj').textContent = date ? `Listing mis à jour le ${date.getDate()} ${MOIS[date.getMonth()]} ${date.getFullYear()}` : '';
+  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande();
+}
+function majDate(d) {
+  const m = String(d.maj || '').match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+  if (!m) return d.importeLe ? new Date(d.importeLe) : null;
+  const a = Number(m[3]) < 100 ? 2000 + Number(m[3]) : Number(m[3]);
+  return new Date(a, Number(m[2]) - 1, Number(m[1]));
+}
+
+/* ---------- demande ---------- */
+function majDemande() {
+  ecrire(CLE_DEMANDE, S.demande);
+  const n = S.demande.reduce((a, l) => a + l.qte, 0);
+  const b = $('#b-demande-n'); b.hidden = !n; b.textContent = n;
+  $('#flottant').classList.toggle('vu', n > 0 && !feuilleOuverte());
+  $('#flottant-txt').innerHTML = n ? `<b>${n} flacon${n > 1 ? 's' : ''}</b><small>dans ta demande</small>` : '';
+}
+function basculer(id) {
+  const r = trouver(id); if (!r || r.rupture) return;
+  const i = S.demande.findIndex(l => l.id === id);
+  if (i >= 0) S.demande.splice(i, 1); else S.demande.push({ id, qte: 1 });
+  majDemande();
+  document.querySelectorAll(`.fiche-mini[data-id="${CSS.escape(id)}"] .ajout`).forEach(btn => {
+    const pris = dansDemande(id);
+    btn.setAttribute('aria-pressed', pris); btn.innerHTML = pris ? IC_OK : IC_PLUS;
+    btn.setAttribute('aria-label', `${pris ? 'Retirer de' : 'Ajouter à'} ma demande : ${r.nom}`);
+  });
+  toast(i >= 0 ? 'Retiré de ta demande' : 'Ajouté à ta demande');
+}
+const trouver = id => donnees().refs.find(r => r.id === id);
+function message() {
+  const lignes = S.demande.map(l => ({ l, r: trouver(l.id) })).filter(x => x.r);
+  const d = donnees();
+  let tot = 0, tousPrix = true;
+  const t = lignes.map(({ l, r }) => {
+    const p = prixDe(r); if (p) tot += p * l.qte; else tousPrix = false;
+    return `• ${l.qte > 1 ? l.qte + ' × ' : ''}${r.libelle}${p ? ' (' + eur(p) + ')' : ''}`;
+  });
+  return `Salut BlackPhantom ! Je suis intéressé(e) par ${lignes.length > 1 ? 'ces flacons' : 'ce flacon'} du listing${d.maj ? ' du ' + d.maj : ''} :\n${t.join('\n')}\n${tousPrix && tot ? `Total : ${eur(tot)}. ` : ''}Tu peux me dire ${tousPrix && tot ? 'comment réserver' : 'les prix et le délai'} ?`;
+}
+function copier(texte) {
+  try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(texte).catch(() => repli(texte)); return; } } catch (e) {}
+  repli(texte);
+}
+function repli(texte) {
+  const ta = document.createElement('textarea');
+  ta.value = texte; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  ta.remove();
+}
+const lienSnap = () => 'https://www.snapchat.com/add/' + encodeURIComponent(CONTACT.snap);
+const lienInsta = () => 'https://www.instagram.com/' + encodeURIComponent(CONTACT.insta.toLowerCase()) + '/';
+
+function ouvrirDemande() {
+  const lignes = S.demande.map(l => ({ l, r: trouver(l.id) })).filter(x => x.r);
+  if (!lignes.length) {
+    ouvrirFeuille('Ma demande', `<div class="vide"><h2>Ta demande est vide.</h2><p>Touche le + sur la photo d'un flacon pour l'ajouter. Quand ta liste est prête, tu me l'envoies sur Snap.</p><button type="button" class="btn clair" data-act="fermer">Voir le listing</button></div>`);
+    return;
+  }
+  const corps = `<div>${lignes.map(({ l, r }) => `<div class="ligne-d" data-id="${esc(r.id)}">${photo(r)}<div class="t"><b>${esc(r.nom)}</b><small>${esc(r.maison)}${r.maison ? ', ' : ''}${esc(detail(r))}${prixDe(r) ? ' — ' + eur(prixDe(r)) : ''}</small></div>
+      <div class="qte"><button type="button" data-act="moins" aria-label="Un de moins">−</button><span aria-live="polite">${l.qte}</span><button type="button" data-act="plus" aria-label="Un de plus">+</button></div></div>`).join('')}</div>
+    <div class="pied-d">
+      <a class="btn or large" href="${lienSnap()}" target="_blank" rel="noopener" data-act="envoyer">Envoyer ma demande sur Snap</a>
+      <a class="btn large" href="${lienInsta()}" target="_blank" rel="noopener" data-act="envoyer">Plutôt sur Instagram</a>
+      <p class="aide">En touchant un bouton, ta liste est copiée : colle-la dans le message.</p>
+    </div>
+    <details class="voir"><summary>Voir le message</summary><pre class="message" id="msg">${esc(message())}</pre><button type="button" class="btn petit" data-act="copier">Copier le message</button></details>`;
+  ouvrirFeuille(`Ma demande, ${lignes.reduce((a, x) => a + x.l.qte, 0)} flacon${lignes.length > 1 || lignes[0].l.qte > 1 ? 's' : ''}`, corps, 'demande');
+}
+
+/* ---------- fiche d'un flacon ---------- */
+function ouvrirFiche(id, depuisAncre) {
+  const r = trouver(id); if (!r) return;
+  const pris = dansDemande(r.id);
+  const p = prixDe(r);
+  const bref = [
+    ['Rayon', r.section],
+    ['Format', r.concentration],
+    ['Contenance', r.ml ? r.ml + ' ml' : ''],
+    ['Coffret', r.contenu],
+    ['État', r.rupture ? 'En rupture chez le fournisseur' : [r.testeur ? 'Testeur' : 'Neuf', ...(r.etat || [])].join(', ')],
+    ['À savoir', r.note],
+  ].filter(x => x[1]);
+  const q = encodeURIComponent((r.maison ? r.maison + ' ' : '') + r.nom);
+  const vend = S.vendeur || S.brouillon ? blocVendeurFiche(r) : '';
+  ouvrirFeuille('', `${photo(r, 'f-photo')}
+    <p class="f-m">${esc(r.maison)}</p><h3 class="f-n" id="f-nom">${esc(r.nom)}</h3><p class="f-d">${esc(detail(r))}</p>
+    ${p ? `<p class="f-prix">${eur(p)}</p>` : ''}
+    ${marques(r).length ? `<div class="f-marques">${marques(r).map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
+    <ul class="bref">${bref.map(([a, b]) => `<li><span>${esc(a)}</span><b>${esc(b)}</b></li>`).join('')}</ul>
+    <div class="f-actions">
+      ${r.rupture ? `<a class="btn large" href="${lienSnap()}" target="_blank" rel="noopener">Me prévenir sur Snap</a>`
+        : `<button type="button" class="btn ${pris ? '' : 'or'} large" data-act="ajout-fiche" data-id="${esc(r.id)}">${pris ? 'Retirer de ma demande' : 'Ajouter à ma demande'}</button>`}
+      <div class="f-liens">
+        <a class="lien" href="https://www.fragrantica.fr/search/?query=${q}" target="_blank" rel="noopener">Voir ses notes sur Fragrantica</a>
+        ${navigator.share ? '<button type="button" class="lien" data-act="partager">Partager</button>' : '<button type="button" class="lien" data-act="copier-lien">Copier le lien</button>'}
+      </div>
+    </div>
+    <p class="libelle">Sur le listing : ${esc(r.libelle)}</p>${vend}`, 'fiche', r.id);
+  if (!depuisAncre) { try { history.replaceState(null, '', '#' + encodeURIComponent(r.id)); } catch (e) {} }
+}
+
+/* ---------- feuille ---------- */
+let feuilleType = '', dernierFocus = null, tFermer = 0;
+const feuilleOuverte = () => !$('#feuille').hidden;
+function ouvrirFeuille(titre, corps, type, id) {
+  clearTimeout(tFermer);
+  feuilleType = type || ''; const f = $('#feuille'), v = $('#voile');
+  if (f.hidden) dernierFocus = document.activeElement;
+  $('#feuille-titre').textContent = titre;
+  $('#feuille-titre').hidden = !titre;
+  $('#feuille-corps').innerHTML = corps;
+  $('#feuille-corps').scrollTop = 0;
+  f.dataset.id = id || '';
+  f.setAttribute('aria-labelledby', titre ? 'feuille-titre' : 'f-nom');
+  f.hidden = false; v.hidden = false;
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => { f.classList.add('vu'); v.classList.add('vu'); });
+  $('#flottant').classList.remove('vu');
+  setTimeout(() => $('#feuille-fermer').focus({ preventScroll: true }), 50);
+}
+function fermerFeuille() {
+  const f = $('#feuille'), v = $('#voile');
+  if (f.hidden) return;
+  f.classList.remove('vu'); v.classList.remove('vu');
+  document.body.style.overflow = '';
+  clearTimeout(tFermer);
+  tFermer = setTimeout(() => { f.hidden = true; v.hidden = true; majDemande(); }, 260);
+  if (location.hash && location.hash !== '#vendeur') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  feuilleType = '';
+  if (dernierFocus && dernierFocus.focus) dernierFocus.focus({ preventScroll: true });
+}
+function rafraichirFeuille() {
+  if (feuilleType === 'demande') ouvrirDemande();
+  else if (feuilleType === 'fiche') ouvrirFiche($('#feuille').dataset.id, true);
+  else if (feuilleType === 'vendeur') ouvrirVendeur();
+}
+
+function ouvrirMaisons() {
+  const vis = visibles().filter(r => S.rayon === 'tout' || r.section === S.rayon);
+  const c = new Map();
+  for (const r of vis) if (r.maison) c.set(r.maison, (c.get(r.maison) || 0) + 1);
+  const noms = [...c.keys()].sort((a, b) => norm(a).localeCompare(norm(b)));
+  let lettre = '';
+  const li = [];
+  for (const m of noms) {
+    const l = norm(m)[0].toUpperCase();
+    if (l !== lettre) { lettre = l; li.push(`<li class="lettre" aria-hidden="true">${esc(l)}</li>`); }
+    li.push(`<li><button type="button" data-act="choisir-maison" data-maison="${esc(m)}">${esc(m)}<span>${c.get(m)}</span></button></li>`);
+  }
+  ouvrirFeuille(`${noms.length} maisons${S.rayon !== 'tout' ? ', ' + (COURT[S.rayon] || S.rayon) : ''}`, `<div class="cherche" style="margin:4px 0 6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q-maison" type="search" placeholder="Chercher une maison" aria-label="Chercher une maison" autocomplete="off"></div><ul class="liste-maisons" id="liste-maisons">${li.join('')}</ul>`, 'maisons');
+}
+
+/* ---------- petits outils ---------- */
+let tToast = 0;
+function toast(t) {
+  const e = $('#toast'); e.textContent = t; e.classList.add('vu');
+  clearTimeout(tToast); tToast = setTimeout(() => e.classList.remove('vu'), 1800);
+}
+
+/* ---------- événements ---------- */
+let tQ = 0;
+$('#q').addEventListener('input', e => {
+  $('#q-vider').hidden = !e.target.value;
+  clearTimeout(tQ); tQ = setTimeout(() => { S.q = e.target.value.trim(); dessinerEtagere(); dessinerVitrine(); }, 140);
+});
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter') e.target.blur(); });
+$('#q-vider').addEventListener('click', () => { $('#q').value = ''; S.q = ''; $('#q-vider').hidden = true; dessinerEtagere(); dessinerVitrine(); $('#q').focus(); });
+$('#b-demande').addEventListener('click', ouvrirDemande);
+$('#flottant-btn').addEventListener('click', ouvrirDemande);
+$('#voile').addEventListener('click', fermerFeuille);
+$('#feuille-fermer').addEventListener('click', fermerFeuille);
+$('#b-vendeur').addEventListener('click', () => ouvrirVendeur());
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && feuilleOuverte()) fermerFeuille(); });
+const barre = $('#barre');
+new IntersectionObserver(e => barre.classList.toggle('colle', !e[0].isIntersecting), { rootMargin: '-1px 0px 0px 0px' }).observe($('.ouverture'));
+
+function versHautListe() {
+  const y = $('#barre').getBoundingClientRect().top + scrollY - 2;
+  if (scrollY > y) scrollTo({ top: y });
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-act],[data-rayon],[data-filtre]');
+  if (!b) return;
+  const carteEl = b.closest('.fiche-mini, .ligne-d');
+  const id = carteEl && carteEl.dataset.id;
+  if (b.dataset.rayon) { S.rayon = b.dataset.rayon; S.maison = ''; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); return; }
+  if (b.dataset.filtre) { const k = b.dataset.filtre; S.filtres.has(k) ? S.filtres.delete(k) : S.filtres.add(k); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); return; }
+  const act = b.dataset.act;
+  if (act === 'fiche') ouvrirFiche(id);
+  else if (act === 'ajout') basculer(id);
+  else if (act === 'ajout-fiche') { basculer(b.dataset.id); rafraichirFeuille(); }
+  else if (act === 'maisons') ouvrirMaisons();
+  else if (act === 'maison-x') { S.maison = ''; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
+  else if (act === 'choisir-maison') { S.maison = b.dataset.maison; fermerFeuille(); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
+  else if (act === 'tout-voir') { S.q = ''; $('#q').value = ''; $('#q-vider').hidden = true; S.rayon = 'tout'; S.maison = ''; S.filtres.clear(); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
+  else if (act === 'fermer') fermerFeuille();
+  else if (act === 'plus' || act === 'moins') {
+    const l = S.demande.find(x => x.id === id); if (!l) return;
+    l.qte += act === 'plus' ? 1 : -1;
+    if (l.qte < 1) { S.demande = S.demande.filter(x => x !== l); dessinerVitrine(); dessinerEtagere(); }
+    majDemande(); ouvrirDemande();
+  }
+  else if (act === 'envoyer') { copier(message()); toast('Ta liste est copiée : colle-la dans le message'); }
+  else if (act === 'copier') { copier(message()); toast('Message copié'); }
+  else if (act === 'partager') {
+    const r = trouver($('#feuille').dataset.id), url = location.href.split('#')[0] + '#' + encodeURIComponent(r.id);
+    try { await navigator.share({ title: nomComplet(r), text: `${nomComplet(r)}, ${detail(r)}, sur le listing BlackPhantom`, url }); }
+    catch (er) { if (!er || er.name !== 'AbortError') { copier(url); toast('Lien copié'); } }
+  }
+  else if (act === 'copier-lien') { copier(location.href.split('#')[0] + '#' + encodeURIComponent($('#feuille').dataset.id)); toast('Lien copié'); }
+  else if (typeof actionsVendeur[act] === 'function') actionsVendeur[act](b, e);
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'q-maison') {
+    const q = norm(e.target.value);
+    document.querySelectorAll('#liste-maisons li').forEach(li => {
+      const btn = li.querySelector('button');
+      li.hidden = q ? (!btn || !norm(btn.dataset.maison).includes(q)) : false;
+    });
+  }
+});
+addEventListener('hashchange', ancre);
+function ancre() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) { if (feuilleType === 'fiche') fermerFeuille(); return; }
+  if (h === 'vendeur') { ouvrirVendeur(); return; }
+  if (donnees() && trouver(h)) ouvrirFiche(h, true);
+}
+
+/* ============ espace vendeur ============ */
+const GH_API = 'https://api.github.com';
+const MAX_PHOTOS = 400;
+const enLigne = () => /\.github\.io$/i.test(location.hostname);
+const dossier = () => location.pathname.replace(/^\/+/, '').replace(/[^/]*$/, '');   /* « listing/ » */
+const PATRON_COMPARAISON = /\s\/\s|\((?!\d)[^)]*\)/;
+const octets = t => new TextEncoder().encode(t);
+const depuisB64 = b => { const s = atob(String(b).replace(/\s/g, '')); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; };
+async function dechiffrer(c, mdp) {
+  const base = await crypto.subtle.importKey('raw', octets(mdp), 'PBKDF2', false, ['deriveKey']);
+  const k = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: depuisB64(c.sel), iterations: c.iter || 310000, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: depuisB64(c.iv) }, k, depuisB64(c.ct)));
+}
+async function accesDuSite() {
+  const r = await fetch('/index.html?acces=' + Date.now(), { cache: 'no-store' });
+  if (!r.ok) return null;
+  const m = (await r.text()).match(/<script type="application\/json" id="bp-data">([\s\S]*?)<\/script>/);
+  return m ? (JSON.parse(m[1]).acces || null) : null;
+}
+async function gh(chemin, opts = {}) {
+  for (let essai = 0; ; essai++) {
+    const r = await fetch(GH_API + chemin, {
+      method: opts.method || 'GET', cache: 'no-store',
+      headers: Object.assign({ Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + S.vendeur.jeton, 'X-GitHub-Api-Version': '2022-11-28' }, opts.body ? { 'Content-Type': 'application/json' } : {}),
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    });
+    if (r.ok) return r.status === 204 ? null : r.json();
+    /* trop de requêtes d'un coup : GitHub demande d'attendre */
+    if ((r.status === 403 || r.status === 429) && essai < 4 && (r.headers.get('retry-after') || /secondary rate|abuse/i.test(await r.clone().text()))) {
+      const s = Number(r.headers.get('retry-after')) || 30 * (essai + 1);
+      if (opts.attente) opts.attente(s);
+      await new Promise(ok => setTimeout(ok, s * 1000));
+      continue;
+    }
+    if (r.status >= 500 && essai < 2) { await new Promise(ok => setTimeout(ok, 1500)); continue; }
+    const t = await r.text().catch(() => '');
+    const err = new Error(`GitHub ${r.status}`); err.status = r.status; err.detail = t; throw err;
+  }
+}
+
+let import_ = null;   /* état d'un import en cours */
+function blocConnexion(erreur) {
+  return `<div class="v-bloc"><h3>Espace vendeur</h3><p>Ton mot de passe habituel, celui de ton espace sur le site.</p>
+    <form id="f-connexion" autocomplete="on"><input type="text" name="username" autocomplete="username" value="BlackPhantom" hidden>
+    <label class="champ"><span>Mot de passe</span><input id="mdp" type="password" autocomplete="current-password" required></label>
+    ${erreur ? `<p class="erreur">${esc(erreur)}</p>` : ''}
+    <div style="margin-top:14px"><button class="btn or large" type="submit">Entrer</button></div></form></div>
+    <div class="v-bloc"><h3>Essayer sans publier</h3><p>Tu peux importer un listing pour voir le résultat ici. Rien ne part en ligne tant que tu n'es pas entré.</p>
+    <div style="margin-top:12px"><button type="button" class="btn large" data-act="choisir-pdf">Importer un PDF</button></div></div>`;
+}
+function blocImport() {
+  const I = import_;
+  if (I && I.etape === 'lecture') return `<div class="v-bloc"><h3>Lecture du listing…</h3><p id="i-txt">${esc(I.txt || 'Ouverture du PDF')}</p><div class="progres"><i id="i-barre" style="width:${I.pc || 0}%"></i></div>
+    <div style="margin-top:12px"><button type="button" class="btn petit" data-act="annuler-import">Arrêter</button></div></div>`;
+  if (I && I.etape === 'erreur') return `<div class="v-bloc"><h3>Le listing n'a pas pu être lu</h3><p class="erreur">${esc(I.txt)}</p><div style="margin-top:12px"><button type="button" class="btn or large" data-act="choisir-pdf">Choisir un autre PDF</button></div></div>`;
+  if (S.brouillon) {
+    const d = S.brouillon, x = d.__resume;
+    const ch = (n, t) => `<div><b>${n}</b><small>${t}</small></div>`;
+    return `<div class="v-bloc"><h3>Listing prêt, pas encore en ligne</h3><p>${esc(d.fichier || '')}${d.maj ? ', mis à jour le ' + esc(d.maj) : ''}. Ce que tu vois sur la page est le nouveau listing.</p>
+      <div class="chiffres">${ch(x.total, 'flacons lus')}${ch(x.visibles, 'visibles par tes clients')}${ch(x.nouveaux, 'nouveautés (en jaune)')}${ch(x.ruptures, 'en rupture')}
+      ${x.avant != null ? ch('+' + x.ajoutes, 'arrivés depuis le dernier') + ch('−' + x.retires, 'retirés du listing') : ''}</div>
+      ${x.photosManquantes ? `<p class="aide">${x.photosManquantes} flacon${x.photosManquantes > 1 ? 's' : ''} sans photo.</p>` : ''}
+      ${d.__avert && d.__avert.length ? `<details class="voir"><summary>${d.__avert.length} point${d.__avert.length > 1 ? 's' : ''} à vérifier</summary><ul class="avert">${d.__avert.slice(0, 30).map(a => `<li>${esc(a)}</li>`).join('')}</ul></details>` : ''}
+      <div style="display:grid;gap:10px;margin-top:14px">
+        ${S.vendeur ? `<button type="button" class="btn or large" data-act="publier">Publier pour mes clients</button>` : `<p class="aide">Entre ton mot de passe plus haut pour le publier.</p>`}
+        <button type="button" class="btn large" data-act="abandonner">Revenir au listing en ligne</button>
+      </div>
+      </div>`;
+  }
+  const reste = S.pub ? S.pub.refs.filter(r => r.__blob).length : 0;
+  return `${reste && S.vendeur ? `<div class="v-bloc"><h3>${reste} photos à envoyer</h3><p>GitHub limite les envois par heure. Si la dernière publication date de plus d'une heure, envoie-les maintenant.</p><div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Envoyer les photos restantes</button></div></div>` : ''}
+    <div class="v-bloc"><h3>Nouveau listing</h3><p>Choisis le PDF reçu de ton fournisseur. La page le lit, te montre le résultat, puis tu publies.</p>
+    <div style="margin-top:12px"><button type="button" class="btn or large" data-act="choisir-pdf">Importer un PDF</button></div></div>`;
+}
+function blocPublication() {
+  const P = S.publication;
+  if (!P) return '';
+  return `<div class="v-bloc"><h3>${esc(P.titre)}</h3><p id="p-txt">${esc(P.txt || '')}</p>${P.pc != null ? `<div class="progres"><i id="p-barre" style="width:${P.pc}%"></i></div>` : ''}
+    ${P.fini ? `<div style="margin-top:12px"><button type="button" class="btn large" data-act="fin-publication">Fermer</button></div>` : ''}</div>`;
+}
+function blocVisibilite() {
+  const d = donnees(), R = reglages();
+  const secs = [], mais = new Map();
+  for (const r of d.refs) { if (!secs.includes(r.section)) secs.push(r.section); if (r.maison) mais.set(r.maison, (mais.get(r.maison) || 0) + 1); }
+  const sw = (on, attrs) => `<button type="button" class="interrupteur" role="switch" aria-checked="${on}" ${attrs}></button>`;
+  const nSec = s => d.refs.filter(r => r.section === s).length;
+  const comp = [...mais.keys()].filter(m => d.refs.some(r => r.maison === m && PATRON_COMPARAISON.test(r.libelle)));
+  return `<div class="v-bloc"><h3>Ce que tes clients voient</h3><p>Coupe un rayon ou une maison : elle reste dans le listing, mais tes clients ne la voient plus. Ton choix est gardé pour les prochains listings.</p>
+    <div style="margin-top:8px">${secs.map(s => `<div class="bascule"><span>${esc(s)}<small>${nSec(s)} flacons</small></span>${sw(!(R.masquer.sections || []).includes(s), `data-act="vis-section" data-v="${esc(s)}" aria-label="${esc(s)} visible"`)}</div>`).join('')}</div>
+    ${comp.length ? `<p class="aide" style="margin-top:10px">Ces maisons citent d'autres parfums dans leurs noms : ${esc(comp.join(', '))}.</p>` : ''}
+    <details class="voir"><summary>Maisons, une par une (${mais.size})</summary>
+      <div class="cherche" style="margin:10px 0 4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q-maison-v" type="search" placeholder="Chercher une maison" aria-label="Chercher une maison" autocomplete="off"></div>
+      <div id="liste-maisons-v">${[...mais.keys()].sort((a, b) => norm(a).localeCompare(norm(b))).map(m => `<div class="bascule" data-maison="${esc(m)}"><span>${esc(m)}<small>${mais.get(m)} flacon${mais.get(m) > 1 ? 's' : ''}</small></span>${sw(!(R.masquer.maisons || []).includes(m), `data-act="vis-maison" data-v="${esc(m)}" aria-label="${esc(m)} visible"`)}</div>`).join('')}</div>
+    </details>
+    ${S.modifie && !S.brouillon ? `<div style="margin-top:14px">${S.vendeur ? '<button type="button" class="btn or large" data-act="publier">Publier ces changements</button>' : '<p class="aide">Entre ton mot de passe pour publier ces changements.</p>'}</div>` : ''}</div>`;
+}
+function blocVendeurFiche(r) {
+  const R = reglages();
+  const p = R.prix && R.prix[r.id];
+  return `<div class="v-bloc" style="margin-top:22px"><h3>Vendeur</h3>
+    <label class="champ"><span>Ton prix pour tes clients (vide = prix sur demande)</span><input id="v-prix" type="number" inputmode="decimal" min="0" step="1" value="${p || ''}" placeholder="Ex. 120" data-id="${esc(r.id)}"></label>
+    <div class="bascule" style="margin-top:6px"><span>Visible par mes clients</span><button type="button" class="interrupteur" role="switch" aria-checked="${!(R.cacher || []).includes(r.id)}" data-act="vis-ref" data-v="${esc(r.id)}"></button></div>
+    <p class="aide">Ces changements partent en ligne quand tu publies, depuis l'espace vendeur.</p></div>`;
+}
+function ouvrirVendeur(erreur) {
+  const corps = [];
+  if (!S.vendeur) corps.push(blocConnexion(erreur));
+  if (S.vendeur || S.brouillon || (import_ && import_.etape)) corps.push(blocImport());
+  if (S.publication) corps.push(blocPublication());
+  if (S.vendeur || S.brouillon) corps.push(blocVisibilite());
+  if (S.vendeur) corps.push(`<p class="aide" style="margin-top:14px">Connecté à ${esc(S.vendeur.proprio)}/${esc(S.vendeur.depot)}. <button type="button" class="lien" data-act="deconnexion">Se déconnecter</button></p>`);
+  corps.push('<input type="file" id="pdf" accept="application/pdf,.pdf" hidden>');
+  ouvrirFeuille(S.vendeur ? 'Espace vendeur' : 'Vendeur', corps.join(''), 'vendeur');
+  const f = $('#f-connexion');
+  if (f) f.addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const mdp = $('#mdp').value;
+    const btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Vérification…';
+    try { await connexion(mdp); ouvrirVendeur(); }
+    catch (er) { ouvrirVendeur(er.message || 'Connexion impossible'); }
+  });
+  const fi = $('#pdf');
+  fi.addEventListener('change', () => { if (fi.files && fi.files[0]) lancerImport(fi.files[0]); });
+}
+async function connexion(mdp) {
+  if (!mdp) throw new Error('Entre ton mot de passe.');
+  if (!window.crypto || !crypto.subtle) throw new Error('Ouvre la page dans Safari (pas dans Snap ou Insta) pour entrer.');
+  let jeton = null, c = null;
+  try { const l = JSON.parse(localStorage.getItem('bp-vendeur') || 'null'); if (l && l.v === 1 && l.ct) { c = l; jeton = await dechiffrer(l, mdp); } } catch (e) { jeton = null; }
+  if (!jeton) {
+    let a = null;
+    try { a = await accesDuSite(); } catch (e) {}
+    if (!a) throw new Error(enLigne() ? "La clé d'accès du site est introuvable. Entre une fois dans l'espace vendeur du site, puis reviens." : "Ici c'est un aperçu : l'entrée vendeur marche une fois la page sur ton site.");
+    try { jeton = await dechiffrer(a, mdp); c = a; } catch (e) { throw new Error('Mot de passe incorrect.'); }
+  }
+  S.vendeur = { jeton, proprio: c.proprio, depot: c.depot };
+  try { const rep = await gh(`/repos/${c.proprio}/${c.depot}`); if (rep.permissions && rep.permissions.push === false) throw new Error('nopush'); S.vendeur.branche = rep.default_branch || 'main'; }
+  catch (e) { S.vendeur = null; throw new Error(e.status === 401 ? 'Ta clé GitHub a expiré : refais-la depuis l’espace vendeur du site.' : 'GitHub ne répond pas. Vérifie ta connexion et réessaie.'); }
+  if (S.brouillon) dessinerTout();
+}
+
+/* lecture du PDF, dans le téléphone */
+async function lancerImport(fichier) {
+  import_ = { etape: 'lecture', txt: 'Ouverture du PDF', pc: 0, stop: false, toutesPhotos: false };
+  ouvrirVendeur();
+  try {
+    const [pdfjs, imp] = await Promise.all([import('./pdfjs/pdf.min.js'), import('./importer.js')]);
+    pdfjs.GlobalWorkerOptions.workerSrc = new URL('./pdfjs/pdf.worker.min.js', location.href).href;
+    const buf = new Uint8Array(await fichier.arrayBuffer());
+    const res = await imp.lireListing(pdfjs, buf, {
+      annule: () => import_.stop,
+      progres: (p, n, nb) => { import_.pc = Math.round(p / n * 100); import_.txt = `Page ${p} sur ${n}${nb ? `, ${nb} flacons trouvés` : ''}`; const t = $('#i-txt'), b = $('#i-barre'); if (t) t.textContent = import_.txt; if (b) b.style.width = import_.pc + '%'; },
+    });
+    if (!res.refs.length) throw new Error("Aucun flacon trouvé dans ce PDF. C'est bien le listing du fournisseur ?");
+    S.brouillon = construireBrouillon(res, fichier.name);
+    import_ = { etape: 'pret', toutesPhotos: false };
+    S.rayon = 'tout'; S.maison = ''; S.filtres.clear(); S.q = ''; $('#q').value = '';
+    dessinerTout(); bandeauApercu(); ouvrirVendeur();
+  } catch (e) {
+    if (e && e.message === 'annulé') { import_ = null; ouvrirVendeur(); return; }
+    console.error(e);
+    import_ = { etape: 'erreur', txt: (e && e.message) || 'Erreur inconnue' };
+    ouvrirVendeur();
+  }
+}
+function construireBrouillon(res, nomFichier) {
+  const avant = S.pub && S.pub.refs && S.pub.refs.length ? S.pub : null;
+  const anciens = new Map((avant ? avant.refs : []).map(r => [r.id, r]));
+  const R = JSON.parse(JSON.stringify((avant && avant.reglages) || { masquer: { sections: [], maisons: [] }, cacher: [], prix: {} }));
+  const mois = (String(nomFichier).toLowerCase().normalize('NFC').match(new RegExp(MOIS.join('|'))) || [])[0] || '';
+  const refs = res.refs.map(r => {
+    const x = Object.assign({}, r);
+    delete x.achat;   /* le prix fournisseur n'est jamais publié */
+    if (x.photo instanceof Blob) { x.__blob = x.photo; x.__url = URL.createObjectURL(x.photo); }
+    x.photo = 'img/' + x.id + '.jpg';
+    if (!x.__blob) x.photo = '';
+    if (avant && !anciens.has(x.id)) x.arrive = true;
+    return x;
+  });
+  const ids = new Set(refs.map(r => r.id));
+  const d = { v: 1, maj: res.maj, mois, fichier: nomFichier, pages: res.pages, importeLe: Date.now(), refs, reglages: R };
+  d.__avert = res.avertissements;
+  d.__resume = {
+    total: refs.length, visibles: refs.filter(r => estVisible(r, R)).length,
+    nouveaux: refs.filter(r => r.nouveau).length, ruptures: refs.filter(r => r.rupture).length,
+    photosManquantes: refs.filter(r => !r.__blob).length,
+    avant: avant ? avant.refs.length : null,
+    ajoutes: refs.filter(r => r.arrive).length,
+    retires: avant ? avant.refs.filter(r => !ids.has(r.id)).length : 0,
+  };
+  return d;
+}
+function bandeauApercu() {
+  const b = $('#apercu-bandeau');
+  b.innerHTML = S.brouillon ? `<div class="bandeau-apercu"><span>Aperçu du nouveau listing, pas encore en ligne</span><button type="button" data-act="ouvrir-vendeur">${S.vendeur ? 'Publier' : 'Vendeur'}</button></div>` : '';
+}
+
+/* publication sur GitHub : photos nouvelles + data.json, en un seul enregistrement */
+const versB64 = blob => new Promise((ok, ko) => { const fr = new FileReader(); fr.onload = () => ok(String(fr.result).split(',')[1]); fr.onerror = ko; fr.readAsDataURL(blob); });
+function propre(d) {
+  const sortie = JSON.parse(JSON.stringify(d, (k, v) => (k.startsWith('__') ? undefined : v)));
+  for (const r of sortie.refs) { delete r.achat; delete r.page; }
+  return sortie;
+}
+async function publier() {
+  if (!S.vendeur) return;
+  const V = S.vendeur, base = `/repos/${V.proprio}/${V.depot}`;
+  const d = donnees();
+  const brouillon = !!S.brouillon;
+  const anciens = new Map((S.pub && S.pub !== d ? S.pub.refs : []).map(r => [r.id, r]));
+  const enLigneDeja = r => (S.pub === d ? !!r.photo : !!(anciens.get(r.id) && anciens.get(r.id).photo));
+  const nouvelles = d.refs.filter(r => r.__blob && !enLigneDeja(r));
+  /* GitHub limite les envois à quelques centaines par heure : le reste partira à la publication suivante */
+  const aEnvoyer = nouvelles.slice(0, MAX_PHOTOS);
+  const envoyees = new Set();
+  const ids = new Set(d.refs.map(r => r.id));
+  const aRetirer = brouillon && S.pub ? S.pub.refs.filter(r => r.photo && !ids.has(r.id)).map(r => dossier() + r.photo) : [];
+  S.publication = { titre: 'Publication…', txt: 'Connexion à GitHub', pc: 0 };
+  ouvrirVendeur();
+  const maj = (txt, pc) => { S.publication.txt = txt; if (pc != null) S.publication.pc = pc; const t = $('#p-txt'), b = $('#p-barre'); if (t) t.textContent = txt; if (b && pc != null) b.style.width = pc + '%'; };
+  try {
+    const entrees = [];
+    /* les photos : quelques-unes à la fois, sans brusquer GitHub */
+    let fait = 0;
+    const lent = aEnvoyer.length > 70 && !window.__sansPause;
+    const file = aEnvoyer.slice();
+    const ouvrier = async () => {
+      while (file.length) {
+        const r = file.shift();
+        const t0 = Date.now();
+        const b = await gh(`${base}/git/blobs`, { method: 'POST', body: { content: await versB64(r.__blob), encoding: 'base64' }, attente: s => maj(`GitHub demande une pause de ${s} s, ça reprend tout seul…`) });
+        entrees.push({ path: dossier() + 'img/' + r.id + '.jpg', mode: '100644', type: 'blob', sha: b.sha });
+        envoyees.add(r.id);
+        fait++;
+        maj(`Photos envoyées : ${fait} sur ${aEnvoyer.length}`, Math.round(fait / Math.max(1, aEnvoyer.length) * 90));
+        if (lent) { const reste = 900 - (Date.now() - t0); if (reste > 0) await new Promise(ok => setTimeout(ok, reste)); }
+      }
+    };
+    await Promise.all(Array.from({ length: lent ? 1 : 3 }, ouvrier));
+    for (const r of d.refs) if (r.__blob || !r.photo) r.photo = (envoyees.has(r.id) || enLigneDeja(r)) && (r.__blob || r.photo) ? 'img/' + r.id + '.jpg' : '';
+    const sortie = propre(d);
+    sortie.publieLe = Date.now();
+    entrees.push({ path: dossier() + 'data.json', mode: '100644', type: 'blob', content: JSON.stringify(sortie) });
+    for (const p of aRetirer) entrees.push({ path: p, mode: '100644', type: 'blob', sha: null });
+    maj('Enregistrement…', 94);
+    const message = brouillon ? `Listing : ${sortie.refs.length} flacons${sortie.maj ? ', mis à jour le ' + sortie.maj : ''}` : aEnvoyer.length ? `Listing : ${aEnvoyer.length} photos de flacons` : 'Listing : réglages de la vitrine';
+    for (let essai = 0; ; essai++) {
+      const ref = await gh(`${base}/git/ref/heads/${V.branche}`);
+      const parent = await gh(`${base}/git/commits/${ref.object.sha}`);
+      const arbre = await gh(`${base}/git/trees`, { method: 'POST', body: { base_tree: parent.tree.sha, tree: entrees } });
+      const commit = await gh(`${base}/git/commits`, { method: 'POST', body: { message, tree: arbre.sha, parents: [ref.object.sha] } });
+      try { await gh(`${base}/git/refs/heads/${V.branche}`, { method: 'PATCH', body: { sha: commit.sha } }); break; }
+      catch (e) { if (e.status === 422 && essai < 3) continue; throw e; }   /* le site a bougé entre-temps : on recommence */
+    }
+    /* la page passe sur les données publiées ; les photos pas encore envoyées restent en mémoire */
+    for (const r of d.refs) if (r.photo) delete r.__blob;
+    S.pub = d; S.brouillon = null; S.modifie = false; import_ = null;
+    delete d.__resume; delete d.__avert;
+    const reste = d.refs.filter(r => r.__blob).length;
+    S.publication = { titre: 'Publié', txt: 'Tes clients voient le nouveau listing dans 1 à 2 minutes, le temps que GitHub mette le site à jour.' + (reste ? ` ${reste} photos restent à envoyer : GitHub limite les envois par heure. Dans une heure, touche « Envoyer les photos restantes » (ou réimporte le même PDF).` : ''), pc: 100, fini: true };
+    bandeauApercu(); dessinerTout(); ouvrirVendeur();
+  } catch (e) {
+    console.error(e);
+    S.publication = { titre: 'La publication a échoué', txt: e.status === 401 ? 'Ta clé GitHub a expiré : refais-la depuis l’espace vendeur du site.' : `Rien n'a été changé en ligne. Réessaie dans un moment. (${e.message})`, fini: true };
+    ouvrirVendeur();
+  }
+}
+
+const actionsVendeur = {
+  'ouvrir-vendeur': () => ouvrirVendeur(),
+  'choisir-pdf': () => { const f = $('#pdf'); if (f) { f.value = ''; f.click(); } },
+  'annuler-import': () => { if (import_) import_.stop = true; },
+  'abandonner': () => { if (S.brouillon) for (const r of S.brouillon.refs) if (r.__url) URL.revokeObjectURL(r.__url); S.brouillon = null; import_ = null; bandeauApercu(); dessinerTout(); ouvrirVendeur(); },
+  'publier': () => publier(),
+  'fin-publication': () => { S.publication = null; fermerFeuille(); },
+  'deconnexion': () => { S.vendeur = null; ouvrirVendeur(); bandeauApercu(); },
+  'vis-section': b => basculerListe('sections', b),
+  'vis-maison': b => basculerListe('maisons', b),
+  'vis-ref': b => {
+    const R = reglages(); R.cacher = R.cacher || [];
+    const id = b.dataset.v, i = R.cacher.indexOf(id);
+    if (i >= 0) R.cacher.splice(i, 1); else R.cacher.push(id);
+    b.setAttribute('aria-checked', i >= 0); S.modifie = true; dessinerTout();
+  },
+};
+function basculerListe(cle, b) {
+  const R = reglages(); R.masquer[cle] = R.masquer[cle] || [];
+  const v = b.dataset.v, l = R.masquer[cle], i = l.indexOf(v);
+  if (i >= 0) l.splice(i, 1); else l.push(v);
+  b.setAttribute('aria-checked', i >= 0);
+  S.modifie = true;
+  if (S.rayon !== 'tout' && !visibles().some(r => r.section === S.rayon)) S.rayon = 'tout';
+  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande();
+  if (S.brouillon) S.brouillon.__resume.visibles = visibles().length;
+}
+document.addEventListener('change', e => {
+  if (e.target.id === 'v-prix') {
+    const R = reglages(); R.prix = R.prix || {};
+    const v = Number(String(e.target.value).replace(',', '.'));
+    if (v > 0) R.prix[e.target.dataset.id] = Math.round(v * 100) / 100; else delete R.prix[e.target.dataset.id];
+    S.modifie = true; dessinerVitrine(); dessinerEtagere(); toast('Prix noté. Publie depuis l’espace vendeur.');
+  }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'q-maison-v') {
+    const q = norm(e.target.value);
+    document.querySelectorAll('#liste-maisons-v .bascule').forEach(x => { x.hidden = q && !norm(x.dataset.maison).includes(q); });
+  }
+});
+addEventListener('beforeunload', e => { if (S.brouillon || (S.modifie && S.vendeur)) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- démarrage ---------- */
+(async function demarrer() {
+  try {
+    const r = await fetch('data.json?v=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error(r.status);
+    S.pub = await r.json();
+    S.pub.reglages = S.pub.reglages || { masquer: { sections: [], maisons: [] }, cacher: [], prix: {} };
+    S.demande = S.demande.filter(l => l && S.pub.refs.some(x => x.id === l.id && !x.rupture));
+    dessinerTout();
+    if (location.hash) ancre();
+  } catch (e) {
+    S.pub = { v: 1, refs: [], reglages: { masquer: { sections: [], maisons: [] }, cacher: [], prix: {} } };
+    $('#vitrine').innerHTML = `<div class="vide"><h2>Le listing n'a pas pu s'afficher.</h2><p>Vérifie ta connexion, puis recharge la page.</p><button type="button" class="btn clair" onclick="location.reload()">Recharger</button></div>`;
+    if (location.hash === '#vendeur') ouvrirVendeur();
+  }
+})();
+</script>
+</body>
+</html>
