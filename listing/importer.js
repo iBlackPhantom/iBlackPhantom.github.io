@@ -193,6 +193,7 @@ export async function lireListing(pdfjs, octets, opts = {}) {
   for (let p = 1; p <= n; p++) {
     if (opts.annule && opts.annule()) throw new Error('annulé');
     const page = await doc.getPage(p);
+    const debutPage = refs.length;
     const vp1 = page.getViewport({ scale: 1 });
     const W = vp1.width, H = vp1.height;
     const tc = await page.getTextContent();
@@ -370,7 +371,7 @@ export async function lireListing(pdfjs, octets, opts = {}) {
       if (!b.cadre) avertissements.push(`Page ${p} : pas de photo pour « ${libelle} »`);
       refs.push(ref);
     }
-    progres(p, n, refs.length);
+    progres(p, n, refs.length, refs.slice(debutPage));
   }
   try { await tache.destroy(); } catch (e) {}
   /* une condition qui nomme une maison va à cette maison (dans la même section si possible) */

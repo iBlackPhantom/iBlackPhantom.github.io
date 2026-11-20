@@ -5,26 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#101011">
 <meta name="color-scheme" content="dark">
 <title>Le listing · BlackPhantom</title>
 <link rel="icon" href="icone.png">
 <link rel="apple-touch-icon" href="icone.png">
 <style>
 :root{
-  --nuit:#000;
-  --ecrin:#F4F5F7;
+  /* identité du site BlackPhantom : noir chaud, ivoire, champagne */
+  --nuit:#101011;
+  --ecrin:#F0ECE3;
   --carte:#1C1C1E;
   --carte2:#2C2C2E;
-  --texte:#F5F5F7;
-  --sous:#A1A1A6;
-  --trait:#ffffff1a;
-  --or:#E3B96F;
+  --texte:#F0ECE3;
+  --sous:#A5A29C;
+  --trait:#ffffff14;
+  --or:#C9B38B;
+  --encre:#181716;
   --vert:#8CC3A3;
   --rupture:#DD9084;
   --ui:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,"Helvetica Neue",sans-serif;
   --titre:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,"Helvetica Neue",sans-serif;
-  --serif:ui-serif,"New York","Iowan Old Style",Georgia,serif;
+  --serif:Georgia,"Times New Roman",serif;
   --haut:env(safe-area-inset-top,0px);
   --bas:env(safe-area-inset-bottom,0px);
 }
@@ -46,14 +48,15 @@ img{display:block}
 .tete .esp{flex:1}
 .bouton-demande{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:0;background:var(--carte)}
 .bouton-demande svg{width:20px;height:20px}
-.bouton-demande b{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--or);color:#000;font:600 11px/18px var(--ui);text-align:center}
+.bouton-demande b{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--or);color:var(--encre);font:600 11px/18px var(--ui);text-align:center}
 
 .sur-cmd{color:var(--or);font-size:15px;font-weight:500;text-decoration:none;padding:8px 4px;white-space:nowrap}
 @media (max-width:350px){.sceau span{display:none}}
 .ouverture{padding:10px 20px 4px}
 .ouv-haut{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px}
-.ouverture h1{margin:0;font:700 clamp(34px,9.6vw,52px)/1.02 var(--titre);letter-spacing:-.025em;text-wrap:balance}
+.ouverture h1{margin:0;font:500 clamp(34px,9.6vw,52px)/1.04 var(--titre);letter-spacing:-.02em;text-wrap:balance}
 .ouverture p{margin:12px 0 0;max-width:34em;color:var(--sous);font-size:16px}
+.ouverture h1 em{font:italic 400 1em/1.04 var(--serif);letter-spacing:-.01em;color:var(--or)}
 /* l'éventail : trois nouveautés posées en vitrine, à côté du titre */
 .eventail{position:relative;width:136px;height:132px;margin-right:-8px}
 .eventail:empty{display:none}
@@ -67,31 +70,31 @@ img{display:block}
 @media (min-width:640px){.eventail{width:240px;height:210px}.ev{width:120px;top:30px}.ev2{left:60px}.ev3{left:120px}}
 
 /* barre collante : recherche + rayons */
-.barre{position:sticky;top:0;z-index:20;padding:calc(8px + var(--haut)) 0 0;margin-top:14px;background:rgba(0,0,0,.78);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid transparent;transition:border-color .2s}
+.barre{position:sticky;top:0;z-index:20;padding:calc(8px + var(--haut)) 0 0;margin-top:14px;background:rgba(16,16,17,.82);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid transparent;transition:border-color .2s}
 .barre.colle{border-bottom-color:var(--trait)}
 .cherche{position:relative;margin:0 20px}
 .cherche svg{position:absolute;left:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--sous);pointer-events:none}
 .cherche input{width:100%;height:46px;padding:0 44px 0 42px;border:0;border-radius:14px;background:var(--carte);font-size:17px;outline:none;-webkit-appearance:none;appearance:none}
 .cherche input::placeholder{color:#8a8a90}
 .cherche input::-webkit-search-cancel-button,.cherche input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
-.cherche input:focus{box-shadow:0 0 0 2px #E3B96F66}
+.cherche input:focus{box-shadow:0 0 0 2px #C9B38B66}
 .cherche .vider{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:#3a3a3c;color:var(--texte);font-size:15px;line-height:1}
 .rayons{display:flex;gap:8px;overflow-x:auto;padding:12px 20px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 /* bords en fondu : on devine qu'il y a la suite */
 .rayons,.rail{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent)}
 .rayons::-webkit-scrollbar{display:none}
 .puce{flex:none;height:34px;padding:0 14px;border-radius:17px;border:1px solid var(--trait);background:transparent;font-size:14px;font-weight:500;color:var(--texte);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
-.puce[aria-pressed="true"]{background:var(--texte);color:#000;border-color:var(--texte)}
+.puce[aria-pressed="true"]{background:var(--texte);color:var(--encre);border-color:var(--texte)}
 .puce .n{color:var(--sous);font-weight:400}
 .puce[aria-pressed="true"] .n{color:#555}
-.puce.maison-choisie{background:var(--or);color:#000;border-color:var(--or)}
+.puce.maison-choisie{background:var(--or);color:var(--encre);border-color:var(--or)}
 .puce .x{font-size:16px;line-height:1;margin-left:2px}
 .sep-puces{flex:none;width:1px;background:var(--trait);margin:6px 2px}
 
 /* ---------- nouveautés ---------- */
 .etagere{padding:22px 0 6px}
 .etagere h2,.groupe h2,.groupe h3{margin:0}
-.etagere h2{padding:0 20px;font:700 24px/1.15 var(--titre);letter-spacing:-.015em}
+.etagere h2{padding:0 20px;font:400 28px/1.15 var(--serif)}
 .etagere .aide{padding:0 20px;margin:4px 0 0;color:var(--sous);font-size:14px}
 .rail{display:flex;gap:12px;overflow-x:auto;padding:14px 20px 6px;scroll-padding-inline:20px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .rail::-webkit-scrollbar{display:none}
@@ -104,11 +107,11 @@ img{display:block}
 .vitrine{padding:6px 20px 120px}
 .compte{margin:14px 0 2px;color:var(--sous);font-size:14px}
 .groupe{padding-top:26px}
-.groupe h2{font:700 30px/1.1 var(--titre);letter-spacing:-.02em;padding:14px 0 2px}
-.groupe h2 span{font:400 16px var(--ui);letter-spacing:0;color:var(--sous)}
+.groupe h2{font:400 32px/1.1 var(--serif);padding:14px 0 2px}
+.groupe h2 span{font:400 16px var(--ui);color:var(--sous)}
 .bloc{position:relative;padding-top:14px}
 /* le nom de la maison reste en haut pendant qu'on fait défiler ses flacons */
-.t-maison{position:sticky;top:var(--barre-h,112px);z-index:6;display:flex;align-items:baseline;gap:8px;margin:0 -20px;padding:12px 20px 14px;font:600 20px/1.2 var(--serif);letter-spacing:.005em;background:linear-gradient(#000 0,#000 72%,rgba(0,0,0,0))}
+.t-maison{position:sticky;top:var(--barre-h,112px);z-index:6;display:flex;align-items:baseline;gap:8px;margin:0 -20px;padding:12px 20px 14px;font:600 20px/1.2 var(--serif);letter-spacing:.005em;background:linear-gradient(#101011 0,#101011 72%,rgba(16,16,17,0))}
 .t-maison span{font:400 14px var(--ui);color:var(--sous)}
 .bloc .cond{margin:-6px 0 2px;color:var(--or);font-size:14px}
 .bloc .grille{margin-top:4px}
@@ -118,7 +121,7 @@ img{display:block}
 
 .fiche-mini{position:relative;min-width:0}
 .ouvrir{display:block;width:100%;padding:0;border:0;background:none;text-align:left;color:inherit}
-.ecrin{position:relative;aspect-ratio:1/1;border-radius:18px;background:radial-gradient(130% 95% at 50% 30%,#fff 0%,var(--ecrin) 50%,#E1E3E8 100%);overflow:hidden;isolation:isolate}
+.ecrin{position:relative;aspect-ratio:1/1;border-radius:18px;background:radial-gradient(130% 95% at 50% 30%,#fff 0%,#F5F2EC 50%,#E3DED4 100%);overflow:hidden;isolation:isolate}
 /* vitrine éclairée : lumière douce au centre, ombre sous le flacon */
 .ecrin::before{content:"";position:absolute;left:20%;right:20%;bottom:5%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.2),rgba(0,0,0,0))}
 .ecrin img{position:absolute;inset:9%;width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply;opacity:0;transition:opacity .45s ease}
@@ -128,14 +131,83 @@ img{display:block}
 .squelette .trait.l2{width:55%;margin-top:8px}
 @keyframes luit{50%{opacity:.55}}
 mark{background:none;color:var(--or)}
+/* étiquettes sous le nom : la photo reste propre */
+.tags{display:flex;flex-wrap:wrap;gap:2px 10px;margin-top:5px;font-size:12.5px;color:var(--sous)}
+.tags .vert{color:var(--vert)}
+/* date de mise à jour dans l'ouverture */
+.maj-pill{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;padding:6px 12px 6px 10px;border-radius:16px;background:var(--carte);color:var(--texte);font-size:13.5px}
+.maj-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:#34c759;box-shadow:0 0 0 3px #34c75933}
+.maj-pill:empty{display:none}
+/* barre plus fine une fois collée en haut */
+.cherche input{transition:height .2s}
+.barre.colle .cherche input{height:40px}
+.barre.colle .rayons{padding-top:9px;padding-bottom:9px}
+/* choix (tri, format, contenance) : la liste native de l'iPhone */
+.puce.choix{position:relative;padding-right:30px}
+.puce.choix::after{content:"";position:absolute;right:13px;top:50%;width:6px;height:6px;margin-top:-5px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg)}
+.puce.choix select{position:absolute;inset:0;width:100%;height:100%;opacity:0;font-size:16px;-webkit-appearance:none;appearance:none}
+.puce.choix.actif{background:var(--texte);color:var(--encre);border-color:var(--texte)}
+.puce.masques{border-color:#5a5a5e}
+/* en-tête de rayon avec trois flacons */
+.groupe.rayon-t{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.mini-pile{display:flex;flex:none;padding-bottom:4px}
+.mini-pile .ecrin{width:38px;margin-left:-12px;border-radius:11px;box-shadow:0 0 0 2px var(--nuit)}
+.mini-pile .ecrin:first-child{margin-left:0}
+.mini-pile .ecrin::before{display:none}
+/* suggestions de recherche */
+.suggestions{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;padding:14px 14px 6px;border-radius:16px;background:#1c1c1ef7;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 16px 40px #000c}
+.suggestions h4{margin:0 0 8px;color:var(--sous);font:500 13px var(--ui)}
+.suggestions .lot{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.suggestions .puce{height:32px;font-size:14px}
+/* retour en haut */
+.haut{position:fixed;right:16px;bottom:calc(16px + var(--bas));z-index:29;width:44px;height:44px;border-radius:50%;border:0;background:rgba(44,44,46,.92);color:var(--texte);display:grid;place-items:center;box-shadow:0 6px 20px #0008;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s,bottom .3s}
+.haut.vu{opacity:1;transform:none;pointer-events:auto}
+.haut.leve{bottom:calc(88px + var(--bas))}
+.haut svg{width:18px;height:18px}
+/* rangée « vus récemment » et « aussi chez » : petites cartes */
+.rail.petit .fiche-mini{width:min(40vw,170px)}
+.rail.petit .infos .n{font-size:15px}
+.aussi{margin:22px -20px 0}
+.aussi h4{margin:0 20px;font:600 18px var(--serif)}
+.aussi .rail{padding-bottom:0}
+/* actions rapides du vendeur sur les cartes */
+.v-rapide{position:absolute;left:8px;bottom:8px;z-index:2;display:flex;gap:6px}
+.v-rapide button{width:32px;height:32px;border-radius:50%;border:0;background:#000000c0;color:#fff;display:grid;place-items:center}
+.v-rapide button svg{width:16px;height:16px}
+.v-rapide button[aria-pressed="true"]{background:var(--or);color:var(--encre)}
+.v-rapide button.oeil[aria-pressed="true"]{background:#fff;color:#000}
+/* fiche plein cadre, poignée en haut */
+.feuille::before{content:"";position:absolute;top:7px;left:50%;z-index:7;width:38px;height:5px;margin-left:-19px;border-radius:3px;background:#ffffff4d}
+.feuille.t-fiche .poignee{position:absolute;top:0;right:0;z-index:6;padding:12px}
+.feuille.t-fiche .poignee .fermer{background:#000000a0;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.feuille.t-fiche .corps{padding-top:0}
+.f-haut{position:relative;margin:0 -20px}
+.f-haut .f-photo{border-radius:24px 24px 0 0;max-height:none;aspect-ratio:1/.92;margin:0}
+.f-haut .f-photo img{inset:9% 10% 8%;width:80%;height:83%}
+.f-nav{position:absolute;top:50%;z-index:3;width:38px;height:38px;margin-top:-19px;border-radius:50%;border:0;background:#000000a6;color:#fff;display:grid;place-items:center}
+.f-nav svg{width:16px;height:16px}
+.f-nav.g{left:12px}.f-nav.d{right:12px}
+.f-compte{position:absolute;left:50%;bottom:12px;z-index:3;transform:translateX(-50%);padding:4px 10px;border-radius:12px;background:#000000a6;color:#fff;font-size:12.5px}
+/* demande : aperçu en bulle, petit mot */
+.bulle-zone{margin-top:18px}
+.bulle{margin:8px 0 0 auto;max-width:92%;padding:12px 14px;border-radius:20px 20px 6px 20px;background:#2a2824;box-shadow:inset 0 0 0 1px #C9B38B40;color:var(--texte);font-size:14.5px;line-height:1.4;white-space:pre-wrap}
+.mot{display:block;margin-top:16px}
+.mot span{display:block;color:var(--sous);font-size:13px;margin-bottom:6px}
+.mot textarea{width:100%;min-height:64px;padding:10px 12px;border-radius:12px;border:1px solid var(--trait);background:var(--nuit);color:var(--texte);font:16px/1.4 var(--ui);resize:vertical;outline:none}
+.mot textarea:focus{border-color:var(--or)}
+/* bulle d'information avec « Annuler » */
+.toast.action{display:flex;align-items:center;gap:14px;padding:8px 8px 8px 16px;left:56px;right:56px}
+.toast.action button{flex:none}
+.toast.action.vu{pointer-events:auto}
+.toast button{border:0;background:#000;color:#fff;border-radius:12px;height:32px;padding:0 12px;font-size:13.5px;font-weight:600}
 .ecrin .sans-photo{position:absolute;inset:0;display:grid;place-items:center;color:#8a8a90;font:500 13px var(--ui)}
 .fiche-mini.epuise .ecrin img.vu{opacity:.45;filter:grayscale(.6)}
 .marques{position:absolute;left:8px;top:8px;right:8px;display:flex;flex-wrap:wrap;gap:4px;z-index:1}
 .marque{height:22px;padding:0 8px;border-radius:11px;font:600 11.5px/22px var(--ui);letter-spacing:.01em;background:#000000d9;color:#fff}
-.marque.nouveau{background:var(--or);color:#000}
+.marque.nouveau{background:var(--or);color:var(--encre)}
 .marque.testeur{background:#24402f;color:#cfeedd}
 .marque.rupture{background:#5a2620;color:#ffd9d2}
-.marque.coeur{background:#000000d9;color:var(--or);box-shadow:inset 0 0 0 1px #E3B96F99}
+.marque.coeur{background:#000000d9;color:var(--or);box-shadow:inset 0 0 0 1px #C9B38B99}
 .marque.masque{background:#3a3a3c;color:#fff}
 .fiche-mini.masque .ecrin{opacity:.38}
 .fiche-mini.masque .infos{opacity:.55}
@@ -147,7 +219,7 @@ mark{background:none;color:var(--or)}
 .ecrin-box{position:relative}
 .ajout{position:absolute;right:8px;bottom:8px;z-index:2;width:36px;height:36px;border-radius:50%;border:0;background:#000;color:#fff;display:grid;place-items:center;box-shadow:0 2px 10px #0003;transition:transform .15s,background .15s}
 .ajout svg{width:18px;height:18px}
-.ajout[aria-pressed="true"]{background:var(--or);color:#000}
+.ajout[aria-pressed="true"]{background:var(--or);color:var(--encre)}
 .ajout:active{transform:scale(.9)}
 .ajout.pop{animation:pop .34s cubic-bezier(.3,1.6,.5,1)}
 @keyframes pop{40%{transform:scale(1.3)}}
@@ -155,17 +227,17 @@ mark{background:none;color:var(--or)}
 @keyframes bump{35%{transform:translateY(-4px) scale(1.1)}}
 .fin-liste{height:1px}
 .vide{padding:40px 0;text-align:left}
-.vide h2{margin:0 0 8px;font:700 22px var(--titre)}
+.vide h2{margin:0 0 8px;font:400 26px var(--serif)}
 .vide p{margin:0 0 16px;color:var(--sous)}
 
 /* ---------- pied ---------- */
 .pied{padding:10px 20px calc(110px + var(--bas));color:var(--sous);font-size:13px;max-width:1180px;margin:0 auto}
 .etapes{margin:0 0 26px;padding:20px;border-radius:20px;background:var(--carte)}
-.etapes h2{margin:0 0 12px;color:var(--texte);font:700 20px var(--titre)}
+.etapes h2{margin:0 0 12px;color:var(--texte);font:400 24px var(--serif)}
 .etapes ol{margin:0;padding:0;list-style:none;counter-reset:e}
 .etapes li{counter-increment:e;position:relative;padding:0 0 12px 36px;color:var(--sous);font-size:15px}
 .etapes li b{display:block;color:var(--texte);font-weight:600}
-.etapes li::before{content:counter(e);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--texte);color:#000;font:600 13px/24px var(--ui);text-align:center}
+.etapes li::before{content:counter(e);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--texte);color:var(--encre);font:600 13px/24px var(--ui);text-align:center}
 .pied .lignes{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
 .pied a{color:var(--sous)}
 .lien-vendeur{border:0;background:none;color:#5d5d63;font-size:12px;padding:8px 0}
@@ -182,9 +254,9 @@ mark{background:none;color:var(--or)}
 .vig .ecrin{border-radius:11px}
 .vig .ecrin::before{display:none}
 .vignettes.bump .vig:last-child{animation:pop .34s cubic-bezier(.3,1.6,.5,1)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:24px;border:0;background:var(--carte2);color:var(--texte);font-size:16px;font-weight:600;text-decoration:none;text-align:center}
-.btn.or{background:var(--or);color:#000}
-.btn.clair{background:var(--texte);color:#000}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:999px;border:1px solid transparent;background:transparent;box-shadow:inset 0 0 0 1px #ffffff2e;color:var(--texte);font-size:16px;font-weight:550;text-decoration:none;text-align:center}
+.btn.or{background:var(--texte);color:var(--encre);box-shadow:none}
+.btn.clair{background:var(--texte);color:var(--encre);box-shadow:none}
 .btn.large{width:100%}
 .btn.petit{min-height:36px;padding:0 14px;font-size:14px;border-radius:18px}
 .btn[disabled]{opacity:.45}
@@ -245,13 +317,13 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 .v-bloc p{margin:0;color:var(--sous);font-size:14px}
 .champ{display:block;margin-top:12px}
 .champ span{display:block;color:var(--sous);font-size:13px;margin-bottom:6px}
-.champ input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--trait);background:#000;font-size:17px;outline:none}
+.champ input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--trait);background:var(--nuit);font-size:17px;outline:none}
 .champ input:focus{border-color:var(--or)}
 .erreur{color:var(--rupture);font-size:14px;margin:8px 0 0}
 .progres{height:6px;border-radius:3px;background:#2c2c2e;overflow:hidden;margin-top:12px}
 .progres i{display:block;height:100%;width:0;background:var(--or);transition:width .2s}
 .chiffres{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
-.chiffres div{padding:10px 12px;border-radius:12px;background:#000}
+.chiffres div{padding:10px 12px;border-radius:12px;background:var(--nuit)}
 .chiffres b{display:block;font:700 22px var(--titre)}
 .chiffres small{color:var(--sous);font-size:12.5px}
 .bascule{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--trait)}
@@ -263,21 +335,34 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 .interrupteur[aria-checked="true"]{background:#34c759}
 .interrupteur[aria-checked="true"]::after{transform:translateX(20px)}
 .avert{margin:8px 0 0;padding-left:18px;color:var(--sous);font-size:13px}
-.bandeau-apercu{position:sticky;top:0;z-index:25;padding:calc(8px + var(--haut)) 16px 8px;background:var(--or);color:#000;font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
+.bandeau-apercu{position:sticky;top:0;z-index:25;padding:calc(8px + var(--haut)) 16px 8px;background:var(--or);color:var(--encre);font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
 .bandeau-apercu span{flex:1}
-.bandeau-apercu button{flex:none;border:0;background:#000;color:#fff;border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
+.bandeau-apercu button{flex:none;border:0;background:var(--encre);color:var(--texte);border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
 .bandeau-apercu button.b-sec{background:transparent;color:#000;box-shadow:inset 0 0 0 1.5px #0008}
 .v-etat{display:flex;gap:12px;align-items:center}
+.tuile{display:block;width:100%;padding:10px 12px;border-radius:12px;border:0;background:var(--nuit);color:var(--texte);text-align:left}
+.tuile b{display:block;font:700 22px var(--titre)}
+.tuile small{color:var(--sous);font-size:12.5px}
+button.tuile small{color:var(--or)}
+.v-coeurs{display:flex;gap:8px;overflow-x:auto;margin-top:8px;padding-bottom:2px;scrollbar-width:none}
+.vig-c{flex:none;width:58px;padding:0;border:0;background:none;border-radius:13px}
+.vig-c .ecrin{border-radius:13px}
+.vig-c .ecrin::before,.vig-v .ecrin::before{display:none}
+.i-vignettes{display:flex;gap:6px;margin-top:12px;min-height:46px;overflow:hidden}
+.i-vignettes .ecrin{flex:none;width:46px;border-radius:10px;animation:entre .35s ease both}
+@keyframes entre{from{opacity:0;transform:translateY(8px) scale(.9)}}
+.vig-v{flex:none;width:36px;margin-right:2px}
+.vig-v .ecrin{border-radius:9px}
 .v-etat .point{flex:none;width:10px;height:10px;border-radius:50%;background:#34c759;box-shadow:0 0 0 4px #34c75933}
-.v-etat.attente .point{background:var(--or);box-shadow:0 0 0 4px #E3B96F33}
+.v-etat.attente .point{background:var(--or);box-shadow:0 0 0 4px #C9B38B33}
 .v-liste{margin:8px 0 0;padding-left:18px;color:var(--sous);font-size:14px;max-height:240px;overflow:auto}
 .v-liste li{padding:2px 0}
 .story-apercu{display:block;width:62%;max-width:260px;margin:14px auto 0;border-radius:16px;box-shadow:0 10px 30px #000}
-.lien-listing{display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#000;color:var(--texte);font-size:14px;word-break:break-all}
+.lien-listing{display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--nuit);color:var(--texte);font-size:14px;word-break:break-all}
 .ou{display:flex;align-items:center;gap:10px;margin:16px 0 4px;color:var(--sous);font-size:13px}
 .ou::before,.ou::after{content:"";flex:1;height:1px;background:var(--trait)}
-.toast{position:fixed;left:50%;top:calc(12px + var(--haut));z-index:60;transform:translate(-50%,-20px);opacity:0;max-width:calc(100% - 40px);padding:12px 16px;border-radius:14px;background:#f5f5f7;color:#000;font-size:14px;font-weight:500;transition:opacity .2s,transform .2s;pointer-events:none}
-.toast.vu{opacity:1;transform:translate(-50%,0)}
+.toast{position:fixed;left:20px;right:20px;margin:0 auto;width:fit-content;top:calc(12px + var(--haut));z-index:60;transform:translateY(-20px);opacity:0;padding:12px 16px;border-radius:14px;background:var(--texte);color:var(--encre);font-size:14px;font-weight:500;transition:opacity .2s,transform .2s;pointer-events:none}
+.toast.vu{opacity:1;transform:none}
 .chargement{padding:60px 20px;color:var(--sous)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -297,6 +382,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 <main>
   <section class="ouverture" aria-labelledby="titre">
     <div class="ouv-haut"><h1 id="titre">Le listing.</h1><div class="eventail" id="eventail"></div></div>
+    <p class="maj-pill" id="maj-pill"></p>
     <p id="sous-titre">Des flacons neufs, que je commande pour toi chez mon fournisseur.</p>
   </section>
 
@@ -306,6 +392,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
       <label class="cache" for="q">Chercher un parfum</label>
       <input id="q" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Sauvage, Dior, vanille, 50 ml…">
       <button type="button" class="vider" id="q-vider" aria-label="Effacer la recherche" hidden>✕</button>
+      <div class="suggestions" id="suggestions" hidden></div>
     </div>
     <nav class="rayons" id="rayons" aria-label="Rayons et filtres"></nav>
   </div>
@@ -320,6 +407,11 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
     <h2 id="t-nouv">Les nouveautés.</h2>
     <p class="aide" id="nouv-aide"></p>
     <div class="rail" id="rail"></div>
+  </section>
+
+  <section class="etagere" id="etagere-vus" aria-labelledby="t-vus" hidden>
+    <h2 id="t-vus">Vus récemment.</h2>
+    <div class="rail petit" id="rail-vus"></div>
   </section>
 
   <section class="vitrine" id="vitrine" aria-live="polite">
@@ -356,6 +448,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
   <div class="corps" id="feuille-corps"></div>
 </section>
 <div class="toast" id="toast" role="status"></div>
+<button type="button" class="haut" id="haut" aria-label="Revenir en haut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></button>
 
 <script type="module">
 /* ============ Le listing BlackPhantom ============
@@ -370,7 +463,9 @@ const CLE_DEMANDE = 'bp-listing-demande';
 const S = {
   pub: null,          /* données publiées */
   brouillon: null,    /* listing importé, pas encore publié (vendeur) */
-  q: '', rayon: 'tout', maison: '', filtres: new Set(),
+  q: '', rayon: 'tout', maison: '', filtres: new Set(), tri: 'listing', format: '', taille: '',
+  ordre: [],          /* l'ordre des flacons à l'écran : pour passer de l'un à l'autre dans la fiche */
+  vus: lire('bp-listing-vus', []), recherches: lire('bp-listing-recherches', []), mot: lire('bp-listing-mot', ''),
   demande: lire(CLE_DEMANDE, []),
   vendeur: null,      /* { jeton, proprio, depot } */
   modifie: false,     /* réglages changés, à publier */
@@ -412,7 +507,31 @@ function marques(r) {
 }
 const texteCherche = r => r.__t || (r.__t = norm([r.maison, r.nom, r.libelle, r.concentration, r.ml ? r.ml + 'ml ' + r.ml + ' ml' : '', r.section, r.testeur ? 'testeur' : '', r.coffret ? 'coffret' : '', r.nouveau ? 'nouveau nouveaute' : ''].join(' ')));
 
-function filtrer() {
+const FORMATS = [['edp', 'Eau de parfum'], ['edt', 'Eau de toilette'], ['parfum', 'Parfum et extrait'], ['cologne', 'Cologne']];
+const TAILLES = [['petit', '50 ml et moins'], ['moyen', 'De 51 à 100 ml'], ['grand', 'Plus de 100 ml']];
+const TRIS = [['listing', 'Ordre du listing'], ['az', 'De A à Z'], ['nouveau', "Nouveautés d'abord"]];
+function formatDe(r) {
+  const c = (r.concentration || '').toLowerCase();
+  if (c.includes('toilette')) return 'edt';
+  if (c === 'eau de parfum') return 'edp';
+  if (c.includes('cologne')) return 'cologne';
+  if (c) return 'parfum';
+  return '';
+}
+const tailleDe = r => (!r.ml ? '' : r.ml <= 50 ? 'petit' : r.ml <= 100 ? 'moyen' : 'grand');
+/* distance d'édition bornée : « sauvge » trouve « sauvage » */
+function proche(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return false;
+  let v = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const w = [i]; let min = i;
+    for (let j = 1; j <= b.length; j++) { w[j] = Math.min(v[j] + 1, w[j - 1] + 1, v[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); if (w[j] < min) min = w[j]; }
+    if (min > max) return false;
+    v = w;
+  }
+  return v[b.length] <= max;
+}
+function filtrer(approx) {
   const mots = norm(S.q).split(' ').filter(Boolean);
   return visibles().filter(r => {
     if (S.rayon !== 'tout' && r.section !== S.rayon) return false;
@@ -421,9 +540,22 @@ function filtrer() {
     if (S.filtres.has('testeur') && !r.testeur) return false;
     if (S.filtres.has('coffret') && !r.coffret) return false;
     if (S.filtres.has('dispo') && r.rupture) return false;
-    if (mots.length) { const t = ' ' + texteCherche(r) + ' '; return mots.every(m => t.includes(' ' + m) || (m.length > 3 && t.includes(m))); }
+    if (S.filtres.has('masques') && estVisible(r)) return false;
+    if (S.format && formatDe(r) !== S.format) return false;
+    if (S.taille && tailleDe(r) !== S.taille) return false;
+    if (mots.length) {
+      const t = ' ' + texteCherche(r) + ' ';
+      const mt = r.__w || (r.__w = texteCherche(r).split(' '));
+      return mots.every(m => t.includes(' ' + m) || (m.length > 3 && t.includes(m)) || (approx && m.length >= 4 && mt.some(w => w.length >= 3 && proche(m, w, m.length >= 7 ? 2 : 1))));
+    }
     return true;
   });
+}
+const ordreSections = () => { const o = []; for (const r of donnees().refs) if (!o.includes(r.section)) o.push(r.section); return o; };
+function trier(liste) {
+  if (S.tri === 'az') { const o = ordreSections(); return liste.slice().sort((a, b) => o.indexOf(a.section) - o.indexOf(b.section) || norm(a.maison).localeCompare(norm(b.maison)) || norm(a.nom).localeCompare(norm(b.nom))); }
+  if (S.tri === 'nouveau') return liste.slice().sort((a, b) => ((b.nouveau || b.arrive) ? 1 : 0) - ((a.nouveau || a.arrive) ? 1 : 0));
+  return liste;
 }
 
 /* ---------- dessin ---------- */
@@ -448,18 +580,32 @@ function apparaitre(racine) {
 }
 document.addEventListener('load', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('vu'); }, true);
 document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('vu'); }, true);
+const IC_COEUR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>';
+const IC_OEIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><path d="M4 4l16 16"/></svg>';
+/* sur la photo : seulement ce qui compte (masqué, rupture, coup de cœur, nouveau) ; le reste sous le nom */
+const SUR_PHOTO = ['masque', 'rupture', 'coeur', 'nouveau'];
+function tagsDe(r) {
+  const t = [];
+  if (r.testeur) t.push(['vert', 'Testeur']);
+  if (r.coffret) t.push(['', 'Coffret']);
+  for (const e of r.etat || []) if (!(r.testeur && /bo[iî]te/i.test(e))) t.push(['', e]);
+  return t;
+}
 function carte(r, o = {}) {
-  const m = marques(r).filter(([c]) => !(o.affiche && c === 'nouveau')).slice(0, 2);
+  const m = marques(r).filter(([c]) => SUR_PHOTO.includes(c) && !(o.affiche && c === 'nouveau')).slice(0, 2);
+  const tags = tagsDe(r);
   const p = prixDe(r);
   const pris = dansDemande(r.id);
-  return `<article class="fiche-mini${o.affiche ? ' affiche' : ''}${r.rupture ? ' epuise' : ''}${modeVendeur() && !estVisible(r) ? ' masque' : ''}" data-id="${esc(r.id)}">
+  const vend = modeVendeur();
+  return `<article class="fiche-mini${o.affiche ? ' affiche' : ''}${r.rupture ? ' epuise' : ''}${vend && !estVisible(r) ? ' masque' : ''}" data-id="${esc(r.id)}" data-o="${o.affiche ? 'a' : ''}${o.sansMaison ? 's' : ''}">
     <div class="ecrin-box">
       <button type="button" class="ouvrir" data-act="fiche" aria-label="${esc(nomComplet(r))}, ${esc(detail(r))}">${photo(r)}</button>
       ${m.length ? `<div class="marques">${m.map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
       ${r.rupture ? '' : `<button type="button" class="ajout" data-act="ajout" aria-pressed="${pris}" aria-label="${pris ? 'Retirer de' : 'Ajouter à'} ma demande : ${esc(r.nom)}">${pris ? IC_OK : IC_PLUS}</button>`}
+      ${vend ? `<div class="v-rapide"><button type="button" data-act="r-coeur" aria-pressed="${estCoeur(r)}" aria-label="Coup de cœur : ${esc(r.nom)}">${IC_COEUR}</button><button type="button" class="oeil" data-act="r-masquer" aria-pressed="${(reglages().cacher || []).includes(r.id)}" aria-label="Masquer pour mes clients : ${esc(r.nom)}">${IC_OEIL}</button></div>` : ''}
     </div>
     <button type="button" class="ouvrir infos" data-act="fiche" tabindex="-1" aria-hidden="true">
-      ${o.sansMaison ? '' : `<span class="m">${surligne(r.maison || r.section)}</span>`}<span class="n">${surligne(r.nom)}</span><span class="d">${esc(detail(r))}</span>${p ? `<span class="p">${eur(p)}</span>` : ''}
+      ${o.sansMaison ? '' : `<span class="m">${surligne(r.maison || r.section)}</span>`}<span class="n">${surligne(r.nom)}</span><span class="d">${esc(detail(r))}</span>${tags.length ? `<span class="tags">${tags.map(([c, x]) => `<span class="${c}">${esc(x)}</span>`).join('')}</span>` : ''}${p ? `<span class="p">${eur(p)}</span>` : ''}
     </button>
   </article>`;
 }
@@ -475,8 +621,15 @@ function dessinerRayons() {
   b.push('<span class="sep-puces" aria-hidden="true"></span>');
   b.push(S.maison ? `<button type="button" class="puce maison-choisie" data-act="maison-x" aria-label="Retirer le filtre ${esc(S.maison)}">${esc(S.maison)} <span class="x" aria-hidden="true">×</span></button>`
     : `<button type="button" class="puce" data-act="maisons">Maisons</button>`);
+  const choix = (cle, titre, options, defaut) => {
+    const actuel = options.find(o => o[0] === S[cle]);
+    const dispo = options.filter(o => cle === 'tri' || vis.some(r => (cle === 'format' ? formatDe(r) : tailleDe(r)) === o[0]));
+    return `<label class="puce choix${S[cle] && S[cle] !== defaut ? ' actif' : ''}"><span>${esc(S[cle] && S[cle] !== defaut && actuel ? actuel[1] : titre)}</span><select data-choix="${cle}" aria-label="${esc(titre)}">${cle === 'tri' ? '' : `<option value="">${cle === 'format' ? 'Tous les formats' : 'Toutes les contenances'}</option>`}${dispo.map(([v, l]) => `<option value="${v}"${S[cle] === v ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></label>`;
+  };
+  b.push(choix('tri', 'Trier', TRIS, 'listing'), choix('format', 'Format', FORMATS, ''), choix('taille', 'Contenance', TAILLES, ''));
   const f = [['nouveau', 'Nouveautés'], ['testeur', 'Testeurs'], ['coffret', 'Coffrets'], ['dispo', 'Disponibles']];
-  for (const [k, t] of f) b.push(`<button type="button" class="puce" data-filtre="${k}" aria-pressed="${S.filtres.has(k)}">${t}</button>`);
+  if (modeVendeur()) f.unshift(['masques', `Masqués ${donnees().refs.filter(r => !estVisible(r)).length}`]);
+  for (const [k, t] of f) b.push(`<button type="button" class="puce${k === 'masques' ? ' masques' : ''}" data-filtre="${k}" aria-pressed="${S.filtres.has(k)}">${esc(t)}</button>`);
   $('#rayons').innerHTML = b.join('');
   hauteurBarre();
 }
@@ -484,6 +637,10 @@ function dessinerRayons() {
 function dessinerEtagere() {
   const sec = $('#etagere');
   const calme = !S.q && !S.maison && !S.filtres.size;
+  const vus = S.vus.map(id => trouver(id)).filter(r => r && (modeVendeur() || estVisible(r)));
+  $('#etagere-vus').hidden = !(calme && vus.length >= 2);
+  $('#rail-vus').innerHTML = calme && vus.length >= 2 ? vus.map(r => carte(r)).join('') : '';
+  apparaitre($('#rail-vus'));
   const cc = coeurs().filter(r => S.rayon === 'tout' || r.section === S.rayon);
   $('#etagere-coeurs').hidden = !(calme && cc.length);
   $('#rail-coeurs').innerHTML = calme ? cc.map(r => carte(r, { affiche: true })).join('') : '';
@@ -497,19 +654,23 @@ function dessinerEtagere() {
 }
 
 function dessinerVitrine() {
-  const liste = filtrer();
+  let liste = filtrer(false), approx = false;
+  if (!liste.length && S.q) { const l2 = filtrer(true); if (l2.length) { liste = l2; approx = true; } }
+  liste = trier(liste);
   const v = $('#vitrine');
   if (obs) { obs.disconnect(); obs = null; }
-  file = [];
+  file = []; S.ordre = [];
   if (!liste.length) {
+    const idees = [...new Set(visibles().map(r => r.maison).filter(Boolean))].filter(m => S.q && norm(m)[0] === norm(S.q)[0]).slice(0, 6);
     v.innerHTML = `<div class="vide"><h2>Aucun flacon trouvé.</h2><p>${S.q ? `Rien pour « ${esc(S.q)} »` : 'Rien avec ces filtres'}${S.rayon !== 'tout' ? ' dans ' + esc(COURT[S.rayon] || S.rayon) : ''}. Essaie un autre mot, ou demande-moi directement : je peux aussi chercher hors listing.</p>
+      ${idees.length ? `<p class="aide" style="margin:-6px 0 10px">Une de ces maisons ?</p><div class="lot" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px">${idees.map(m => `<button type="button" class="puce" data-act="choisir-maison" data-maison="${esc(m)}">${esc(m)}</button>`).join('')}</div>` : ''}
       <button type="button" class="btn clair" data-act="tout-voir">Tout voir</button></div>`;
     return;
   }
-  const groupe = !S.q;
-  const html = [`<p class="compte">${liste.length} flacon${liste.length > 1 ? 's' : ''}${S.q ? ` pour « ${esc(S.q)} »` : ''}</p>`];
-  const bloc = (titre, compte, note, refs, avecMaison) => ({ n: refs.length, html: `<section class="bloc"><h3 class="t-maison">${esc(titre)} <span>${esc(compte)}</span></h3>${note ? `<p class="cond">${esc(note)}</p>` : ''}<div class="grille">${refs.map(r => carte(r, { sansMaison: !avecMaison })).join('')}</div></section>` });
-  if (!groupe) { for (let i = 0; i < liste.length; i += 24) file.push({ n: 24, html: `<div class="grille">${liste.slice(i, i + 24).map(r => carte(r)).join('')}</div>` }); }
+  const groupe = !S.q && S.tri !== 'nouveau';
+  const html = [`<p class="compte">${liste.length} flacon${liste.length > 1 ? 's' : ''}${S.q ? (approx ? ` proches de « ${esc(S.q)} »` : ` pour « ${esc(S.q)} »`) : ''}</p>`];
+  const bloc = (titre, compte, note, refs, avecMaison) => { S.ordre.push(...refs.map(r => r.id)); return { n: refs.length, html: `<section class="bloc"><h3 class="t-maison">${esc(titre)} <span>${esc(compte)}</span></h3>${note ? `<p class="cond">${esc(note)}</p>` : ''}<div class="grille">${refs.map(r => carte(r, { sansMaison: !avecMaison })).join('')}</div></section>` }; };
+  if (!groupe) { S.ordre = liste.map(r => r.id); for (let i = 0; i < liste.length; i += 24) file.push({ n: 24, html: `<div class="grille">${liste.slice(i, i + 24).map(r => carte(r)).join('')}</div>` }); }
   else {
     const notes = {};
     for (const r of liste) if (r.note) notes[r.section + '|' + r.maison] = r.note;
@@ -522,7 +683,10 @@ function dessinerVitrine() {
     }
     for (const [sec, maisons] of sections) {
       const nSec = [...maisons.values()].reduce((a, l) => a + l.length, 0);
-      if (S.rayon === 'tout' && !S.maison) file.push({ n: 0, html: `<div class="groupe"><h2>${esc(sec)} <span>${nSec}</span></h2></div>` });
+      if (S.rayon === 'tout' && !S.maison) {
+        const trois = [...maisons.values()].flat().filter(r => r.photo || r.__url).slice(0, 3);
+        file.push({ n: 0, html: `<div class="groupe rayon-t"><h2>${esc(sec)} <span>${nSec}</span></h2><div class="mini-pile" aria-hidden="true">${trois.map(r => photo(r)).join('')}</div></div>` });
+      }
       /* les maisons d'un ou deux flacons sont regroupées en fin de rayon : plus de cases seules */
       const petite = (mai, refs) => mai && refs.length <= 2 && !notes[sec + '|' + mai];
       const nbPetites = [...maisons].filter(([mai, refs]) => petite(mai, refs)).length;
@@ -552,10 +716,27 @@ function dessinerVitrine() {
   } else while (file.length) encore();
 }
 
+/* redessine les cartes d'un flacon sur place (la page ne saute pas) */
+function majCarte(id) {
+  const r = trouver(id); if (!r) return;
+  document.querySelectorAll(`.fiche-mini[data-id="${CSS.escape(id)}"]`).forEach(el => {
+    const o = el.dataset.o || '';
+    el.outerHTML = carte(r, { affiche: o.includes('a'), sansMaison: o.includes('s') });
+  });
+  apparaitre(document);
+}
+/* garde à l'écran l'élément qu'on regarde, même si le haut de la page change de taille */
+function garderAncre(el, fn) {
+  const avant = el && el.isConnected ? el.getBoundingClientRect().top : null;
+  fn();
+  if (avant != null && el.isConnected) { const d = el.getBoundingClientRect().top - avant; if (Math.abs(d) > 1) scrollBy(0, d); }
+}
 function dessinerTout() {
   const d = donnees();
   const date = majDate(d);
-  $('#titre').textContent = `Le listing de ${d.mois || (date ? MOIS[date.getMonth()] : 'ce mois')}.`;
+  const mois = d.mois || (date ? MOIS[date.getMonth()] : '');
+  /* même forme que l'accueil du site : « Grands parfums. Petits formats. » */
+  $('#titre').innerHTML = mois ? `Le listing.<br><em>${esc(mois.charAt(0).toUpperCase() + mois.slice(1))}.</em>` : 'Le listing.';
   const n = visiblesClients().length;
   $('#sous-titre').textContent = `${n} flacons neufs, sur commande. Fais ta liste, envoie-la-moi sur Snap : je te réponds avec les prix.`;
   const vis = visiblesClients().filter(r => (r.photo || r.__url) && !r.rupture);
@@ -564,6 +745,7 @@ function dessinerTout() {
   $('#eventail').innerHTML = choix.length === 3 ? choix.map((r, i) => `<button type="button" class="ev ev${i + 1}" data-act="fiche-id" data-id="${esc(r.id)}" tabindex="-1" aria-hidden="true">${photo(r)}</button>`).join('') : '';
   apparaitre($('#eventail'));
   $('#pied-maj').textContent = date ? `Listing mis à jour le ${date.getDate()} ${MOIS[date.getMonth()]} ${date.getFullYear()}` : '';
+  $('#maj-pill').textContent = date ? `Mis à jour le ${date.getDate() === 1 ? '1er' : date.getDate()} ${MOIS[date.getMonth()]}` : '';
   dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande(); bandeauApercu();
 }
 function majDate(d) {
@@ -608,7 +790,8 @@ function message() {
     const p = prixDe(r); if (p) tot += p * l.qte; else tousPrix = false;
     return `• ${l.qte > 1 ? l.qte + ' × ' : ''}${r.libelle}${p ? ' (' + eur(p) + ')' : ''}`;
   });
-  return `Salut BlackPhantom ! Je suis intéressé(e) par ${lignes.length > 1 ? 'ces flacons' : 'ce flacon'} du listing${d.maj ? ' du ' + d.maj : ''} :\n${t.join('\n')}\n${tousPrix && tot ? `Total : ${eur(tot)}. ` : ''}Tu peux me dire ${tousPrix && tot ? 'comment réserver' : 'les prix et le délai'} ?`;
+  const mot = String(S.mot || '').trim();
+  return `Salut BlackPhantom ! Je suis intéressé(e) par ${lignes.length > 1 ? 'ces flacons' : 'ce flacon'} du listing${d.maj ? ' du ' + d.maj : ''} :\n${t.join('\n')}\n${tousPrix && tot ? `Total : ${eur(tot)}. ` : ''}Tu peux me dire ${tousPrix && tot ? 'comment réserver' : 'les prix et le délai'} ?${mot ? '\n' + mot : ''}`;
 }
 function copier(texte) {
   try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(texte).catch(() => repli(texte)); return; } } catch (e) {}
@@ -632,12 +815,14 @@ function ouvrirDemande() {
   }
   const corps = `<div>${lignes.map(({ l, r }) => `<div class="ligne-d" data-id="${esc(r.id)}">${photo(r)}<div class="t"><b>${esc(r.nom)}</b><small>${esc(r.maison)}${r.maison ? ', ' : ''}${esc(detail(r))}${prixDe(r) ? ' — ' + eur(prixDe(r)) : ''}</small></div>
       <div class="qte"><button type="button" data-act="moins" aria-label="Un de moins">−</button><span aria-live="polite">${l.qte}</span><button type="button" data-act="plus" aria-label="Un de plus">+</button></div></div>`).join('')}</div>
+    <button type="button" class="lien" data-act="vider-demande" style="margin-top:6px">Tout retirer</button>
+    <label class="mot"><span>Un mot à ajouter ? (facultatif)</span><textarea id="mot" rows="2" placeholder="Ex. dispo samedi pour la remise en main propre">${esc(S.mot || '')}</textarea></label>
+    <div class="bulle-zone"><p class="aide">Ton message</p><div class="bulle" id="msg">${esc(message())}</div></div>
     <div class="pied-d">
       <a class="btn or large" href="${lienSnap()}" target="_blank" rel="noopener" data-act="envoyer">Envoyer ma demande sur Snap</a>
       <a class="btn large" href="${lienInsta()}" target="_blank" rel="noopener" data-act="envoyer">Plutôt sur Instagram</a>
-      <p class="aide">En touchant un bouton, ta liste est copiée : colle-la dans le message.</p>
-    </div>
-    <details class="voir"><summary>Voir le message</summary><pre class="message" id="msg">${esc(message())}</pre><button type="button" class="btn petit" data-act="copier">Copier le message</button></details>`;
+      <p class="aide">En touchant un bouton, ton message est copié : colle-le dans la conversation. <button type="button" class="lien" data-act="copier" style="padding:0;font-size:13.5px">Copier seulement</button></p>
+    </div>`;
   ouvrirFeuille(`Ma demande, ${lignes.reduce((a, x) => a + x.l.qte, 0)} flacon${lignes.length > 1 || lignes[0].l.qte > 1 ? 's' : ''}`, corps, 'demande');
 }
 
@@ -656,7 +841,17 @@ function ouvrirFiche(id, depuisAncre) {
   ].filter(x => x[1]);
   const q = encodeURIComponent((r.maison ? r.maison + ' ' : '') + r.nom);
   const vend = S.vendeur || S.brouillon ? blocVendeurFiche(r) : '';
-  ouvrirFeuille('', `${photo(r, 'f-photo')}
+  S.vus = [r.id, ...S.vus.filter(x => x !== r.id)].slice(0, 12); ecrire('bp-listing-vus', S.vus);
+  const i = S.ordre.indexOf(r.id);
+  const prec = i > 0 ? S.ordre[i - 1] : null, suiv = i >= 0 && i < S.ordre.length - 1 ? S.ordre[i + 1] : null;
+  const IC_G = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>';
+  const IC_D = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>';
+  const aussi = visibles().filter(x => x.maison && x.maison === r.maison && x.id !== r.id).slice(0, 12);
+  ouvrirFeuille('', `<div class="f-haut" id="f-haut">${photo(r, 'f-photo')}
+      ${prec ? `<button type="button" class="f-nav g" data-act="fiche-id" data-id="${esc(prec)}" aria-label="Flacon précédent">${IC_G}</button>` : ''}
+      ${suiv ? `<button type="button" class="f-nav d" data-act="fiche-id" data-id="${esc(suiv)}" aria-label="Flacon suivant">${IC_D}</button>` : ''}
+      ${i >= 0 && S.ordre.length > 1 ? `<span class="f-compte">${i + 1} sur ${S.ordre.length}</span>` : ''}
+    </div>
     <p class="f-m">${esc(r.maison)}</p><h3 class="f-n" id="f-nom">${esc(r.nom)}</h3><p class="f-d">${esc(detail(r))}</p>
     ${p ? `<p class="f-prix">${eur(p)}</p>` : ''}
     ${marques(r).length ? `<div class="f-marques">${marques(r).map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
@@ -665,12 +860,25 @@ function ouvrirFiche(id, depuisAncre) {
       <a class="lien" href="https://www.fragrantica.fr/search/?query=${q}" target="_blank" rel="noopener">Voir ses notes sur Fragrantica</a>
       ${navigator.share ? '<button type="button" class="lien" data-act="partager">Partager</button>' : '<button type="button" class="lien" data-act="copier-lien">Copier le lien</button>'}
     </div>
-    <p class="libelle">Sur le listing : ${esc(r.libelle)}</p>${vend}
+    <p class="libelle">Sur le listing : ${esc(r.libelle)}</p>
+    ${aussi.length ? `<div class="aussi"><h4>Aussi chez ${esc(r.maison)}</h4><div class="rail petit">${aussi.map(x => carte(x)).join('')}</div></div>` : ''}
+    ${vend}
     <div class="f-cta">
       ${r.rupture ? `<a class="btn large" href="${lienSnap()}" target="_blank" rel="noopener">Me prévenir sur Snap</a>`
         : `<button type="button" class="btn ${pris ? '' : 'or'} large" data-act="ajout-fiche" data-id="${esc(r.id)}">${pris ? 'Retirer de ma demande' : 'Ajouter à ma demande'}</button>`}
     </div>`, 'fiche', r.id);
   if (!depuisAncre) { try { history.replaceState(null, '', '#' + encodeURIComponent(r.id)); } catch (e) {} }
+  /* glisser la photo à gauche ou à droite : flacon suivant ou précédent */
+  const h = $('#f-haut');
+  if (h) {
+    let x0 = null, y0 = 0;
+    h.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    h.addEventListener('touchend', e => {
+      if (x0 == null) return;
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+      if (Math.abs(dx) > 50 && Math.abs(dy) < 45) { const cible = dx < 0 ? suiv : prec; if (cible) ouvrirFiche(cible); }
+    }, { passive: true });
+  }
 }
 
 /* ---------- feuille ---------- */
@@ -686,6 +894,7 @@ function ouvrirFeuille(titre, corps, type, id) {
   $('#feuille-corps').scrollTop = 0;
   apparaitre($('#feuille-corps'));
   f.dataset.id = id || '';
+  f.classList.toggle('t-fiche', feuilleType === 'fiche');
   f.setAttribute('aria-labelledby', titre ? 'feuille-titre' : 'f-nom');
   f.hidden = false; v.hidden = false;
   document.body.style.overflow = 'hidden';
@@ -701,9 +910,20 @@ function fermerFeuille() {
   clearTimeout(tFermer);
   tFermer = setTimeout(() => { f.hidden = true; v.hidden = true; majDemande(); }, 260);
   if (location.hash && location.hash !== '#vendeur') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  const etaitFiche = feuilleType === 'fiche';
   feuilleType = '';
+  /* après une fiche : la rangée « vus récemment » se met à jour, sans faire bouger ce qu'on regardait */
+  if (etaitFiche) garderAncre(carteVisible(), dessinerEtagere);
   if (dernierFocus && dernierFocus.focus) dernierFocus.focus({ preventScroll: true });
 }
+function carteVisible() { return [...document.querySelectorAll('#vitrine .fiche-mini')].find(el => el.getBoundingClientRect().top >= 0) || null; }
+/* glisser la feuille vers le bas (depuis le haut) pour la fermer */
+(() => {
+  const f = $('#feuille'); let y0 = null, dy = 0;
+  f.addEventListener('touchstart', e => { const c = $('#feuille-corps'); if (c.scrollTop > 0 || e.target.closest('.rail, textarea, input, select')) { y0 = null; return; } y0 = e.touches[0].clientY; dy = 0; }, { passive: true });
+  f.addEventListener('touchmove', e => { if (y0 == null) return; dy = e.touches[0].clientY - y0; if (dy > 0) { f.style.transition = 'none'; f.style.transform = `translateY(${dy}px)`; } }, { passive: true });
+  f.addEventListener('touchend', () => { if (y0 == null) return; f.style.transition = ''; f.style.transform = ''; if (dy > 110) fermerFeuille(); y0 = null; }, { passive: true });
+})();
 function rafraichirFeuille() {
   if (feuilleType === 'demande') ouvrirDemande();
   else if (feuilleType === 'fiche') ouvrirFiche($('#feuille').dataset.id, true);
@@ -727,9 +947,28 @@ function ouvrirMaisons() {
 
 /* ---------- petits outils ---------- */
 let tToast = 0;
-function toast(t) {
-  const e = $('#toast'); e.textContent = t; e.classList.add('vu');
-  clearTimeout(tToast); tToast = setTimeout(() => e.classList.remove('vu'), 1800);
+let annulerAction = null;
+function toast(t, annuler) {
+  const e = $('#toast');
+  annulerAction = annuler || null;
+  e.classList.toggle('action', !!annuler);
+  e.innerHTML = `<span>${esc(t)}</span>${annuler ? '<button type="button" data-act="annuler">Annuler</button>' : ''}`;
+  e.classList.add('vu');
+  clearTimeout(tToast); tToast = setTimeout(() => { e.classList.remove('vu'); annulerAction = null; }, annuler ? 4500 : 1800);
+}
+/* avant un changement de réglage : de quoi revenir en arrière */
+function memoire() {
+  const avant = JSON.stringify(reglages()), mod = S.modifie;
+  return () => { donnees().reglages = JSON.parse(avant); S.modifie = mod; apresReglage(); };
+}
+function apresReglage(el) {
+  garderAncre(el || document.querySelector('#vitrine .fiche-mini'), () => { dessinerRayons(); dessinerEtagere(); dessinerVitrineSurPlace(); bandeauApercu(); });
+  if (feuilleType === 'fiche' || feuilleType === 'vendeur') { const c = $('#feuille-corps'), y = c.scrollTop; rafraichirFeuille(); c.scrollTop = y; }
+}
+/* met à jour les cartes déjà affichées sans recharger la liste (sinon la page remonte) */
+function dessinerVitrineSurPlace() {
+  const ids = new Set([...document.querySelectorAll('#vitrine .fiche-mini')].map(el => el.dataset.id));
+  ids.forEach(id => majCarte(id));
 }
 
 /* ---------- événements ---------- */
@@ -738,9 +977,31 @@ $('#q').addEventListener('input', e => {
   $('#q-vider').hidden = !e.target.value;
   clearTimeout(tQ); tQ = setTimeout(() => { S.q = e.target.value.trim(); dessinerEtagere(); dessinerVitrine(); }, 140);
 });
-$('#q').addEventListener('keydown', e => { if (e.key === 'Enter') e.target.blur(); });
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter') { if (e.target.value.trim()) retenirRecherche(e.target.value.trim()); e.target.blur(); } });
+function retenirRecherche(q) { S.recherches = [q, ...S.recherches.filter(x => norm(x) !== norm(q))].slice(0, 6); ecrire('bp-listing-recherches', S.recherches); }
+function montrerSuggestions() {
+  const s = $('#suggestions');
+  if ($('#q').value || !donnees() || !donnees().refs.length) { s.hidden = true; return; }
+  const c = new Map();
+  for (const r of visibles()) if (r.maison) c.set(r.maison, (c.get(r.maison) || 0) + 1);
+  const top = [...c].sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
+  s.innerHTML = `${S.recherches.length ? `<h4>Tes dernières recherches</h4><div class="lot">${S.recherches.map(q => `<button type="button" class="puce" data-act="suggestion" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>` : ''}
+    <h4>Les maisons les plus présentes</h4><div class="lot">${top.map(m => `<button type="button" class="puce" data-act="suggestion-maison" data-maison="${esc(m)}">${esc(m)}</button>`).join('')}</div>`;
+  s.hidden = false;
+}
+const cacherSuggestions = () => { $('#suggestions').hidden = true; };
+$('#q').addEventListener('focus', montrerSuggestions);
+$('#q').addEventListener('input', () => { if ($('#q').value) cacherSuggestions(); else montrerSuggestions(); });
+$('#q').addEventListener('blur', () => setTimeout(cacherSuggestions, 150));
+$('#suggestions').addEventListener('pointerdown', e => e.preventDefault());
 $('#q-vider').addEventListener('click', () => { $('#q').value = ''; S.q = ''; $('#q-vider').hidden = true; dessinerEtagere(); dessinerVitrine(); $('#q').focus(); });
 $('#b-demande').addEventListener('click', ouvrirDemande);
+$('#haut').addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+let tHaut = 0;
+addEventListener('scroll', () => {
+  if (tHaut) return;
+  tHaut = requestAnimationFrame(() => { tHaut = 0; $('#haut').classList.toggle('vu', scrollY > innerHeight * 2.5); $('#haut').classList.toggle('leve', $('#flottant').classList.contains('vu')); });
+}, { passive: true });
 $('#flottant-btn').addEventListener('click', ouvrirDemande);
 $('#voile').addEventListener('click', fermerFeuille);
 $('#feuille-fermer').addEventListener('click', fermerFeuille);
@@ -771,14 +1032,22 @@ document.addEventListener('click', async e => {
   else if (act === 'maisons') ouvrirMaisons();
   else if (act === 'maison-x') { S.maison = ''; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
   else if (act === 'choisir-maison') { S.maison = b.dataset.maison; fermerFeuille(); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
-  else if (act === 'tout-voir') { S.q = ''; $('#q').value = ''; $('#q-vider').hidden = true; S.rayon = 'tout'; S.maison = ''; S.filtres.clear(); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
+  else if (act === 'tout-voir') { S.q = ''; $('#q').value = ''; $('#q-vider').hidden = true; S.rayon = 'tout'; S.maison = ''; S.filtres.clear(); S.format = ''; S.taille = ''; S.tri = 'listing'; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
   else if (act === 'fermer') fermerFeuille();
   else if (act === 'plus' || act === 'moins') {
     const l = S.demande.find(x => x.id === id); if (!l) return;
     l.qte += act === 'plus' ? 1 : -1;
-    if (l.qte < 1) { S.demande = S.demande.filter(x => x !== l); dessinerVitrine(); dessinerEtagere(); }
+    if (l.qte < 1) { S.demande = S.demande.filter(x => x !== l); majCarte(id); }
     majDemande(); ouvrirDemande();
   }
+  else if (act === 'vider-demande') {
+    const avant = S.demande.slice();
+    S.demande = []; majDemande(); avant.forEach(l => majCarte(l.id)); ouvrirDemande();
+    toast('Demande vidée', () => { S.demande = avant; majDemande(); avant.forEach(l => majCarte(l.id)); if (feuilleType === 'demande') ouvrirDemande(); });
+  }
+  else if (act === 'annuler') { const f = annulerAction; annulerAction = null; $('#toast').classList.remove('vu'); if (f) f(); }
+  else if (act === 'suggestion') { $('#q').value = b.dataset.q; $('#q-vider').hidden = false; S.q = b.dataset.q; $('#q').blur(); cacherSuggestions(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
+  else if (act === 'suggestion-maison') { $('#q').value = ''; S.q = ''; $('#q-vider').hidden = true; $('#q').blur(); cacherSuggestions(); S.maison = b.dataset.maison; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
   else if (act === 'envoyer') { copier(message()); toast('Ta liste est copiée : colle-la dans le message'); }
   else if (act === 'copier') { copier(message()); toast('Message copié'); }
   else if (act === 'partager') {
@@ -789,7 +1058,14 @@ document.addEventListener('click', async e => {
   else if (act === 'copier-lien') { copier(location.href.split('#')[0] + '#' + encodeURIComponent($('#feuille').dataset.id)); toast('Lien copié'); }
   else if (typeof actionsVendeur[act] === 'function') actionsVendeur[act](b, e);
 });
+/* tri, format, contenance : listes natives */
+document.addEventListener('change', e => {
+  const k = e.target.dataset && e.target.dataset.choix;
+  if (k) { S[k] = e.target.value; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
+  if (e.target.id === 'q' && e.target.value.trim()) retenirRecherche(e.target.value.trim());
+});
 document.addEventListener('input', e => {
+  if (e.target.id === 'mot') { S.mot = e.target.value; ecrire('bp-listing-mot', S.mot); const m = $('#msg'); if (m) m.textContent = message(); return; }
   if (e.target.id === 'q-maison') {
     const q = norm(e.target.value);
     document.querySelectorAll('#liste-maisons li').forEach(li => {
@@ -869,6 +1145,7 @@ function blocConnexion(erreur) {
 function blocImport() {
   const I = import_;
   if (I && I.etape === 'lecture') return `<div class="v-bloc"><h3>Lecture du listing…</h3><p id="i-txt">${esc(I.txt || 'Ouverture du PDF')}</p><div class="progres"><i id="i-barre" style="width:${I.pc || 0}%"></i></div>
+    <div class="i-vignettes" id="i-vignettes" aria-hidden="true"></div>
     <div style="margin-top:12px"><button type="button" class="btn petit" data-act="annuler-import">Arrêter</button></div></div>`;
   if (I && I.etape === 'erreur') return `<div class="v-bloc"><h3>Le listing n'a pas pu être lu</h3><p class="erreur">${esc(I.txt)}</p><div style="margin-top:12px"><button type="button" class="btn or large" data-act="choisir-pdf">Choisir un autre PDF</button></div></div>`;
   if (S.brouillon) {
@@ -898,8 +1175,13 @@ function blocEtat() {
   if (!d || !d.refs || !d.refs.length) return '';
   const quand = d.publieLe ? new Date(d.publieLe) : null;
   const nVis = d.refs.filter(r => estVisible(r, d.reglages)).length;
+  const ch = (n, t, act) => `<${act ? `button type="button" data-act="${act}"` : 'div'} class="tuile">${'<b>' + n + '</b>'}<small>${t}</small></${act ? 'button' : 'div'}>`;
+  const cc = coeurs();
   return `<div class="v-bloc"><div class="v-etat${S.modifie ? ' attente' : ''}"><span class="point" aria-hidden="true"></span><div><h3>${S.modifie ? 'Changements pas encore publiés' : 'En ligne'}</h3>
-    <p>Listing${d.maj ? ' du ' + esc(d.maj) : ''} : ${nVis} flacons visibles sur ${d.refs.length}${quand ? `, publié le ${quand.getDate()} ${MOIS[quand.getMonth()]} à ${String(quand.getHours()).padStart(2, '0')} h ${String(quand.getMinutes()).padStart(2, '0')}` : ''}.</p></div></div>
+    <p>Listing${d.maj ? ' du ' + esc(d.maj) : ''}${quand ? `, publié le ${quand.getDate()} ${MOIS[quand.getMonth()]} à ${String(quand.getHours()).padStart(2, '0')} h ${String(quand.getMinutes()).padStart(2, '0')}` : ''}.</p></div></div>
+    <div class="chiffres">${ch(nVis, 'visibles par tes clients')}${ch(d.refs.length - nVis, 'masqués', d.refs.length - nVis ? 'voir-masques' : '')}${ch((d.reglages.coeurs || []).length, 'coups de cœur')}${ch(d.refs.filter(r => r.nouveau || r.arrive).length, 'nouveautés')}</div>
+    ${cc.length ? `<p class="aide" style="margin-top:12px">Tes coups de cœur, en haut de la page :</p><div class="v-coeurs">${cc.map(r => `<button type="button" class="vig-c" data-act="fiche-id" data-id="${esc(r.id)}" aria-label="${esc(nomComplet(r))}">${photo(r)}</button>`).join('')}</div>`
+      : `<p class="aide" style="margin-top:12px">Astuce : touche le cœur sur une photo pour mettre un flacon en avant.</p>`}
     ${S.modifie && S.vendeur ? '<div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Publier les changements</button></div>' : ''}</div>`;
 }
 function blocPartage() {
@@ -939,7 +1221,7 @@ function blocVisibilite() {
     ${comp.length ? `<p class="aide" style="margin-top:10px">Ces maisons citent d'autres parfums dans leurs noms : ${esc(comp.join(', '))}.</p>` : ''}
     <details class="voir"><summary>Maisons, une par une (${mais.size})</summary>
       <div class="cherche" style="margin:10px 0 4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q-maison-v" type="search" placeholder="Chercher une maison" aria-label="Chercher une maison" autocomplete="off"></div>
-      <div id="liste-maisons-v">${[...mais.keys()].sort((a, b) => norm(a).localeCompare(norm(b))).map(m => `<div class="bascule" data-maison="${esc(m)}"><span>${esc(m)}<small>${mais.get(m)} flacon${mais.get(m) > 1 ? 's' : ''}</small></span>${sw(!(R.masquer.maisons || []).includes(m), `data-act="vis-maison" data-v="${esc(m)}" aria-label="${esc(m)} visible"`)}</div>`).join('')}</div>
+      <div id="liste-maisons-v">${[...mais.keys()].sort((a, b) => norm(a).localeCompare(norm(b))).map(m => `<div class="bascule" data-maison="${esc(m)}"><span class="vig-v" aria-hidden="true">${photo(d.refs.find(r => r.maison === m && (r.photo || r.__url)) || {})}</span><span>${esc(m)}<small>${mais.get(m)} flacon${mais.get(m) > 1 ? 's' : ''}</small></span>${sw(!(R.masquer.maisons || []).includes(m), `data-act="vis-maison" data-v="${esc(m)}" aria-label="${esc(m)} visible"`)}</div>`).join('')}</div>
     </details>
     ${S.modifie && !S.brouillon ? `<div style="margin-top:14px">${S.vendeur ? '<button type="button" class="btn or large" data-act="publier">Publier ces changements</button>' : '<p class="aide">Entre ton mot de passe pour publier ces changements.</p>'}</div>` : ''}</div>`;
 }
@@ -1034,20 +1316,20 @@ async function creerStory() {
   const W = 1080, H = 1920, choix = storyChoix();
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
   const c = cv.getContext('2d');
-  const SANS = '-apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif', SERIF = '"New York", "Iowan Old Style", Georgia, serif';
-  c.fillStyle = '#000'; c.fillRect(0, 0, W, H);
+  const SANS = '-apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif', SERIF = 'Georgia, "Times New Roman", serif';
+  c.fillStyle = '#101011'; c.fillRect(0, 0, W, H);
   try { const logo = await chargerImage('icone.png'); c.save(); c.beginPath(); c.arc(118, 150, 38, 0, Math.PI * 2); c.clip(); c.drawImage(logo, 80, 112, 76, 76); c.restore(); } catch (e) {}
-  c.fillStyle = '#F5F5F7'; c.font = `500 42px ${SERIF}`; c.textBaseline = 'alphabetic'; c.fillText('BlackPhantom', 176, 164);
+  c.fillStyle = '#F0ECE3'; c.font = `400 42px ${SERIF}`; c.textBaseline = 'alphabetic'; c.fillText('BlackPhantom', 176, 164);
   const d = donnees(), date = majDate(d), mois = d.mois || (date ? MOIS[date.getMonth()] : '');
-  c.font = `700 96px ${SANS}`; c.fillText('Nouveautés', 80, 330); c.fillText('du listing.', 80, 432);
-  c.fillStyle = '#A1A1A6'; c.font = `400 40px ${SANS}`; c.fillText(`Flacons neufs, sur commande${mois ? ', ' + mois : ''}`, 80, 498);
+  c.font = `400 100px ${SERIF}`; c.fillText('Nouveautés', 80, 330); c.fillText('du listing.', 80, 434);
+  c.fillStyle = '#A5A29C'; c.font = `400 40px ${SANS}`; c.fillText(`Flacons neufs, sur commande${mois ? ', ' + mois : ''}`, 80, 498);
   /* grille centrée, en gardant libres le haut et le bas (boutons de Snap) */
   const gap = 40, mx = 120, tw = (W - 2 * mx - gap) / 2, th = tw, top0 = 566, rowH = th + 124;
   for (let i = 0; i < choix.length; i++) {
     const r = choix[i], x = mx + (i % 2) * (tw + gap), y = top0 + Math.floor(i / 2) * rowH;
     c.save(); arrondi(c, x, y, tw, th, 36); c.clip();
     const g = c.createRadialGradient(x + tw / 2, y + th * 0.3, 10, x + tw / 2, y + th * 0.45, tw * 0.85);
-    g.addColorStop(0, '#ffffff'); g.addColorStop(0.5, '#F4F5F7'); g.addColorStop(1, '#E1E3E8');
+    g.addColorStop(0, '#ffffff'); g.addColorStop(0.5, '#F5F2EC'); g.addColorStop(1, '#E3DED4');
     c.fillStyle = g; c.fillRect(x, y, tw, th);
     try {
       const im = await chargerImage(r.__url || r.photo);
@@ -1055,17 +1337,18 @@ async function creerStory() {
       c.globalCompositeOperation = 'multiply'; c.drawImage(im, x + (tw - w) / 2, y + (th - h) / 2, w, h);
     } catch (e) {}
     c.restore();
-    c.fillStyle = '#A1A1A6'; c.font = `400 30px ${SANS}`; c.fillText(couper(c, r.maison || r.section, tw), x, y + th + 48);
-    c.fillStyle = '#F5F5F7'; c.font = `500 40px ${SERIF}`; c.fillText(couper(c, r.nom, tw), x, y + th + 98);
+    c.fillStyle = '#A5A29C'; c.font = `400 30px ${SANS}`; c.fillText(couper(c, r.maison || r.section, tw), x, y + th + 48);
+    c.fillStyle = '#F0ECE3'; c.font = `400 40px ${SERIF}`; c.fillText(couper(c, r.nom, tw), x, y + th + 98);
   }
-  c.fillStyle = '#E3B96F'; c.font = `600 50px ${SANS}`; c.fillText('Commande sur Snap', 80, H - 250);
-  c.fillStyle = '#F5F5F7'; c.font = `400 42px ${SANS}`; c.fillText('i.blackphantom', 80, H - 190);
+  c.fillStyle = '#C9B38B'; c.font = `500 50px ${SANS}`; c.fillText('Commande sur Snap', 80, H - 250);
+  c.fillStyle = '#F0ECE3'; c.font = `400 42px ${SANS}`; c.fillText('i.blackphantom', 80, H - 190);
   const blob = await new Promise(ok => cv.toBlob(ok, 'image/jpeg', 0.9));
   if (S.story) URL.revokeObjectURL(S.story.url);
   S.story = { blob, url: URL.createObjectURL(blob) };
 }
 
 /* lecture du PDF, dans le téléphone */
+let vignettesImport = [];
 async function lancerImport(fichier) {
   import_ = { etape: 'lecture', txt: 'Ouverture du PDF', pc: 0, stop: false };
   ouvrirVendeur();
@@ -1076,7 +1359,17 @@ async function lancerImport(fichier) {
     const buf = new Uint8Array(await fichier.arrayBuffer());
     const res = await imp.lireListing(pdfjs, buf, {
       annule: () => import_.stop,
-      progres: (p, n, nb) => { import_.pc = Math.round(p / n * 100); import_.txt = `Page ${p} sur ${n}${nb ? `, ${nb} flacons trouvés` : ''}`; const t = $('#i-txt'), b = $('#i-barre'); if (t) t.textContent = import_.txt; if (b) b.style.width = import_.pc + '%'; },
+      progres: (p, n, nb, nouveaux) => {
+        import_.pc = Math.round(p / n * 100); import_.txt = `Page ${p} sur ${n}${nb ? `, ${nb} flacons trouvés` : ''}`;
+        const t = $('#i-txt'), b = $('#i-barre'), v = $('#i-vignettes');
+        if (t) t.textContent = import_.txt; if (b) b.style.width = import_.pc + '%';
+        if (v && nouveaux) for (const r of nouveaux) {
+          if (!(r.photo instanceof Blob)) continue;
+          const u = URL.createObjectURL(r.photo); vignettesImport.push(u);
+          v.insertAdjacentHTML('afterbegin', `<div class="ecrin"><img class="vu" src="${u}" alt=""></div>`);
+          while (v.children.length > 7) v.lastElementChild.remove();
+        }
+      },
     });
     if (!res.refs.length) throw new Error("Aucun flacon trouvé dans ce PDF. C'est bien le listing du fournisseur ?");
     S.brouillon = construireBrouillon(res, fichier.name);
@@ -1089,7 +1382,7 @@ async function lancerImport(fichier) {
     console.error(e);
     import_ = { etape: 'erreur', txt: (e && e.message) || 'Erreur inconnue' };
     ouvrirVendeur();
-  } finally { garderEcran(false); }
+  } finally { garderEcran(false); vignettesImport.forEach(u => URL.revokeObjectURL(u)); vignettesImport = []; }
 }
 function construireBrouillon(res, nomFichier) {
   const avant = S.pub && S.pub.refs && S.pub.refs.length ? S.pub : null;
@@ -1212,7 +1505,7 @@ const actionsVendeur = {
   'abandonner': () => { if (S.brouillon) for (const r of S.brouillon.refs) if (r.__url) URL.revokeObjectURL(r.__url); S.brouillon = null; import_ = null; bandeauApercu(); dessinerTout(); ouvrirVendeur(); },
   'publier': () => publier(),
   'fin-publication': () => { if (S.publication && S.publication.attend) S.publication.ferme = true; else S.publication = null; fermerFeuille(); },
-  'deconnexion': () => { S.vendeur = null; S.vueClient = false; dessinerTout(); ouvrirVendeur(); },
+  'deconnexion': () => { S.vendeur = null; S.vueClient = false; S.filtres.delete('masques'); dessinerTout(); ouvrirVendeur(); },
   'faceid': b => {
     /* Safari n'ouvre Face ID que juste après un toucher : la demande part tout de suite */
     const c = faceIdConfig();
@@ -1238,15 +1531,10 @@ const actionsVendeur = {
     }).catch(e => ouvrirVendeur(e && e.name === 'NotAllowedError' ? 'Face ID annulé. Réessaie, ou entre ton mot de passe.'
       : e && e.message && e.message !== 'prf' ? e.message : "Face ID n'a pas pu ouvrir ton accès ici. Entre ton mot de passe."));
   },
-  'vue-client': () => { S.vueClient = !S.vueClient; dessinerTout(); if (feuilleType === 'fiche') rafraichirFeuille(); },
-  'coeur': b => {
-    const R = reglages(); R.coeurs = R.coeurs || [];
-    const id = b.dataset.v, i = R.coeurs.indexOf(id);
-    if (i >= 0) R.coeurs.splice(i, 1); else R.coeurs.unshift(id);
-    b.setAttribute('aria-checked', i < 0); S.modifie = true; S.story = null;
-    const y = scrollY; dessinerTout(); scrollTo(0, y);
-    toast(i < 0 ? 'Ajouté à tes coups de cœur' : 'Retiré de tes coups de cœur');
-  },
+  'vue-client': () => { S.vueClient = !S.vueClient; if (S.vueClient) S.filtres.delete('masques'); dessinerTout(); if (feuilleType === 'fiche') rafraichirFeuille(); },
+  'coeur': b => basculerCoeur(b.dataset.v),
+  'r-coeur': b => basculerCoeur(b.closest('.fiche-mini').dataset.id, b.closest('.fiche-mini')),
+  'r-masquer': b => basculerCache(b.closest('.fiche-mini').dataset.id, b.closest('.fiche-mini')),
   'story': async b => {
     b.disabled = true; b.textContent = 'Création…';
     try { await creerStory(); } catch (e) { console.error(e); toast("L'image n'a pas pu être créée"); }
@@ -1265,23 +1553,38 @@ const actionsVendeur = {
   'partager-listing': async () => { try { await navigator.share({ title: 'Le listing BlackPhantom', text: annonce() }); } catch (e) { if (!e || e.name !== 'AbortError') { copier(annonce()); toast('Message copié'); } } },
   'vis-section': b => basculerListe('sections', b),
   'vis-maison': b => basculerListe('maisons', b),
-  'vis-ref': b => {
-    const R = reglages(); R.cacher = R.cacher || [];
-    const id = b.dataset.v, i = R.cacher.indexOf(id);
-    if (i >= 0) R.cacher.splice(i, 1); else R.cacher.push(id);
-    b.setAttribute('aria-checked', i >= 0); S.modifie = true;
-    const y = scrollY; dessinerTout(); scrollTo(0, y);
-  },
+  'vis-ref': b => basculerCache(b.dataset.v),
+  'voir-masques': () => { S.filtres.add('masques'); S.vueClient = false; fermerFeuille(); dessinerTout(); versHautListe(); },
 };
+function basculerCoeur(id, el) {
+  const annuler = memoire();
+  const R = reglages(); R.coeurs = R.coeurs || [];
+  const i = R.coeurs.indexOf(id);
+  if (i >= 0) R.coeurs.splice(i, 1); else R.coeurs.unshift(id);
+  S.modifie = true; S.story = null;
+  apresReglage(el);
+  toast(i < 0 ? 'Ajouté à tes coups de cœur' : 'Retiré de tes coups de cœur', annuler);
+}
+function basculerCache(id, el) {
+  const annuler = memoire();
+  const R = reglages(); R.cacher = R.cacher || [];
+  const i = R.cacher.indexOf(id);
+  if (i >= 0) R.cacher.splice(i, 1); else R.cacher.push(id);
+  S.modifie = true;
+  apresReglage(el);
+  toast(i < 0 ? 'Masqué pour tes clients' : 'De nouveau visible', annuler);
+}
 function basculerListe(cle, b) {
+  const annuler = memoire();
   const R = reglages(); R.masquer[cle] = R.masquer[cle] || [];
   const v = b.dataset.v, l = R.masquer[cle], i = l.indexOf(v);
   if (i >= 0) l.splice(i, 1); else l.push(v);
   b.setAttribute('aria-checked', i >= 0);
   S.modifie = true;
   if (S.rayon !== 'tout' && !visibles().some(r => r.section === S.rayon)) S.rayon = 'tout';
-  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande(); bandeauApercu();
+  dessinerRayons(); dessinerEtagere(); dessinerVitrineSurPlace(); majDemande(); bandeauApercu();
   if (S.brouillon) S.brouillon.__resume.visibles = visiblesClients().length;
+  toast(i < 0 ? `${v} : masqué pour tes clients` : `${v} : de nouveau visible`, annuler);
 }
 document.addEventListener('input', e => {
   if (e.target.id === 'q-maison-v') {
