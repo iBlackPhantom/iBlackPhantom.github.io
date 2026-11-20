@@ -48,9 +48,23 @@ img{display:block}
 .bouton-demande svg{width:20px;height:20px}
 .bouton-demande b{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--or);color:#000;font:600 11px/18px var(--ui);text-align:center}
 
-.ouverture{padding:18px 20px 4px}
-.ouverture h1{margin:0;font:700 clamp(34px,9.6vw,52px)/1.02 var(--titre);letter-spacing:-.025em}
+.sur-cmd{color:var(--or);font-size:15px;font-weight:500;text-decoration:none;padding:8px 4px;white-space:nowrap}
+@media (max-width:350px){.sceau span{display:none}}
+.ouverture{padding:10px 20px 4px}
+.ouv-haut{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px}
+.ouverture h1{margin:0;font:700 clamp(34px,9.6vw,52px)/1.02 var(--titre);letter-spacing:-.025em;text-wrap:balance}
 .ouverture p{margin:12px 0 0;max-width:34em;color:var(--sous);font-size:16px}
+/* l'éventail : trois nouveautés posées en vitrine, à côté du titre */
+.eventail{position:relative;width:136px;height:132px;margin-right:-8px}
+.eventail:empty{display:none}
+.ev{position:absolute;top:22px;width:70px;padding:0;border:0;background:none;border-radius:15px;box-shadow:0 14px 30px #000e;animation:ouvre .7s cubic-bezier(.2,.8,.2,1) both}
+.ev .ecrin{border-radius:15px}
+.ev1{left:0;transform:rotate(-15deg) translateY(12px) scale(.92);animation-delay:.05s}
+.ev2{left:33px;z-index:2;transform:translateY(-10px);animation-delay:.15s}
+.ev3{left:66px;transform:rotate(15deg) translateY(12px) scale(.92);animation-delay:.25s}
+@keyframes ouvre{from{opacity:0;transform:translateY(26px) rotate(0)}}
+@media (max-width:350px){.eventail{width:108px}.ev{width:56px}.ev2{left:26px}.ev3{left:52px}}
+@media (min-width:640px){.eventail{width:240px;height:210px}.ev{width:120px;top:30px}.ev2{left:60px}.ev3{left:120px}}
 
 /* barre collante : recherche + rayons */
 .barre{position:sticky;top:0;z-index:20;padding:calc(8px + var(--haut)) 0 0;margin-top:14px;background:rgba(0,0,0,.78);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-bottom:1px solid transparent;transition:border-color .2s}
@@ -63,6 +77,8 @@ img{display:block}
 .cherche input:focus{box-shadow:0 0 0 2px #E3B96F66}
 .cherche .vider{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:#3a3a3c;color:var(--texte);font-size:15px;line-height:1}
 .rayons{display:flex;gap:8px;overflow-x:auto;padding:12px 20px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+/* bords en fondu : on devine qu'il y a la suite */
+.rayons,.rail{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 28px),transparent)}
 .rayons::-webkit-scrollbar{display:none}
 .puce{flex:none;height:34px;padding:0 14px;border-radius:17px;border:1px solid var(--trait);background:transparent;font-size:14px;font-weight:500;color:var(--texte);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .puce[aria-pressed="true"]{background:var(--texte);color:#000;border-color:var(--texte)}
@@ -79,31 +95,50 @@ img{display:block}
 .etagere .aide{padding:0 20px;margin:4px 0 0;color:var(--sous);font-size:14px}
 .rail{display:flex;gap:12px;overflow-x:auto;padding:14px 20px 6px;scroll-padding-inline:20px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .rail::-webkit-scrollbar{display:none}
-.rail .fiche-mini{flex:none;width:min(46vw,210px);scroll-snap-align:start}
+.rail .fiche-mini{flex:none;width:min(60vw,250px);scroll-snap-align:start}
+.affiche .ecrin{aspect-ratio:4/5;border-radius:22px}
+.affiche .ecrin img{inset:10% 8% 12%;width:84%;height:78%}
+.affiche .infos .n{font-size:19px}
 
 /* ---------- vitrine ---------- */
 .vitrine{padding:6px 20px 120px}
 .compte{margin:14px 0 2px;color:var(--sous);font-size:14px}
 .groupe{padding-top:26px}
 .groupe h2{font:700 30px/1.1 var(--titre);letter-spacing:-.02em;padding:14px 0 2px}
-.groupe h3{display:flex;align-items:baseline;gap:8px;font:600 20px/1.2 var(--serif);letter-spacing:.005em;padding:20px 0 4px}
-.groupe h3 span{font:400 14px var(--ui);color:var(--sous)}
-.groupe .cond{margin:2px 0 6px;color:var(--or);font-size:14px}
+.groupe h2 span{font:400 16px var(--ui);letter-spacing:0;color:var(--sous)}
+.bloc{position:relative;padding-top:14px}
+/* le nom de la maison reste en haut pendant qu'on fait défiler ses flacons */
+.t-maison{position:sticky;top:var(--barre-h,112px);z-index:6;display:flex;align-items:baseline;gap:8px;margin:0 -20px;padding:12px 20px 14px;font:600 20px/1.2 var(--serif);letter-spacing:.005em;background:linear-gradient(#000 0,#000 72%,rgba(0,0,0,0))}
+.t-maison span{font:400 14px var(--ui);color:var(--sous)}
+.bloc .cond{margin:-6px 0 2px;color:var(--or);font-size:14px}
+.bloc .grille{margin-top:4px}
 .grille{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px;margin-top:10px}
 @media (min-width:640px){.grille{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (min-width:960px){.grille{grid-template-columns:repeat(4,minmax(0,1fr))}.vitrine,.ouverture{max-width:1180px;margin-left:auto;margin-right:auto}}
 
 .fiche-mini{position:relative;min-width:0}
 .ouvrir{display:block;width:100%;padding:0;border:0;background:none;text-align:left;color:inherit}
-.ecrin{position:relative;aspect-ratio:1/1;border-radius:18px;background:var(--ecrin);overflow:hidden;isolation:isolate}
-.ecrin img{position:absolute;inset:9%;width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply}
+.ecrin{position:relative;aspect-ratio:1/1;border-radius:18px;background:radial-gradient(130% 95% at 50% 30%,#fff 0%,var(--ecrin) 50%,#E1E3E8 100%);overflow:hidden;isolation:isolate}
+/* vitrine éclairée : lumière douce au centre, ombre sous le flacon */
+.ecrin::before{content:"";position:absolute;left:20%;right:20%;bottom:5%;height:8%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.2),rgba(0,0,0,0))}
+.ecrin img{position:absolute;inset:9%;width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply;opacity:0;transition:opacity .45s ease}
+.ecrin img.vu{opacity:1}
+.squelette .ecrin{animation:luit 1.4s ease-in-out infinite}
+.squelette .trait{display:block;height:12px;border-radius:6px;background:#1c1c1e;margin-top:12px;width:80%}
+.squelette .trait.l2{width:55%;margin-top:8px}
+@keyframes luit{50%{opacity:.55}}
+mark{background:none;color:var(--or)}
 .ecrin .sans-photo{position:absolute;inset:0;display:grid;place-items:center;color:#8a8a90;font:500 13px var(--ui)}
-.fiche-mini.epuise .ecrin img{opacity:.45;filter:grayscale(.6)}
+.fiche-mini.epuise .ecrin img.vu{opacity:.45;filter:grayscale(.6)}
 .marques{position:absolute;left:8px;top:8px;right:8px;display:flex;flex-wrap:wrap;gap:4px;z-index:1}
 .marque{height:22px;padding:0 8px;border-radius:11px;font:600 11.5px/22px var(--ui);letter-spacing:.01em;background:#000000d9;color:#fff}
 .marque.nouveau{background:var(--or);color:#000}
 .marque.testeur{background:#24402f;color:#cfeedd}
 .marque.rupture{background:#5a2620;color:#ffd9d2}
+.marque.coeur{background:#000000d9;color:var(--or);box-shadow:inset 0 0 0 1px #E3B96F99}
+.marque.masque{background:#3a3a3c;color:#fff}
+.fiche-mini.masque .ecrin{opacity:.38}
+.fiche-mini.masque .infos{opacity:.55}
 .infos{padding:10px 2px 0}
 .infos .m{display:block;font-size:13px;color:var(--sous);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .infos .n{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px;font:500 17px/1.22 var(--serif);color:var(--texte)}
@@ -114,6 +149,10 @@ img{display:block}
 .ajout svg{width:18px;height:18px}
 .ajout[aria-pressed="true"]{background:var(--or);color:#000}
 .ajout:active{transform:scale(.9)}
+.ajout.pop{animation:pop .34s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{40%{transform:scale(1.3)}}
+.bouton-demande.bump{animation:bump .45s ease}
+@keyframes bump{35%{transform:translateY(-4px) scale(1.1)}}
 .fin-liste{height:1px}
 .vide{padding:40px 0;text-align:left}
 .vide h2{margin:0 0 8px;font:700 22px var(--titre)}
@@ -132,10 +171,17 @@ img{display:block}
 .lien-vendeur{border:0;background:none;color:#5d5d63;font-size:12px;padding:8px 0}
 
 /* ---------- barre de demande ---------- */
-.flottant{position:fixed;left:12px;right:12px;bottom:calc(12px + var(--bas));z-index:30;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 18px;border-radius:22px;background:rgba(28,28,30,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 40px #000a;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:560px;margin:0 auto}
+.flottant{position:fixed;left:12px;right:12px;bottom:calc(12px + var(--bas));z-index:30;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 12px;border-radius:22px;background:rgba(28,28,30,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:0 10px 40px #000a;transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:560px;margin:0 auto}
 .flottant.vu{transform:none}
-.flottant p{flex:1;margin:0;font-size:15px;line-height:1.25}
+.flottant p{flex:1;min-width:0;margin:0;font-size:15px;line-height:1.25;white-space:nowrap}
+.flottant .btn{white-space:nowrap;padding:0 18px}
 .flottant p small{display:block;color:var(--sous);font-size:13px}
+.vignettes{display:flex;flex:none;padding-left:4px}
+.vig{width:34px;margin-left:-14px;border-radius:11px;box-shadow:0 0 0 2px #1c1c1e;overflow:hidden}
+.vig:first-child{margin-left:0}
+.vig .ecrin{border-radius:11px}
+.vig .ecrin::before{display:none}
+.vignettes.bump .vig:last-child{animation:pop .34s cubic-bezier(.3,1.6,.5,1)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:24px;border:0;background:var(--carte2);color:var(--texte);font-size:16px;font-weight:600;text-decoration:none;text-align:center}
 .btn.or{background:var(--or);color:#000}
 .btn.clair{background:var(--texte);color:#000}
@@ -155,10 +201,12 @@ img{display:block}
 .fermer svg{width:14px;height:14px}
 .feuille .corps{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:6px 20px calc(24px + var(--bas))}
 
-.f-photo{aspect-ratio:1/1;border-radius:22px;max-height:46vh;margin:0 auto}
-.f-photo img{inset:7%;width:86%;height:86%}
+.f-photo{aspect-ratio:1/1;border-radius:24px;max-height:40vh;margin:0 auto}
+.f-photo img{inset:8%;width:84%;height:84%}
 .f-m{margin:18px 0 0;color:var(--sous);font-size:15px}
-.f-n{margin:2px 0 0;font:600 28px/1.15 var(--serif)}
+.f-n{margin:2px 0 0;font:600 30px/1.12 var(--serif);text-wrap:balance}
+/* le bouton reste en bas de la fiche, même en faisant défiler */
+.f-cta{position:sticky;bottom:calc(-24px - var(--bas));z-index:3;margin:18px -20px calc(-24px - var(--bas));padding:18px 20px calc(16px + var(--bas));background:linear-gradient(rgba(17,17,19,0),#111113 30%)}
 .f-d{margin:6px 0 0;color:var(--sous);font-size:15px}
 .f-prix{margin:10px 0 0;font:700 24px var(--titre)}
 .f-marques{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
@@ -217,7 +265,17 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 .avert{margin:8px 0 0;padding-left:18px;color:var(--sous);font-size:13px}
 .bandeau-apercu{position:sticky;top:0;z-index:25;padding:calc(8px + var(--haut)) 16px 8px;background:var(--or);color:#000;font-size:14px;font-weight:500;display:flex;gap:10px;align-items:center}
 .bandeau-apercu span{flex:1}
-.bandeau-apercu button{border:0;background:#000;color:#fff;border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
+.bandeau-apercu button{flex:none;border:0;background:#000;color:#fff;border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
+.bandeau-apercu button.b-sec{background:transparent;color:#000;box-shadow:inset 0 0 0 1.5px #0008}
+.v-etat{display:flex;gap:12px;align-items:center}
+.v-etat .point{flex:none;width:10px;height:10px;border-radius:50%;background:#34c759;box-shadow:0 0 0 4px #34c75933}
+.v-etat.attente .point{background:var(--or);box-shadow:0 0 0 4px #E3B96F33}
+.v-liste{margin:8px 0 0;padding-left:18px;color:var(--sous);font-size:14px;max-height:240px;overflow:auto}
+.v-liste li{padding:2px 0}
+.story-apercu{display:block;width:62%;max-width:260px;margin:14px auto 0;border-radius:16px;box-shadow:0 10px 30px #000}
+.lien-listing{display:block;margin-top:10px;padding:12px 14px;border-radius:12px;background:#000;color:var(--texte);font-size:14px;word-break:break-all}
+.ou{display:flex;align-items:center;gap:10px;margin:16px 0 4px;color:var(--sous);font-size:13px}
+.ou::before,.ou::after{content:"";flex:1;height:1px;background:var(--trait)}
 .toast{position:fixed;left:50%;top:calc(12px + var(--haut));z-index:60;transform:translate(-50%,-20px);opacity:0;max-width:calc(100% - 40px);padding:12px 16px;border-radius:14px;background:#f5f5f7;color:#000;font-size:14px;font-weight:500;transition:opacity .2s,transform .2s;pointer-events:none}
 .toast.vu{opacity:1;transform:translate(-50%,0)}
 .chargement{padding:60px 20px;color:var(--sous)}
@@ -227,8 +285,9 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 <body>
 <div id="apercu-bandeau"></div>
 <header class="tete">
-  <a class="sceau" href="https://iblackphantom.github.io/" aria-label="BlackPhantom, retour au site"><img src="icone.png" alt="" width="30" height="30">BlackPhantom</a>
+  <a class="sceau" href="https://iblackphantom.github.io/" aria-label="BlackPhantom, retour au site"><img src="icone.png" alt="" width="30" height="30"><span>BlackPhantom</span></a>
   <span class="esp"></span>
+  <a class="sur-cmd" href="https://iblackphantom.github.io/#sur-commande">Sur commande</a>
   <button type="button" class="bouton-demande" id="b-demande" aria-label="Ma demande">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
     <b id="b-demande-n" hidden>0</b>
@@ -237,7 +296,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 
 <main>
   <section class="ouverture" aria-labelledby="titre">
-    <h1 id="titre">Le listing.</h1>
+    <div class="ouv-haut"><h1 id="titre">Le listing.</h1><div class="eventail" id="eventail"></div></div>
     <p id="sous-titre">Des flacons neufs, que je commande pour toi chez mon fournisseur.</p>
   </section>
 
@@ -251,6 +310,12 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
     <nav class="rayons" id="rayons" aria-label="Rayons et filtres"></nav>
   </div>
 
+  <section class="etagere" id="etagere-coeurs" aria-labelledby="t-coeurs" hidden>
+    <h2 id="t-coeurs">Mes coups de cœur.</h2>
+    <p class="aide">Ma sélection dans le listing.</p>
+    <div class="rail" id="rail-coeurs"></div>
+  </section>
+
   <section class="etagere" id="etagere" aria-labelledby="t-nouv" hidden>
     <h2 id="t-nouv">Les nouveautés.</h2>
     <p class="aide" id="nouv-aide"></p>
@@ -258,7 +323,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
   </section>
 
   <section class="vitrine" id="vitrine" aria-live="polite">
-    <p class="chargement">Chargement du listing…</p>
+    <div class="grille squelette" aria-label="Chargement du listing"><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div><div class="fiche-mini"><div class="ecrin"></div><span class="trait"></span><span class="trait l2"></span></div></div>
   </section>
 </main>
 
@@ -280,6 +345,7 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 </footer>
 
 <div class="flottant" id="flottant" aria-live="polite">
+  <div class="vignettes" id="vignettes" aria-hidden="true"></div>
   <p id="flottant-txt"></p>
   <button type="button" class="btn or" id="flottant-btn">Voir ma demande</button>
 </div>
@@ -324,13 +390,20 @@ function estVisible(r, R) {
   R = R || reglages();
   return !(R.masquer.sections || []).includes(r.section) && !(R.masquer.maisons || []).includes(r.maison) && !(R.cacher || []).includes(r.id);
 }
-const visibles = () => donnees().refs.filter(r => estVisible(r));
+/* en mode vendeur, les flacons masqués restent visibles, en gris : on peut les remettre */
+const modeVendeur = () => !!(S.vendeur || S.brouillon) && !S.vueClient;
+const visiblesClients = () => donnees().refs.filter(r => estVisible(r));
+const visibles = () => (modeVendeur() ? donnees().refs : visiblesClients());
+const estCoeur = r => (reglages().coeurs || []).includes(r.id);
+const coeurs = () => (reglages().coeurs || []).map(id => trouver(id)).filter(r => r && !r.rupture && (modeVendeur() || estVisible(r)));
 const prixDe = r => { const p = reglages().prix && reglages().prix[r.id]; return p > 0 ? p : null; };
 const detail = r => [r.concentration, r.ml ? r.ml + ' ml' : ''].filter(Boolean).join(', ');
 const nomComplet = r => (r.maison ? r.maison + ' ' : '') + r.nom;
 function marques(r) {
   const m = [];
+  if (modeVendeur() && !estVisible(r)) m.push(['masque', 'Masqué']);
   if (r.rupture) m.push(['rupture', 'Rupture']);
+  if (estCoeur(r)) m.push(['coeur', 'Coup de cœur']);
   if (r.nouveau || r.arrive) m.push(['nouveau', 'Nouveau']);
   if (r.testeur) m.push(['testeur', 'Testeur']);
   if (r.coffret) m.push(['', 'Coffret']);
@@ -361,18 +434,32 @@ function photo(r, classe) {
   const src = r.__url || (r.photo ? r.photo : '');
   return `<div class="ecrin ${classe || ''}">${src ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async">` : '<span class="sans-photo">Pas de photo</span>'}</div>`;
 }
-function carte(r, sansMaison) {
-  const m = marques(r).slice(0, 2);
+/* les mots cherchés ressortent en or, accents compris */
+const ACC = { a: '[aàâäá]', e: '[eéèêë]', i: '[iîïí]', o: '[oôöó]', u: '[uùûüú]', c: '[cç]', y: '[yÿ]', n: '[nñ]' };
+function surligne(t) {
+  const s = String(t || '');
+  const mots = S.q ? norm(S.q).split(' ').filter(m => m.length > 1) : [];
+  if (!mots.length) return esc(s);
+  const re = new RegExp('(' + mots.map(m => m.split('').map(ch => ACC[ch] || ch).join('')).join('|') + ')', 'gi');
+  return s.split(re).map((x, i) => (i % 2 ? `<mark>${esc(x)}</mark>` : esc(x))).join('');
+}
+function apparaitre(racine) {
+  (racine || document).querySelectorAll('.ecrin img:not(.vu)').forEach(i => { if (i.complete && i.naturalWidth) i.classList.add('vu'); });
+}
+document.addEventListener('load', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('vu'); }, true);
+document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') e.target.classList.add('vu'); }, true);
+function carte(r, o = {}) {
+  const m = marques(r).filter(([c]) => !(o.affiche && c === 'nouveau')).slice(0, 2);
   const p = prixDe(r);
   const pris = dansDemande(r.id);
-  return `<article class="fiche-mini${r.rupture ? ' epuise' : ''}" data-id="${esc(r.id)}">
+  return `<article class="fiche-mini${o.affiche ? ' affiche' : ''}${r.rupture ? ' epuise' : ''}${modeVendeur() && !estVisible(r) ? ' masque' : ''}" data-id="${esc(r.id)}">
     <div class="ecrin-box">
       <button type="button" class="ouvrir" data-act="fiche" aria-label="${esc(nomComplet(r))}, ${esc(detail(r))}">${photo(r)}</button>
       ${m.length ? `<div class="marques">${m.map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
       ${r.rupture ? '' : `<button type="button" class="ajout" data-act="ajout" aria-pressed="${pris}" aria-label="${pris ? 'Retirer de' : 'Ajouter à'} ma demande : ${esc(r.nom)}">${pris ? IC_OK : IC_PLUS}</button>`}
     </div>
     <button type="button" class="ouvrir infos" data-act="fiche" tabindex="-1" aria-hidden="true">
-      ${sansMaison ? '' : `<span class="m">${esc(r.maison || r.section)}</span>`}<span class="n">${esc(r.nom)}</span><span class="d">${esc(detail(r))}</span>${p ? `<span class="p">${eur(p)}</span>` : ''}
+      ${o.sansMaison ? '' : `<span class="m">${surligne(r.maison || r.section)}</span>`}<span class="n">${surligne(r.nom)}</span><span class="d">${esc(detail(r))}</span>${p ? `<span class="p">${eur(p)}</span>` : ''}
     </button>
   </article>`;
 }
@@ -391,16 +478,22 @@ function dessinerRayons() {
   const f = [['nouveau', 'Nouveautés'], ['testeur', 'Testeurs'], ['coffret', 'Coffrets'], ['dispo', 'Disponibles']];
   for (const [k, t] of f) b.push(`<button type="button" class="puce" data-filtre="${k}" aria-pressed="${S.filtres.has(k)}">${t}</button>`);
   $('#rayons').innerHTML = b.join('');
+  hauteurBarre();
 }
 
 function dessinerEtagere() {
   const sec = $('#etagere');
   const calme = !S.q && !S.maison && !S.filtres.size;
+  const cc = coeurs().filter(r => S.rayon === 'tout' || r.section === S.rayon);
+  $('#etagere-coeurs').hidden = !(calme && cc.length);
+  $('#rail-coeurs').innerHTML = calme ? cc.map(r => carte(r, { affiche: true })).join('') : '';
+  apparaitre($('#rail-coeurs'));
   const nv = visibles().filter(r => (r.nouveau || r.arrive) && !r.rupture && (S.rayon === 'tout' || r.section === S.rayon));
   if (!calme || nv.length < 2) { sec.hidden = true; return; }
   sec.hidden = false;
   $('#nouv-aide').textContent = `${nv.length} flacon${nv.length > 1 ? 's' : ''} arrivé${nv.length > 1 ? 's' : ''} sur le listing. Fais glisser.`;
-  $('#rail').innerHTML = nv.slice(0, 40).map(r => carte(r)).join('');
+  $('#rail').innerHTML = nv.slice(0, 40).map(r => carte(r, { affiche: true })).join('');
+  apparaitre($('#rail'));
 }
 
 function dessinerVitrine() {
@@ -415,31 +508,43 @@ function dessinerVitrine() {
   }
   const groupe = !S.q;
   const html = [`<p class="compte">${liste.length} flacon${liste.length > 1 ? 's' : ''}${S.q ? ` pour « ${esc(S.q)} »` : ''}</p>`];
-  let sec = null, mai = null, grille = [];
-  const fermerGrille = () => { if (grille.length) { file.push(`<div class="grille">${grille.join('')}</div>`); grille = []; } };
-  if (!groupe) { file.push(`<div class="grille">${liste.slice(0, 2000).map(r => carte(r)).join('')}</div>`); }
+  const bloc = (titre, compte, note, refs, avecMaison) => ({ n: refs.length, html: `<section class="bloc"><h3 class="t-maison">${esc(titre)} <span>${esc(compte)}</span></h3>${note ? `<p class="cond">${esc(note)}</p>` : ''}<div class="grille">${refs.map(r => carte(r, { sansMaison: !avecMaison })).join('')}</div></section>` });
+  if (!groupe) { for (let i = 0; i < liste.length; i += 24) file.push({ n: 24, html: `<div class="grille">${liste.slice(i, i + 24).map(r => carte(r)).join('')}</div>` }); }
   else {
     const notes = {};
     for (const r of liste) if (r.note) notes[r.section + '|' + r.maison] = r.note;
+    const sections = new Map();
     for (const r of liste) {
-      if (r.section !== sec) {
-        fermerGrille(); sec = r.section; mai = null;
-        if (S.rayon === 'tout' && !S.maison) file.push(`<div class="groupe"><h2>${esc(sec)}</h2></div>`);
-      }
-      if (r.maison !== mai) {
-        fermerGrille(); mai = r.maison;
-        const n = liste.filter(x => x.section === sec && x.maison === mai).length;
-        const note = notes[sec + '|' + mai];
-        file.push(`<div class="groupe"><h3>${esc(mai || 'Divers')} <span>${n}</span></h3>${note ? `<p class="cond">${esc(note)}</p>` : ''}</div>`);
-      }
-      grille.push(carte(r, !!r.maison));
-      if (grille.length >= 24) fermerGrille();
+      if (!sections.has(r.section)) sections.set(r.section, new Map());
+      const m = sections.get(r.section);
+      if (!m.has(r.maison)) m.set(r.maison, []);
+      m.get(r.maison).push(r);
     }
-    fermerGrille();
+    for (const [sec, maisons] of sections) {
+      const nSec = [...maisons.values()].reduce((a, l) => a + l.length, 0);
+      if (S.rayon === 'tout' && !S.maison) file.push({ n: 0, html: `<div class="groupe"><h2>${esc(sec)} <span>${nSec}</span></h2></div>` });
+      /* les maisons d'un ou deux flacons sont regroupées en fin de rayon : plus de cases seules */
+      const petite = (mai, refs) => mai && refs.length <= 2 && !notes[sec + '|' + mai];
+      const nbPetites = [...maisons].filter(([mai, refs]) => petite(mai, refs)).length;
+      const regrouper = !S.maison && nbPetites >= 3;
+      const petites = [];
+      for (const [mai, refs] of maisons) {
+        if (regrouper && petite(mai, refs)) { petites.push(...refs); continue; }
+        file.push(bloc(mai || 'Divers', refs.length, notes[sec + '|' + mai], refs, !mai));
+      }
+      if (petites.length) {
+        petites.sort((a, b) => norm(a.maison).localeCompare(norm(b.maison)));
+        file.push(bloc('Et aussi', `${nbPetites} maisons`, '', petites, true));
+      }
+    }
   }
   v.innerHTML = html.join('') + '<div id="suite"></div><div class="fin-liste" id="fin-liste"></div>';
   const suite = $('#suite');
-  const encore = () => { suite.insertAdjacentHTML('beforeend', file.splice(0, 6).join('')); };
+  const encore = () => {
+    let n = 0, h = '';
+    while (file.length && n < 40) { const x = file.shift(); h += x.html; n += x.n; }
+    suite.insertAdjacentHTML('beforeend', h); apparaitre(suite);
+  };
   encore(); encore();
   if (file.length && 'IntersectionObserver' in window) {
     obs = new IntersectionObserver(e => { if (e.some(x => x.isIntersecting)) { encore(); if (!file.length) obs.disconnect(); } }, { rootMargin: '1400px 0px' });
@@ -451,10 +556,15 @@ function dessinerTout() {
   const d = donnees();
   const date = majDate(d);
   $('#titre').textContent = `Le listing de ${d.mois || (date ? MOIS[date.getMonth()] : 'ce mois')}.`;
-  const n = visibles().length;
-  $('#sous-titre').textContent = `${n} flacons neufs que je commande pour toi chez mon fournisseur. Ajoute ceux qui te plaisent, envoie-moi ta liste sur Snap : je te réponds avec les prix.`;
+  const n = visiblesClients().length;
+  $('#sous-titre').textContent = `${n} flacons neufs, sur commande. Fais ta liste, envoie-la-moi sur Snap : je te réponds avec les prix.`;
+  const vis = visiblesClients().filter(r => (r.photo || r.__url) && !r.rupture);
+  const choix = [], vues = new Set();
+  for (const r of [...coeurs().filter(r => estVisible(r) && (r.photo || r.__url)), ...vis.filter(r => r.nouveau || r.arrive), ...vis]) { if (choix.length === 3) break; if (!vues.has(r.maison)) { vues.add(r.maison); choix.push(r); } }
+  $('#eventail').innerHTML = choix.length === 3 ? choix.map((r, i) => `<button type="button" class="ev ev${i + 1}" data-act="fiche-id" data-id="${esc(r.id)}" tabindex="-1" aria-hidden="true">${photo(r)}</button>`).join('') : '';
+  apparaitre($('#eventail'));
   $('#pied-maj').textContent = date ? `Listing mis à jour le ${date.getDate()} ${MOIS[date.getMonth()]} ${date.getFullYear()}` : '';
-  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande();
+  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande(); bandeauApercu();
 }
 function majDate(d) {
   const m = String(d.maj || '').match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
@@ -469,8 +579,11 @@ function majDemande() {
   const n = S.demande.reduce((a, l) => a + l.qte, 0);
   const b = $('#b-demande-n'); b.hidden = !n; b.textContent = n;
   $('#flottant').classList.toggle('vu', n > 0 && !feuilleOuverte());
-  $('#flottant-txt').innerHTML = n ? `<b>${n} flacon${n > 1 ? 's' : ''}</b><small>dans ta demande</small>` : '';
+  $('#flottant-txt').innerHTML = n ? `<b>${n} flacon${n > 1 ? 's' : ''}</b>` : '';
+  $('#vignettes').innerHTML = S.demande.slice(-3).map(l => trouver(l.id)).filter(Boolean).map(r => `<span class="vig">${photo(r)}</span>`).join('');
+  apparaitre($('#vignettes'));
 }
+function rebond(el) { if (!el) return; el.classList.remove('bump', 'pop'); void el.offsetWidth; el.classList.add(el.classList.contains('ajout') ? 'pop' : 'bump'); }
 function basculer(id) {
   const r = trouver(id); if (!r || r.rupture) return;
   const i = S.demande.findIndex(l => l.id === id);
@@ -480,8 +593,11 @@ function basculer(id) {
     const pris = dansDemande(id);
     btn.setAttribute('aria-pressed', pris); btn.innerHTML = pris ? IC_OK : IC_PLUS;
     btn.setAttribute('aria-label', `${pris ? 'Retirer de' : 'Ajouter à'} ma demande : ${r.nom}`);
+    if (pris) rebond(btn);
   });
-  toast(i >= 0 ? 'Retiré de ta demande' : 'Ajouté à ta demande');
+  rebond($('#b-demande'));
+  if (i < 0) rebond($('#vignettes'));
+  if (feuilleOuverte()) toast(i >= 0 ? 'Retiré de ta demande' : 'Ajouté à ta demande');
 }
 const trouver = id => donnees().refs.find(r => r.id === id);
 function message() {
@@ -545,15 +661,15 @@ function ouvrirFiche(id, depuisAncre) {
     ${p ? `<p class="f-prix">${eur(p)}</p>` : ''}
     ${marques(r).length ? `<div class="f-marques">${marques(r).map(([c, t]) => `<span class="marque ${c}">${esc(t)}</span>`).join('')}</div>` : ''}
     <ul class="bref">${bref.map(([a, b]) => `<li><span>${esc(a)}</span><b>${esc(b)}</b></li>`).join('')}</ul>
-    <div class="f-actions">
+    <div class="f-liens" style="margin-top:14px">
+      <a class="lien" href="https://www.fragrantica.fr/search/?query=${q}" target="_blank" rel="noopener">Voir ses notes sur Fragrantica</a>
+      ${navigator.share ? '<button type="button" class="lien" data-act="partager">Partager</button>' : '<button type="button" class="lien" data-act="copier-lien">Copier le lien</button>'}
+    </div>
+    <p class="libelle">Sur le listing : ${esc(r.libelle)}</p>${vend}
+    <div class="f-cta">
       ${r.rupture ? `<a class="btn large" href="${lienSnap()}" target="_blank" rel="noopener">Me prévenir sur Snap</a>`
         : `<button type="button" class="btn ${pris ? '' : 'or'} large" data-act="ajout-fiche" data-id="${esc(r.id)}">${pris ? 'Retirer de ma demande' : 'Ajouter à ma demande'}</button>`}
-      <div class="f-liens">
-        <a class="lien" href="https://www.fragrantica.fr/search/?query=${q}" target="_blank" rel="noopener">Voir ses notes sur Fragrantica</a>
-        ${navigator.share ? '<button type="button" class="lien" data-act="partager">Partager</button>' : '<button type="button" class="lien" data-act="copier-lien">Copier le lien</button>'}
-      </div>
-    </div>
-    <p class="libelle">Sur le listing : ${esc(r.libelle)}</p>${vend}`, 'fiche', r.id);
+    </div>`, 'fiche', r.id);
   if (!depuisAncre) { try { history.replaceState(null, '', '#' + encodeURIComponent(r.id)); } catch (e) {} }
 }
 
@@ -568,6 +684,7 @@ function ouvrirFeuille(titre, corps, type, id) {
   $('#feuille-titre').hidden = !titre;
   $('#feuille-corps').innerHTML = corps;
   $('#feuille-corps').scrollTop = 0;
+  apparaitre($('#feuille-corps'));
   f.dataset.id = id || '';
   f.setAttribute('aria-labelledby', titre ? 'feuille-titre' : 'f-nom');
   f.hidden = false; v.hidden = false;
@@ -630,6 +747,9 @@ $('#feuille-fermer').addEventListener('click', fermerFeuille);
 $('#b-vendeur').addEventListener('click', () => ouvrirVendeur());
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && feuilleOuverte()) fermerFeuille(); });
 const barre = $('#barre');
+function hauteurBarre() { const b = document.getElementById('barre'); if (b) document.documentElement.style.setProperty('--barre-h', Math.max(0, b.offsetHeight - 1) + 'px'); }
+hauteurBarre(); addEventListener('resize', hauteurBarre);
+if ('ResizeObserver' in window) new ResizeObserver(hauteurBarre).observe(barre);
 new IntersectionObserver(e => barre.classList.toggle('colle', !e[0].isIntersecting), { rootMargin: '-1px 0px 0px 0px' }).observe($('.ouverture'));
 
 function versHautListe() {
@@ -645,8 +765,9 @@ document.addEventListener('click', async e => {
   if (b.dataset.filtre) { const k = b.dataset.filtre; S.filtres.has(k) ? S.filtres.delete(k) : S.filtres.add(k); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); return; }
   const act = b.dataset.act;
   if (act === 'fiche') ouvrirFiche(id);
+  else if (act === 'fiche-id') ouvrirFiche(b.dataset.id);
   else if (act === 'ajout') basculer(id);
-  else if (act === 'ajout-fiche') { basculer(b.dataset.id); rafraichirFeuille(); }
+  else if (act === 'ajout-fiche') { const y = $('#feuille-corps').scrollTop; basculer(b.dataset.id); rafraichirFeuille(); $('#feuille-corps').scrollTop = y; }
   else if (act === 'maisons') ouvrirMaisons();
   else if (act === 'maison-x') { S.maison = ''; dessinerRayons(); dessinerEtagere(); dessinerVitrine(); }
   else if (act === 'choisir-maison') { S.maison = b.dataset.maison; fermerFeuille(); dessinerRayons(); dessinerEtagere(); dessinerVitrine(); versHautListe(); }
@@ -726,12 +847,22 @@ async function gh(chemin, opts = {}) {
 }
 
 let import_ = null;   /* état d'un import en cours */
+/* Face ID : la clé d'accès activée dans l'espace vendeur du site marche aussi ici (même adresse) */
+function faceIdConfig() { const c = lire('bp-faceid', null); return c && c.v === 1 && c.id && c.sel && c.iv && c.ct && c.proprio && c.depot ? c : null; }
+const faceIdPossible = () => !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && window.crypto && crypto.subtle);
+async function cleFaceId(secret) {
+  const base = await crypto.subtle.importKey('raw', secret, 'HKDF', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(32), info: octets('BlackPhantom Face ID v1') }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+}
 function blocConnexion(erreur) {
-  return `<div class="v-bloc"><h3>Espace vendeur</h3><p>Ton mot de passe habituel, celui de ton espace sur le site.</p>
+  const fid = faceIdConfig() && faceIdPossible();
+  return `<div class="v-bloc"><h3>Espace vendeur</h3><p>${fid ? 'Entre avec Face ID, comme sur ton site.' : 'Ton mot de passe habituel, celui de ton espace sur le site.'}</p>
+    ${fid ? `<div style="margin-top:14px"><button type="button" class="btn or large" data-act="faceid">Entrer avec Face ID</button></div><p class="ou">ou avec ton mot de passe</p>` : ''}
     <form id="f-connexion" autocomplete="on"><input type="text" name="username" autocomplete="username" value="BlackPhantom" hidden>
     <label class="champ"><span>Mot de passe</span><input id="mdp" type="password" autocomplete="current-password" required></label>
     ${erreur ? `<p class="erreur">${esc(erreur)}</p>` : ''}
-    <div style="margin-top:14px"><button class="btn or large" type="submit">Entrer</button></div></form></div>
+    <div style="margin-top:14px"><button class="btn ${fid ? '' : 'or '}large" type="submit">Entrer</button></div></form>
+    ${fid ? '' : `<p class="aide" style="margin-top:12px">Astuce : active Face ID dans l'espace vendeur du site, il marchera aussi ici.</p>`}</div>
     <div class="v-bloc"><h3>Essayer sans publier</h3><p>Tu peux importer un listing pour voir le résultat ici. Rien ne part en ligne tant que tu n'es pas entré.</p>
     <div style="margin-top:12px"><button type="button" class="btn large" data-act="choisir-pdf">Importer un PDF</button></div></div>`;
 }
@@ -746,6 +877,9 @@ function blocImport() {
     return `<div class="v-bloc"><h3>Listing prêt, pas encore en ligne</h3><p>${esc(d.fichier || '')}${d.maj ? ', mis à jour le ' + esc(d.maj) : ''}. Ce que tu vois sur la page est le nouveau listing.</p>
       <div class="chiffres">${ch(x.total, 'flacons lus')}${ch(x.visibles, 'visibles par tes clients')}${ch(x.nouveaux, 'nouveautés (en jaune)')}${ch(x.ruptures, 'en rupture')}
       ${x.avant != null ? ch('+' + x.ajoutes, 'arrivés depuis le dernier') + ch('−' + x.retires, 'retirés du listing') : ''}</div>
+      ${x.listeArrives.length ? `<details class="voir"><summary>Voir les ${x.listeArrives.length} arrivés</summary><ul class="v-liste">${x.listeArrives.map(n => `<li>${esc(n)}</li>`).join('')}</ul></details>` : ''}
+      ${x.listeRetires.length ? `<details class="voir"><summary>Voir les ${x.listeRetires.length} retirés</summary><ul class="v-liste">${x.listeRetires.map(n => `<li>${esc(n)}</li>`).join('')}</ul></details>` : ''}
+      ${x.prixLus ? `<p class="aide" style="margin-top:12px">Prix du fournisseur lus pour ${x.prixLus} flacons : ils restent dans ton téléphone, jamais publiés.</p>` : ''}
       ${x.photosManquantes ? `<p class="aide">${x.photosManquantes} flacon${x.photosManquantes > 1 ? 's' : ''} sans photo.</p>` : ''}
       ${d.__avert && d.__avert.length ? `<details class="voir"><summary>${d.__avert.length} point${d.__avert.length > 1 ? 's' : ''} à vérifier</summary><ul class="avert">${d.__avert.slice(0, 30).map(a => `<li>${esc(a)}</li>`).join('')}</ul></details>` : ''}
       <div style="display:grid;gap:10px;margin-top:14px">
@@ -758,6 +892,34 @@ function blocImport() {
   return `${reste && S.vendeur ? `<div class="v-bloc"><h3>${reste} photos à envoyer</h3><p>GitHub limite les envois par heure. Si la dernière publication date de plus d'une heure, envoie-les maintenant.</p><div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Envoyer les photos restantes</button></div></div>` : ''}
     <div class="v-bloc"><h3>Nouveau listing</h3><p>Choisis le PDF reçu de ton fournisseur. La page le lit, te montre le résultat, puis tu publies.</p>
     <div style="margin-top:12px"><button type="button" class="btn or large" data-act="choisir-pdf">Importer un PDF</button></div></div>`;
+}
+function blocEtat() {
+  const d = S.pub;
+  if (!d || !d.refs || !d.refs.length) return '';
+  const quand = d.publieLe ? new Date(d.publieLe) : null;
+  const nVis = d.refs.filter(r => estVisible(r, d.reglages)).length;
+  return `<div class="v-bloc"><div class="v-etat${S.modifie ? ' attente' : ''}"><span class="point" aria-hidden="true"></span><div><h3>${S.modifie ? 'Changements pas encore publiés' : 'En ligne'}</h3>
+    <p>Listing${d.maj ? ' du ' + esc(d.maj) : ''} : ${nVis} flacons visibles sur ${d.refs.length}${quand ? `, publié le ${quand.getDate()} ${MOIS[quand.getMonth()]} à ${String(quand.getHours()).padStart(2, '0')} h ${String(quand.getMinutes()).padStart(2, '0')}` : ''}.</p></div></div>
+    ${S.modifie && S.vendeur ? '<div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Publier les changements</button></div>' : ''}</div>`;
+}
+function blocPartage() {
+  const url = location.origin + location.pathname;
+  return `<div class="v-bloc"><h3>Envoyer le listing à tes clients</h3><p>Le lien, avec un message tout prêt pour Snap ou Insta.</p>
+    <span class="lien-listing">${esc(url)}</span>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px"><button type="button" class="btn" data-act="copier-annonce">Copier le texte</button>${navigator.share ? '<button type="button" class="btn" data-act="partager-listing">Partager</button>' : '<button type="button" class="btn" data-act="copier-url">Copier le lien</button>'}</div></div>`;
+}
+function annonce() {
+  const d = donnees(), date = majDate(d);
+  const mois = d.mois || (date ? MOIS[date.getMonth()] : '');
+  return `Le listing${mois ? ' de ' + mois : ''} est en ligne : ${visiblesClients().length} flacons neufs, sur commande. Fais ta liste et envoie-la-moi ici : ${location.origin + location.pathname}`;
+}
+function blocStory() {
+  const n = storyChoix().length;
+  if (!n) return '';
+  return `<div class="v-bloc"><h3>Story des nouveautés</h3><p>Une image prête pour ta story Snap : ${(reglages().coeurs || []).length ? 'tes coups de cœur, puis ' : ''}les nouveautés du listing.</p>
+    ${S.story ? `<img class="story-apercu" src="${S.story.url}" alt="Aperçu de la story">
+      <div style="display:grid;gap:10px;margin-top:14px">${navigator.share ? '<button type="button" class="btn or large" data-act="story-partager">Partager ou enregistrer</button>' : ''}<a class="btn large" href="${S.story.url}" download="blackphantom-nouveautes.jpg" target="_blank" rel="noopener">Ouvrir l'image</a><button type="button" class="lien" data-act="story">Refaire l'image</button></div>`
+      : `<div style="margin-top:12px"><button type="button" class="btn large" data-act="story">Créer l'image</button></div>`}</div>`;
 }
 function blocPublication() {
   const P = S.publication;
@@ -783,21 +945,26 @@ function blocVisibilite() {
 }
 function blocVendeurFiche(r) {
   const R = reglages();
-  const p = R.prix && R.prix[r.id];
+  const parMaison = (R.masquer.maisons || []).includes(r.maison) || (R.masquer.sections || []).includes(r.section);
   return `<div class="v-bloc" style="margin-top:22px"><h3>Vendeur</h3>
-    <label class="champ"><span>Ton prix pour tes clients (vide = prix sur demande)</span><input id="v-prix" type="number" inputmode="decimal" min="0" step="1" value="${p || ''}" placeholder="Ex. 120" data-id="${esc(r.id)}"></label>
-    <div class="bascule" style="margin-top:6px"><span>Visible par mes clients</span><button type="button" class="interrupteur" role="switch" aria-checked="${!(R.cacher || []).includes(r.id)}" data-act="vis-ref" data-v="${esc(r.id)}"></button></div>
-    <p class="aide">Ces changements partent en ligne quand tu publies, depuis l'espace vendeur.</p></div>`;
+    <div class="bascule"><span>Coup de cœur<small>En haut de la page et dans la story</small></span><button type="button" class="interrupteur" role="switch" aria-checked="${estCoeur(r)}" data-act="coeur" data-v="${esc(r.id)}" aria-label="Coup de cœur"></button></div>
+    <div class="bascule"><span>Visible par mes clients${parMaison ? `<small>Sa maison ou son rayon est masqué dans l'espace vendeur</small>` : ''}</span><button type="button" class="interrupteur" role="switch" aria-checked="${!(R.cacher || []).includes(r.id)}" data-act="vis-ref" data-v="${esc(r.id)}" aria-label="Visible par mes clients"></button></div>
+    <p class="aide">Tu publies ensuite avec le bouton en haut de la page.</p></div>`;
 }
-function ouvrirVendeur(erreur) {
+function ouvrirVendeur(erreur, garderPosition) {
+  const y = garderPosition && feuilleType === 'vendeur' ? $('#feuille-corps').scrollTop : 0;
   const corps = [];
   if (!S.vendeur) corps.push(blocConnexion(erreur));
-  if (S.vendeur || S.brouillon || (import_ && import_.etape)) corps.push(blocImport());
   if (S.publication) corps.push(blocPublication());
+  if (S.vendeur && !S.brouillon && !S.publication) corps.push(blocEtat());
+  if (S.vendeur || S.brouillon || (import_ && import_.etape)) corps.push(blocImport());
+  if (S.vendeur && !S.brouillon) corps.push(blocPartage());
+  if (S.vendeur || S.brouillon) corps.push(blocStory());
   if (S.vendeur || S.brouillon) corps.push(blocVisibilite());
   if (S.vendeur) corps.push(`<p class="aide" style="margin-top:14px">Connecté à ${esc(S.vendeur.proprio)}/${esc(S.vendeur.depot)}. <button type="button" class="lien" data-act="deconnexion">Se déconnecter</button></p>`);
   corps.push('<input type="file" id="pdf" accept="application/pdf,.pdf" hidden>');
   ouvrirFeuille(S.vendeur ? 'Espace vendeur' : 'Vendeur', corps.join(''), 'vendeur');
+  if (y) $('#feuille-corps').scrollTop = y;
   const f = $('#f-connexion');
   if (f) f.addEventListener('submit', async ev => {
     ev.preventDefault();
@@ -820,16 +987,89 @@ async function connexion(mdp) {
     if (!a) throw new Error(enLigne() ? "La clé d'accès du site est introuvable. Entre une fois dans l'espace vendeur du site, puis reviens." : "Ici c'est un aperçu : l'entrée vendeur marche une fois la page sur ton site.");
     try { jeton = await dechiffrer(a, mdp); c = a; } catch (e) { throw new Error('Mot de passe incorrect.'); }
   }
-  S.vendeur = { jeton, proprio: c.proprio, depot: c.depot };
-  try { const rep = await gh(`/repos/${c.proprio}/${c.depot}`); if (rep.permissions && rep.permissions.push === false) throw new Error('nopush'); S.vendeur.branche = rep.default_branch || 'main'; }
+  await finirConnexion(jeton, c.proprio, c.depot);
+}
+async function finirConnexion(jeton, proprio, depot) {
+  S.vendeur = { jeton, proprio, depot };
+  try { const rep = await gh(`/repos/${proprio}/${depot}`); if (rep.permissions && rep.permissions.push === false) throw new Error('nopush'); S.vendeur.branche = rep.default_branch || 'main'; }
   catch (e) { S.vendeur = null; throw new Error(e.status === 401 ? 'Ta clé GitHub a expiré : refais-la depuis l’espace vendeur du site.' : 'GitHub ne répond pas. Vérifie ta connexion et réessaie.'); }
-  if (S.brouillon) dessinerTout();
+  dessinerTout();
+}
+/* l'écran reste allumé pendant la lecture et la publication (Safari 16.4 et plus) */
+let verrou = null;
+async function garderEcran(on) {
+  try {
+    if (on && !verrou && navigator.wakeLock) { verrou = await navigator.wakeLock.request('screen'); verrou.addEventListener('release', () => { verrou = null; }); }
+    else if (!on && verrou) { const v = verrou; verrou = null; await v.release(); }
+  } catch (e) {}
+}
+/* après la publication : on regarde quand GitHub a vraiment mis le site à jour */
+async function verifierEnLigne(publieLe) {
+  for (let i = 0; i < 45; i++) {
+    await new Promise(ok => setTimeout(ok, i ? 8000 : 15000));
+    if (!S.publication || S.publication.attend !== publieLe) return;
+    try {
+      const r = await fetch('data.json?v=' + Date.now(), { cache: 'no-store' });
+      if (r.ok && (await r.json()).publieLe === publieLe) {
+        S.publication = { titre: 'En ligne', txt: 'C’est fait : tes clients voient le nouveau listing.', pc: 100, fini: true, enLigne: true };
+        if (feuilleType === 'vendeur') ouvrirVendeur(null, true);
+        toast('Le listing est en ligne');
+        return;
+      }
+    } catch (e) {}
+  }
+  if (S.publication && S.publication.attend === publieLe) { S.publication.txt = 'GitHub met plus de temps que d’habitude. Recharge la page dans quelques minutes pour vérifier.'; if (feuilleType === 'vendeur') ouvrirVendeur(null, true); }
+}
+
+/* ---------- story Snap des nouveautés (1080 × 1920) ---------- */
+function storyChoix() {
+  const vis = visiblesClients().filter(r => (r.photo || r.__url) && !r.rupture);
+  const l = [...coeurs().filter(r => estVisible(r)), ...vis.filter(r => r.nouveau || r.arrive)];
+  return l.filter((r, i) => (r.photo || r.__url) && l.indexOf(r) === i).slice(0, 4);
+}
+const chargerImage = src => new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = src; });
+function arrondi(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function couper(c, t, max) { if (c.measureText(t).width <= max) return t; while (t.length > 1 && c.measureText(t + '…').width > max) t = t.slice(0, -1); return t.trim() + '…'; }
+async function creerStory() {
+  const W = 1080, H = 1920, choix = storyChoix();
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const c = cv.getContext('2d');
+  const SANS = '-apple-system, "SF Pro Display", "Helvetica Neue", Arial, sans-serif', SERIF = '"New York", "Iowan Old Style", Georgia, serif';
+  c.fillStyle = '#000'; c.fillRect(0, 0, W, H);
+  try { const logo = await chargerImage('icone.png'); c.save(); c.beginPath(); c.arc(118, 150, 38, 0, Math.PI * 2); c.clip(); c.drawImage(logo, 80, 112, 76, 76); c.restore(); } catch (e) {}
+  c.fillStyle = '#F5F5F7'; c.font = `500 42px ${SERIF}`; c.textBaseline = 'alphabetic'; c.fillText('BlackPhantom', 176, 164);
+  const d = donnees(), date = majDate(d), mois = d.mois || (date ? MOIS[date.getMonth()] : '');
+  c.font = `700 96px ${SANS}`; c.fillText('Nouveautés', 80, 330); c.fillText('du listing.', 80, 432);
+  c.fillStyle = '#A1A1A6'; c.font = `400 40px ${SANS}`; c.fillText(`Flacons neufs, sur commande${mois ? ', ' + mois : ''}`, 80, 498);
+  /* grille centrée, en gardant libres le haut et le bas (boutons de Snap) */
+  const gap = 40, mx = 120, tw = (W - 2 * mx - gap) / 2, th = tw, top0 = 566, rowH = th + 124;
+  for (let i = 0; i < choix.length; i++) {
+    const r = choix[i], x = mx + (i % 2) * (tw + gap), y = top0 + Math.floor(i / 2) * rowH;
+    c.save(); arrondi(c, x, y, tw, th, 36); c.clip();
+    const g = c.createRadialGradient(x + tw / 2, y + th * 0.3, 10, x + tw / 2, y + th * 0.45, tw * 0.85);
+    g.addColorStop(0, '#ffffff'); g.addColorStop(0.5, '#F4F5F7'); g.addColorStop(1, '#E1E3E8');
+    c.fillStyle = g; c.fillRect(x, y, tw, th);
+    try {
+      const im = await chargerImage(r.__url || r.photo);
+      const k = Math.min(tw * 0.82 / im.width, th * 0.82 / im.height), w = im.width * k, h = im.height * k;
+      c.globalCompositeOperation = 'multiply'; c.drawImage(im, x + (tw - w) / 2, y + (th - h) / 2, w, h);
+    } catch (e) {}
+    c.restore();
+    c.fillStyle = '#A1A1A6'; c.font = `400 30px ${SANS}`; c.fillText(couper(c, r.maison || r.section, tw), x, y + th + 48);
+    c.fillStyle = '#F5F5F7'; c.font = `500 40px ${SERIF}`; c.fillText(couper(c, r.nom, tw), x, y + th + 98);
+  }
+  c.fillStyle = '#E3B96F'; c.font = `600 50px ${SANS}`; c.fillText('Commande sur Snap', 80, H - 250);
+  c.fillStyle = '#F5F5F7'; c.font = `400 42px ${SANS}`; c.fillText('i.blackphantom', 80, H - 190);
+  const blob = await new Promise(ok => cv.toBlob(ok, 'image/jpeg', 0.9));
+  if (S.story) URL.revokeObjectURL(S.story.url);
+  S.story = { blob, url: URL.createObjectURL(blob) };
 }
 
 /* lecture du PDF, dans le téléphone */
 async function lancerImport(fichier) {
-  import_ = { etape: 'lecture', txt: 'Ouverture du PDF', pc: 0, stop: false, toutesPhotos: false };
+  import_ = { etape: 'lecture', txt: 'Ouverture du PDF', pc: 0, stop: false };
   ouvrirVendeur();
+  garderEcran(true);
   try {
     const [pdfjs, imp] = await Promise.all([import('./pdfjs/pdf.min.js'), import('./importer.js')]);
     pdfjs.GlobalWorkerOptions.workerSrc = new URL('./pdfjs/pdf.worker.min.js', location.href).href;
@@ -840,7 +1080,8 @@ async function lancerImport(fichier) {
     });
     if (!res.refs.length) throw new Error("Aucun flacon trouvé dans ce PDF. C'est bien le listing du fournisseur ?");
     S.brouillon = construireBrouillon(res, fichier.name);
-    import_ = { etape: 'pret', toutesPhotos: false };
+    import_ = { etape: 'pret' };
+    S.story = null;
     S.rayon = 'tout'; S.maison = ''; S.filtres.clear(); S.q = ''; $('#q').value = '';
     dessinerTout(); bandeauApercu(); ouvrirVendeur();
   } catch (e) {
@@ -848,7 +1089,7 @@ async function lancerImport(fichier) {
     console.error(e);
     import_ = { etape: 'erreur', txt: (e && e.message) || 'Erreur inconnue' };
     ouvrirVendeur();
-  }
+  } finally { garderEcran(false); }
 }
 function construireBrouillon(res, nomFichier) {
   const avant = S.pub && S.pub.refs && S.pub.refs.length ? S.pub : null;
@@ -874,12 +1115,20 @@ function construireBrouillon(res, nomFichier) {
     avant: avant ? avant.refs.length : null,
     ajoutes: refs.filter(r => r.arrive).length,
     retires: avant ? avant.refs.filter(r => !ids.has(r.id)).length : 0,
+    listeArrives: refs.filter(r => r.arrive).map(nomComplet),
+    listeRetires: avant ? avant.refs.filter(r => !ids.has(r.id)).map(nomComplet) : [],
+    prixLus: res.refs.filter(r => r.achat != null).length,
   };
+  R.coeurs = (R.coeurs || []).filter(id => ids.has(id));
   return d;
 }
 function bandeauApercu() {
   const b = $('#apercu-bandeau');
-  b.innerHTML = S.brouillon ? `<div class="bandeau-apercu"><span>Aperçu du nouveau listing, pas encore en ligne</span><button type="button" data-act="ouvrir-vendeur">${S.vendeur ? 'Publier' : 'Vendeur'}</button></div>` : '';
+  if (!b) return;
+  if (!S.vendeur && !S.brouillon) { b.innerHTML = ''; return; }
+  const aPublier = !!(S.brouillon || S.modifie);
+  const txt = S.brouillon ? 'Nouveau listing à publier' : S.modifie ? 'Pas encore publié' : S.vueClient ? 'Vue client' : 'Mode vendeur';
+  b.innerHTML = `<div class="bandeau-apercu"><span>${txt}</span><button type="button" class="b-sec" data-act="vue-client">${S.vueClient ? 'Mode vendeur' : 'Voir en client'}</button>${aPublier && S.vendeur ? '<button type="button" data-act="publier">Publier</button>' : `<button type="button" data-act="ouvrir-vendeur">${S.vendeur ? 'Espace vendeur' : 'Vendeur'}</button>`}</div>`;
 }
 
 /* publication sur GitHub : photos nouvelles + data.json, en un seul enregistrement */
@@ -904,6 +1153,7 @@ async function publier() {
   const aRetirer = brouillon && S.pub ? S.pub.refs.filter(r => r.photo && !ids.has(r.id)).map(r => dossier() + r.photo) : [];
   S.publication = { titre: 'Publication…', txt: 'Connexion à GitHub', pc: 0 };
   ouvrirVendeur();
+  garderEcran(true);
   const maj = (txt, pc) => { S.publication.txt = txt; if (pc != null) S.publication.pc = pc; const t = $('#p-txt'), b = $('#p-barre'); if (t) t.textContent = txt; if (b && pc != null) b.style.width = pc + '%'; };
   try {
     const entrees = [];
@@ -927,6 +1177,7 @@ async function publier() {
     for (const r of d.refs) if (r.__blob || !r.photo) r.photo = (envoyees.has(r.id) || enLigneDeja(r)) && (r.__blob || r.photo) ? 'img/' + r.id + '.jpg' : '';
     const sortie = propre(d);
     sortie.publieLe = Date.now();
+    d.publieLe = sortie.publieLe;
     entrees.push({ path: dossier() + 'data.json', mode: '100644', type: 'blob', content: JSON.stringify(sortie) });
     for (const p of aRetirer) entrees.push({ path: p, mode: '100644', type: 'blob', sha: null });
     maj('Enregistrement…', 94);
@@ -944,13 +1195,14 @@ async function publier() {
     S.pub = d; S.brouillon = null; S.modifie = false; import_ = null;
     delete d.__resume; delete d.__avert;
     const reste = d.refs.filter(r => r.__blob).length;
-    S.publication = { titre: 'Publié', txt: 'Tes clients voient le nouveau listing dans 1 à 2 minutes, le temps que GitHub mette le site à jour.' + (reste ? ` ${reste} photos restent à envoyer : GitHub limite les envois par heure. Dans une heure, touche « Envoyer les photos restantes » (ou réimporte le même PDF).` : ''), pc: 100, fini: true };
+    S.publication = { titre: 'Publié', txt: 'GitHub met le site à jour, ça prend en général une à deux minutes. Tu peux fermer : je te préviens ici quand c’est en ligne.' + (reste ? ` ${reste} photos restent à envoyer : GitHub limite les envois par heure. Dans une heure, touche « Envoyer les photos restantes » (ou réimporte le même PDF).` : ''), pc: 100, fini: true, attend: d.publieLe };
     bandeauApercu(); dessinerTout(); ouvrirVendeur();
+    verifierEnLigne(d.publieLe);
   } catch (e) {
     console.error(e);
     S.publication = { titre: 'La publication a échoué', txt: e.status === 401 ? 'Ta clé GitHub a expiré : refais-la depuis l’espace vendeur du site.' : `Rien n'a été changé en ligne. Réessaie dans un moment. (${e.message})`, fini: true };
     ouvrirVendeur();
-  }
+  } finally { garderEcran(false); }
 }
 
 const actionsVendeur = {
@@ -959,15 +1211,66 @@ const actionsVendeur = {
   'annuler-import': () => { if (import_) import_.stop = true; },
   'abandonner': () => { if (S.brouillon) for (const r of S.brouillon.refs) if (r.__url) URL.revokeObjectURL(r.__url); S.brouillon = null; import_ = null; bandeauApercu(); dessinerTout(); ouvrirVendeur(); },
   'publier': () => publier(),
-  'fin-publication': () => { S.publication = null; fermerFeuille(); },
-  'deconnexion': () => { S.vendeur = null; ouvrirVendeur(); bandeauApercu(); },
+  'fin-publication': () => { if (S.publication && S.publication.attend) S.publication.ferme = true; else S.publication = null; fermerFeuille(); },
+  'deconnexion': () => { S.vendeur = null; S.vueClient = false; dessinerTout(); ouvrirVendeur(); },
+  'faceid': b => {
+    /* Safari n'ouvre Face ID que juste après un toucher : la demande part tout de suite */
+    const c = faceIdConfig();
+    if (!c || b.dataset.occupe) return;
+    b.dataset.occupe = '1'; b.textContent = 'Face ID…';
+    let demande;
+    try {
+      demande = navigator.credentials.get({ publicKey: {
+        challenge: crypto.getRandomValues(new Uint8Array(32)), rpId: location.hostname,
+        allowCredentials: [{ type: 'public-key', id: depuisB64(c.id) }], userVerification: 'required', timeout: 120000,
+        extensions: { prf: { eval: { first: depuisB64(c.sel) } } },
+      } });
+    } catch (e) { demande = Promise.reject(e); }
+    demande.then(async cred => {
+      const res = cred && typeof cred.getClientExtensionResults === 'function' ? cred.getClientExtensionResults() : null;
+      const f = res && res.prf && res.prf.results && res.prf.results.first;
+      if (!f) throw new Error('prf');
+      let jeton;
+      try { jeton = new TextDecoder().decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: depuisB64(c.iv) }, await cleFaceId(new Uint8Array(f)), depuisB64(c.ct))); }
+      catch (e) { throw new Error('prf'); }
+      await finirConnexion(jeton, c.proprio, c.depot);
+      ouvrirVendeur();
+    }).catch(e => ouvrirVendeur(e && e.name === 'NotAllowedError' ? 'Face ID annulé. Réessaie, ou entre ton mot de passe.'
+      : e && e.message && e.message !== 'prf' ? e.message : "Face ID n'a pas pu ouvrir ton accès ici. Entre ton mot de passe."));
+  },
+  'vue-client': () => { S.vueClient = !S.vueClient; dessinerTout(); if (feuilleType === 'fiche') rafraichirFeuille(); },
+  'coeur': b => {
+    const R = reglages(); R.coeurs = R.coeurs || [];
+    const id = b.dataset.v, i = R.coeurs.indexOf(id);
+    if (i >= 0) R.coeurs.splice(i, 1); else R.coeurs.unshift(id);
+    b.setAttribute('aria-checked', i < 0); S.modifie = true; S.story = null;
+    const y = scrollY; dessinerTout(); scrollTo(0, y);
+    toast(i < 0 ? 'Ajouté à tes coups de cœur' : 'Retiré de tes coups de cœur');
+  },
+  'story': async b => {
+    b.disabled = true; b.textContent = 'Création…';
+    try { await creerStory(); } catch (e) { console.error(e); toast("L'image n'a pas pu être créée"); }
+    ouvrirVendeur(null, true);
+  },
+  'story-partager': async () => {
+    if (!S.story) return;
+    const f = new File([S.story.blob], 'blackphantom-nouveautes.jpg', { type: 'image/jpeg' });
+    try {
+      if (navigator.canShare && navigator.canShare({ files: [f] })) await navigator.share({ files: [f] });
+      else window.open(S.story.url, '_blank');
+    } catch (e) { if (!e || e.name !== 'AbortError') window.open(S.story.url, '_blank'); }
+  },
+  'copier-annonce': () => { copier(annonce()); toast('Message copié : colle-le sur Snap ou Insta'); },
+  'copier-url': () => { copier(location.origin + location.pathname); toast('Lien copié'); },
+  'partager-listing': async () => { try { await navigator.share({ title: 'Le listing BlackPhantom', text: annonce() }); } catch (e) { if (!e || e.name !== 'AbortError') { copier(annonce()); toast('Message copié'); } } },
   'vis-section': b => basculerListe('sections', b),
   'vis-maison': b => basculerListe('maisons', b),
   'vis-ref': b => {
     const R = reglages(); R.cacher = R.cacher || [];
     const id = b.dataset.v, i = R.cacher.indexOf(id);
     if (i >= 0) R.cacher.splice(i, 1); else R.cacher.push(id);
-    b.setAttribute('aria-checked', i >= 0); S.modifie = true; dessinerTout();
+    b.setAttribute('aria-checked', i >= 0); S.modifie = true;
+    const y = scrollY; dessinerTout(); scrollTo(0, y);
   },
 };
 function basculerListe(cle, b) {
@@ -977,17 +1280,9 @@ function basculerListe(cle, b) {
   b.setAttribute('aria-checked', i >= 0);
   S.modifie = true;
   if (S.rayon !== 'tout' && !visibles().some(r => r.section === S.rayon)) S.rayon = 'tout';
-  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande();
-  if (S.brouillon) S.brouillon.__resume.visibles = visibles().length;
+  dessinerRayons(); dessinerEtagere(); dessinerVitrine(); majDemande(); bandeauApercu();
+  if (S.brouillon) S.brouillon.__resume.visibles = visiblesClients().length;
 }
-document.addEventListener('change', e => {
-  if (e.target.id === 'v-prix') {
-    const R = reglages(); R.prix = R.prix || {};
-    const v = Number(String(e.target.value).replace(',', '.'));
-    if (v > 0) R.prix[e.target.dataset.id] = Math.round(v * 100) / 100; else delete R.prix[e.target.dataset.id];
-    S.modifie = true; dessinerVitrine(); dessinerEtagere(); toast('Prix noté. Publie depuis l’espace vendeur.');
-  }
-});
 document.addEventListener('input', e => {
   if (e.target.id === 'q-maison-v') {
     const q = norm(e.target.value);
