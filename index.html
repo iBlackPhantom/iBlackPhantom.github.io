@@ -2270,6 +2270,23 @@ a.menu-lien{display:inline-flex;align-items:center;text-decoration:none}
 .cmd-listing p{margin:0;font-size:.92rem;line-height:1.45;color:#C9C3B6}
 .cmd-listing .btn{margin-top:4px}
 
+/* ouverture de marque (21 nov. 2026) : l'emblème argent se révèle depuis son centre, un reflet le traverse, puis il s'efface sur la page */
+.intro-bp{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:#101011;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:none}
+.intro-bp .ib-em{position:relative;width:min(50vw,220px);aspect-ratio:1;isolation:isolate;mix-blend-mode:lighten;opacity:0;transform:scale(.9);filter:blur(10px);clip-path:circle(14% at 50% 50%);will-change:transform,opacity,filter,clip-path}
+.intro-bp .ib-em img{display:block;width:100%;height:100%;filter:contrast(1.14)}
+.intro-bp .ib-em::after{content:"";position:absolute;inset:0;background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.8) 50%,rgba(255,255,255,0) 60%) no-repeat;background-size:260% 100%;background-position:130% 0;mix-blend-mode:overlay;pointer-events:none}
+.intro-bp.joue .ib-em{animation:ib-entree .85s cubic-bezier(.2,.75,.2,1) .05s forwards,ib-loin .5s cubic-bezier(.55,0,.75,.2) 1.35s forwards}
+.intro-bp.joue .ib-em::after{animation:ib-reflet .75s cubic-bezier(.45,0,.25,1) .62s forwards}
+.intro-bp.joue{animation:ib-sortie .5s cubic-bezier(.55,0,.75,.2) 1.4s forwards}
+.intro-bp.joue.vite,.intro-bp.vite{animation:ib-vite .28s ease-in forwards}
+@keyframes ib-entree{from{opacity:0;transform:scale(.9);filter:blur(10px);clip-path:circle(14% at 50% 50%)}to{opacity:1;transform:scale(1);filter:blur(0);clip-path:circle(75% at 50% 50%)}}
+@keyframes ib-reflet{from{background-position:130% 0}to{background-position:-30% 0}}
+@keyframes ib-loin{from{opacity:1;transform:scale(1);filter:blur(0);clip-path:circle(75% at 50% 50%)}to{opacity:0;transform:scale(1.08);filter:blur(4px);clip-path:circle(75% at 50% 50%)}}
+@keyframes ib-sortie{to{opacity:0;visibility:hidden}}
+@keyframes ib-vite{to{opacity:0;visibility:hidden}}
+/* le réglage des sons, en bas de page, discret comme un lien */
+.pied-sons{padding:.4rem 0;border:0;background:none;color:inherit;font:inherit;text-decoration:underline;text-decoration-color:#ffffff40;text-underline-offset:3px;cursor:pointer}
+
 /* ===== espace vendeur complet (28 octobre) : Plus, clients, commandes, statistiques, réassort, mise en avant, promos ===== */
 .vue-vendeur :is(#g-res,#v-cmds):empty{display:none}
 .vue-vendeur #g-res:not(:empty){display:grid;gap:4px;margin-top:-.6rem}
@@ -2758,6 +2775,113 @@ const S = {
 };
 /* Sur Claude, window.claude existe ; sur le site hébergé (GitHub Pages), non. */
 const surClaude = () => !!(window.claude && typeof window.claude.use === 'function');
+
+/* ---------- sons des boutons : fabriqués dans le navigateur, sans musique ni instrument ----------
+   Un toucher discret pour chaque bouton ; pour un ajout au panier, le clic d'un bouchon puis le tintement du verre.
+   Muets quand l'iPhone est en silencieux (session audio « ambient », qui laisse aussi jouer la musique du client).
+   Désactivables en bas de page (réglage gardé sur le téléphone). */
+const SONS = (() => {
+  const CLE = 'bp-sons';
+  let ctx = null, sortie = null, bruitBuf = null, dernier = 0, attente = 0;
+  const actifs = () => { try { return localStorage.getItem(CLE) !== '0'; } catch (e) { return true; } };
+  function contexte() {
+    if (!actifs()) return null;
+    try {
+      if (!ctx) {
+        const C = window.AudioContext || window.webkitAudioContext;
+        if (!C) return null;
+        try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch (e) {}
+        ctx = new C();
+        sortie = ctx.createGain(); sortie.gain.value = 1; sortie.connect(ctx.destination);
+      }
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    } catch (e) { return null; }
+  }
+  function bruit(c) {
+    if (bruitBuf && bruitBuf.sampleRate === c.sampleRate) return bruitBuf;
+    const n = Math.ceil(c.sampleRate * 0.05), b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+    let x = 1234567; for (let i = 0; i < n; i++) { x = (x * 1103515245 + 12345) % 2147483648; d[i] = x / 1073741824 - 1; }
+    return (bruitBuf = b);
+  }
+  const env = (g, t, crete, monte, duree) => { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(crete, t + monte); g.gain.exponentialRampToValueAtTime(0.0001, t + duree); };
+  function souffle(c, out, t, type, freq, q, crete, duree) {
+    const s = c.createBufferSource(); s.buffer = bruit(c);
+    const f = c.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
+    const g = c.createGain(); env(g, t, crete, 0.0015, duree);
+    s.connect(f); f.connect(g); g.connect(out); s.start(t); s.stop(t + duree + 0.01);
+  }
+  function corps(c, out, t, f0, f1, crete, duree) {
+    const o = c.createOscillator(), g = c.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + duree * 0.8);
+    env(g, t, crete, 0.002, duree); o.connect(g); g.connect(out); o.start(t); o.stop(t + duree + 0.01);
+  }
+  /* un toucher : bref et feutré */
+  function tap(c, out, t) {
+    souffle(c, out, t, 'bandpass', 3000, 0.9, 0.22, 0.024);
+    corps(c, out, t, 180, 110, 0.12, 0.055);
+  }
+  /* ajout au panier : le bouchon qui se ferme, puis le verre qui tinte (les vibrations d'une pièce de verre, pas une note) */
+  function panier(c, out, t) {
+    souffle(c, out, t, 'lowpass', 1400, 0.7, 0.3, 0.02);
+    corps(c, out, t, 140, 80, 0.15, 0.07);
+    const t2 = t + 0.045, base = 2300;
+    [[1, 0.15, 0.55], [2.76, 0.06, 0.32], [5.4, 0.03, 0.2], [8.93, 0.015, 0.12]].forEach(([k, a, d]) => {
+      const o = c.createOscillator(), g = c.createGain(); o.type = 'sine'; o.frequency.value = base * k;
+      env(g, t2, a, 0.003, d); o.connect(g); g.connect(out); o.start(t2); o.stop(t2 + d + 0.02);
+    });
+  }
+  const jouer = f => { const c = contexte(); if (c) { try { f(c, sortie, c.currentTime + 0.005); } catch (e) {} } };
+  return {
+    actifs,
+    /* le contexte audio naît pendant le geste (exigence de Safari) */
+    eveil: () => { contexte(); },
+    tap() { const n = Date.now(); if (n - dernier < 70) return; dernier = n; jouer(tap); },
+    panier() { attente = 0; dernier = Date.now(); jouer(panier); },
+    /* bouton d'ajout : son du panier si l'ajout réussit, sinon un simple toucher */
+    guetter() { const t = attente = Date.now(); setTimeout(() => { if (attente === t) { attente = 0; SONS.tap(); } }, 0); },
+    basculer() { const on = !actifs(); try { localStorage.setItem(CLE, on ? '1' : '0'); } catch (e) {} if (on) jouer(tap); return on; },
+    _tap: tap, _panier: panier,
+  };
+})();
+/* chaque bouton, lien ou case touché fait son petit bruit ; la porte discrète du vendeur reste muette */
+function brancherSons(panierSel) {
+  const CIBLES = 'button, a[href], [role="button"], [role="switch"], [data-act], summary, label, select, input[type="checkbox"], input[type="radio"]';
+  document.addEventListener('click', e => {
+    if (!e.isTrusted) return;
+    const el = e.target && e.target.closest && e.target.closest(CIBLES);
+    if (!el || el.closest('.intro-bp, .porte, [data-son="non"]') || el.matches(':disabled')) return;
+    SONS.eveil();
+    if (panierSel && el.matches(panierSel)) SONS.guetter(); else SONS.tap();
+  }, true);
+}
+
+/* ---------- ouverture de marque : l'emblème se révèle, un reflet passe, puis la page apparaît ----------
+   Une fois par visite (onglet). Jamais pour les robots de test, ni quand la page s'ouvre en arrière-plan.
+   Un toucher la passe. */
+function introMarque(src) {
+  const forcer = /[?&]intro=1\b/.test(location.search);
+  try {
+    if (!forcer && (navigator.webdriver || sessionStorage.getItem('bp-intro') || document.visibilityState === 'hidden' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches))) return;
+    sessionStorage.setItem('bp-intro', '1');
+  } catch (e) { return; }
+  const d = document.createElement('div');
+  d.className = 'intro-bp'; d.setAttribute('aria-hidden', 'true');
+  d.innerHTML = `<div class="ib-em"><img alt="" src="${src}"></div>`;
+  (document.body || document.documentElement).appendChild(d);
+  let fini = false;
+  const retirer = () => { if (fini) return; fini = true; d.remove(); document.documentElement.classList.remove('intro-en-cours'); };
+  const passer = () => { d.classList.add('vite'); setTimeout(retirer, 300); };
+  document.documentElement.classList.add('intro-en-cours');
+  d.addEventListener('pointerdown', passer, { once: true });
+  d.addEventListener('animationend', e => { if (e.target === d) retirer(); });
+  setTimeout(retirer, 3400);
+  const img = d.querySelector('img');
+  const pret = img.decode ? img.decode() : Promise.resolve();
+  const delai = new Promise((ok, non) => setTimeout(non, 900));
+  Promise.race([pret, delai]).then(() => requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add('joue'))), retirer);
+}
+
 
 const SAISONS = [['printemps', 'Printemps', 'au printemps'], ['ete', 'Été', 'en été'], ['automne', 'Automne', 'en automne'], ['hiver', 'Hiver', 'en hiver']];
 const MOMENTS = [['jour', 'Jour'], ['soir', 'Soir']];
@@ -3511,6 +3635,7 @@ function pied() {
       <div>${B.lieuRemise ? `<p>Remise en main propre gratuite à ${esc(B.lieuRemise)}.</p>` : ''}${B.zoneLivraison ? `<p>Livraison à ${esc(B.zoneLivraison)} ${seuilTexte()}.</p>` : ''}</div>
     </div>
     <p>Notes et accords d'après Fragrantica.${B.note ? ' ' + esc(B.note) : ''}</p>
+    <p><button type="button" class="pied-sons" data-act="sons" data-son="non" aria-pressed="${SONS.actifs()}">${SONS.actifs() ? 'Sons des boutons : activés' : 'Sons des boutons : coupés'}</button></p>
     <p class="pied-bas">${surClaude() ? '©' : '<button type="button" class="porte" data-act="vendeur-entree" aria-label="Espace vendeur">©</button>'} ${new Date().getFullYear()} ${esc(B.nom)}</p>
   </footer>`;
 }
@@ -4504,6 +4629,7 @@ function majNavFlot() {
 }
 /* « Ajouté à ton panier », au-dessus de la barre, avec de quoi aller voir */
 function bandeauAjout(p, texte) {
+  SONS.panier();
   let b = document.getElementById('ajout-flot');
   if (!b) { b = document.createElement('div'); b.id = 'ajout-flot'; b.className = 'ajout-flot'; b.setAttribute('role', 'status'); document.body.appendChild(b); }
   b.innerHTML = typo(`<span class="af-img" aria-hidden="true">${plaqueContenu(p)}</span><span class="af-txt"><b>Ajouté à ton panier</b><small>${esc(texte)}</small></span><button type="button" class="af-voir" data-act="panier">Voir</button>`);
@@ -9468,6 +9594,11 @@ const actions = {
     copier(texte).then(ok => toast(ok ? (question ? 'Message copié : colle-le dans la conversation.' : 'Commande copiée : colle-la dans la conversation.') : 'La copie a échoué : recopie le message de ta commande.'));
   },
   panier: () => ouvrirPanier(),
+  sons: () => {
+    const on = SONS.basculer();
+    document.querySelectorAll('.pied-sons').forEach(b => { b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Sons des boutons : activés' : 'Sons des boutons : coupés'; });
+    toast(on ? 'Sons des boutons activés.' : 'Sons des boutons coupés.');
+  },
   fav: el => {
     const id = el.dataset.id, p = trouver(id);
     if (!p) return;
@@ -9868,6 +9999,8 @@ document.addEventListener('paste', e => {
 
 /* ---------- démarrage ---------- */
 function demarrer(donnees) {
+  brancherSons('[data-act="ajouter"],[data-act="offre"],[data-act="reserver"]');
+  if (!surClaude() && location.hash !== '#vendeur') introMarque(LOGO);
   installerDegrades();
   const d = donnees || {};
   if (d.panier && typeof d.panier === 'object') S.panier = d.panier;
