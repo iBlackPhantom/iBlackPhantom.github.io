@@ -2263,6 +2263,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 .entete .recherche-haut input{padding-left:24px}
 .vue-vendeur .ls-txt b{white-space:normal;overflow:visible;text-overflow:clip}
 
+/* le listing du fournisseur : une entrée dans le menu et dans Sur commande (21 nov. 2026) */
+a.menu-lien{display:inline-flex;align-items:center;text-decoration:none}
+.cmd-listing{display:grid;gap:10px;justify-items:start;max-width:560px;padding:16px;border:1px solid #ffffff1a;border-radius:22px;background:#19191c}
+.cmd-listing h2{margin:0;font:500 1.4rem/1.2 var(--f-titre);color:var(--platine)}
+.cmd-listing p{margin:0;font-size:.92rem;line-height:1.45;color:#C9C3B6}
+.cmd-listing .btn{margin-top:4px}
+
 /* ===== espace vendeur complet (28 octobre) : Plus, clients, commandes, statistiques, réassort, mise en avant, promos ===== */
 .vue-vendeur :is(#g-res,#v-cmds):empty{display:none}
 .vue-vendeur #g-res:not(:empty){display:grid;gap:4px;margin-top:-.6rem}
@@ -3507,10 +3514,13 @@ function pied() {
     <p class="pied-bas">${surClaude() ? '©' : '<button type="button" class="porte" data-act="vendeur-entree" aria-label="Espace vendeur">©</button>'} ${new Date().getFullYear()} ${esc(B.nom)}</p>
   </footer>`;
 }
+/* le listing du fournisseur : une page à part du site (iblackphantom.github.io/listing/) */
+const lienListing = () => (String(ST.boutique.adresse || '').replace(/\/+$/, '') || '') + '/listing/';
 /* le menu : quelques rayons, comme une boutique Apple (les maisons sont des filtres dans la carte) */
 function liensMenu() {
   const lien = (cible, txt) => `<button type="button" class="menu-lien" data-act="aller" data-cible="${cible}">${esc(txt)}</button>`;
   return (cmdVisibles().length ? `<button type="button" class="menu-lien menu-cmd" data-act="vue" data-v="commande">${IC_NAV.commande}Sur commande</button>` : '')
+    + `<a class="menu-lien menu-listing" href="${esc(lienListing())}">Le listing</a>`
     + (comptesMaisons().length ? lien('decants', 'Décants') : '')
     + (flaconVisibles().length ? lien('flacons', 'Flacons neufs') : '')
     + (miniVisibles().length ? lien('miniatures', 'Miniatures') : '');
@@ -3944,6 +3954,7 @@ function vueCommande() {
       <button type="button" class="bp-header-cart" data-act="panier" aria-label="Ouvrir le panier">${IC_SAC}<span class="bp-cart-number"${contenuPanier().n ? '' : ' hidden'}>${contenuPanier().n}</span></button>
     </nav>
     <div class="cmd-tete"><h1 id="h-commande">Sur commande</h1><p>Des flacons neufs, dans leur boîte, que je commande exprès pour toi chez mon fournisseur.</p></div>
+    ${blocListing()}
     ${cmdOuvert() ? '' : blocClotureCmd()}
     ${blocEtapesCmd(L, C)}
     ${cmdOuvert() ? jaugeCmd(C.remplie) : ''}
@@ -3956,6 +3967,14 @@ function vueCommande() {
     <button type="button" class="btn cmd-fin" data-act="vue" data-v="carte">Voir la carte des décants</button>
   </section>
   ${pied()}`;
+}
+/* tout le listing du fournisseur, sur sa page : on y fait sa liste et on l'envoie sur Snap */
+function blocListing() {
+  return `<section class="cmd-listing" aria-labelledby="t-cmd-listing">
+      <h2 id="t-cmd-listing">Le listing complet</h2>
+      <p>Tous les flacons neufs de mon fournisseur, avec les nouveautés du mois. Fais ta liste, envoie-la-moi sur Snap : je te réponds avec les prix.</p>
+      <a class="btn plein" href="${esc(lienListing())}">Voir le listing</a>
+    </section>`;
 }
 /* précommandes clôturées : on le dit tout de suite, et on dit comment être prévenu */
 function blocClotureCmd() {
