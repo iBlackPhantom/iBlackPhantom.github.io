@@ -4924,7 +4924,7 @@ const FEN_HISTO = /\b(produit|panier|quiz|coffret)\b/;
 const etatFen = () => !!(history.state && history.state.bpFen);
 let retourFen = false;
 function histoFen(d, h) {
-  if (surClaude() || S.vendeur) return;
+  if (surClaude()) return;
   const url = location.pathname + location.search + (h != null ? h : location.hash);
   /* une page vient d'être retirée et le navigateur n'a pas fini d'y revenir : on attend son retour */
   if (retourFen) { d.dataset.histo = 'attente'; d.dataset.url = url; return; }
@@ -4942,8 +4942,23 @@ window.addEventListener('popstate', () => {
     else if (!ouverte) { const a = ancre(); if (trouver(a) || ficheCmd(a)) majAdresse(enCommande() ? '#sur-commande' : ''); }
     return;
   }
-  if (ouverte && d.dataset.histo === '1' && !etatFen()) { d.dataset.histo = ''; fermerTout(); }
+  if (ouverte && d.dataset.histo === '1' && !etatFen()) { d.dataset.histo = ''; fermerTout(); return; }
+  /* espace vendeur : le geste retour revient à l'onglet d'avant au lieu de quitter le site */
+  const st = history.state;
+  if (S.vendeur && !ouverte && st && st.bpOnglet && st.bpOnglet !== S.onglet && ongletValide(st.bpOnglet)) {
+    S.onglet = st.bpOnglet; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null;
+    rendre(); window.scrollTo(0, 0);
+  }
 });
+/* chaque onglet du vendeur a sa page dans l'historique */
+function histoOnglet() {
+  if (surClaude() || !S.vendeur) return;
+  try {
+    const url = location.pathname + location.search + location.hash;
+    if (etatFen() || (history.state && history.state.bpOnglet === S.onglet)) history.replaceState({ bpOnglet: S.onglet }, '', url);
+    else history.pushState({ bpOnglet: S.onglet }, '', url);
+  } catch (e) {}
+}
 /* le bandeau « Annuler » peut être dans la fenêtre qu'on ferme ou qu'on remplace : on le remet sur la page avant */
 function rangerBandeau() { const b = document.getElementById('bandeau-vente'); if (b && b.parentNode !== document.body) document.body.appendChild(b); }
 function ouvrir(html, cls, h) {
@@ -4959,7 +4974,8 @@ function ouvrir(html, cls, h) {
   });
   d.addEventListener('cancel', e => { if (d.classList.contains('produit') && zoomPossible()) { e.preventDefault(); fermer(); } });
   try { d.showModal(); } catch (e) { d.setAttribute('open', ''); }
-  if (FEN_HISTO.test(cls || '')) histoFen(d, h);
+  /* vitrine : fiche, panier, quiz, coffret ; espace vendeur : toutes les fenêtres */
+  if (FEN_HISTO.test(cls || '') || S.vendeur) histoFen(d, h);
   suivreVue();
   suivreLumiere();
   return d;
@@ -6801,7 +6817,7 @@ async function enregistrerNouvelleResa() {
 async function supprimerGroupeNr() {
   const N = S.nr;
   if (!N || !N.g || N.envoi || N.verrou) return;
-  const C = copieCmd(), l = C.reservations.filter(r => cleGroupe(r) === N.g);
+  const C = copieCmd(), l = C.reservations.filter(r => cleGroupe(r) === N.g), avantC = copieCmd();
   if (!l.length) return;
   const deja = sommeDe(l.filter(r => r.recu), r => r.acompte);
   C.reservations = C.reservations.filter(r => cleGroupe(r) !== N.g);
@@ -6811,6 +6827,7 @@ async function supprimerGroupeNr() {
   S.nr = null;
   fermer();
   await apresCmd(deja ? `Réservation retirée. Pense à rendre ${eur(deja)}${l[0].client ? ' à ' + l[0].client : ''}.` : 'Réservation retirée.');
+  annulerCmdPossible(avantC, 'Réservation retirée', `${l[0].client || 'client'}, ${l.length} ${l.length > 1 ? 'flacons' : 'flacon'}`);
 }
 /* l'acompte de toute une réservation, en une fois */
 async function marquerRecuGroupe(g) {
@@ -6915,7 +6932,7 @@ async function enregistrerResa() {
 async function supprimerResa() {
   const E = S.cvEdit;
   if (!E || !E.id || E.envoi) return;
-  const C = copieCmd(), r = C.reservations.find(x => x.id === E.id);
+  const C = copieCmd(), r = C.reservations.find(x => x.id === E.id), avantC = copieCmd();
   if (!r) return;
   C.reservations = C.reservations.filter(x => x.id !== E.id);
   E.envoi = true;
@@ -6924,6 +6941,7 @@ async function supprimerResa() {
   S.cvEdit = null;
   fermer();
   await apresCmd(r.recu && !r.commande ? `Réservation retirée. Pense à rendre ${eur(r.acompte)}${r.client ? ' à ' + r.client : ''}.` : 'Réservation retirée.');
+  annulerCmdPossible(avantC, 'Réservation retirée', nomRes(r));
 }
 async function marquerRecu(id) {
   if (S.cvEnvoi) return;
@@ -6999,7 +7017,7 @@ function ouvrirAnnulerCmd(cid) {
 async function annulerCommande() {
   const A = S.cvAnnul;
   if (!A || A.envoi) return;
-  const C = copieCmd();
+  const C = copieCmd(), avantC = copieCmd();
   const l = C.reservations.filter(r => r.commande === A.cid && !r.remis);
   if (!l.length) { fermer(); return; }
   l.forEach(r => { r.commande = null; });
@@ -7011,11 +7029,12 @@ async function annulerCommande() {
   S.cvAnnul = null;
   fermer();
   await apresCmd(`Commande annulée : ${l.length > 1 ? `les ${l.length} flacons repassent` : 'le flacon repasse'} en réservation.`);
+  annulerCmdPossible(avantC, 'Commande annulée', `${l.length} ${l.length > 1 ? 'flacons repassés' : 'flacon repassé'} en réservation`);
 }
 async function retirerDeCommande() {
   const E = S.cvEdit;
   if (!E || !E.id || E.envoi) return;
-  const C = copieCmd(), r = C.reservations.find(x => x.id === E.id);
+  const C = copieCmd(), r = C.reservations.find(x => x.id === E.id), avantC = copieCmd();
   if (!r || !r.commande || r.remis) return;
   const cid = r.commande;
   r.commande = null;
@@ -7026,6 +7045,7 @@ async function retirerDeCommande() {
   S.cvEdit = null;
   fermer();
   await apresCmd(`${r.nom} repasse en réservation, avec son acompte.`);
+  annulerCmdPossible(avantC, 'Retiré de la commande', r.nom);
 }
 /* ajouter un flacon sur commande : photo, nom, maison, contenance, concentration, prix (le prix d'achat reste privé) */
 const FORMATS_CMD = ['Eau de parfum', 'Extrait de parfum', 'Parfum', 'Eau de toilette'];
@@ -7745,6 +7765,8 @@ function entrerVendeur() {
   fermer();
   rendre();
   window.scrollTo(0, 0);
+  /* la page d'arrivée de l'espace vendeur porte son onglet : le geste retour y revient */
+  if (!surClaude()) { try { history.replaceState({ bpOnglet: S.onglet }, '', location.pathname + location.search + location.hash); } catch (e) {} }
   chargerGh();
 }
 function quitterVendeur() {
@@ -7886,17 +7908,38 @@ async function ecrireVentes(liste, message) {
 }
 async function supprimerVenteGh(v) {
   const rendre_ = estDeduite(v) && v.stockSuivi;
+  const avantV = S.ventes.slice(), avantC = S.cmdP ? copieCmd() : null;
   try { await ecrireVentes(S.ventes.filter(x => x.id !== v.id), `Vente retirée : ${v.nom}`); }
   catch (e) { toast(messageGh(e, S.gh.prive)); rendreVentesDyn(); return; }
   await oublierRemis([v.id]);
+  const cmdTouchee = avantC && JSON.stringify(avantC) !== JSON.stringify(S.cmdP);
   const p = trouver(v.parfumId);
-  if (rendre_ && p && p.stock != null) {
+  const stockRendu = !!(rendre_ && p && p.stock != null);
+  if (stockRendu) {
     p.stock = arrondi(p.stock + (v.ml || 0));
     S.modifs++;
     rendreVentesDyn();
     await publier(`Vente supprimée. ${qteVente(v)} ${venteEntiere(v) && v.qte > 1 ? 'remises' : venteEntiere(v) ? 'remise' : 'remis'} en stock.`);
   } else toast('Vente supprimée.');
   rendreVentesDyn();
+  /* « Annuler » : la vente revient, avec le flacon remis et le stock d'avant */
+  bandeauAnnuler('Vente supprimée', v.nom, async () => {
+    try {
+      await ecrireVentes(avantV, `Annulé : vente remise : ${v.nom}`);
+      if (cmdTouchee) { try { await ecrireCmd(avantC, 'Annulé : flacon remis'); } catch (e) {} }
+      const q = trouver(v.parfumId);
+      if (stockRendu && q && q.stock != null) { q.stock = arrondi(q.stock - (v.ml || 0)); S.modifs++; rendreVentesDyn(); await publier('Vente remise. Le stock reprend sa valeur d’avant.'); }
+      else toast('Vente remise.');
+      rendreVentesDyn();
+    } catch (e) { toast(messageGh(e, S.gh.prive)); }
+  });
+}
+/* sur commande : après un retrait, « Annuler » réécrit la commande d'avant */
+function annulerCmdPossible(avantC, titre, sous) {
+  bandeauAnnuler(titre, sous, async () => {
+    try { await ecrireCmd(avantC, 'Annulé : ' + titre); await apresCmd('Annulé.'); }
+    catch (e) { toast(messageGh(e, S.gh.prive)); }
+  });
 }
 
 /* ---------- événements ---------- */
@@ -9464,7 +9507,7 @@ const actions = {
     });
   },
   fermer: () => fermer(),
-  onglet: el => { if (el.dataset.o === 'historique') S.histo = null; if (el.dataset.o !== S.onglet && S.annulerFn) { S.annulerFn = null; const bv = document.getElementById('bandeau-vente'); if (bv && bv.querySelector('[data-act=annuler-dernier]')) { clearTimeout(S.bvMinuteur); bv.hidden = true; } }  /* changer d'onglet : le « Annuler » d'une promo, d'une fiche… s'en va (celui d'une vente reste, pour la retrouver dans le journal) */ if (document.querySelector('#dlg.g-dlg')) fermerTout(); S.onglet = el.dataset.o; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); },
+  onglet: el => { if (el.dataset.o === 'historique') S.histo = null; if (el.dataset.o !== S.onglet && S.annulerFn) { S.annulerFn = null; const bv = document.getElementById('bandeau-vente'); if (bv && bv.querySelector('[data-act=annuler-dernier]')) { clearTimeout(S.bvMinuteur); bv.hidden = true; } }  /* changer d'onglet : le « Annuler » d'une promo, d'une fiche… s'en va (celui d'une vente reste, pour la retrouver dans le journal) */ { const dg = document.querySelector('#dlg.g-dlg'); if (dg) { dg.dataset.histo = ''; fermerTout(); } } S.onglet = el.dataset.o; ecrire(CLE_ONGLET, S.onglet); S.confirmVente = null; S.prixManuel = false; S.lotEdit = null; S.lotSuppr = null; S.flAjout = null; rendre(); window.scrollTo(0, 0); histoOnglet(); },
   publier: async () => {
     const ok = await publier('Carte publiée.');
     /* une fois publié, le bandeau « Annuler » d'un changement de la carte n'a plus lieu d'être */
@@ -9476,7 +9519,7 @@ const actions = {
   'annuler-modifs': () => { ST = normaliser(JSON.parse(BASE)); S.modifs = 0; rendre(); toast('Modifications annulées.'); },
   photo: el => ouvrirPhoto(el.dataset.id),
   'photo-ok': el => { const p = trouver(el.dataset.id); if (!p || !S.photoTemp) return; p.photo = S.photoTemp; S.photoTemp = null; fermer(); modifie(); rendre(); toast('Photo ajoutée. Publie pour la montrer à tes clients.'); },
-  'photo-retirer': el => { const p = trouver(el.dataset.id); if (!p) return; p.photo = ''; fermer(); modifie(); rendre(); },
+  'photo-retirer': el => { const id = el.dataset.id; if (!trouver(id)) return; fermer(); majSite(st => { const q = st.parfums.find(x => x.id === id); if (q) q.photo = ''; }, 'Photo retirée'); rendre(); },
   editer: el => ouvrirEditeur(el.dataset.id),
   nouveau: () => ouvrirEditeur(null),
   'editer-ok': () => enregistrerEditeur(),
@@ -9486,8 +9529,10 @@ const actions = {
   },
   'suppr-parfum-ok': () => {
     const id = document.getElementById('edit').dataset.id;
-    ST.parfums = ST.parfums.filter(p => p.id !== id);
-    fermer(); modifie(); rendre(); toast('Parfum retiré. Publie pour mettre la carte à jour.');
+    const nom = (trouver(id) || {}).nom || '';
+    fermer();
+    majSite(st => { st.parfums = st.parfums.filter(p => p.id !== id); }, nom ? `Parfum retiré : ${nom}` : 'Parfum retiré');
+    rendre();
   },
   reglages: () => ouvrirReglages(),
   vitrine: () => telechargerVitrine(),
@@ -9520,7 +9565,11 @@ const actions = {
   'lot-ok': () => validerLot(),
   'lot-suppr': el => { S.lotSuppr = Number(el.dataset.i); rendreCouts(); },
   'lot-suppr-non': () => { S.lotSuppr = null; rendreCouts(); },
-  'lot-suppr-ok': el => { const i = Number(el.dataset.i); const lots = lotsCouts().filter((_, k) => k !== i); enregistrerLots(lots, 'Achat supprimé.'); },
+  'lot-suppr-ok': async el => {
+    const i = Number(el.dataset.i), avant = JSON.parse(JSON.stringify(lotsCouts()));
+    const lots = lotsCouts().filter((_, k) => k !== i);
+    if (await enregistrerLots(lots, 'Achat supprimé.')) bandeauAnnuler('Achat supprimé', 'Touche Annuler pour le remettre', async () => { await enregistrerLots(avant, 'Achat remis.'); });
+  },
   quiz: () => ouvrirQuiz(),
   partager: el => {
     const p = trouver(el.dataset.id); if (!p) return;

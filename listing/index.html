@@ -45,6 +45,8 @@ img{display:block}
 .tete{display:flex;align-items:center;gap:10px;padding:calc(14px + var(--haut)) 20px 6px}
 .sceau{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--texte);font:500 17px/1 var(--serif);letter-spacing:.01em}
 .sceau img{width:30px;height:30px;border-radius:50%}
+.sceau .chev{flex:none;width:20px;height:20px;margin:0 -3px 0 -6px;color:var(--or)}
+.puce.effacer{border-color:#C9B38B80;color:var(--or)}
 .tete .esp{flex:1}
 .bouton-demande{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:0;background:var(--carte)}
 .bouton-demande svg{width:20px;height:20px}
@@ -340,6 +342,8 @@ details.voir summary{cursor:pointer;color:var(--or);margin-top:14px;font-size:15
 .bandeau-apercu button{flex:none;border:0;background:var(--encre);color:var(--texte);border-radius:14px;height:30px;padding:0 12px;font-size:13px;font-weight:600}
 .bandeau-apercu button.b-sec{background:transparent;color:#000;box-shadow:inset 0 0 0 1.5px #0008}
 .v-etat{display:flex;gap:12px;align-items:center}
+.v-confirm{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--nuit);box-shadow:inset 0 0 0 1px #C9B38B55}
+.v-confirm p{margin:0;color:var(--texte);font-size:14px}
 .tuile{display:block;width:100%;padding:10px 12px;border-radius:12px;border:0;background:var(--nuit);color:var(--texte);text-align:left}
 .tuile b{display:block;font:700 22px var(--titre)}
 .tuile small{color:var(--sous);font-size:12.5px}
@@ -370,7 +374,7 @@ button.tuile small{color:var(--or)}
 <body>
 <div id="apercu-bandeau"></div>
 <header class="tete">
-  <a class="sceau" href="https://iblackphantom.github.io/" aria-label="BlackPhantom, retour au site"><img src="icone.png" alt="" width="30" height="30"><span>BlackPhantom</span></a>
+  <a class="sceau" id="retour-site" href="https://iblackphantom.github.io/" aria-label="Retour au site BlackPhantom"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg><img src="icone.png" alt="" width="30" height="30"><span>BlackPhantom</span></a>
   <span class="esp"></span>
   <a class="sur-cmd" href="https://iblackphantom.github.io/#sur-commande">Sur commande</a>
   <button type="button" class="bouton-demande" id="b-demande" aria-label="Ma demande">
@@ -619,6 +623,7 @@ function dessinerRayons() {
   const b = [`<button type="button" class="puce" data-rayon="tout" aria-pressed="${S.rayon === 'tout'}">Tout</button>`];
   for (const s of sections) b.push(`<button type="button" class="puce" data-rayon="${esc(s)}" aria-pressed="${S.rayon === s}">${esc(COURT[s] || s)} <span class="n">${n(s)}</span></button>`);
   b.push('<span class="sep-puces" aria-hidden="true"></span>');
+  if (S.rayon !== 'tout' || S.maison || S.filtres.size || S.format || S.taille || S.tri !== 'listing') b.push('<button type="button" class="puce effacer" data-act="tout-voir">Effacer les filtres <span class="x" aria-hidden="true">×</span></button>');
   b.push(S.maison ? `<button type="button" class="puce maison-choisie" data-act="maison-x" aria-label="Retirer le filtre ${esc(S.maison)}">${esc(S.maison)} <span class="x" aria-hidden="true">×</span></button>`
     : `<button type="button" class="puce" data-act="maisons">Maisons</button>`);
   const choix = (cle, titre, options, defaut) => {
@@ -769,7 +774,8 @@ function rebond(el) { if (!el) return; el.classList.remove('bump', 'pop'); void 
 function basculer(id) {
   const r = trouver(id); if (!r || r.rupture) return;
   const i = S.demande.findIndex(l => l.id === id);
-  if (i >= 0) S.demande.splice(i, 1); else S.demande.push({ id, qte: 1 });
+  const retire = i >= 0 ? S.demande.splice(i, 1)[0] : null;
+  if (!retire) S.demande.push({ id, qte: 1 });
   majDemande();
   document.querySelectorAll(`.fiche-mini[data-id="${CSS.escape(id)}"] .ajout`).forEach(btn => {
     const pris = dansDemande(id);
@@ -779,7 +785,8 @@ function basculer(id) {
   });
   rebond($('#b-demande'));
   if (i < 0) rebond($('#vignettes'));
-  if (feuilleOuverte()) toast(i >= 0 ? 'Retiré de ta demande' : 'Ajouté à ta demande');
+  if (retire) toast('Retiré de ta demande', () => { if (!dansDemande(id)) { S.demande.splice(Math.min(i, S.demande.length), 0, retire); majDemande(); majCarte(id); if (feuilleType === 'fiche' || feuilleType === 'demande') rafraichirFeuille(); } });
+  else if (feuilleOuverte()) toast('Ajouté à ta demande');
 }
 const trouver = id => donnees().refs.find(r => r.id === id);
 function message() {
@@ -867,7 +874,6 @@ function ouvrirFiche(id, depuisAncre) {
       ${r.rupture ? `<a class="btn large" href="${lienSnap()}" target="_blank" rel="noopener">Me prévenir sur Snap</a>`
         : `<button type="button" class="btn ${pris ? '' : 'or'} large" data-act="ajout-fiche" data-id="${esc(r.id)}">${pris ? 'Retirer de ma demande' : 'Ajouter à ma demande'}</button>`}
     </div>`, 'fiche', r.id);
-  if (!depuisAncre) { try { history.replaceState(null, '', '#' + encodeURIComponent(r.id)); } catch (e) {} }
   /* glisser la photo à gauche ou à droite : flacon suivant ou précédent */
   const h = $('#f-haut');
   if (h) {
@@ -883,8 +889,17 @@ function ouvrirFiche(id, depuisAncre) {
 
 /* ---------- feuille ---------- */
 let feuilleType = '', dernierFocus = null, tFermer = 0;
+let histoFeuille = false, retourEnCours = false, ouvertureSansHisto = false;
+const feuilleVisible = () => { const f = $('#feuille'); return !f.hidden && f.classList.contains('vu'); };
+const urlFeuille = (type, id) => location.pathname + location.search + (type === 'fiche' && id ? '#' + encodeURIComponent(id) : type === 'vendeur' ? '#vendeur' : '');
 const feuilleOuverte = () => !$('#feuille').hidden;
 function ouvrirFeuille(titre, corps, type, id) {
+  const etaitOuverte = feuilleVisible();
+  try {
+    if (etaitOuverte && histoFeuille) history.replaceState({ lst: 1 }, '', urlFeuille(type, id));
+    else if (!etaitOuverte && !ouvertureSansHisto) { history.pushState({ lst: 1 }, '', urlFeuille(type, id)); histoFeuille = true; }
+    else if (type === 'fiche' && id) history.replaceState(history.state, '', urlFeuille(type, id));
+  } catch (e) {}
   clearTimeout(tFermer);
   feuilleType = type || ''; const f = $('#feuille'), v = $('#voile');
   if (f.hidden) dernierFocus = document.activeElement;
@@ -902,14 +917,17 @@ function ouvrirFeuille(titre, corps, type, id) {
   $('#flottant').classList.remove('vu');
   setTimeout(() => $('#feuille-fermer').focus({ preventScroll: true }), 50);
 }
-function fermerFeuille() {
+function fermerFeuille(depuisHisto) {
   const f = $('#feuille'), v = $('#voile');
-  if (f.hidden) return;
+  if (f.hidden || !f.classList.contains('vu')) return;
+  /* fermée par le bouton : on retire aussi sa page de l'historique */
+  if (histoFeuille && !depuisHisto) { histoFeuille = false; retourEnCours = true; try { history.back(); } catch (e) { retourEnCours = false; } }
+  if (depuisHisto) histoFeuille = false;
   f.classList.remove('vu'); v.classList.remove('vu');
   document.body.style.overflow = '';
   clearTimeout(tFermer);
   tFermer = setTimeout(() => { f.hidden = true; v.hidden = true; majDemande(); }, 260);
-  if (location.hash && location.hash !== '#vendeur') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
+  if (!retourEnCours && !depuisHisto && location.hash) { try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {} }
   const etaitFiche = feuilleType === 'fiche';
   feuilleType = '';
   /* après une fiche : la rangée « vus récemment » se met à jour, sans faire bouger ce qu'on regardait */
@@ -1003,8 +1021,8 @@ addEventListener('scroll', () => {
   tHaut = requestAnimationFrame(() => { tHaut = 0; $('#haut').classList.toggle('vu', scrollY > innerHeight * 2.5); $('#haut').classList.toggle('leve', $('#flottant').classList.contains('vu')); });
 }, { passive: true });
 $('#flottant-btn').addEventListener('click', ouvrirDemande);
-$('#voile').addEventListener('click', fermerFeuille);
-$('#feuille-fermer').addEventListener('click', fermerFeuille);
+$('#voile').addEventListener('click', () => fermerFeuille());
+$('#feuille-fermer').addEventListener('click', () => fermerFeuille());
 $('#b-vendeur').addEventListener('click', () => ouvrirVendeur());
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && feuilleOuverte()) fermerFeuille(); });
 const barre = $('#barre');
@@ -1037,7 +1055,11 @@ document.addEventListener('click', async e => {
   else if (act === 'plus' || act === 'moins') {
     const l = S.demande.find(x => x.id === id); if (!l) return;
     l.qte += act === 'plus' ? 1 : -1;
-    if (l.qte < 1) { S.demande = S.demande.filter(x => x !== l); majCarte(id); }
+    if (l.qte < 1) {
+      const pos = S.demande.indexOf(l);
+      S.demande = S.demande.filter(x => x !== l); majCarte(id);
+      toast('Retiré de ta demande', () => { l.qte = 1; S.demande.splice(Math.min(pos, S.demande.length), 0, l); majDemande(); majCarte(id); if (feuilleType === 'demande') ouvrirDemande(); });
+    }
     majDemande(); ouvrirDemande();
   }
   else if (act === 'vider-demande') {
@@ -1074,13 +1096,27 @@ document.addEventListener('input', e => {
     });
   }
 });
-addEventListener('hashchange', ancre);
+addEventListener('popstate', () => {
+  if (retourEnCours) { retourEnCours = false; return; }
+  if (feuilleVisible()) { fermerFeuille(true); return; }
+  ancre();
+});
 function ancre() {
   const h = decodeURIComponent(location.hash.slice(1));
-  if (!h) { if (feuilleType === 'fiche') fermerFeuille(); return; }
-  if (h === 'vendeur') { ouvrirVendeur(); return; }
-  if (donnees() && trouver(h)) ouvrirFiche(h, true);
+  if (!h) return;
+  ouvertureSansHisto = true;
+  try {
+    if (h === 'vendeur') ouvrirVendeur();
+    else if (donnees() && trouver(h)) ouvrirFiche(h, true);
+  } finally { ouvertureSansHisto = false; }
 }
+/* retour au site : si on vient du site, on y revient là où on était */
+$('#retour-site').addEventListener('click', e => {
+  try {
+    const r = document.referrer ? new URL(document.referrer) : null;
+    if (r && r.origin === location.origin && !r.pathname.startsWith(location.pathname) && history.length > 1) { e.preventDefault(); history.back(); }
+  } catch (er) {}
+});
 
 /* ============ espace vendeur ============ */
 const GH_API = 'https://api.github.com';
@@ -1182,7 +1218,9 @@ function blocEtat() {
     <div class="chiffres">${ch(nVis, 'visibles par tes clients')}${ch(d.refs.length - nVis, 'masqués', d.refs.length - nVis ? 'voir-masques' : '')}${ch((d.reglages.coeurs || []).length, 'coups de cœur')}${ch(d.refs.filter(r => r.nouveau || r.arrive).length, 'nouveautés')}</div>
     ${cc.length ? `<p class="aide" style="margin-top:12px">Tes coups de cœur, en haut de la page :</p><div class="v-coeurs">${cc.map(r => `<button type="button" class="vig-c" data-act="fiche-id" data-id="${esc(r.id)}" aria-label="${esc(nomComplet(r))}">${photo(r)}</button>`).join('')}</div>`
       : `<p class="aide" style="margin-top:12px">Astuce : touche le cœur sur une photo pour mettre un flacon en avant.</p>`}
-    ${S.modifie && S.vendeur ? '<div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Publier les changements</button></div>' : ''}</div>`;
+    ${S.modifie && S.vendeur ? '<div style="margin-top:12px"><button type="button" class="btn or large" data-act="publier">Publier les changements</button></div>' : ''}
+    ${S.vendeur ? (S.confirmRetour ? `<div class="v-confirm"><p>Remettre le listing tel qu'il était avant la dernière publication ? Tu pourras revenir à celui d'aujourd'hui de la même façon.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><button type="button" class="btn or" data-act="revenir-ok">Oui, revenir</button><button type="button" class="btn" data-act="revenir-non">Non</button></div></div>`
+      : `<button type="button" class="lien" data-act="revenir" style="margin-top:8px">Revenir à la publication d'avant</button>`) : ''}</div>`;
 }
 function blocPartage() {
   const url = location.origin + location.pathname;
@@ -1238,7 +1276,7 @@ function ouvrirVendeur(erreur, garderPosition) {
   const corps = [];
   if (!S.vendeur) corps.push(blocConnexion(erreur));
   if (S.publication) corps.push(blocPublication());
-  if (S.vendeur && !S.brouillon && !S.publication) corps.push(blocEtat());
+  if (S.vendeur && !S.brouillon && (!S.publication || S.publication.fini)) corps.push(blocEtat());
   if (S.vendeur || S.brouillon || (import_ && import_.etape)) corps.push(blocImport());
   if (S.vendeur && !S.brouillon) corps.push(blocPartage());
   if (S.vendeur || S.brouillon) corps.push(blocStory());
@@ -1431,6 +1469,51 @@ function propre(d) {
   for (const r of sortie.refs) { delete r.achat; delete r.page; }
   return sortie;
 }
+/* un seul enregistrement sur GitHub ; si le site a bougé entre-temps, on recommence */
+async function enregistrer(entrees, message) {
+  const V = S.vendeur, base = `/repos/${V.proprio}/${V.depot}`;
+  for (let essai = 0; ; essai++) {
+    const ref = await gh(`${base}/git/ref/heads/${V.branche}`);
+    const parent = await gh(`${base}/git/commits/${ref.object.sha}`);
+    const arbre = await gh(`${base}/git/trees`, { method: 'POST', body: { base_tree: parent.tree.sha, tree: entrees } });
+    const commit = await gh(`${base}/git/commits`, { method: 'POST', body: { message, tree: arbre.sha, parents: [ref.object.sha] } });
+    try { await gh(`${base}/git/refs/heads/${V.branche}`, { method: 'PATCH', body: { sha: commit.sha } }); return; }
+    catch (e) { if (e.status === 422 && essai < 3) continue; throw e; }
+  }
+}
+/* revenir à la publication d'avant : on reprend son data.json et ses photos dans l'historique de GitHub (rien à renvoyer) */
+async function revenirPublication() {
+  const V = S.vendeur, base = `/repos/${V.proprio}/${V.depot}`, chemin = dossier() + 'data.json';
+  S.confirmRetour = false;
+  S.publication = { titre: 'Retour à la publication d’avant…', txt: 'Je cherche la version d’avant sur GitHub', pc: 20 };
+  ouvrirVendeur(); garderEcran(true);
+  try {
+    const commits = await gh(`${base}/commits?path=${encodeURIComponent(chemin)}&per_page=2`);
+    if (!Array.isArray(commits) || commits.length < 2) throw new Error('Il n’y a pas encore de publication d’avant.');
+    const c = await gh(`${base}/git/commits/${commits[1].sha}`);
+    const arbre = await gh(`${base}/git/trees/${c.tree.sha}?recursive=1`);
+    const fichiers = new Map((arbre.tree || []).filter(e => e.type === 'blob').map(e => [e.path, e.sha]));
+    if (!fichiers.has(chemin)) throw new Error('La version d’avant est introuvable.');
+    const blob = await gh(`${base}/git/blobs/${fichiers.get(chemin)}`);
+    const data = JSON.parse(new TextDecoder().decode(depuisB64(blob.content)));
+    const actuelles = new Set((S.pub ? S.pub.refs : []).filter(r => r.photo).map(r => dossier() + r.photo));
+    const entrees = [];
+    for (const r of data.refs || []) if (r.photo) { const pth = dossier() + r.photo; if (!actuelles.has(pth) && fichiers.has(pth)) entrees.push({ path: pth, mode: '100644', type: 'blob', sha: fichiers.get(pth) }); }
+    data.publieLe = Date.now();
+    entrees.push({ path: chemin, mode: '100644', type: 'blob', content: JSON.stringify(data) });
+    S.publication.txt = 'Enregistrement…'; S.publication.pc = 70; ouvrirVendeur(null, true);
+    await enregistrer(entrees, 'Listing : retour à la publication d’avant');
+    data.reglages = data.reglages || { masquer: { sections: [], maisons: [] }, cacher: [], prix: {} };
+    S.pub = data; S.brouillon = null; S.modifie = false; import_ = null; S.story = null;
+    S.publication = { titre: 'Publié', txt: 'Le listing d’avant est remis. GitHub met le site à jour, je te préviens ici quand c’est en ligne. Tu peux revenir à la version que tu viens de quitter de la même façon.', pc: 100, fini: true, attend: data.publieLe };
+    dessinerTout(); ouvrirVendeur();
+    verifierEnLigne(data.publieLe);
+  } catch (e) {
+    console.error(e);
+    S.publication = { titre: 'Retour impossible', txt: e.status === 401 ? 'Ta clé GitHub a expiré : refais-la depuis l’espace vendeur du site.' : (e.message && !/^GitHub/.test(e.message) ? e.message : 'GitHub ne répond pas. Rien n’a été changé en ligne, réessaie dans un moment.'), fini: true };
+    ouvrirVendeur();
+  } finally { garderEcran(false); }
+}
 async function publier() {
   if (!S.vendeur) return;
   const V = S.vendeur, base = `/repos/${V.proprio}/${V.depot}`;
@@ -1475,14 +1558,7 @@ async function publier() {
     for (const p of aRetirer) entrees.push({ path: p, mode: '100644', type: 'blob', sha: null });
     maj('Enregistrement…', 94);
     const message = brouillon ? `Listing : ${sortie.refs.length} flacons${sortie.maj ? ', mis à jour le ' + sortie.maj : ''}` : aEnvoyer.length ? `Listing : ${aEnvoyer.length} photos de flacons` : 'Listing : réglages de la vitrine';
-    for (let essai = 0; ; essai++) {
-      const ref = await gh(`${base}/git/ref/heads/${V.branche}`);
-      const parent = await gh(`${base}/git/commits/${ref.object.sha}`);
-      const arbre = await gh(`${base}/git/trees`, { method: 'POST', body: { base_tree: parent.tree.sha, tree: entrees } });
-      const commit = await gh(`${base}/git/commits`, { method: 'POST', body: { message, tree: arbre.sha, parents: [ref.object.sha] } });
-      try { await gh(`${base}/git/refs/heads/${V.branche}`, { method: 'PATCH', body: { sha: commit.sha } }); break; }
-      catch (e) { if (e.status === 422 && essai < 3) continue; throw e; }   /* le site a bougé entre-temps : on recommence */
-    }
+    await enregistrer(entrees, message);
     /* la page passe sur les données publiées ; les photos pas encore envoyées restent en mémoire */
     for (const r of d.refs) if (r.photo) delete r.__blob;
     S.pub = d; S.brouillon = null; S.modifie = false; import_ = null;
@@ -1504,6 +1580,9 @@ const actionsVendeur = {
   'annuler-import': () => { if (import_) import_.stop = true; },
   'abandonner': () => { if (S.brouillon) for (const r of S.brouillon.refs) if (r.__url) URL.revokeObjectURL(r.__url); S.brouillon = null; import_ = null; bandeauApercu(); dessinerTout(); ouvrirVendeur(); },
   'publier': () => publier(),
+  'revenir': () => { S.confirmRetour = true; ouvrirVendeur(null, true); },
+  'revenir-non': () => { S.confirmRetour = false; ouvrirVendeur(null, true); },
+  'revenir-ok': () => revenirPublication(),
   'fin-publication': () => { if (S.publication && S.publication.attend) S.publication.ferme = true; else S.publication = null; fermerFeuille(); },
   'deconnexion': () => { S.vendeur = null; S.vueClient = false; S.filtres.delete('masques'); dessinerTout(); ouvrirVendeur(); },
   'faceid': b => {
